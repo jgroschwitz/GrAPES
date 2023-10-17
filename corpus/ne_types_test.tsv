@@ -1,0 +1,660 @@
+bolt12_64556_5628.1	person	Hua Mulan
+bolt12_64556_5629.1	event	Long March
+bolt12_6455_6561.3	incident	Lugou Bridge
+bolt12_6455_6561.3	incident	September 18th
+bolt12_6455_6561.9	military	Unit 731
+bolt12_6455_6561.9	incident	Nanjing Massacre
+bolt12_6455_6561.9	city	Hengyang
+bolt12_6455_6561.9	city	Changsha
+bolt12_6455_6561.26	facility	People's Heroes Monument
+bolt12_6455_6561.30	treaty	Boxer Protocol
+bolt12_6455_6562.13	work-of-art	Ci
+bolt12_6455_6562.16	island	Ryukyu Islands
+bolt12_6455_6562.26	person	Ren Zhiqiang
+bolt12_91455_5327.1	thing	Imperial Examination
+bolt12_91455_5327.1	thing	Imperial Examination
+bolt12_91455_5342.2	guy	Zhang Jizhong
+wb.eng_0003.4	highway	Route 288
+wb.eng_0003.4	country-region	Richmond New Urban Region
+wb.eng_0003.6	newspaper	Richmond Times-Dispatch
+wb.eng_0003.6	road	Huguenot Trail
+wb.eng_0003.6	county	Powhatan County
+wb.eng_0003.7	person	Will Jones
+wb.eng_0003.7	road	Huguenot Trail
+wb.eng_0003.7	road	288
+wb.eng_0003.9	road	Winterfield Road
+wb.eng_0003.10	government-organization	Virginia Department of Transportation
+wb.eng_0003.11	government-organization	VDOT
+wb.eng_0003.12	government-organization	VDOT
+wb.eng_0003.12	road	288
+wb.eng_0003.15	road	Route 288
+wb.eng_0003.16	county	Chesterfield County
+wb.eng_0003.16	county	Goochland County
+wb.eng_0003.20	road	Route 288
+wb.eng_0003.22	road	288
+wb.eng_0003.24	road	Route 288
+wb.eng_0003.27	road	288
+wb.eng_0003.32	road	288
+wb.eng_0003.37	local-region	NOVA
+wb.eng_0003.38	road	288
+wb.eng_0003.46	person	5:26
+wb.eng_0003.47	government-organization	CTB
+wb.eng_0003.47	government-organization	VDOT
+wb.eng_0003.53	road	288
+wb.eng_0003.72	airport	Dulles
+wb.eng_0003.79	facility	Watkins Landing
+wb.eng_0003.80	road	Huguenot Trail
+wb.eng_0003.83	road	Huguenot Trail
+wb.eng_0003.83	county	Chesterfield
+wb.eng_0003.83	road	Robious Road
+wb.eng_0003.84	road	288
+wb.eng_0003.84	county	Powhatan
+wb.eng_0003.84	county	Chesterfield
+wb.eng_0003.98	road	288
+DF-200-192400-625_6344.3	medical-condition	epilepsy
+DF-200-192400-625_6344.3	medical-condition	manic depressive
+DF-200-192400-625_6344.10	exam	A2
+DF-200-192400-625_6344.28	organization	Childline
+DF-200-192400-625_7200.8	disease	leukaemia
+DF-200-192400-625_7200.11	disease	Asperger's
+DF-200-192400-625_7557.6	product	paracetamol
+DF-200-192400-625_7557.15	disease	bipolar
+ENG_DF_000170_20050903_C00020J0V_0001.11	local-region	South Texas
+ENG_DF_000170_20050903_C00020J0V_0001.13	university	Rice U
+ENG_DF_000170_20050903_C00020J0V_0001.13	university	Texas A & M
+ENG_DF_000170_20050903_C00020J0V_0001.13	university	Tulane
+ENG_DF_000170_20050903_C00020J0V_0001.14	university	Trinity U
+ENG_DF_000170_20050903_C00020J0V_0001.22	organization	Jewish Community Center
+ENG_DF_000170_20050903_C00020J0V_0001.23	organization	Jewish Community Center Austin
+ENG_DF_000170_20050903_C00020J0V_0001.25	organization	Jewish Family Services
+ENG_DF_000170_20050903_C00020J0V_0001.27	person	Mitch Sudolsky
+ENG_DF_000170_20050903_C00020J0V_0001.28	shelter	Burger Center
+ENG_DF_000170_20050903_C00020J0V_0001.28	facility	Convention Center
+ENG_DF_000170_20050903_C00020J0V_0001.29	organization	Capital Area Food Bank
+ENG_DF_000170_20050903_C00020J0V_0001.31	organization	Goodwill Industries
+ENG_DF_000170_20050903_C00020J0V_0001.32	city	Oak Hill
+ENG_DF_000170_20050903_C00020J0V_0001.44	road	Convict Hill RD
+ENG_DF_000170_20050903_C00020J0V_0001.44	city	Oak Hill
+ENG_DF_000170_20050903_C00020J0V_0001.45	company	United Van Lines
+ENG_DF_000170_20050903_C00020J0V_0001.45	organization	Junior College Athletic Association
+ENG_DF_000170_20050903_C00020J0V_0001.48	organization	Junior College Athletic Association
+ENG_DF_000170_20050903_C00020J0V_0001.51	hotel	Holiday Inn
+ENG_DF_000170_20050903_C00020J0V_0001.51	road	Business Park Drive
+ENG_DF_000170_20050903_C00020J0V_0001.52	hotel	Renaissance Austin Hotel
+ENG_DF_000170_20050903_C00020J0V_0001.52	building	Hurricane Katrina Block
+ENG_DF_000170_20050903_C00020J0V_0001.52	road	Arboretum Blvd
+ENG_DF_000170_20050903_C00020J0V_0001.53	hotel	Doubletree Hotel
+ENG_DF_000170_20050903_C00020J0V_0001.53	road	North IH 35
+ENG_DF_000170_20050903_C00020J0V_0001.53	person	Jon McFarland
+ENG_DF_000170_20050903_C00020J0V_0001.53	hotel	AmeriSuites
+ENG_DF_000170_20050903_C00020J0V_0001.53	road	Tudor Blvd
+ENG_DF_000170_20050903_C00020J0V_0001.54	organization	Austin Area Interreligious Ministry
+ENG_DF_000170_20050903_C00020J0V_0001.56	local-region	Central Texas
+ENG_DF_000170_20050903_C00020J0V_0001.58	road	Trinity Street
+ENG_DF_000170_20050903_C00020J0V_0001.58	road	9th
+ENG_NA_020001_20161020_G0023FSUM_0001.4	city	Pelerin
+ENG_NA_020001_20161020_G0023FSUN_0001.4	road	Rue Petrel
+ENG_NA_020001_20161020_G0023FSUN_0001.4	school	College Mevar
+ENG_NA_020001_20161020_G0023FSUO_0001.6	city	Tiboukan
+ENG_NA_020001_20161020_G0023FSUO_0001.6	city	Gresye
+ENG_NA_020001_20161020_G0023FSUP_0001.4	city	Saint Marc
+ENG_NA_020001_20161020_G0023FSUP_0001.4	university	Alliance University
+ENG_NA_020001_20161020_G0023FSUQ_0001.4	road	Delmas 31
+ENG_NA_020001_20161020_G0023FSUQ_0001.4	road	Rue Marien
+ENG_NA_020001_20161020_G0023FSUR_0001.4	road	Delmas 32
+ENG_NA_020001_20161020_G0023FSUT_0001.5	mountain	Saint Antoine
+ENG_NA_020001_20161020_G0023FSUT_0001.5	city	Dubois
+ENG_NA_020001_20161020_G0023FSUU_0001.4	organization	OJCAD
+ENG_NA_020001_20161020_G0023FSUU_0001.4	area	Duffort
+ENG_NA_020001_20161020_G0023FSUV_0001.4	road	Magloire Ambroide Avenue
+ENG_NA_020001_20161020_G0023FSUW_0001.4	commune	Croix de Bouquets
+ENG_NA_020001_20161020_G0023FSUX_0001.4	city	Kenscoff
+ENG_NA_020001_20161020_G0023FSUY_0001.4	road	Route Nationale 1
+ENG_NA_020001_20161020_G0023FSUY_0001.4	location	Cite Boston
+ENG_NA_020001_20161020_G0023FSUZ_0001.6	location	Brat Darbonne
+ENG_NA_020001_20161020_G0023FSUZ_0001.6	location	Pond Branch
+ENG_NA_020001_20161020_G0023FSV1_0001.6	area	Mandine
+ENG_NA_020001_20161020_G0023FSV1_0001.6	city-district	Petion Ville
+ENG_NA_020001_20161020_G0023FSV2_0001.4	island	La Tortue
+ENG_NA_020001_20161020_G0023FSV3_0001.4	location	La Plaine
+ENG_NA_020001_20161020_G0023FSV3_0001.7	area	Moya
+ENG_NA_020001_20161020_G0023FSV4_0001.4	city-district	Bon Repos
+ENG_NA_020001_20161020_G0023FSV5_0001.4	building	Mathieu
+ENG_NA_020001_20161020_G0023FSV5_0001.4	city-district	Grand Riviere
+ENG_NA_020001_20161020_G0023FSV6_0001.4	road	Delmas 95
+ENG_NA_020001_20161020_G0023FSV6_0001.4	sea	Carribean
+ENG_NA_020001_20161020_G0023FSV7_0001.4	location	nway
+ENG_NA_020001_20161020_G0023FSV7_0001.4	area	Croix-des-Bouquets
+ENG_NA_020001_20161020_G0023FSV8_0001.4	city	Port-de-Paix
+ENG_NA_020001_20161020_G0023FSV9_0001.4	road	Delmas 1
+ENG_NA_020001_20161020_G0023FSVA_0001.4	location	La Plaine
+ENG_NA_020001_20161020_G0023FSVA_0001.4	city-district	Bon Repos
+ENG_NA_020001_20161020_G0023FSVA_0001.4	road	Moleya
+ENG_NA_020001_20161020_G0023FSVA_0001.4	street	Ruelle Mackendi
+ENG_NA_020001_20161020_G0023FSVA_0001.4	road	Impasse Celeste
+ENG_NA_020001_20161020_G0023FSVB_0001.4	road	Martisan
+ENG_NA_020001_20161020_G0023FSVB_0001.4	organization	Doctors without Frontiers
+ENG_NA_020001_20161020_G0023FSVC_0001.4	road	Impasse Nicolas
+ENG_NA_020001_20161020_G0023FSVC_0001.4	city-district	Canapevert
+ENG_NA_020001_20161020_G0023FSVD_0001.4	military	Haitian Coast Guard
+ENG_NA_020001_20161020_G0023FSVD_0001.4	company	EDH
+ENG_NA_020001_20161020_G0023FSVE_0001.4	province	Plateau Central
+ENG_NA_020001_20161020_G0023FSVF_0001.4	hospital	Saint Michel
+ENG_NA_020001_20161020_G0023FSVG_0001.4	road	Thomassin 32
+ENG_NA_020001_20161020_G0023FSVG_0001.4	area	Pyron
+ENG_NA_020001_20161020_G0023FSVH_0001.6	facility	Silo
+ENG_NA_020001_20161020_G0023FSVS_0001.4	city-district	Fontamara
+ENG_NA_020001_20161020_G0023FSVS_0001.4	road	Louis St
+ENG_NA_020001_20161020_G0023FSVT_0001.4	road	Patience
+ENG_NA_020001_20161020_G0023FSVU_0001.5	building	Church of Saint Maire
+ENG_NA_020001_20161020_G0023FSVV_0001.4	city	Dessalines
+ENG_NA_020001_20161020_G0023FSVV_0001.4	city-district	Rue Perodin
+ENG_NA_020001_20161020_G0023FSVW_0001.5	road	Ruelle Alix Roy
+ENG_NA_020001_20161020_G0023FSVX_0001.4	road	National 1
+ENG_NA_020001_20161020_G0023FSVX_0001.4	city-district	Bon Repos
+ENG_NA_020001_20161020_G0023FSVX_0001.4	city	Croix-des-Bouquets
+ENG_NA_020001_20161020_G0023FSVX_0001.4	area	Moya
+ENG_NA_020001_20161020_G0023FSVY_0001.5	hospital	St. Nicholas Hospital
+ENG_NA_020001_20161020_G0023FSVY_0001.5	city	Saint-Marc
+ENG_NA_020001_20161020_G0023FSVZ_0001.4	city-district	Clercine 26
+ENG_NA_020001_20161020_G0023FSVZ_0001.5	city	Village Theodate
+ENG_NA_020001_20161020_G0023FSW0_0001.4	hospital	Immaculate Conception Hospital
+ENG_NA_020001_20161020_G0023FSW0_0001.4	road	Rue Duvivier
+ENG_NA_020001_20161020_G0023FSW1_0001.4	city	Delmas 2
+ENG_NA_020001_20161020_G0023FSW2_0001.5	city	Place Canape Vert
+ENG_NA_020001_20161020_G0023FSW3_0001.4	road	Monrepos 38
+ENG_NA_020001_20161020_G0023FSW4_0001.4	city	La Plaine
+ENG_NA_020001_20161020_G0023FSW5_0001.4	village	Renaissance Village
+ENG_NA_020001_20161020_G0023FSW5_0001.5	road	TN
+ENG_NA_020001_20161020_G0023FSW5_0001.5	city	Solei
+ENG_NA_020001_20161020_G0023FSW5_0001.5	road	National 1 Highway
+ENG_NA_020001_20161020_G0023FSW6_0001.4	area	Ranche Croix Des Bouquet
+ENG_NA_020001_20161020_G0023FSW7_0001.4	location	Lesdunes
+ENG_NA_020001_20161020_G0023FSW8_0001.4	road	Rue Menos
+ENG_NA_020001_20161020_G0023FSW8_0001.4	road	Fontamara 43
+ENG_NA_020001_20161020_G0023FSW9_0001.4	city	Gros More
+ENG_NA_020001_20161020_G0023FSWA_0001.4	road	Mahotiere 75
+ENG_NA_020001_20161020_G0023FSWB_0001.4	government-organization	Ministry of Public Health
+ENG_NA_020001_20161020_G0023FSWB_0001.5	city	Canapè Vert
+ENG_NA_020001_20161020_G0023FSWC_0001.5	location	Departement Sud
+ENG_NA_020001_20161020_G0023FSWC_0001.5	city	Saint Louis Du Sud
+ENG_NA_020001_20161020_G0023FSWD_0001.4	street	Boukman Street
+ENG_NA_020001_20161020_G0023FSWE_0001.4	government-organization	General Police Department
+ENG_NA_020001_20161020_G0023FSWE_0001.4	city	Paco Lazon
+ENG_NA_020001_20161020_G0023FSWF_0001.4	local-region	St. Marc
+ENG_NA_020001_20161020_G0023FSWF_0001.5	local-region	St. Marc
+ENG_NA_020001_20161020_G0023FSWG_0001.4	street	Andre Street
+ENG_NA_020001_20161020_G0023FSWG_0001.4	city-district	Brochet 99
+ENG_NA_020001_20161020_G0023FSWH_0001.5	city-district	Canape Vert
+ENG_NA_020001_20161020_G0023FSWH_0001.5	city	Saint-Hilaire
+NW_AFP_ENG_0009_2003_0330.1	country	United_States
+NW_AFP_ENG_0009_2003_0330.2	person	Miyako Fuji
+NW_AFP_ENG_0009_2003_0330.2	agency	Jiji
+NW_AFP_ENG_0009_2003_0330.4	publication	Jiji
+NW_AFP_ENG_0009_2003_0330.4	park	Osaka Castle
+NW_AFP_ENG_0009_2003_0330.6	agency	Kyodo
+NW_AFP_ENG_0010_2003_0401.1	organization	Financial Services Authority
+NW_AFP_ENG_0010_2003_0401.3	university	School of Economics
+NW_AFP_ENG_0010_2003_0401.3	organization	University of London
+NW_AFP_ENG_0010_2003_0401.4	organization	Federal Security Agency
+NW_AFP_ENG_0010_2003_0401.5	organization	Office of Gas and Electricity Markets
+NW_AFP_ENG_0010_2003_0401.6	person	McCarthy
+NW_AFP_ENG_0010_2003_0401.6	company	Barclays Bank
+NW_AFP_ENG_0010_2003_0401.6	company	BZW
+NW_AFP_ENG_0010_2003_0401.6	company	Kleinwort Benson
+NW_AFP_ENG_0010_2003_0401.6	organization	Department of Trade and Industry
+NW_AFP_ENG_0010_2003_0401.7	organization	Financial Services Authority
+NW_AFP_ENG_0011_2003_0417.1	state	Tripura
+NW_AFP_ENG_0011_2003_0417.2	city	Agartala
+NW_AFP_ENG_0011_2003_0417.2	state	Tripuras
+NW_AFP_ENG_0011_2003_0417.2	region	Tultuli
+NW_AFP_ENG_0011_2003_0417.3	city	Agartala
+NW_AFP_ENG_0011_2003_0417.4	doctor	Nityalila Naotia
+NW_AFP_ENG_0011_2003_0417.7	state	Tripura
+NW_AFP_ENG_0012_2003_0419.2	city	Muscat
+NW_AFP_ENG_0012_2003_0419.4	region	Wilayat
+NW_AFP_ENG_0012_2003_0419.7	person	Choyal
+NW_AFP_ENG_0012_2003_0419.7	city	Muscat
+NW_AFP_ENG_0012_2003_0419.11	market	Muttrah Souq
+NW_AFP_ENG_0012_2003_0419.11	city	Muscat
+NW_AFP_ENG_0013_2003_0427.2	government-organization	district court
+NW_AFP_ENG_0013_2003_0427.2	city	Faisalabad
+NW_AFP_ENG_0013_2003_0427.4	city	Faisalabad
+NW_AFP_ENG_0013_2003_0427.5	person	John Joseph
+NW_AFP_ENG_0013_2003_0427.5	city	Faisalabad
+NW_AFP_ENG_0013_2003_0427.5	district	Sahiwal
+NW_AFP_ENG_0013_2003_0427.6	novel	The Satanic Verses
+NW_AFP_ENG_0013_2003_0427.7	prophet	Mohammad
+NW_AFP_ENG_0013_2003_0427.10	person	General Zia-ul Haq
+NW_AFP_ENG_0014_2003_0502.1	group	Vivendi Universal
+NW_AFP_ENG_0014_2003_0502.2	unit	Vivendi Universal Entertainment
+NW_AFP_ENG_0014_2003_0502.3	company	Vivendi Universal
+NW_AFP_ENG_0014_2003_0502.3	firm	Blackstone Group
+NW_AFP_ENG_0014_2003_0502.4	company	Vivendi Universal
+NW_AFP_ENG_0014_2003_0502.5	company	Blackstone Group
+NW_AFP_ENG_0014_2003_0502.5	company	Universal Studios Hollywood
+NW_AFP_ENG_0014_2003_0502.5	company	Universal Orlando
+NW_AFP_ENG_0014_2003_0502.5	company	Universal
+NW_AFP_ENG_0014_2003_0502.6	company	Blackstone
+NW_AFP_ENG_0014_2003_0502.6	company	Universal Orlando
+NW_AFP_ENG_0014_2003_0502.7	studio	Universal
+NW_AFP_ENG_0014_2003_0502.8	company	Vivendi Univeral Entertainment
+NW_AFP_ENG_0014_2003_0502.9	business	Universal Music Group
+NW_AFP_ENG_0015_2003_0514.2	person	Mahmud Abbas
+NW_AFP_ENG_0016_2003_0527.3	city	Evian
+NW_AFP_ENG_0016_2003_0527.4	person	Fleischer
+NW_AFP_ENG_0016_2003_0527.4	country	Democratic Republic of Congo
+NW_AFP_ENG_0017_2003_0607.2	god	Varuna
+NW_AFP_ENG_0017_2003_0607.5	person	Kalam
+NW_AFP_ENG_0017_2003_0607.6	political-party	Bharatiya Janata
+NW_AFP_ENG_0018_2003_0616.2	city-district	Byrds Creek
+NW_AFP_ENG_0018_2003_0616.2	county	Richland
+NW_AFP_ENG_0018_2003_0616.3	city	Abilene
+NW_AFP_ENG_0018_2003_0616.7	person	William Scott
+NW_AFP_ENG_0018_2003_0616.8	city-district	Byrds Creek
+NW_AFP_ENG_0018_2003_0616.8	city	Richland Center
+NW_AFP_ENG_0019_2003_0630.6	town	Beit Lahiya
+NW_AFP_ENG_0019_2003_0630.9	road	trans-Gaza highway
+NW_AFP_ENG_0019_2003_0630.10	city-district	Netzarim
+NW_AFP_ENG_0019_2003_0630.10	city	Gaza City
+NW_AFP_ENG_0019_2003_0630.10	city	Deir al-Balah
+NW_AFP_ENG_0019_2003_0630.10	city-district	Kissufim
+NW_AFP_ENG_0019_2003_0630.10	city-district	Guest House
+NW_AFP_ENG_0019_2003_0630.12	city-district	Kissufim
+NW_AFP_ENG_0019_2003_0630.12	city-district	Guest House
+NW_AFP_ENG_0019_2003_0630.13	road	trans-Gaza highway
+NW_AFP_ENG_0019_2003_0630.14	road	Karni-Netzarim road
+NW_AFP_ENG_0019_2003_0630.14	settlement	Kfar Darom
+NW_AFP_ENG_0019_2003_0630.14	city-district	Guest House
+NW_AFP_ENG_0019_2003_0630.15	town	Rafah
+NW_AFP_ENG_0019_2003_0630.15	city	Khan Yunis
+NW_AFP_ENG_0019_2003_0630.16	city-district	Netzarim
+NW_AFP_ENG_0019_2003_0630.16	city-district	Guest House
+NW_AFP_ENG_0019_2003_0630.18	city	Rafah
+NW_AFP_ENG_0019_2003_0630.20	city	Rafah
+NW_XIN_ENG_0189_2003_0324.2	city-district	Al-Azamiyah
+NW_XIN_ENG_0190_2003_0709.2	city	Hefei
+NW_XIN_ENG_0190_2003_0709.3	county	Wuwei
+NW_XIN_ENG_0190_2003_0709.3	province	Anhui
+NW_XIN_ENG_0191_2005_0405.2	county	Menyuan
+NW_XIN_ENG_0191_2005_0405.3	province	Qinghai
+NW_XIN_ENG_0191_2005_0405.5	province	Qinghai
+NW_XIN_ENG_0191_2005_0405.9	mountain	Daban
+NW_XIN_ENG_0191_2005_0405.9	thing	Ertanggou
+NW_XIN_ENG_0191_2005_0405.9	county	Menyuan Hui Autonomous
+NW_XIN_ENG_0191_2005_0405.9	prefecture	Haibei Tibetan Autonomous
+NW_XIN_ENG_0191_2005_0405.13	person	Deng
+NW_XIN_ENG_0192_2005_0906.4	county	Los Angeles County
+NW_XIN_ENG_0192_2005_0906.4	festival	Labor Day
+NW_XIN_ENG_0192_2005_0906.5	person	Molina
+NW_XIN_ENG_0192_2005_0906.8	county	Los Angeles County
+NW_XIN_ENG_0192_2005_0906.9	county	Los Angeles County
+NW_XIN_ENG_0192_2005_0906.9	agency	Dream Center
+NW_XIN_ENG_0193_2006_0822.4	district	Udaipur
+NW_XIN_ENG_0193_2006_0822.4	district	Dungarpur
+NW_XIN_ENG_0193_2006_0822.4	district	Barmer
+NW_XIN_ENG_0193_2006_0822.4	district	Pali
+NW_XIN_ENG_0193_2006_0822.4	district	Sirohi
+NW_XIN_ENG_0193_2006_0822.4	district	Jalore
+NW_XIN_ENG_0193_2006_0822.4	district	Kota
+NW_XIN_ENG_0193_2006_0822.4	district	Jhalawar
+NW_XIN_ENG_0193_2006_0822.8	city	Udaipur
+NW_XIN_ENG_0193_2006_0822.11	person	Raje
+NW_XIN_ENG_0194_2007_0704.2	city	Hefei
+NW_XIN_ENG_0194_2007_0704.4	township	Renhe
+NW_XIN_ENG_0194_2007_0704.4	township	Qinlan
+NW_XIN_ENG_0194_2007_0704.7	city	Tianchang
+NW_XIN_ENG_0194_2007_0704.7	province	Anhui
+NW_XIN_ENG_0194_2007_0704.8	city	Tianchang
+NW_XIN_ENG_0195_2008_0420.4	county	Xingshan
+NW_XIN_ENG_0195_2008_0420.4	city	Gaoyang
+NW_XIN_ENG_0195_2008_0420.7	city	Gaoyang
+NW_XIN_ENG_0196_2008_1027.1	city	Sukabumi
+NW_XIN_ENG_0196_2008_1027.3	city	Sukabumi
+NW_XIN_ENG_0196_2008_1027.3	government-organization	Meteorological and Geophysics Agency
+NW_XIN_ENG_0196_2008_1027.4	city	Sukabumi
+NW_XIN_ENG_0196_2008_1027.4	city	Bandung
+NW_XIN_ENG_0198_2008_1218.1	country	Solomon Islands
+NW_XIN_ENG_0198_2008_1218.3	country	Solomon Islands
+NW_XIN_ENG_0198_2008_1218.4	city	Honiara
+NW_XIN_ENG_0198_2008_1218.5	country	Vanuatu
+NW_XIN_ENG_0198_2008_1218.6	city	Port-Vila
+NW_XIN_ENG_0209_2008_0513.5	village	Pinzalu
+NW_XIN_ENG_0209_2008_0513.15	village	Yway Ywa
+NW_XIN_ENG_0209_2008_0513.16	village	Yay Wai Ywa
+NW_XIN_ENG_0209_2008_0513.16	publication	Weekly Eleven News
+NW_XIN_ENG_0209_2008_0513.21	city	Pathein
+NW_XIN_ENG_0209_2008_0513.21	city	Myaungmya
+PROXY_LTW_ENG_20070831_0072.17	person	Jacqueline Shire
+PROXY_LTW_ENG_20070930_0021.4	organization	Nuclear Suppliers Group
+PROXY_LTW_ENG_20070930_0021.8	organization	Nuclear Suppliers Group
+PROXY_LTW_ENG_20070930_0021.10	organization	NSG
+PROXY_LTW_ENG_20070930_0021.11	organization	NSG
+PROXY_LTW_ENG_20070930_0021.16	person	Kimball
+PROXY_LTW_ENG_20070930_0021.17	organization	NSG
+PROXY_LTW_ENG_20070930_0021.18	organization	NSG
+PROXY_LTW_ENG_20070930_0021.29	organization	NSG
+PROXY_LTW_ENG_20070930_0021.30	publication	NSG Guidelines
+PROXY_LTW_ENG_20070930_0021.31	organization	NSG
+PROXY_LTW_ENG_20070930_0021.32	organization	NSG
+PROXY_LTW_ENG_20070930_0021.33	publication	NSG Guidelines
+PROXY_LTW_ENG_20080727_0030.6	city	Mashbad
+PROXY_LTW_ENG_20080727_0030.24	person	Burns
+PROXY_LTW_ENG_20081115_0076.18	person	David Albright
+PROXY_NYT_ENG_20020406_0118.4	utility	Mosenergo
+PROXY_NYT_ENG_20020406_0118.6	utility	Mosenergo
+PROXY_NYT_ENG_20020406_0118.9	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.9	city	Obolensk
+PROXY_NYT_ENG_20020406_0118.10	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.12	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.13	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.14	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.15	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.16	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.17	person	Nikolai N. Urakov
+PROXY_NYT_ENG_20020406_0118.17	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.18	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.19	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.20	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.21	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.23	scientist	Randall Lee Beatty
+PROXY_NYT_ENG_20020406_0118.23	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.23	city	Obolensk
+PROXY_NYT_ENG_20020406_0118.24	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.25	person	Randall Lee Beatty
+PROXY_NYT_ENG_20020406_0118.25	research-institute	International Science and Technology Center
+PROXY_NYT_ENG_20020406_0118.26	research-institute	International Science and Technology Center
+PROXY_NYT_ENG_20020406_0118.27	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.28	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.29	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.30	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.31	research-institute	Monterey Institute of International Studies
+PROXY_NYT_ENG_20020406_0118.31	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.32	person	Raymond Zilinskas
+PROXY_NYT_ENG_20020406_0118.33	utility	Mosenergo
+PROXY_NYT_ENG_20020406_0118.33	research-institute	State Scientific Center of Applied Microbiology
+PROXY_NYT_ENG_20020406_0118.33	city	Obolensk
+PROXY_NYT_ENG_20020406_0118.34	company	National Power Company
+PROXY_NYT_ENG_20020406_0118.37	company	United Energy Systems
+PROXY_NYT_ENG_20040724_0084.20	research-institute	Air Institute
+PROXY_NYT_ENG_20040724_0084.20	university	Estacio de Sa University
+PROXY_NYT_ENG_20040724_0084.23	person	Gandra
+PROXY_NYT_ENG_20040724_0084.24	city	Brasilia
+PROXY_NYT_ENG_20040724_0084.25	city	Sao Paolo
+PROXY_NYT_ENG_20040724_0084.29	military	Brazilian Air Force
+PROXY_NYT_ENG_20040724_0084.32	newspaper	O Estado de Sao Paolo
+PROXY_NYT_ENG_20040724_0084.35	system	SIVAM
+PROXY_NYT_ENG_20040724_0084.43	country	Suriname
+PROXY_NYT_ENG_20050716_0171.14	country	Uruguay
+PROXY_NYT_ENG_20050716_0171.17	person	Espinoza Leon
+PROXY_NYT_ENG_20050716_0171.22	event	Bolivarian Revolution
+PROXY_NYT_ENG_20050716_0171.23	firm	Datanalisis
+PROXY_NYT_ENG_20050716_0171.24	person	Alberto Garrido
+PROXY_NYT_ENG_20050716_0171.25	state	Anzoategui
+PROXY_NYT_ENG_20050716_0171.27	rifle	AK-103
+PROXY_NYT_ENG_20050716_0171.32	rifle	FAL
+PROXY_NYT_ENG_20050716_0171.35	person	Ochoa
+PROXY_NYT_ENG_20050716_0171.38	rifle	FAL
+PROXY_NYT_ENG_20050716_0171.41	government-organization	Defense Intelligence Agency
+PROXY_NYT_ENG_20050716_0171.46	university	Free University
+PROXY_NYT_ENG_20050716_0171.50	person	Quintero
+PROXY_NYT_ENG_20050716_0171.61	organization	Cooperation Office
+PROXY_NYT_ENG_20070618_0031.13	company	Banco Delta Asia
+PROXY_NYT_ENG_20070618_0031.14	company	New York Federal Reserve Bank
+PROXY_NYT_ENG_20070618_0031.15	company	Central Bank
+PROXY_NYT_ENG_20070828_0223.22	physicist	David Albright
+PROXY_NYT_ENG_20071115_0274.4	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20071115_0274.5	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20071115_0274.6	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20071115_0274.7	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20071115_0274.8	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20071115_0274.9	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20071115_0274.10	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20071115_0274.11	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20071115_0274.20	organization	Nuclear Suppliers Group
+PROXY_NYT_ENG_20080808_0162.15	port	Poti
+PROXY_NYT_ENG_20080808_0162.18	person	Mikheil Saakashvili
+PROXY_NYT_ENG_20080808_0162.22	world-region	Caucasus
+PROXY_NYT_ENG_20080808_0162.23	world-region	Caucasus
+PROXY_NYT_ENG_20080808_0162.24	world-region	Caucasus
+PROXY_NYT_ENG_20080808_0162.31	city	Tskhinvali
+PROXY_NYT_ENG_20080808_0162.33	city	Tskhinvali
+PROXY_NYT_ENG_20080919_0209.15	person	Al-Sistani
+PROXY_NYT_ENG_20080919_0209.18	religious-group	Rafidha
+PROXY_NYT_ENG_20080919_0209.19	religious-group	Rafidha
+PROXY_NYT_ENG_20080919_0209.24	publication	Fars
+PROXY_NYT_ENG_20080919_0209.24	religious-group	Sunni Islam
+PROXY_NYT_ENG_20081008_0040.5	country	South Sudan
+PROXY_NYT_ENG_20081008_0040.8	businessman	Ahmed Omar
+PROXY_NYT_ENG_20081008_0040.8	city	Xarardheere
+PROXY_NYT_ENG_20081008_0040.9	city	Xarardheere
+PROXY_NYT_ENG_20081008_0040.20	port	Mombasa
+PROXY_NYT_ENG_20081008_0040.21	tank	T-72
+PROXY_NYT_ENG_20081008_0040.22	country	Southern Sudan
+PROXY_NYT_ENG_20081008_0040.26	country	South Sudan
+PROXY_NYT_ENG_20081008_0040.32	country	Southern Sudan
+PROXY_NYT_ENG_20081128_0005.4	person	Antonio Maria Costa
+PROXY_NYT_ENG_20081128_0005.4	organization	U.N. Drug Office
+PROXY_NYT_ENG_20081128_0005.5	organization	U.N. Drug Office
+PROXY_NYT_ENG_20081128_0005.6	organization	U.N. Drug Office
+PROXY_NYT_ENG_20081128_0005.24	organization	U.N. Office on Drugs and Crime
+PROXY_XIN_ENG_20011006_0073.5	newspaper	The Citizen
+PROXY_XIN_ENG_20011006_0073.6	newspaper	The Citizen
+PROXY_XIN_ENG_20011006_0073.7	organization	Muslims Against Illegitimate Leaders
+PROXY_XIN_ENG_20011006_0073.9	organization	Muslims Against Illegitimate Leaders
+PROXY_XIN_ENG_20011006_0073.10	organization	Muslim Judicial Council
+PROXY_XIN_ENG_20011006_0073.11	law	Foreign Military Assistance Act
+PROXY_XIN_ENG_20011006_0073.12	law	Foreign Military Assistance Act
+PROXY_XIN_ENG_20011006_0073.13	law	Foreign Military Assistance Act
+PROXY_XIN_ENG_20011006_0073.14	law	Foreign Military Assistance Act
+PROXY_XIN_ENG_20020701_0314.7	person	Alberto Fujimori
+PROXY_XIN_ENG_20020701_0314.11	person	Montesinos
+PROXY_XIN_ENG_20020701_0314.15	person	Montesinos
+PROXY_XIN_ENG_20020701_0314.16	port	Callao Naval Base
+PROXY_XIN_ENG_20020725_0113.4	criminal-organization	Triad
+PROXY_XIN_ENG_20020725_0113.5	criminal-organization	Triad
+PROXY_XIN_ENG_20020725_0113.6	newspaper	Oriental Daily News
+PROXY_XIN_ENG_20020725_0113.6	criminal-organization	Triad
+PROXY_XIN_ENG_20020725_0113.7	organization	Public Security Bureau
+PROXY_XIN_ENG_20020725_0113.8	criminal-organization	Triad
+PROXY_XIN_ENG_20020725_0113.9	criminal-organization	Triad
+PROXY_XIN_ENG_20020725_0113.9	city-district	Mongkok
+PROXY_XIN_ENG_20020725_0113.10	criminal-organization	Triad
+PROXY_XIN_ENG_20020725_0113.13	criminal-organization	Triad
+PROXY_XIN_ENG_20020725_0113.15	conference	International Drug Enforcement Conference
+PROXY_XIN_ENG_20020725_0113.16	conference	IDEC
+PROXY_XIN_ENG_20020725_0113.20	organization	National Narcotics Control Commission
+PROXY_XIN_ENG_20020725_0113.21	government-organization	Bureau of Narcotics Control
+PROXY_XIN_ENG_20020725_0113.21	government-organization	Narcotics Bureau
+PROXY_XIN_ENG_20020725_0113.22	organization	National Narcotics Control Commission
+PROXY_XIN_ENG_20020725_0113.23	person	Yam Tat Wing
+PROXY_XIN_ENG_20020725_0333.6	newspaper	El Comercio
+PROXY_XIN_ENG_20020725_0333.6	country-region	Alto Huallaga
+PROXY_XIN_ENG_20020725_0333.6	criminal-organization	Shinning Path
+PROXY_XIN_ENG_20020725_0333.6	criminal-organization	Tupac Amaru Revolutionary Movement
+PROXY_XIN_ENG_20020725_0333.7	country-region	Alto Huallaga
+PROXY_XIN_ENG_20020725_0333.8	organization	Attorney General's Office
+PROXY_XIN_ENG_20020725_0333.9	organization	Attorney General's Office
+PROXY_XIN_ENG_20020725_0333.10	newspaper	El Comercio
+PROXY_XIN_ENG_20020725_0333.10	operation	Scorpion
+PROXY_XIN_ENG_20020725_0333.11	event	Scorpion
+PROXY_XIN_ENG_20020725_0333.13	person	Montesinos
+PROXY_XIN_ENG_20020829_0017.4	city	Kathmandu
+PROXY_XIN_ENG_20020829_0017.5	city	Kathmandu
+PROXY_XIN_ENG_20020829_0017.6	military	Royal Nepal Army
+PROXY_XIN_ENG_20020829_0017.6	city	Okubahal
+PROXY_XIN_ENG_20020829_0017.6	city	Sundhara
+PROXY_XIN_ENG_20020829_0017.6	district	Lalitpur
+PROXY_XIN_ENG_20020829_0017.6	city	Kathmandu
+PROXY_XIN_ENG_20020829_0017.8	city	Kathmandu
+PROXY_XIN_ENG_20020829_0017.10	city	Kathmandu
+PROXY_XIN_ENG_20020829_0017.10	supermarket	Bishalbazar
+PROXY_XIN_ENG_20020905_0122.8	valley	Kathmandu Valley
+PROXY_XIN_ENG_20020905_0122.9	city	Kathmandu
+PROXY_XIN_ENG_20020905_0122.10	district	Lalitpur
+PROXY_XIN_ENG_20020905_0122.10	valley	Kathmandu Valley
+PROXY_XIN_ENG_20020905_0122.11	district	Lalitpur
+PROXY_XIN_ENG_20020905_0122.11	city	Kathmandu
+PROXY_XIN_ENG_20020905_0122.12	city	Kathmandu
+PROXY_XIN_ENG_20020905_0122.13	political-party	Nepali Congress
+PROXY_XIN_ENG_20020905_0122.13	valley	Kathmandu Valley
+PROXY_XIN_ENG_20020905_0122.14	newspaper	The Kathmandu Post
+PROXY_XIN_ENG_20020905_0122.17	government-organization	US State Department
+PROXY_XIN_ENG_20020905_0122.17	valley	Kathmandu Valley
+PROXY_XIN_ENG_20020905_0122.18	government-organization	US State Department
+PROXY_XIN_ENG_20020905_0122.21	event	World Summit on Sustainable Development
+PROXY_XIN_ENG_20021020_0012.5	publication	Radio Nepal
+PROXY_XIN_ENG_20021020_0012.6	publication	Radio Nepal
+PROXY_XIN_ENG_20021020_0012.7	area	Tikapur
+PROXY_XIN_ENG_20021020_0012.7	district	Kailali
+PROXY_XIN_ENG_20021020_0012.11	city	Kathmandu
+PROXY_XIN_ENG_20021020_0012.11	city	Nepalgunj
+PROXY_XIN_ENG_20021020_0012.12	world-region	Himalaya
+PROXY_XIN_ENG_20021123_0156.4	organization	Shanghai Cooperation Organization
+PROXY_XIN_ENG_20021123_0156.5	person	Tang Jiaxuan
+PROXY_XIN_ENG_20021123_0156.5	organization	Shanghai Cooperation Organization
+PROXY_XIN_ENG_20021123_0156.6	organization	SCO
+PROXY_XIN_ENG_20021123_0156.7	organization	SCO
+PROXY_XIN_ENG_20021123_0156.8	organization	SCO
+PROXY_XIN_ENG_20021123_0156.9	organization	SCO
+PROXY_XIN_ENG_20021123_0156.10	person	Tang
+PROXY_XIN_ENG_20021123_0156.11	organization	SCO
+PROXY_XIN_ENG_20021123_0156.11	city	Bishkek
+PROXY_XIN_ENG_20021123_0156.15	person	Tang
+PROXY_XIN_ENG_20021123_0156.15	organization	SCO
+PROXY_XIN_ENG_20021123_0156.16	organization	SCO
+PROXY_XIN_ENG_20021123_0156.17	organization	SCO
+PROXY_XIN_ENG_20021123_0156.19	organization	SCO
+PROXY_XIN_ENG_20021123_0156.20	organization	SCO
+PROXY_XIN_ENG_20021123_0156.21	person	Tang
+PROXY_XIN_ENG_20021123_0156.21	organization	SCO
+PROXY_XIN_ENG_20021123_0156.22	organization	SCO
+PROXY_XIN_ENG_20021228_0162.6	juice	Yaffa
+PROXY_XIN_ENG_20021228_0162.6	company	National Food Industries Co.
+PROXY_XIN_ENG_20021228_0162.6	city-district	Zafaraniyah
+PROXY_XIN_ENG_20021228_0162.7	juice	Yaffa
+PROXY_XIN_ENG_20021228_0162.8	site	Al Kindi
+PROXY_XIN_ENG_20021228_0162.9	factory	Al Qaib
+PROXY_XIN_ENG_20021228_0162.9	complex	Al Qa Qaa
+PROXY_XIN_ENG_20021228_0162.9	missile	Al Samoud
+PROXY_XIN_ENG_20021228_0162.9	missile	Al Fatah
+PROXY_XIN_ENG_20021228_0162.10	research-institute	Ibn Younis Center
+PROXY_XIN_ENG_20021228_0162.11	political-party	Bath Party
+PROXY_XIN_ENG_20021228_0162.12	site	Hadre Air Force
+PROXY_XIN_ENG_20030428_0226.13	product	Mirage 2002-5
+PROXY_XIN_ENG_20030428_0226.13	tank	T-72
+PROXY_XIN_ENG_20030428_0226.13	tank	T-90
+PROXY_XIN_ENG_20030428_0226.18	person	Alliot-Marie
+PROXY_XIN_ENG_20030624_0298.6	radio	France Info
+PROXY_XIN_ENG_20030624_0298.8	person	De Villepin
+PROXY_XIN_ENG_20030624_0298.12	organization	Mujahedeen
+PROXY_XIN_ENG_20030624_0298.18	event	Iranian Revolution
+PROXY_XIN_ENG_20030624_0298.21	facility	Evin Prison
+PROXY_XIN_ENG_20030709_0070.7	treaty	Convention
+PROXY_XIN_ENG_20031107_0242.5	publication	South African Press Association
+PROXY_XIN_ENG_20031107_0242.5	person	Lula da Silva
+PROXY_XIN_ENG_20031107_0242.7	airport	Waterkloof Air Force
+PROXY_XIN_ENG_20031107_0242.8	organization	Joint Commission
+PROXY_XIN_ENG_20031107_0242.9	person	Celso Amorim
+PROXY_XIN_ENG_20031107_0242.9	organization	Joint Commission
+PROXY_XIN_ENG_20031107_0242.10	organization	Brazil-Africa Forum
+PROXY_XIN_ENG_20031107_0242.10	city	Fortaleza
+PROXY_XIN_ENG_20031107_0242.11	organization	Brazil-Africa Forum
+PROXY_XIN_ENG_20031107_0242.18	organization	Africa Union
+PROXY_XIN_ENG_20031107_0242.18	organization	New Partnership
+PROXY_XIN_ENG_20040403_0262.4	center	Titov
+PROXY_XIN_ENG_20040403_0262.4	city	Krasnoznamernsk
+PROXY_XIN_ENG_20040403_0262.5	center	Titov
+PROXY_XIN_ENG_20040403_0262.6	city	Krasnoznamernsk
+PROXY_XIN_ENG_20040403_0262.7	city	Krasnoznamernsk
+PROXY_XIN_ENG_20040403_0262.15	center	Titov
+PROXY_XIN_ENG_20040407_0026.4	government-organization	Immigrations Bureau
+PROXY_XIN_ENG_20040407_0026.5	channel	ABS-CBN
+PROXY_XIN_ENG_20040407_0026.5	government-organization	Immigrations Bureau
+PROXY_XIN_ENG_20040407_0026.6	channel	ABS-CBN News
+PROXY_XIN_ENG_20040407_0026.7	person	Hambali
+PROXY_XIN_ENG_20040407_0026.8	government-organization	Immigrations Bureau
+PROXY_XIN_ENG_20040407_0026.11	government-organization	Immigrations Bureau
+PROXY_XIN_ENG_20040407_0026.12	person	Sheik Mohammed Khalid
+PROXY_XIN_ENG_20040407_0026.15	country-region	Metro Manila
+PROXY_XIN_ENG_20040407_0026.18	channel	ABS-CBN
+PROXY_XIN_ENG_20040429_0189.7	publication	Die Welt
+PROXY_XIN_ENG_20040429_0189.14	city	Frankfurt
+PROXY_XIN_ENG_20040429_0189.25	company	Daimler-Chrysler
+PROXY_XIN_ENG_20040922_0123.6	person	Nikolai Tanayev
+PROXY_XIN_ENG_20040922_0123.7	treaty	Shanghai Convention on Combating Terrorism, Separatism and Extremism
+PROXY_XIN_ENG_20040922_0123.7	treaty	China-Kyrgyzstan Agreement
+PROXY_XIN_ENG_20040922_0123.8	organization	Shanghai Cooperation Organization
+PROXY_XIN_ENG_20040922_0123.9	country-region	Eastern Turkistan
+PROXY_XIN_ENG_20040922_0123.10	country-region	Eastern Turkistan
+PROXY_XIN_ENG_20040922_0123.14	organization	Shanghai Cooperation Organization
+PROXY_XIN_ENG_20040922_0123.15	organization	Shanghai Cooperation Organization
+PROXY_XIN_ENG_20040922_0123.16	organization	SCO
+PROXY_XIN_ENG_20041010_0024.4	organization	Asia-Europe Meeting
+PROXY_XIN_ENG_20041010_0024.7	organization	Asia-Europe Meeting
+PROXY_XIN_ENG_20041010_0024.11	company	Vietnam Railway Corporation
+PROXY_XIN_ENG_20041219_0059.7	university	Hong Kong Polytechnic University
+PROXY_XIN_ENG_20041219_0059.7	facility	Virtual University Park
+PROXY_XIN_ENG_20041219_0059.8	university	PolyU
+PROXY_XIN_ENG_20041219_0059.10	university	City University of Hong Kong
+PROXY_XIN_ENG_20041219_0059.10	university	University of Science and Technology of China
+PROXY_XIN_ENG_20041219_0059.10	province	Anhui
+PROXY_XIN_ENG_20041219_0059.10	city	Suzhou
+PROXY_XIN_ENG_20041219_0059.11	university	University of Science and Technology of China
+PROXY_XIN_ENG_20041219_0059.14	university	Hong Kong University of Science and Technology
+PROXY_XIN_ENG_20041219_0059.14	event	China Hi-Tech Fair
+PROXY_XIN_ENG_20041219_0059.15	university	HKUST
+PROXY_XIN_ENG_20041219_0059.16	university	HKUST
+PROXY_XIN_ENG_20041219_0059.17	university	HKUST
+PROXY_XIN_ENG_20041219_0059.18	person	Paul Ching-Wu Chu
+PROXY_XIN_ENG_20041219_0059.18	university	HKUST
+PROXY_XIN_ENG_20041219_0059.19	university	HKUST
+PROXY_XIN_ENG_20041219_0059.19	country-region	Pearl River Delta
+nw.chtb_0302.2	government-organization	Domestic Affairs
+nw.chtb_0302.2	hotel	Diaoyutai State Guesthouse
+nw.chtb_0302.4	person	Chavalit
+nw.chtb_0303.2	country	Hungary Republic
+nw.chtb_0303.3	person	Casymier Auye Muba
+nw.chtb_0303.3	country	Gabon Republic
+nw.chtb_0303.4	country	Tanzania United Republic
+nw.chtb_0305.1	city	Bishket
+nw.chtb_0305.2	country	Kirghizia
+nw.chtb_0305.3	country	Kirghizia
+nw.chtb_0305.4	country	Kirghizia
+nw.chtb_0305.4	government-organization	Economy and Trade Committee
+nw.chtb_0305.4	government-organization	Trade Promotion Council
+nw.chtb_0305.4	government-organization	Chamber of Industry and Commerce
+nw.chtb_0305.5	person	Akayev
+nw.chtb_0305.5	country	Kirghizia
+nw.chtb_0305.9	country	Kirghizia
+nw.chtb_0305.11	country	Kirghizia
+nw.chtb_0318.2	game	Far East and South Pacific Region Handicapped Sports Meet
+nw.chtb_0318.6	government-organization	State Welfare Ministry
+nw.chtb_0318.7	game	Far South Sports Meet
+nw.chtb_0318.9	person	Souya
+nw.chtb_0318.9	game	Beijing Far South Sports Meet
+nw.chtb_0318.10	sports-facility	Tokyo Handicapped Integrated Sports Center
+nw.chtb_0318.11	team	Japanese Handicapped Sports Team
+nw.chtb_0318.13	game	Sports Meet
+nw.chtb_0319.1	organization	Sports Association
+nw.chtb_0319.1	game	Far South Sports Meet
+nw.chtb_0322.1	person	Shuifu Tang
+nw.chtb_0322.2	compete-01	Le Tian Cup
+nw.chtb_0322.2	game	Go
+nw.chtb_0322.2	city	Fushan
+nw.chtb_0322.4	game	Go
+nw.chtb_0322.5	person	Hao Chang
+nw.chtb_0322.6	person	Hao Chang
+nw.chtb_0322.8	person	Changhao Li
+nw.chtb_0322.10	person	Changhao Li
+nw.chtb_0322.14	person	Fengzhu Xu
+nw.chtb_0322.15	game	Go
+nw.chtb_0322.16	game	Go
+nw.chtb_0322.16	hotel	Le Tian Hotel
+nw.chtb_0324.2	game	Seventh World Swimming Championship
+nw.chtb_0324.3	person	Lan Wei
+nw.chtb_0324.6	athlete	Bao Lizuo
+nw.chtb_0324.7	person	Si Aiwan
+nw.chtb_0324.15	game	World Championship
+nw.chtb_0325.2	person	Bin Chi
+nw.chtb_0325.2	game	Seventh World Swimming Championships

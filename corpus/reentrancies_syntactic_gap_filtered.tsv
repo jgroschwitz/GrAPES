@@ -1,0 +1,41 @@
+PROXY_LTW_ENG_20080727_0030.15	(g / goal)	:poss	(c2 / country)	assemble-01	:ARG1	N-control		semantic
+DF-200-192400-625_7557.12	(h3 / have-rel-role-91 :ARG2 (w / wife))	:ARG1	(h / he)	(h2 / have-rel-role-91 :ARG2 (g / girl))	:ARG0	coord	since “wife” is second, we care about the coordinated reentrancy here.	
+bolt12_64556_5627.4	(s / sign-02)	:ARG0	(w / we)	appear-01	:ARG1	secondary-predicate		
+PROXY_NYT_ENG_20071115_0274.9	(n2 / notify-01)	:ARG0	(o / organization)	have-03	:ARG0	N-control		semantic
+PROXY_NYT_ENG_20071115_0274.9	(v / violate-01)	:ARG0	(c / company)	notify-01	:ARG1	control		
+NW_XIN_ENG_0194_2007_0704.8	(p2 / promise-01)	:ARG0	(p / person :name (n / name :op1 "Zhao" :op2 "Shucong"))	lead-01	:ARG0	control		
+PROXY_NYT_ENG_20040724_0084.8	(f / file-01)	:ARG0	(a / and)	need-01	:ARG1	control		
+PROXY_XIN_ENG_20040922_0123.12	(p3 / principle)	:poss	(l / law)	norm	:poss	coord		
+bolt12_6455_6562.4	(d3 / deploy-01)	:ARG1	(m / missile)	research-01	:ARG1	coord		
+ENG_DF_000170_20050903_C00020J0V_0001.39	(p2 / place-01)	:ARG0	(w / we)	try-01	:ARG0	control		
+PROXY_XIN_ENG_20021123_0156.4	(b / begin-01)	:ARG0	(c3 / country)	proceed-01	:ARG0	coord		
+PROXY_XIN_ENG_20021123_0156.4	(d2 / discuss-01)	:ARG0	(c3 / country)	begin-01	:ARG0	N-control		semantic
+NW_XIN_ENG_0209_2008_0513.17	(l / lie-07)	:ARG1	(m / member)	die-01	:ARG1	secondary-predicate		
+PROXY_NYT_ENG_20050716_0171.14	(l2 / lead-02)	:ARG0	(p / person)	elect-01	:ARG1	control		
+PROXY_NYT_ENG_20050716_0171.65	(a2 / aid-01)	:ARG0	(p3 / person)	use-01	:ARG0	control		
+bolt12_6455_6568.1	(p2 / protect-01)	:ARG0	(c2 / country :name (n2 / name :op1 "China"))	strengthen-01	:ARG0	coord		
+DF-200-192400-625_6344.5	(r / remark-01)	:ARG0	(s / she)	burst-out-04	:ARG0	coord		
+PROXY_XIN_ENG_20021228_0162.7	(h / have-03)	:ARG0	(p2 / plant)	finance-01	:ARG0	coord		
+PROXY_XIN_ENG_20021228_0162.7	(s3 / site)	:domain	(p2 / plant)	finance-01	:ARG0	coord		
+PROXY_XIN_ENG_20021228_0162.7	(m / monitor-01)	:time	(p3 / previous)	declare-02	:time	coord		
+PROXY_XIN_ENG_20030428_0226.12	(m / maintain-01)	:ARG0	(c / country :name (n / name :op1 "France"))	sell-01	:ARG0	coord		
+DF-200-192400-625_7744.15	(c2 / check-01)	:ARG0	(i / i)	(h / have-03 :ARG1 (t /thing))	:ARG0	coord		
+DF-199-194215-653_0484.28	(e / email-01)	:ARG2	(y / you)	make-02	:ARG0	coord		
+DF-199-194215-653_0484.28	(t / text-01)	:ARG0	(h / he)	email-01	:ARG0	coord		
+DF-199-194215-653_0484.28	(t / text-01)	:ARG2	(y / you)	make-02	:ARG0	coord		
+DF-200-192400-625_7557.14	(s / speak-01)	:ARG0	(i / i)	forbid-01	:ARG0	control		
+DF-200-192400-625_7557.14	(f / forbid-01)	:ARG2	(i / i)	relation-03	:ARG0	coord		
+PROXY_NYT_ENG_20040724_0084.25	(a / act-02)	:ARG0	(g / government-organization)	prompt-02	:ARG2	control		
+PROXY_XIN_ENG_20040429_0189.42	(r / resolve-01)	:ARG0	(l / lead-01)	begin-01	:ARG0	control		
+PROXY_XIN_ENG_20040429_0189.42	(f / focus-01)	:ARG0	(l / lead-01)	begin-01	:ARG0	coord		
+bolt12_64556_5627.2	(f / fight-01)	:ARG0	(y / you)	pledge-01	:ARG0	control		
+bolt12_64556_5627.2	(d2 / defend-01)	:ARG0	(y / you)	fight-01	:ARG0	secondary-predicate		
+nw.chtb_0322.8	(p8 / person :name (n2 / name :op1 "Changhao" :op2 "Li"))	:part-of	(t / team :mod (c / country :name (n / name :op1 “Korea”)))	(p11 / person :name (n6 / name :op1 "Xiaocun" :op2 "Ma"))	:part-of	coord	kept all 6 because of cool senence with “respectively”	
+nw.chtb_0322.8	(p11 / person :name (n6 / name :op1 "Xiaocun" :op2 "Ma"))	:part-of	(t / team :mod (c / country :name (n / name :op1 “China”)))	(p / person :name (n6 / name :op1 "Jing" :op2 "Liu"))	:part-of	coord		
+PROXY_XIN_ENG_20040403_0262.8	(c3 / collect-01)	:ARG0	(f2 / facility)	found-01	:ARG1	coord		
+PROXY_XIN_ENG_20040403_0262.8	(a2 / analyze-01)	:ARG0	(f2 / facility)	found-01	:ARG1	coord		
+PROXY_LTW_ENG_20081115_0076.24	(m2 / master-01)	:ARG0	(c / country :name (n / name :op1 "Iran"))	stop-03	:ARG1	control		
+PROXY_LTW_ENG_20081115_0076.24	(d3 / deliver-01)	:ARG1	(w / weapon)	manufacture-01	:ARG1	coord		
+PROXY_XIN_ENG_20021020_0012.4	(w / wound-01)	:ARG0	(g / guerrilla)	kill-01	:ARG0	coord		
+PROXY_XIN_ENG_20021020_0012.4	(w / wound-01)	:ARG1	(p / policeman)	kill-01	:ARG1	coord		
+PROXY_NYT_ENG_20071115_0274.14	(c6 / carry-out-03)	:ARG0	(a2 / and)	prevent-01	:ARG1	control		

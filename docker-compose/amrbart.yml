@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  mycontainer:
+    image: jgroschwitz/amrbart:amr30
+    build: .
+    volumes:
+      - '/c/Users/jonas/Documents/Work/GitHub/amr-challenge:/mounted'  # may need to add/remove /mnt/ in the beginning
+    command: bash -c "ls /mounted"
+    # command: bash -c "cd fine-tune && conda run -n amrbart bash inference-amr.sh ../AMRParsing-model/ /mounted/corpus/pp_attachment_amrbart_input.jsonl && cp -r /amrbart/fine-tune/outputs/Infer-examples-AMRBART-large-AMRParing-bsz16-lr-1e-5-UnifiedInp /mounted/amrbart-output/pp_attachment && yes yes | conda run -n amrbart bash inference-amr.sh ../AMRParsing-model/ /mounted/corpus/long_lists_short_amrbart_input.jsonl && cp -r /amrbart/fine-tune/outputs /mounted/amrbart-output/outputs"
+    # bash -c "echo 'testing' && cd fine-tune && conda run -n amrbart bash inference-amr.sh ../AMRParsing-model/ /mounted/corpus/long_lists_short_amrbart_input.jsonl && cp -r /amrbart/fine-tune/outputs /mounted/amrbart-output/outputs"

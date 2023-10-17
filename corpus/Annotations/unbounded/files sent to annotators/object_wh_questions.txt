@@ -1,0 +1,76 @@
+Object wh-questions
+Choose about 15 of these
+*Special instructions*: Please follow AMR guidelines for which node is the source. Some have a function word marked as the head, but I suspect most of those aren't right for AMR. e.g. for the first one, the head is probably "stand" or "stand-for". If it makes sense to do so, please also report the dependency length accordingly. In the first example, that would be 5, not 6.
+
+xx00.mrg-oq-2
+What do the initials CPR stand for ?
+pobj for_6 What_0
+
+xx00.mrg-oq-5
+What does target heart rate mean ?
+dobj mean_5 What_0
+
+xx00.mrg-oq-6
+What is the text of an opera called ?
+dobj called_7 What_0
+
+xx00.mrg-oq-7
+What did Peter Minuit buy for the equivalent of $ 24.00 ?
+dobj buy_4 What_0
+
+xx00.mrg-oq-11
+How much vitamin C should you take in a day ?
+dobj take_6 C_3
+
+xx00.mrg-oq-12
+What did Edward Binney and Howard Smith invent in 1903 ?
+dobj invent_7 What_0
+
+xx00.mrg-oq-17
+What state does Martha Stewart live in ?
+pobj in_6 state_1
+
+xx00.mrg-oq-19
+What countries has the IFC financed projects in ?
+pobj in_7 countries_1
+
+xx00.mrg-oq-21
+What did Sherlock Holmes call the street gang that helped him crack cases ?
+dobj call_4 What_0
+
+xx00.mrg-oq-23
+What is a group of antelope called ?
+dobj called_6 What_0
+
+xx00.mrg-oq-25
+What award did Sterling North's book " Rascal " win in 1963 ?
+dobj win_9 award_1
+
+xx00.mrg-oq-27
+What city in Louisiana was Britney Spears born in ?
+pobj in_8 city_1
+
+xx00.mrg-oq-36
+What schools did he attend ?
+dobj attend_4 schools_1
+
+xx00.mrg-oq-40
+Where is the tallest roller coaster located ?
+dobj located_6 Where_0
+
+xx00.mrg-oq-44
+What did Caesar say before he died ?
+dobj say_3 What_0
+
+xx00.mrg-oq-48
+What flower did Vincent Van Gogh paint ?
+dobj paint_6 flower_1
+
+xx00.mrg-oq-63
+What Cuban dictator did Fidel Castro force out of power in 1958 ?
+dobj force_6 dictator_2
+
+xx00.mrg-oq-64
+What percent of the nation 's cheese does Wisconsin produce ?
+dobj produce_9 percent_1
+

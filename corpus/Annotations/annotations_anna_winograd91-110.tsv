@@ -1,0 +1,291 @@
+﻿#	Sentence	Annotation	Comments				
+1	Anne gave birth to a daughter last month. She is a very charming woman.	"(m / multi-sentence
+      :snt1 (b / bear-02
+            :ARG0 (p / person :name (n / name :op1 ""Anne""))
+            :ARG1 (p2 / person
+                  :ARG0-of (h / have-rel-role-91
+                        :ARG1 p
+                        :ARG2 (d / daughter)))
+            :time (m2 / month
+                  :mod (l / last)))
+      :snt2 (w / woman
+            :domain p
+            :ARG0-of (c / charm-01
+                  :degree (v / very))))"					
+2	Anne gave birth to a daughter last month. She is a very charming baby.	"(m / multi-sentence
+      :snt1 (b / bear-02
+            :ARG0 (p / person :name (n / name :op1 ""Anne""))
+            :ARG1 (p2 / person
+                  :ARG0-of (h / have-rel-role-91
+                        :ARG1 p
+                        :ARG2 (d / daughter)))
+            :time (m2 / month
+                  :mod (l / last)))
+      :snt2 (b2 / baby
+            :domain p2
+            :ARG0-of (c / charm-01
+                  :degree (v / very))))"					
+3	Alice tried frantically to stop her daughter from chatting at the party, leaving us to wonder why she was behaving so strangely.	"(t / try-01
+      :ARG0 (p / person :name (n / name :op1 ""Alice""))
+      :ARG1 (s / stop-03
+            :ARG0 p
+            :ARG1 (p2 / person
+                  :ARG0-of (h / have-rel-role-91
+                        :ARG1 p
+                        :ARG2 (d / daughter)))
+            :ARG2 (c / chat-01
+                  :location (p3 / party)))
+      :ARG0-of (l / leave-13
+            :ARG1 (w / wonder-01
+                  :ARG0 (w2 / we)
+                  :ARG1 (t2 / thing
+                        :ARG0-of (c2 / cause-01
+                              :ARG1 (b / behave-01
+                                    :ARG0 p
+                                    :ARG1 (s2 / strange))))))
+      :manner (f / frantic))"					
+4	Alice tried frantically to stop her daughter from barking at the party, leaving us to wonder why she was behaving so strangely.	"(t / try-01
+      :ARG0 (p / person :name (n / name :op1 ""Alice""))
+      :ARG1 (s / stop-03
+            :ARG0 p
+            :ARG1 (p2 / person
+                  :ARG0-of (h / have-rel-role-91
+                        :ARG1 p
+                        :ARG2 (d / daughter)))
+            :ARG2 (b2 / bark-01
+                  :location (p3 / party)))
+      :ARG0-of (l / leave-13
+            :ARG1 (w / wonder-01
+                  :ARG0 (w2 / we)
+                  :ARG1 (t2 / thing
+                        :ARG0-of (c2 / cause-01
+                              :ARG1 (b / behave-01
+                                    :ARG0 p2
+                                    :ARG1 (s2 / strange))))))
+      :manner (f / frantic))"					
+5	I saw Jim yelling at some guy in a military uniform with a huge red beard. I don't know why he was, but he looked very unhappy.	"(m / multi-sentence
+      :snt1 (s / see-01
+            :ARG0 (i / i)
+            :ARG1 (y / yell-01
+                  :ARG0 (p / person :name (n / name :op1 ""Jim""))
+                  :ARG2 (g / guy
+                        :mod (s2 / some)
+                        :prep-in (u / uniform
+                              :mod (m2 / military))
+                        :ARG0-of (h / have-03
+                              :ARG1 (b / beard
+                                    :ARG1-of (r / red-02)
+                                    :mod (h2 / huge))))))
+      :snt2 (c / contrast-01
+            :ARG1 (k / know-01 :polarity -
+                  :ARG0 i
+                  :ARG1 (t / thing
+                        :ARG0-of (c2 / cause-01
+                              :ARG1 y)))
+            :ARG2 (l / look-02
+                  :ARG0 p
+                  :ARG1 (h3 / happy-01 :polarity -
+                        :degree (v / very)))))"	"contrast-01 or :concession for ""but""?"				
+6	I saw Jim yelling at some guy in a military uniform with a huge red beard. I don't know who he was, but he looked very unhappy.	"(m / multi-sentence
+      :snt1 (s / see-01
+            :ARG0 (i / i)
+            :ARG1 (y / yell-01
+                  :ARG0 (p / person :name (n / name :op1 ""Jim""))
+                  :ARG2 (g / guy
+                        :mod (s2 / some)
+                        :prep-in (u / uniform
+                              :mod (m2 / military))
+                        :ARG0-of (h / have-03
+                              :ARG1 (b / beard
+                                    :ARG1-of (r / red-02)
+                                    :mod (h2 / huge))))))
+      :snt2 (c / contrast-01
+            :ARG1 (k / know-01 :polarity -
+                  :ARG0 i
+                  :ARG1 (p2 / person
+                        :domain g))
+            :ARG2 (l / look-02
+                  :ARG0 g
+                  :ARG1 (h3 / happy-01 :polarity -
+                        :degree (v / very)))))"	"contrast-01 or :concession for ""but""?"				
+7	The fish ate the worm. It was hungry.	"(m / multi-sentence
+      :snt1 (e / eat-01
+            :ARG0 (f / fish)
+            :ARG1 (w / worm))
+      :snt2 (h / hunger-01
+            :ARG0 f))"					
+8	The fish ate the worm. It was tasty.	"(m / multi-sentence
+      :snt1 (e / eat-01
+            :ARG0 (f / fish)
+            :ARG1 (w / worm))
+      :snt2 (t / tasty
+            :domain w))"					
+9	I was trying to open the lock with the key, but someone had filled the keyhole with chewing gum, and I couldn't get it in.	"(c / contrast-01
+      :ARG1 (t / try-01
+            :ARG0 (i / i)
+            :ARG1 (o / open-01
+                  :ARG1 (l / lock)
+                  :ARG2 (k / key)))
+      :ARG2 (a / and
+            :op1 (f / fill-01
+                  :ARG0 (s / someone)
+                  :ARG1 (k2 / keyhole)
+                  :ARG2 (g / gum
+                        :ARG1-of (c2 / chew-01)))
+            :op2 (p / possible-01 :polarity -
+                  :ARG1 (g2 / get-05
+                        :ARG0 i
+                        :ARG1 k
+                        :ARG2 (i2 / inside)))))"	"Reference for ""inside""from corpus: ""If you still have troubles, just go see the piercer and they'll put it in for you"""				
+10	I was trying to open the lock with the key, but someone had filled the keyhole with chewing gum, and I couldn't get it out.	"(c / contrast-01
+      :ARG1 (t / try-01
+            :ARG0 (i / i)
+            :ARG1 (o / open-01
+                  :ARG1 (l / lock)
+                  :ARG2 (k / key)))
+      :ARG2 (a / and
+            :op1 (f / fill-01
+                  :ARG0 (s / someone)
+                  :ARG1 (k2 / keyhole)
+                  :ARG2 (g / gum
+                        :ARG1-of (c2 / chew-01)))
+            :op2 (p / possible-01 :polarity -
+                  :ARG1 (g2 / get-05
+                        :ARG0 i
+                        :ARG1 g
+                        :ARG2 (o2 / out-06)))))"					
+11	The dog chased the cat, which ran up a tree. It waited at the bottom.	"(m / multi-sentence
+      :snt1 (c / chase-01
+            :ARG0 (d / dog)
+            :ARG1 (c2 / cat
+                  :ARG0-of (r / run-02
+                        :direction (u / up
+                              :op1 (t / tree)))))
+      :snt2 (w / wait-01
+            :ARG1 d
+            :location (b / bottom)))"					
+12	The dog chased the cat, which ran up a tree. It waited at the top.	"(m / multi-sentence
+      :snt1 (c / chase-01
+            :ARG0 (d / dog)
+            :ARG1 (c2 / cat
+                  :ARG0-of (r / run-02
+                        :direction (u / up
+                              :op1 (t / tree)))))
+      :snt2 (w / wait-01
+            :ARG1 c2
+            :location (t2 / top)))"					
+13	In the storm, the tree fell down and crashed through the roof of my house. Now, I have to get it removed.	"(m / multi-sentence
+      :snt1 (a / and
+            :op1 (f / fall-01
+                  :ARG1 (t / tree)
+                  :direction (d / down))
+            :op2 (c / crash-01
+                  :direction (t2 / through
+                        :op1 (r / roof
+                              :part-of (h / house
+                                    :poss (i / i)))))
+            :time (s / storm-01))
+      :snt2 (o / obligate-01
+            :ARG2 (g / get-04
+                  :ARG0 i
+                  :ARG1 (r2 / remove-01
+                        :ARG1 t))
+            :time (n / now)))"	"Reference for ""get it removed"" from the corpus: ""Perhaps go and see your doctor, and see if there's any way you can get your deadlines extended to try and ease the pressure a bit?"""				
+14	In the storm, the tree fell down and crashed through the roof of my house. Now, I have to get it repaired.	"(m / multi-sentence
+      :snt1 (a / and
+            :op1 (f / fall-01
+                  :ARG1 (t / tree)
+                  :direction (d / down))
+            :op2 (c / crash-01
+                  :direction (t2 / through
+                        :op1 (r / roof
+                              :part-of (h / house
+                                    :poss (i / i)))))
+            :time (s / storm-01))
+      :snt2 (o / obligate-01
+            :ARG2 (g / get-04
+                  :ARG0 i
+                  :ARG1 (r2 / repair-01
+                        :ARG1 r))
+            :time (n / now)))"					
+15	The customer walked into the bank and stabbed one of the tellers. He was immediately taken to the police station.	"(m / multi-sentence
+      :snt1 (a / and
+            :op1 (w / walk-01
+                  :ARG0 (c / customer)
+                  :direction (b / bank))
+            :op2 (s / stab-01
+                  :ARG0 c
+                  :ARG1 (t2 / teller :quant 1
+                        :ARG1-of (i2 / include-91
+                              :ARG2 (t3 / teller)))))
+      :snt2 (t / take-01
+            :ARG1 c
+            :ARG3 (s2 / station
+                  :mod (p / police))
+            :time (i3 / immediate)))"	"search in corpus for ""one of the"": different solutions - ""I've written about one of the victims a little over three years ago"" vs. ""What I don't understand is in the film Hot Fuzz, one of the detectives, who was white, called Nick Frost, who is also white, a monkey."""				
+16	The customer walked into the bank and stabbed one of the tellers. He was immediately taken to the hospital.	"(m / multi-sentence
+      :snt1 (a / and
+            :op1 (w / walk-01
+                  :ARG0 (c / customer)
+                  :direction (b / bank))
+            :op2 (s / stab-01
+                  :ARG0 c
+                  :ARG1 (t2 / teller :quant 1
+                        :ARG1-of (i2 / include-91
+                              :ARG2 (t3 / teller)))))
+      :snt2 (t / take-01
+            :ARG1 t2
+            :ARG3 (h / hospital)
+            :time (i3 / immediate)))"					
+17	John was doing research in the library when he heard a man humming and whistling. He was very annoyed.	"(m / multi-sentence
+      :snt1 (h / hear-01
+            :ARG0 (p / person :name (n / name :op1 ""John""))
+            :ARG1 (a2 / and
+                  :op1 (h2 / hum-02)
+                  :op2 (w / whistle-01))
+            :ARG2 (m2 / man)
+            :time (d / do-02
+                  :ARG0 p
+                  :ARG1 (r / research-01)
+                  :location (l / library)))
+      :snt2 (a / annoy-01
+            :ARG1 p
+            :degree (v / very)))"					
+18	John was doing research in the library when he heard a man humming and whistling. He was very annoying.	"(m / multi-sentence
+      :snt1 (h / hear-01
+            :ARG0 (p / person :name (n / name :op1 ""John""))
+            :ARG1 (a2 / and
+                  :op1 (h2 / hum-02)
+                  :op2 (w / whistle-01))
+            :ARG2 (m2 / man)
+            :time (d / do-02
+                  :ARG0 p
+                  :ARG1 (r / research-01)
+                  :location (l / library)))
+      :snt2 (a / annoy-01
+            :ARG0 m2
+            :degree (v / very)))"					
+19	John was jogging through the park when he saw a man juggling watermelons. He was very impressed.	"(m / multi-sentence
+      :snt1 (s / see-01
+            :ARG0 (p / person :name (n / name :op1 ""John""))
+            :ARG1 (m2 / man)
+            :ARG2 (j2 / juggle-01
+                  :ARG1 (w / watermelon))
+            :time (j / jog-01
+                  :ARG0 p
+                  :ARG1 (p2 / park)))
+      :snt2 (i2 / impress-01
+            :ARG1 p
+            :degree (v / very)))"	it feels wrong when the plural of watermelons is not represented in any way				
+20	John was jogging through the park when he saw a man juggling watermelons. He was very impressive.	"(m / multi-sentence
+      :snt1 (s / see-01
+            :ARG0 (p / person :name (n / name :op1 ""John""))
+            :ARG1 (m2 / man)
+            :ARG2 (j2 / juggle-01
+                  :ARG1 (w / watermelon))
+            :time (j / jog-01
+                  :ARG0 p
+                  :ARG1 (p2 / park)))
+      :snt2 (i2 / impress-01
+            :ARG0 m2
+            :degree (v / very)))"					

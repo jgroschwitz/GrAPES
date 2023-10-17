@@ -1,0 +1,44 @@
+Subject Relative Clauses
+Choose about 8 of these. (We already have 7) 
+
+wsj_0060.mrg-sr-3
+Viacom's move comes as the syndication market is being flooded with situation comedies that are still running on the networks .
+nsubj running_17 comedies_13
+
+wsj_0062.mrg-sr-3
+The first two issues featured ads from only a handful of big advertisers , including General Electric and Adolph Coors , but the majority were from companies like Waste Management Inc. and Bumkins International , firms that don't spend much money advertising and can't be relied on to support a magazine over the long haul .
+nsubj spend_38 firms_35
+nsubjpass relied_45 firms_35
+
+wsj_0062.mrg-sr-4
+Billings weren't disclosed for the small account , which had been serviced at Young & Rubicam , New York .
+nsubjpass serviced_12 account_7
+
+wsj_0064.mrg-sr-1
+In September , the department had said it will require trucks and minivans to be equipped with the same front-seat headrests that have long been required on passenger cars .
+nsubjpass required_25 headrests_20
+
+wsj_0067.mrg-sr-1
+Richard Driscoll , vice chairman of Bank of New England , told the Dow Jones Professional Investor Report , " Certainly , there are those outside the region who think of us prospectively as a good partner . "
+nsubj think_29 those_24
+
+wsj_0067.mrg-sr-2
+We have , and I'm sure others have , considered what our options are , and we've had conversations with people who in the future might prove to be interesting partners .
+nsubj prove_28 people_22
+
+wsj_0034.mrg-sr-2
+The surge brings to nearly 50 the number of country funds that are or soon will be listed in New York or London .
+nsubjpass listed_17 funds_10
+
+wsj_0034.mrg-sr-3
+It 's probably worth paying a premium for funds that invest in markets that are partially closed to foreign investors , such as South Korea , some specialists say .
+nsubj invest_10 funds_8
+nsubj closed_16 markets_12
+
+wsj_0034.mrg-sr-4
+And several new funds that aren't even fully invested yet have jumped to trade at big premiums .
+nsubj invested_8 funds_3
+
+wsj_0071.mrg-sr-2
+Wine auctions have almost exhausted the limited supply of those wines , Mr. Shapiro continued : " We've seen a dramatic decrease in demand for wines from the '40s and '50s , which go for $ 300 to $ 400 a bottle . "
+nsubj go_34 wines_26

@@ -1,0 +1,31 @@
+ENG_NA_020001_20161020_G0023FSVS_0001.5	(w / wait-01)	:ARG2	(y / you)	thank-01	:ARG1	coref	1st or 2nd person	
+DF-200-192400-625_6304.11	(h / hit-02)	:ARG0	(i / i)	neck	:part-of	coref	“my” is the first overt mention of “i”	
+DF-200-192400-625_6304.11	(d / depress-01)	:ARG1	(i / i)	neck	:part-of	coref		
+DF-200-192400-625_6304.11	(f / feel-01)	:ARG0	(i / i)	neck	:part-of	coref		
+bolt12_6455_6568.1	(d2 / defend-01)	:ARG0	(w / we)	fight-01	:ARG0	self	“self-defence”: notice “Chidi tutored Eleanor in self-defence” is ambiguous	
+bolt12_6455_6568.1	(t / territory)	:poss	(w / we)	fight-01	:ARG0	coref		
+DF-200-192400-625_6344.5	(b / be-located-at-91)	:ARG1	(i / i)	cope-01	:ARG0	coref		
+bolt12_9145_5531.4	(i / imagine-01)	:ARG0	(w / we)	seem-01	:ARG2	coref		
+DF-200-192400-625_6344.13	(s / selfish)	:domain	(i / i)	think-01	:ARG0	coref		
+DF-200-192400-625_7557.5	(c / cut-01)	:ARG1	(i / i)	cut-01	:ARG0	self	condition A. Note that the prereq node is the same as the recall one	
+DF-200-192400-625_7557.5	(r / rob-01)	:ARG0	(i / i)	cut-01	:ARG0	coref		
+DF-200-192400-625_7806.10	(t2 / tense-01)	:ARG1	(y / you)	anxiety	:poss	coref	note the actual subject of parent “try” is “I” not “you”, so we go for the first overt “you”, which is “ur”	
+DF-200-192400-625_7806.10	(p2 / panic-01)	:ARG1	(y / you)	tense-01	:ARG1	coref		
+DF-200-192400-625_7744.15	(w / way)	:poss	(i / i)	do-02	:ARG0	coref		
+DF-200-192400-625_7744.15	(h / have-03 :ARG1 (t / item))	:ARG0	(i / i)	know-01	:ARG0	coref		
+DF-200-192400-625_7744.15	(k / know-01)	:ARG0	(i / i)	(h / have-03 :ARG1 (t /thing))	:ARG0	coref	The secondary parent edge (have-03 :ARG0 i) does not exist in the gold graph, but should, so we still use it here.	
+bolt12_6455_6561.16	(c2 / challenge-01)	:ARG1	(w / we)	beset-01	:ARG1	coref		
+ENG_NA_020001_20161020_G0023FSWH_0001.6	(g / get-02)	:ARG0	(w / we)	need-01	:ARG0	coref		
+ENG_DF_000170_20050903_C00020J0V_0001.6	(g / get-01)	:ARG0	(i / i)	live-01	:ARG0	coref		
+ENG_NA_020001_20161020_G0023FSUW_0001.4	(n2 / need-01)	:ARG0	(i / i)	be-located-at-91	:ARG1	coref		
+DF-200-192400-625_7557.3	(l / leg)	:part-of	(i2 / i)	have-03	:ARG0	coref		
+DF-200-192400-625_7557.3	(s2 / slit-01)	:ARG0	(i2 / i)	have-03	:ARG0	coref		
+DF-200-192400-625_7557.3	(h2 / have-rel-role-91)	:ARG1	(i2 / i)	have-03	:ARG0	coref		
+DF-199-194215-653_0484.6	(n / need-01)	:ARG1	(i / i)	want-01	:ARG0	coref		
+DF-200-192400-625_7806.2	(t4 / talk-01)	:ARG0	(i / i)	find-01	:ARG0	coref		
+ENG_NA_020001_20161020_G0023FSWD_0001.4	(h / have-03)	:ARG0	(w / we)	be-located-at-91	:ARG1	coref		
+ENG_NA_020001_20161020_G0023FSWD_0001.4	(n / need-01)	:ARG0	(w / we)	be-located-at-91	:ARG1	coref		
+DF-200-192400-625_7806.5	(h2 / have-rel-role-91)	:ARG1	(i / i)	speak-01	:ARG0	coref		
+DF-200-192400-625_7806.5	(r / recommend-01)	:ARG2	(i / i)	speak-01	:ARG0	coref		
+DF-200-192400-625_7557.18	(m2 / mean-01)	:ARG3	(i / i)	love-01	:ARG0	coref	using this as the first refernence, following the AMR annotation	
+DF-200-192400-625_7557.18	(d2 / do-02)	:ARG0	(i / i)	love-01	:ARG0	coref		

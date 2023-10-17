@@ -1,0 +1,8 @@
+ID	sentence	source	edge	target	distance	dependency label	comment	category
+cf21.mrg-ofr-1	We have learned from earthquakes much of what we now know about the earth's interior , for they send waves through the earth which emerge with information about the materials through which they have traveled .	(k / know-01)	:ARG1	(t / thing)	3	dobj		object free relative
+cf23.mrg-ofr-1	The thing to lose sleep over is what people , having concluded that we are weaker than we are , are likely to do about it .	(d / do-02)	:ARG1	(t / thing)	16	dobj		object free relative
+cf06.mrg-ofr-1	Well , whatever you have , that 's it ! !	(h / have-03)	:ARG1	(w / whatever)	2	dobj		object free relative
+cf09.mrg-ofr-1	Of course , her benevolence was limited to those who could afford it , but then there is a limit to what one person can do .	(d / do-02)	:ARG1	(t / thing)	4	dobj		object free relative
+cg21.mrg-ofr-3	What I am here to do is to report on the gyrations of the struggle -- a struggle that amounts to self-redefinition -- to see if we can predict its future course .	(d / do-02)	:ARG1	(t / thing)	5	dobj		object free relative
+cg21.mrg-ofr-4	"Only Walter Lippman envisioned the possibility of our having "" outlived most of what we used to regard as the program of our national purposes '' ."	(r / regard-01)	:ARG1	(t / thing)	4	dobj		object free relative
+ck04.mrg-ofr-1	The audience did not think much of the new pastor , and what the new pastor thought of the audience he did not dare at the time to say .	(t / think-01)	:ARG1	(t / thing)	4	dobj		object free relative

@@ -1,0 +1,376 @@
+# Prepositional Phrase attachment ambiguities. Created by a grammar.
+
+# ::snt Mary abandoned her ambitions in spring.
+# ::tree templateGiveUpAmbitionInTimePeriod(mary,abandon,ambition,spring)
+# ::id give_up_in_0
+(u_1595 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / ambition  :ARG1-of u_1595))  :time (d / date-entity  :season (s35 / spring)))
+
+# ::snt My sister abandoned her ambitions in spring.
+# ::tree templateGiveUpAmbitionInTimePeriod(my_sister,abandon,ambition,spring)
+# ::id give_up_in_1
+(u_1597 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :ARG1-of u_1597))  :time (d / date-entity  :season (s35 / spring)))
+
+# ::snt She abandoned her aspirations in the 60s.
+# ::tree templateGiveUpAmbitionInTimePeriod(she,abandon,aspiration,the_60s)
+# ::id give_up_in_2
+(u_1599 / abandon-01  :ARG0 (p / she  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1599)))  :time (d / date-entity  :decade 1960))
+
+# ::snt The astronaut abandoned her aspirations in spring.
+# ::tree templateGiveUpAmbitionInTimePeriod(astronaut,abandon,aspiration,spring)
+# ::id give_up_in_3
+(u_1601 / abandon-01  :ARG0 (p / astronaut  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1601)))  :time (d / date-entity  :season (s35 / spring)))
+
+# ::snt My sister abandoned her aspirations in spring.
+# ::tree templateGiveUpAmbitionInTimePeriod(my_sister,abandon,aspiration,spring)
+# ::id give_up_in_4
+(u_1603 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1603)))  :time (d / date-entity  :season (s35 / spring)))
+
+# ::snt She gave up her aspirations in spring.
+# ::tree templateGiveUpAmbitionInTimePeriod(she,give_up,aspiration,spring)
+# ::id give_up_in_5
+(u_1605 / give-up-07  :ARG0 (p / she  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1605)))  :time (d / date-entity  :season (s35 / spring)))
+
+# ::snt Mary abandoned her ambitions in the 60s.
+# ::tree templateGiveUpAmbitionInTimePeriod(mary,abandon,ambition,the_60s)
+# ::id give_up_in_6
+(u_1609 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / ambition  :ARG1-of u_1609))  :time (d / date-entity  :decade 1960))
+
+# ::snt Mary gave up her aspirations in the 60s.
+# ::tree templateGiveUpAmbitionInTimePeriod(mary,give_up,aspiration,the_60s)
+# ::id give_up_in_7
+(u_1613 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1613)))  :time (d / date-entity  :decade 1960))
+
+# ::snt She gave up her career in 2012.
+# ::tree templateGiveUpAmbitionInTimePeriod(she,give_up,career,year2012)
+# ::id give_up_in_8
+(u_1615 / give-up-07  :ARG0 (p / she  :poss-of (r / career  :ARG1-of u_1615))  :time (d / date-entity  :year 2012))
+
+# ::snt My sister gave up her ambitions in 2012.
+# ::tree templateGiveUpAmbitionInTimePeriod(my_sister,give_up,ambition,year2012)
+# ::id give_up_in_9
+(u_1617 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :ARG1-of u_1617))  :time (d / date-entity  :year 2012))
+
+# ::snt The astronaut abandoned her career in 2012.
+# ::tree templateGiveUpAmbitionInTimePeriod(astronaut,abandon,career,year2012)
+# ::id give_up_in_10
+(u_1619 / abandon-01  :ARG0 (p / astronaut  :poss-of (r / career  :ARG1-of u_1619))  :time (d / date-entity  :year 2012))
+
+# ::snt Mary abandoned her ambitions in 2012.
+# ::tree templateGiveUpAmbitionInTimePeriod(mary,abandon,ambition,year2012)
+# ::id give_up_in_11
+(u_1623 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / ambition  :ARG1-of u_1623))  :time (d / date-entity  :year 2012))
+
+# ::snt She gave up her ambitions in July.
+# ::tree templateGiveUpAmbitionInTimePeriod(she,give_up,ambition,july)
+# ::id give_up_in_12
+(u_1625 / give-up-07  :ARG0 (p / she  :poss-of (r / ambition  :ARG1-of u_1625))  :time (d / date-entity  :month 7))
+
+# ::snt Mary abandoned her career in July.
+# ::tree templateGiveUpAmbitionInTimePeriod(mary,abandon,career,july)
+# ::id give_up_in_13
+(u_1629 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / career  :ARG1-of u_1629))  :time (d / date-entity  :month 7))
+
+# ::snt The astronaut abandoned her ambitions in spring.
+# ::tree templateGiveUpAmbitionInTimePeriod(astronaut,abandon,ambition,spring)
+# ::id give_up_in_14
+(u_1631 / abandon-01  :ARG0 (p / astronaut  :poss-of (r / ambition  :ARG1-of u_1631))  :time (d / date-entity  :season (s35 / spring)))
+
+# ::snt She gave up her ambitions in the 60s.
+# ::tree templateGiveUpAmbitionInTimePeriod(she,give_up,ambition,the_60s)
+# ::id give_up_in_15
+(u_1633 / give-up-07  :ARG0 (p / she  :poss-of (r / ambition  :ARG1-of u_1633))  :time (d / date-entity  :decade 1960))
+
+# ::snt My sister abandoned her aspirations in the 60s.
+# ::tree templateGiveUpAmbitionInTimePeriod(my_sister,abandon,aspiration,the_60s)
+# ::id give_up_in_16
+(u_1635 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1635)))  :time (d / date-entity  :decade 1960))
+
+# ::snt My sister abandoned her career in July.
+# ::tree templateGiveUpAmbitionInTimePeriod(my_sister,abandon,career,july)
+# ::id give_up_in_17
+(u_1637 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / career  :ARG1-of u_1637))  :time (d / date-entity  :month 7))
+
+# ::snt Mary abandoned her career in 2012.
+# ::tree templateGiveUpAmbitionInTimePeriod(mary,abandon,career,year2012)
+# ::id give_up_in_18
+(u_1641 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / career  :ARG1-of u_1641))  :time (d / date-entity  :year 2012))
+
+# ::snt My sister gave up her career in July.
+# ::tree templateGiveUpAmbitionInTimePeriod(my_sister,give_up,career,july)
+# ::id give_up_in_19
+(u_1643 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / career  :ARG1-of u_1643))  :time (d / date-entity  :month 7))
+
+# ::snt She abandoned her career in spring.
+# ::tree templateGiveUpAmbitionInTimePeriod(she,abandon,career,spring)
+# ::id give_up_in_20
+(u_1645 / abandon-01  :ARG0 (p / she  :poss-of (r / career  :ARG1-of u_1645))  :time (d / date-entity  :season (s35 / spring)))
+
+# ::snt Mary gave up her aspirations in July.
+# ::tree templateGiveUpAmbitionInTimePeriod(mary,give_up,aspiration,july)
+# ::id give_up_in_21
+(u_1649 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1649)))  :time (d / date-entity  :month 7))
+
+# ::snt She gave up her career in spring.
+# ::tree templateGiveUpAmbitionInTimePeriod(she,give_up,career,spring)
+# ::id give_up_in_22
+(u_1651 / give-up-07  :ARG0 (p / she  :poss-of (r / career  :ARG1-of u_1651))  :time (d / date-entity  :season (s35 / spring)))
+
+# ::snt She gave up her career in July.
+# ::tree templateGiveUpAmbitionInTimePeriod(she,give_up,career,july)
+# ::id give_up_in_23
+(u_1653 / give-up-07  :ARG0 (p / she  :poss-of (r / career  :ARG1-of u_1653))  :time (d / date-entity  :month 7))
+
+# ::snt My sister abandoned her ambitions in the 60s.
+# ::tree templateGiveUpAmbitionInTimePeriod(my_sister,abandon,ambition,the_60s)
+# ::id give_up_in_24
+(u_1655 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :ARG1-of u_1655))  :time (d / date-entity  :decade 1960))
+
+# ::snt My sister gave up her ambitions in theater.
+# ::tree templateGiveUpAmbitionInField(my_sister,give_up,ambition,theater)
+# ::id give_up_in_25
+(u_1656 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :topic (u_1657 / theater)  :ARG1-of u_1656)))
+
+# ::snt Mary gave up her career in theater.
+# ::tree templateGiveUpAmbitionInField(mary,give_up,career,theater)
+# ::id give_up_in_26
+(u_1658 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / career  :topic (u_1661 / theater)  :ARG1-of u_1658)))
+
+# ::snt She gave up her career in mathematics.
+# ::tree templateGiveUpAmbitionInField(she,give_up,career,mathematics)
+# ::id give_up_in_27
+(u_1662 / give-up-07  :ARG0 (p / she  :poss-of (r / career  :topic (u_1663 / mathematics)  :ARG1-of u_1662)))
+
+# ::snt My sister gave up her ambitions in mathematics.
+# ::tree templateGiveUpAmbitionInField(my_sister,give_up,ambition,mathematics)
+# ::id give_up_in_28
+(u_1664 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :topic (u_1665 / mathematics)  :ARG1-of u_1664)))
+
+# ::snt My sister gave up her career in mathematics.
+# ::tree templateGiveUpAmbitionInField(my_sister,give_up,career,mathematics)
+# ::id give_up_in_29
+(u_1666 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / career  :topic (u_1667 / mathematics)  :ARG1-of u_1666)))
+
+# ::snt The astronaut abandoned her aspirations in theater.
+# ::tree templateGiveUpAmbitionInField(astronaut,abandon,aspiration,theater)
+# ::id give_up_in_30
+(u_1668 / abandon-01  :ARG0 (p / astronaut  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1669 / theater)  :ARG1-of u_1668))))
+
+# ::snt The astronaut abandoned her aspirations in mathematics.
+# ::tree templateGiveUpAmbitionInField(astronaut,abandon,aspiration,mathematics)
+# ::id give_up_in_31
+(u_1670 / abandon-01  :ARG0 (p / astronaut  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1671 / mathematics)  :ARG1-of u_1670))))
+
+# ::snt My sister abandoned her career in theater.
+# ::tree templateGiveUpAmbitionInField(my_sister,abandon,career,theater)
+# ::id give_up_in_32
+(u_1672 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / career  :topic (u_1673 / theater)  :ARG1-of u_1672)))
+
+# ::snt My sister gave up her aspirations in theater.
+# ::tree templateGiveUpAmbitionInField(my_sister,give_up,aspiration,theater)
+# ::id give_up_in_33
+(u_1674 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1675 / theater)  :ARG1-of u_1674))))
+
+# ::snt My sister abandoned her ambitions in mathematics.
+# ::tree templateGiveUpAmbitionInField(my_sister,abandon,ambition,mathematics)
+# ::id give_up_in_34
+(u_1676 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :topic (u_1677 / mathematics)  :ARG1-of u_1676)))
+
+# ::snt Mary abandoned her aspirations in theater.
+# ::tree templateGiveUpAmbitionInField(mary,abandon,aspiration,theater)
+# ::id give_up_in_35
+(u_1678 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1681 / theater)  :ARG1-of u_1678))))
+
+# ::snt My sister abandoned her career in mathematics.
+# ::tree templateGiveUpAmbitionInField(my_sister,abandon,career,mathematics)
+# ::id give_up_in_36
+(u_1682 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / career  :topic (u_1683 / mathematics)  :ARG1-of u_1682)))
+
+# ::snt The astronaut gave up her aspirations in crime.
+# ::tree templateGiveUpAmbitionInField(astronaut,give_up,aspiration,crime)
+# ::id give_up_in_37
+(u_1684 / give-up-07  :ARG0 (p / astronaut  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1685 / crime-02)  :ARG1-of u_1684))))
+
+# ::snt She abandoned her aspirations in theater.
+# ::tree templateGiveUpAmbitionInField(she,abandon,aspiration,theater)
+# ::id give_up_in_38
+(u_1686 / abandon-01  :ARG0 (p / she  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1687 / theater)  :ARG1-of u_1686))))
+
+# ::snt She abandoned her ambitions in theater.
+# ::tree templateGiveUpAmbitionInField(she,abandon,ambition,theater)
+# ::id give_up_in_39
+(u_1688 / abandon-01  :ARG0 (p / she  :poss-of (r / ambition  :topic (u_1689 / theater)  :ARG1-of u_1688)))
+
+# ::snt The astronaut abandoned her career in theater.
+# ::tree templateGiveUpAmbitionInField(astronaut,abandon,career,theater)
+# ::id give_up_in_40
+(u_1690 / abandon-01  :ARG0 (p / astronaut  :poss-of (r / career  :topic (u_1691 / theater)  :ARG1-of u_1690)))
+
+# ::snt My sister abandoned her career in crime.
+# ::tree templateGiveUpAmbitionInField(my_sister,abandon,career,crime)
+# ::id give_up_in_41
+(u_1692 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / career  :topic (u_1693 / crime-02)  :ARG1-of u_1692)))
+
+# ::snt The astronaut abandoned her aspirations in crime.
+# ::tree templateGiveUpAmbitionInField(astronaut,abandon,aspiration,crime)
+# ::id give_up_in_42
+(u_1694 / abandon-01  :ARG0 (p / astronaut  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1695 / crime-02)  :ARG1-of u_1694))))
+
+# ::snt My sister abandoned her aspirations in mathematics.
+# ::tree templateGiveUpAmbitionInField(my_sister,abandon,aspiration,mathematics)
+# ::id give_up_in_43
+(u_1696 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1697 / mathematics)  :ARG1-of u_1696))))
+
+# ::snt Mary gave up her ambitions in crime.
+# ::tree templateGiveUpAmbitionInField(mary,give_up,ambition,crime)
+# ::id give_up_in_44
+(u_1698 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / ambition  :topic (u_1701 / crime-02)  :ARG1-of u_1698)))
+
+# ::snt She gave up her aspirations in crime.
+# ::tree templateGiveUpAmbitionInField(she,give_up,aspiration,crime)
+# ::id give_up_in_45
+(u_1702 / give-up-07  :ARG0 (p / she  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1703 / crime-02)  :ARG1-of u_1702))))
+
+# ::snt My sister abandoned her aspirations in theater.
+# ::tree templateGiveUpAmbitionInField(my_sister,abandon,aspiration,theater)
+# ::id give_up_in_46
+(u_1704 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :topic (u_1705 / theater)  :ARG1-of u_1704))))
+
+# ::snt Mary gave up her career in mathematics.
+# ::tree templateGiveUpAmbitionInField(mary,give_up,career,mathematics)
+# ::id give_up_in_47
+(u_1706 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / career  :topic (u_1709 / mathematics)  :ARG1-of u_1706)))
+
+# ::snt She abandoned her career in crime.
+# ::tree templateGiveUpAmbitionInField(she,abandon,career,crime)
+# ::id give_up_in_48
+(u_1710 / abandon-01  :ARG0 (p / she  :poss-of (r / career  :topic (u_1711 / crime-02)  :ARG1-of u_1710)))
+
+# ::snt Mary abandoned her ambitions in theater.
+# ::tree templateGiveUpAmbitionInField(mary,abandon,ambition,theater)
+# ::id give_up_in_49
+(u_1712 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / ambition  :topic (u_1715 / theater)  :ARG1-of u_1712)))
+
+# ::snt She gave up her aspirations in a moment of clarity.
+# ::tree templateGiveUpAmbitionInEmotionalState(she,give_up,aspiration,a_moment_of_clarity)
+# ::id give_up_in_50
+(u_1718 / give-up-07  :ARG0 (p / she  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1718))  :ARG2-of (c3 / clear-06  :time (u_1716 / moment  :ARG0-of (u_1717 / cause-01  :ARG1 u_1718)))))
+
+# ::snt My sister gave up her aspirations in a fit of despair.
+# ::tree templateGiveUpAmbitionInEmotionalState(my_sister,give_up,aspiration,a_fit_of_despair)
+# ::id give_up_in_51
+(u_1721 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1721))  :ARG0-of (d / despair-01  :ARG2-of (u_1719 / fit-04  :ARG1 p  :ARG0-of (u_1720 / cause-01  :ARG1 u_1721)))))
+
+# ::snt The astronaut gave up her ambitions in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(astronaut,give_up,ambition,anger)
+# ::id give_up_in_52
+(u_1724 / give-up-07  :ARG0 (p / astronaut  :poss-of (r / ambition  :ARG1-of u_1724)  :ARG1-of (u_1722 / anger-01  :ARG0-of (u_1723 / cause-01  :ARG1 u_1724))))
+
+# ::snt Mary gave up her career in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(mary,give_up,career,anger)
+# ::id give_up_in_53
+(u_1729 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / career  :ARG1-of u_1729)  :ARG1-of (u_1725 / anger-01  :ARG0-of (u_1726 / cause-01  :ARG1 u_1729))))
+
+# ::snt The astronaut abandoned her ambitions in a fit of despair.
+# ::tree templateGiveUpAmbitionInEmotionalState(astronaut,abandon,ambition,a_fit_of_despair)
+# ::id give_up_in_54
+(u_1732 / abandon-01  :ARG0 (p / astronaut  :poss-of (r / ambition  :ARG1-of u_1732)  :ARG0-of (d / despair-01  :ARG2-of (u_1730 / fit-04  :ARG1 p  :ARG0-of (u_1731 / cause-01  :ARG1 u_1732)))))
+
+# ::snt Mary abandoned her career in a moment of clarity.
+# ::tree templateGiveUpAmbitionInEmotionalState(mary,abandon,career,a_moment_of_clarity)
+# ::id give_up_in_55
+(u_1737 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / career  :ARG1-of u_1737)  :ARG2-of (c3 / clear-06  :time (u_1733 / moment  :ARG0-of (u_1734 / cause-01  :ARG1 u_1737)))))
+
+# ::snt Mary gave up her ambitions in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(mary,give_up,ambition,anger)
+# ::id give_up_in_56
+(u_1742 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / ambition  :ARG1-of u_1742)  :ARG1-of (u_1738 / anger-01  :ARG0-of (u_1739 / cause-01  :ARG1 u_1742))))
+
+# ::snt My sister abandoned her aspirations in a fit of despair.
+# ::tree templateGiveUpAmbitionInEmotionalState(my_sister,abandon,aspiration,a_fit_of_despair)
+# ::id give_up_in_57
+(u_1745 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1745))  :ARG0-of (d / despair-01  :ARG2-of (u_1743 / fit-04  :ARG1 p  :ARG0-of (u_1744 / cause-01  :ARG1 u_1745)))))
+
+# ::snt Mary gave up her career in a moment of clarity.
+# ::tree templateGiveUpAmbitionInEmotionalState(mary,give_up,career,a_moment_of_clarity)
+# ::id give_up_in_58
+(u_1750 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / career  :ARG1-of u_1750)  :ARG2-of (c3 / clear-06  :time (u_1746 / moment  :ARG0-of (u_1747 / cause-01  :ARG1 u_1750)))))
+
+# ::snt She gave up her career in a fit of despair.
+# ::tree templateGiveUpAmbitionInEmotionalState(she,give_up,career,a_fit_of_despair)
+# ::id give_up_in_59
+(u_1753 / give-up-07  :ARG0 (p / she  :poss-of (r / career  :ARG1-of u_1753)  :ARG0-of (d / despair-01  :ARG2-of (u_1751 / fit-04  :ARG1 p  :ARG0-of (u_1752 / cause-01  :ARG1 u_1753)))))
+
+# ::snt Mary abandoned her aspirations in a fit of despair.
+# ::tree templateGiveUpAmbitionInEmotionalState(mary,abandon,aspiration,a_fit_of_despair)
+# ::id give_up_in_60
+(u_1758 / abandon-01  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1758))  :ARG0-of (d / despair-01  :ARG2-of (u_1754 / fit-04  :ARG1 p  :ARG0-of (u_1755 / cause-01  :ARG1 u_1758)))))
+
+# ::snt My sister gave up her ambitions in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(my_sister,give_up,ambition,anger)
+# ::id give_up_in_61
+(u_1761 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :ARG1-of u_1761)  :ARG1-of (u_1759 / anger-01  :ARG0-of (u_1760 / cause-01  :ARG1 u_1761))))
+
+# ::snt Mary gave up her ambitions in a moment of clarity.
+# ::tree templateGiveUpAmbitionInEmotionalState(mary,give_up,ambition,a_moment_of_clarity)
+# ::id give_up_in_62
+(u_1766 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :poss-of (r / ambition  :ARG1-of u_1766)  :ARG2-of (c3 / clear-06  :time (u_1762 / moment  :ARG0-of (u_1763 / cause-01  :ARG1 u_1766)))))
+
+# ::snt My sister abandoned her aspirations in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(my_sister,abandon,aspiration,anger)
+# ::id give_up_in_63
+(u_1769 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1769))  :ARG1-of (u_1767 / anger-01  :ARG0-of (u_1768 / cause-01  :ARG1 u_1769))))
+
+# ::snt My sister gave up her ambitions in a fit of despair.
+# ::tree templateGiveUpAmbitionInEmotionalState(my_sister,give_up,ambition,a_fit_of_despair)
+# ::id give_up_in_64
+(u_1772 / give-up-07  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :ARG1-of u_1772)  :ARG0-of (d / despair-01  :ARG2-of (u_1770 / fit-04  :ARG1 p  :ARG0-of (u_1771 / cause-01  :ARG1 u_1772)))))
+
+# ::snt The astronaut gave up her aspirations in a moment of clarity.
+# ::tree templateGiveUpAmbitionInEmotionalState(astronaut,give_up,aspiration,a_moment_of_clarity)
+# ::id give_up_in_65
+(u_1775 / give-up-07  :ARG0 (p / astronaut  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1775))  :ARG2-of (c3 / clear-06  :time (u_1773 / moment  :ARG0-of (u_1774 / cause-01  :ARG1 u_1775)))))
+
+# ::snt She gave up her aspirations in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(she,give_up,aspiration,anger)
+# ::id give_up_in_66
+(u_1778 / give-up-07  :ARG0 (p / she  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1778))  :ARG1-of (u_1776 / anger-01  :ARG0-of (u_1777 / cause-01  :ARG1 u_1778))))
+
+# ::snt My sister abandoned her aspirations in a moment of clarity.
+# ::tree templateGiveUpAmbitionInEmotionalState(my_sister,abandon,aspiration,a_moment_of_clarity)
+# ::id give_up_in_67
+(u_1781 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1781))  :ARG2-of (c3 / clear-06  :time (u_1779 / moment  :ARG0-of (u_1780 / cause-01  :ARG1 u_1781)))))
+
+# ::snt The astronaut abandoned her aspirations in a fit of despair.
+# ::tree templateGiveUpAmbitionInEmotionalState(astronaut,abandon,aspiration,a_fit_of_despair)
+# ::id give_up_in_68
+(u_1784 / abandon-01  :ARG0 (p / astronaut  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1784))  :ARG0-of (d / despair-01  :ARG2-of (u_1782 / fit-04  :ARG1 p  :ARG0-of (u_1783 / cause-01  :ARG1 u_1784)))))
+
+# ::snt My sister abandoned her ambitions in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(my_sister,abandon,ambition,anger)
+# ::id give_up_in_69
+(u_1787 / abandon-01  :ARG0 (p / person  :ARG0-of (h / have-org-role-91  :ARG1 (i / i)  :ARG2 (s / sister))  :poss-of (r / ambition  :ARG1-of u_1787)  :ARG1-of (u_1785 / anger-01  :ARG0-of (u_1786 / cause-01  :ARG1 u_1787))))
+
+# ::snt Mary gave up her aspirations in a fit of despair.
+# ::tree templateGiveUpAmbitionInEmotionalState(mary,give_up,aspiration,a_fit_of_despair)
+# ::id give_up_in_70
+(u_1792 / give-up-07  :ARG0 (p / person  :wiki -  :name (n / name  :op1 "Mary")  :ARG0-of (a / aspire-01  :ARG1 (r / thing  :ARG1-of u_1792))  :ARG0-of (d / despair-01  :ARG2-of (u_1788 / fit-04  :ARG1 p  :ARG0-of (u_1789 / cause-01  :ARG1 u_1792)))))
+
+# ::snt The astronaut abandoned her ambitions in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(astronaut,abandon,ambition,anger)
+# ::id give_up_in_71
+(u_1795 / abandon-01  :ARG0 (p / astronaut  :poss-of (r / ambition  :ARG1-of u_1795)  :ARG1-of (u_1793 / anger-01  :ARG0-of (u_1794 / cause-01  :ARG1 u_1795))))
+
+# ::snt She abandoned her ambitions in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(she,abandon,ambition,anger)
+# ::id give_up_in_72
+(u_1798 / abandon-01  :ARG0 (p / she  :poss-of (r / ambition  :ARG1-of u_1798)  :ARG1-of (u_1796 / anger-01  :ARG0-of (u_1797 / cause-01  :ARG1 u_1798))))
+
+# ::snt She gave up her ambitions in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(she,give_up,ambition,anger)
+# ::id give_up_in_73
+(u_1801 / give-up-07  :ARG0 (p / she  :poss-of (r / ambition  :ARG1-of u_1801)  :ARG1-of (u_1799 / anger-01  :ARG0-of (u_1800 / cause-01  :ARG1 u_1801))))
+
+# ::snt The astronaut gave up her career in anger.
+# ::tree templateGiveUpAmbitionInEmotionalState(astronaut,give_up,career,anger)
+# ::id give_up_in_74
+(u_1804 / give-up-07  :ARG0 (p / astronaut  :poss-of (r / career  :ARG1-of u_1804)  :ARG1-of (u_1802 / anger-01  :ARG0-of (u_1803 / cause-01  :ARG1 u_1804))))

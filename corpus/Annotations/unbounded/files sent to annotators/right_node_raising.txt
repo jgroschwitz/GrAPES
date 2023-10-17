@@ -1,0 +1,72 @@
+Right-Node Raising
+Please choose about 8 of these
+*Special instructions*: RNR always has at least two dependencies, so please choose 8 sentences and for each include all dependencies. As usual, make each dependency one row in the TSV file. (This will give you about 16 items.)
+
+cf21.mrg-rnr-1
+The waves of a 1923 tsunami in Sagami Bay brought to the surface and battered to death huge numbers of fishes that normally live at a depth of 3,000 feet .
+dobj brought_9 numbers_18
+dobj battered_14 numbers_18
+
+cf21.mrg-rnr-2
+By means of charts showing wave-travel times and depths in the ocean at various locations , it is possible to estimate the rate of approach and probable time of arrival at Hawaii of a tsunami getting under way at any spot in the Pacific .
+prep rate_22 of_32
+prep time_27 of_32
+
+cf23.mrg-rnr-2
+The first was that America had become -- or was in danger of becoming -- a second-rate military power .
+dobj become_6 power_18
+dobj becoming_13 power_18
+
+cf07.mrg-rnr-1
+Various factors in the setting can still be of great advantage in making the first intercourse a good rather than a bad memory for one or both .
+amod memory_22 good_17
+amod memory_22 bad_21
+
+cf07.mrg-rnr-2
+She learns how to relax them to accept -- instead of contracting them to repel -- the entering object .
+dobj accept_7 object_18
+dobj repel_14 object_18
+
+cf12.mrg-rnr-1
+All he can do is to be an objective and careful questioner , seeking to help the sensitive in clarifying and making more specific her paranormal impressions .
+dobj clarifying_19 impressions_26
+nsubj specific_23 impressions_26
+
+cf13.mrg-rnr-1
+If you are not well acquainted with the area in which you wish to locate , or if you are not sure that you and your family will like and make a success of farming , usually you would do better to rent a place for a year or two before you buy .
+dobj like_28 farming_34
+pobj of_33 farming_34
+
+cf14.mrg-rnr-1
+In regard to Eichmann , it was to be found in the Nazi outlook , which contained a principle separate from and far worse than anti-Semitism , a principle by which the poison of anti-Semitism itself was made more virulent .
+pobj from_20 anti-Semitism_25
+pobj than_24 anti-Semitism_25
+
+cf19.mrg-rnr-1
+On the one side we have the university professors and their students , trained in Teutonic methods of research , who have sought out , collected and studied the true products of the oral traditions of the ethnic , regional and occupational groups that make up this nation .
+dobj sought_22 products_30
+dobj collected_25 products_30
+dobj studied_27 products_30
+
+cf19.mrg-rnr-2
+Dominated by the vicious circle of the university promotion system , the analyst looks down on and gets along poorly with the other three groups , although he can not deny his debt to the collector .
+pobj on_15 groups_24
+pobj with_20 groups_24
+
+cg03.mrg-rnr-1
+In recent weeks , as a result of a sweeping defense policy reappraisal by the Kennedy Administration , basic United States strategy has been modified -- and large new sums allocated -- to meet the accidental-war danger and to reduce it as quickly as possible .
+xcomp modified_24 meet_33
+xcomp allocated_30 meet_33
+
+cg22.mrg-rnr-1
+The company grew out of efforts by two completely inexperienced men in their late twenties , neither having a formal education applicable to , or experience in , manufacturing or selling our type of articles .
+pobj to_22 manufacturing_28
+pobj to_22 selling_30
+pobj in_26 manufacturing_28
+pobj in_26 selling_30
+
+cg05.mrg
+They think of it as a kind of spooky museum in which they may half see and half imagine the old splendor .
+dobj see_15 splendor_21
+dobj imagine_18 splendor_21
+

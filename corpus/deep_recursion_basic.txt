@@ -1,0 +1,602 @@
+# Randomly sampled examples of deep CP recursion (standard version). Created by a grammar. Size (size0) here is number of CPs + 1 (i.e., to get the recursion depth, subtract 1 from the value of size0 given in this file).
+
+# ::snt We said that the astronaut left
+# ::tree TP_CP(said,we,TP_intr(left,astronaut))
+# ::size0 2
+# ::id deep_recursion_basic_0
+(u_2193 / say-01  :ARG0 (r / we)  :ARG1 (u_2194 / leave-11  :ARG0 (a / astronaut)))
+
+# ::snt You knew that the men left
+# ::tree TP_CP(knew,you,TP_intr(left,men))
+# ::size0 2
+# ::id deep_recursion_basic_1
+(u_2196 / know-01  :ARG0 (r / you)  :ARG1 (u_2195 / leave-11  :ARG0 (u_2197 / man)))
+
+# ::snt The doctor thought that the women arrived
+# ::tree TP_CP(thought,doctor,TP_intr(arrived,women))
+# ::size0 2
+# ::id deep_recursion_basic_2
+(u_2199 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2198 / arrive-01  :ARG1 (r / woman)))
+
+# ::snt The girls believed that the men left
+# ::tree TP_CP(believed,girls,TP_intr(left,men))
+# ::size0 2
+# ::id deep_recursion_basic_3
+(u_2201 / believe-01  :ARG0 (r / girl)  :ARG1 (u_2200 / leave-11  :ARG0 (u_2202 / man)))
+
+# ::snt The boys knew that you arrived
+# ::tree TP_CP(knew,boys,TP_intr(arrived,you))
+# ::size0 2
+# ::id deep_recursion_basic_4
+(u_2204 / know-01  :ARG0 (r / boy)  :ARG1 (u_2203 / arrive-01  :ARG1 (u_2205 / you)))
+
+# ::snt The men mentioned that you slept
+# ::tree TP_CP(mentioned,men,TP_intr(slept,you))
+# ::size0 2
+# ::id deep_recursion_basic_5
+(u_2207 / mention-01  :ARG0 (r / man)  :ARG1 (u_2206 / sleep-01  :ARG0 (u_2208 / you)))
+
+# ::snt The soldier heard that the astronaut slept
+# ::tree TP_CP(heard,soldier,TP_intr(slept,astronaut))
+# ::size0 2
+# ::id deep_recursion_basic_6
+(u_2209 / hear-01  :ARG0 (s / soldier)  :ARG1 (r / sleep-01  :ARG0 (a / astronaut)))
+
+# ::snt You thought that the lawyer won
+# ::tree TP_CP(thought,you,TP_intr(won,lawyer))
+# ::size0 2
+# ::id deep_recursion_basic_7
+(u_2210 / think-01  :ARG0 (r / you)  :ARG1 (u_2211 / win-01  :ARG0 (m / lawyer)))
+
+# ::snt The lawyer knew that we slept
+# ::tree TP_CP(knew,lawyer,TP_intr(slept,we))
+# ::size0 2
+# ::id deep_recursion_basic_8
+(u_2213 / know-01  :ARG0 (m / lawyer)  :ARG1 (u_2212 / sleep-01  :ARG0 (r / we)))
+
+# ::snt The doctor said that the women arrived
+# ::tree TP_CP(said,doctor,TP_intr(arrived,women))
+# ::size0 2
+# ::id deep_recursion_basic_9
+(u_2215 / say-01  :ARG0 (d / doctor)  :ARG1 (u_2214 / arrive-01  :ARG1 (r / woman)))
+
+# ::snt The women thought that you knew that the kids won
+# ::tree TP_CP(thought,women,TP_CP(knew,you,TP_intr(won,kids)))
+# ::size0 3
+# ::id deep_recursion_basic_10
+(u_2219 / think-01  :ARG0 (r / woman)  :ARG1 (u_2217 / know-01  :ARG0 (u_2220 / you)  :ARG1 (u_2216 / win-01  :ARG0 (u_2218 / kid))))
+
+# ::snt The soldier thought that the men thought that the astronaut left
+# ::tree TP_CP(thought,soldier,TP_CP(thought,men,TP_intr(left,astronaut)))
+# ::size0 3
+# ::id deep_recursion_basic_11
+(u_2223 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2221 / think-01  :ARG0 (r / man)  :ARG1 (u_2222 / leave-11  :ARG0 (a / astronaut))))
+
+# ::snt The soldier believed that you believed that the astronaut won
+# ::tree TP_CP(believed,soldier,TP_CP(believed,you,TP_intr(won,astronaut)))
+# ::size0 3
+# ::id deep_recursion_basic_12
+(u_2226 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2224 / believe-01  :ARG0 (r / you)  :ARG1 (u_2225 / win-01  :ARG0 (a / astronaut))))
+
+# ::snt The astronaut thought that the boys believed that you won
+# ::tree TP_CP(thought,astronaut,TP_CP(believed,boys,TP_intr(won,you)))
+# ::size0 3
+# ::id deep_recursion_basic_13
+(u_2230 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_2228 / believe-01  :ARG0 (r / boy)  :ARG1 (u_2227 / win-01  :ARG0 (u_2229 / you))))
+
+# ::snt The boys knew that the men believed that the soldier arrived
+# ::tree TP_CP(knew,boys,TP_CP(believed,men,TP_intr(arrived,soldier)))
+# ::size0 3
+# ::id deep_recursion_basic_14
+(u_2234 / know-01  :ARG0 (r / boy)  :ARG1 (u_2231 / believe-01  :ARG0 (u_2236 / man)  :ARG1 (u_2233 / arrive-01  :ARG1 (s / soldier))))
+
+# ::snt You thought that I knew that the women left
+# ::tree TP_CP(thought,you,TP_CP(knew,I,TP_intr(left,women)))
+# ::size0 3
+# ::id deep_recursion_basic_15
+(u_2240 / think-01  :ARG0 (r / you)  :ARG1 (u_2238 / know-01  :ARG0 (u_2241 / i)  :ARG1 (u_2237 / leave-11  :ARG0 (u_2239 / woman))))
+
+# ::snt The women knew that the astronaut believed that I won
+# ::tree TP_CP(knew,women,TP_CP(believed,astronaut,TP_intr(won,I)))
+# ::size0 3
+# ::id deep_recursion_basic_16
+(u_2244 / know-01  :ARG0 (r / woman)  :ARG1 (u_2243 / believe-01  :ARG0 (a / astronaut)  :ARG1 (u_2242 / win-01  :ARG0 (u_2245 / i))))
+
+# ::snt The boys said that the men heard that I won
+# ::tree TP_CP(said,boys,TP_CP(heard,men,TP_intr(won,I)))
+# ::size0 3
+# ::id deep_recursion_basic_17
+(u_2249 / say-01  :ARG0 (r / boy)  :ARG1 (u_2247 / hear-01  :ARG0 (u_2250 / man)  :ARG1 (u_2246 / win-01  :ARG0 (u_2248 / i))))
+
+# ::snt The men believed that I thought that the doctor left
+# ::tree TP_CP(believed,men,TP_CP(thought,I,TP_intr(left,doctor)))
+# ::size0 3
+# ::id deep_recursion_basic_18
+(u_2253 / believe-01  :ARG0 (r / man)  :ARG1 (u_2251 / think-01  :ARG0 (u_2254 / i)  :ARG1 (u_2252 / leave-11  :ARG0 (d / doctor))))
+
+# ::snt The men heard that the kids heard that we left
+# ::tree TP_CP(heard,men,TP_CP(heard,kids,TP_intr(left,we)))
+# ::size0 3
+# ::id deep_recursion_basic_19
+(u_2258 / hear-01  :ARG0 (r / man)  :ARG1 (u_2256 / hear-01  :ARG0 (u_2259 / kid)  :ARG1 (u_2255 / leave-11  :ARG0 (u_2257 / we))))
+
+# ::snt The boys mentioned that the lawyer thought that the doctor knew that the astronaut won
+# ::tree TP_CP(mentioned,boys,TP_CP(thought,lawyer,TP_CP(knew,doctor,TP_intr(won,astronaut))))
+# ::size0 4
+# ::id deep_recursion_basic_20
+(u_2262 / mention-01  :ARG0 (r / boy)  :ARG1 (u_2261 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2260 / know-01  :ARG0 (d / doctor)  :ARG1 (u_2263 / win-01  :ARG0 (a / astronaut)))))
+
+# ::snt The men thought that the astronaut mentioned that the girls said that the women left
+# ::tree TP_CP(thought,men,TP_CP(mentioned,astronaut,TP_CP(said,girls,TP_intr(left,women))))
+# ::size0 4
+# ::id deep_recursion_basic_21
+(u_2268 / think-01  :ARG0 (r / man)  :ARG1 (u_2267 / mention-01  :ARG0 (a / astronaut)  :ARG1 (u_2265 / say-01  :ARG0 (u_2269 / girl)  :ARG1 (u_2264 / leave-11  :ARG0 (u_2266 / woman)))))
+
+# ::snt The soldier believed that you knew that the men believed that the doctor slept
+# ::tree TP_CP(believed,soldier,TP_CP(knew,you,TP_CP(believed,men,TP_intr(slept,doctor))))
+# ::size0 4
+# ::id deep_recursion_basic_22
+(u_2274 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2272 / know-01  :ARG0 (r / you)  :ARG1 (u_2270 / believe-01  :ARG0 (u_2273 / man)  :ARG1 (u_2271 / sleep-01  :ARG0 (d / doctor)))))
+
+# ::snt The girls mentioned that I mentioned that we said that the boys arrived
+# ::tree TP_CP(mentioned,girls,TP_CP(mentioned,I,TP_CP(said,we,TP_intr(arrived,boys))))
+# ::size0 4
+# ::id deep_recursion_basic_23
+(u_2280 / mention-01  :ARG0 (r / girl)  :ARG1 (u_2278 / mention-01  :ARG0 (u_2281 / i)  :ARG1 (u_2276 / say-01  :ARG0 (u_2279 / we)  :ARG1 (u_2275 / arrive-01  :ARG1 (u_2277 / boy)))))
+
+# ::snt The women said that you heard that we knew that the kids slept
+# ::tree TP_CP(said,women,TP_CP(heard,you,TP_CP(knew,we,TP_intr(slept,kids))))
+# ::size0 4
+# ::id deep_recursion_basic_24
+(u_2287 / say-01  :ARG0 (r / woman)  :ARG1 (u_2285 / hear-01  :ARG0 (u_2288 / you)  :ARG1 (u_2283 / know-01  :ARG0 (u_2286 / we)  :ARG1 (u_2282 / sleep-01  :ARG0 (u_2284 / kid)))))
+
+# ::snt The doctor said that the women knew that the boys said that we slept
+# ::tree TP_CP(said,doctor,TP_CP(knew,women,TP_CP(said,boys,TP_intr(slept,we))))
+# ::size0 4
+# ::id deep_recursion_basic_25
+(u_2294 / say-01  :ARG0 (d / doctor)  :ARG1 (u_2292 / know-01  :ARG0 (r / woman)  :ARG1 (u_2290 / say-01  :ARG0 (u_2293 / boy)  :ARG1 (u_2289 / sleep-01  :ARG0 (u_2291 / we)))))
+
+# ::snt I knew that the soldier mentioned that the lawyer mentioned that the men left
+# ::tree TP_CP(knew,I,TP_CP(mentioned,soldier,TP_CP(mentioned,lawyer,TP_intr(left,men))))
+# ::size0 4
+# ::id deep_recursion_basic_26
+(u_2298 / know-01  :ARG0 (r / i)  :ARG1 (u_2297 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_2296 / mention-01  :ARG0 (m / lawyer)  :ARG1 (u_2295 / leave-11  :ARG0 (u_2300 / man)))))
+
+# ::snt The lawyer believed that the kids mentioned that the astronaut said that the soldier won
+# ::tree TP_CP(believed,lawyer,TP_CP(mentioned,kids,TP_CP(said,astronaut,TP_intr(won,soldier))))
+# ::size0 4
+# ::id deep_recursion_basic_27
+(u_2306 / believe-01  :ARG0 (m / lawyer)  :ARG1 (u_2303 / mention-01  :ARG0 (r / kid)  :ARG1 (u_2301 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2305 / win-01  :ARG0 (s / soldier)))))
+
+# ::snt I heard that the kids believed that the soldier thought that the men arrived
+# ::tree TP_CP(heard,I,TP_CP(believed,kids,TP_CP(thought,soldier,TP_intr(arrived,men))))
+# ::size0 4
+# ::id deep_recursion_basic_28
+(u_2313 / hear-01  :ARG0 (r / i)  :ARG1 (u_2310 / believe-01  :ARG0 (u_2315 / kid)  :ARG1 (u_2309 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2308 / arrive-01  :ARG1 (u_2312 / man)))))
+
+# ::snt The boys said that the kids said that I heard that the soldier slept
+# ::tree TP_CP(said,boys,TP_CP(said,kids,TP_CP(heard,I,TP_intr(slept,soldier))))
+# ::size0 4
+# ::id deep_recursion_basic_29
+(u_2322 / say-01  :ARG0 (r / boy)  :ARG1 (u_2319 / say-01  :ARG0 (u_2324 / kid)  :ARG1 (u_2316 / hear-01  :ARG0 (u_2321 / i)  :ARG1 (u_2318 / sleep-01  :ARG0 (s / soldier)))))
+
+# ::snt The lawyer said that you knew that the men mentioned that the boys believed that the women left
+# ::tree TP_CP(said,lawyer,TP_CP(knew,you,TP_CP(mentioned,men,TP_CP(believed,boys,TP_intr(left,women)))))
+# ::size0 5
+# ::id deep_recursion_basic_30
+(u_2332 / say-01  :ARG0 (m / lawyer)  :ARG1 (u_2330 / know-01  :ARG0 (r / you)  :ARG1 (u_2328 / mention-01  :ARG0 (u_2331 / man)  :ARG1 (u_2326 / believe-01  :ARG0 (u_2329 / boy)  :ARG1 (u_2325 / leave-11  :ARG0 (u_2327 / woman))))))
+
+# ::snt You thought that the doctor said that the girls said that the women thought that the lawyer left
+# ::tree TP_CP(thought,you,TP_CP(said,doctor,TP_CP(said,girls,TP_CP(thought,women,TP_intr(left,lawyer)))))
+# ::size0 5
+# ::id deep_recursion_basic_31
+(u_2338 / think-01  :ARG0 (r / you)  :ARG1 (u_2337 / say-01  :ARG0 (d / doctor)  :ARG1 (u_2335 / say-01  :ARG0 (u_2339 / girl)  :ARG1 (u_2333 / think-01  :ARG0 (u_2336 / woman)  :ARG1 (u_2334 / leave-11  :ARG0 (m / lawyer))))))
+
+# ::snt The women said that the boys knew that the lawyer heard that the soldier knew that the men arrived
+# ::tree TP_CP(said,women,TP_CP(knew,boys,TP_CP(heard,lawyer,TP_CP(knew,soldier,TP_intr(arrived,men)))))
+# ::size0 5
+# ::id deep_recursion_basic_32
+(u_2347 / say-01  :ARG0 (r / woman)  :ARG1 (u_2344 / know-01  :ARG0 (u_2349 / boy)  :ARG1 (u_2342 / hear-01  :ARG0 (m / lawyer)  :ARG1 (u_2341 / know-01  :ARG0 (s / soldier)  :ARG1 (u_2340 / arrive-01  :ARG1 (u_2346 / man))))))
+
+# ::snt The astronaut said that the soldier heard that we heard that the women heard that the doctor arrived
+# ::tree TP_CP(said,astronaut,TP_CP(heard,soldier,TP_CP(heard,we,TP_CP(heard,women,TP_intr(arrived,doctor)))))
+# ::size0 5
+# ::id deep_recursion_basic_33
+(u_2355 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2354 / hear-01  :ARG0 (s / soldier)  :ARG1 (u_2352 / hear-01  :ARG0 (r / we)  :ARG1 (u_2350 / hear-01  :ARG0 (u_2353 / woman)  :ARG1 (u_2351 / arrive-01  :ARG1 (d / doctor))))))
+
+# ::snt We heard that the astronaut thought that the boys knew that you mentioned that the women left
+# ::tree TP_CP(heard,we,TP_CP(thought,astronaut,TP_CP(knew,boys,TP_CP(mentioned,you,TP_intr(left,women)))))
+# ::size0 5
+# ::id deep_recursion_basic_34
+(u_2363 / hear-01  :ARG0 (r / we)  :ARG1 (u_2362 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_2360 / know-01  :ARG0 (u_2364 / boy)  :ARG1 (u_2358 / mention-01  :ARG0 (u_2361 / you)  :ARG1 (u_2357 / leave-11  :ARG0 (u_2359 / woman))))))
+
+# ::snt You knew that the kids heard that the girls thought that we said that I left
+# ::tree TP_CP(knew,you,TP_CP(heard,kids,TP_CP(thought,girls,TP_CP(said,we,TP_intr(left,I)))))
+# ::size0 5
+# ::id deep_recursion_basic_35
+(u_2372 / know-01  :ARG0 (r / you)  :ARG1 (u_2370 / hear-01  :ARG0 (u_2373 / kid)  :ARG1 (u_2368 / think-01  :ARG0 (u_2371 / girl)  :ARG1 (u_2366 / say-01  :ARG0 (u_2369 / we)  :ARG1 (u_2365 / leave-11  :ARG0 (u_2367 / i))))))
+
+# ::snt The girls thought that the women thought that the boys thought that the soldier thought that the doctor won
+# ::tree TP_CP(thought,girls,TP_CP(thought,women,TP_CP(thought,boys,TP_CP(thought,soldier,TP_intr(won,doctor)))))
+# ::size0 5
+# ::id deep_recursion_basic_36
+(u_2381 / think-01  :ARG0 (r / girl)  :ARG1 (u_2378 / think-01  :ARG0 (u_2383 / woman)  :ARG1 (u_2375 / think-01  :ARG0 (u_2380 / boy)  :ARG1 (u_2374 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2377 / win-01  :ARG0 (d / doctor))))))
+
+# ::snt The soldier mentioned that the astronaut knew that you believed that the doctor heard that the lawyer slept
+# ::tree TP_CP(mentioned,soldier,TP_CP(knew,astronaut,TP_CP(believed,you,TP_CP(heard,doctor,TP_intr(slept,lawyer)))))
+# ::size0 5
+# ::id deep_recursion_basic_37
+(u_2388 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_2387 / know-01  :ARG0 (a / astronaut)  :ARG1 (u_2385 / believe-01  :ARG0 (r / you)  :ARG1 (u_2384 / hear-01  :ARG0 (d / doctor)  :ARG1 (u_2386 / sleep-01  :ARG0 (m / lawyer))))))
+
+# ::snt The women mentioned that we said that the astronaut thought that the girls knew that the soldier left
+# ::tree TP_CP(mentioned,women,TP_CP(said,we,TP_CP(thought,astronaut,TP_CP(knew,girls,TP_intr(left,soldier)))))
+# ::size0 5
+# ::id deep_recursion_basic_38
+(u_2397 / mention-01  :ARG0 (r / woman)  :ARG1 (u_2394 / say-01  :ARG0 (u_2399 / we)  :ARG1 (u_2392 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_2389 / know-01  :ARG0 (u_2396 / girl)  :ARG1 (u_2391 / leave-11  :ARG0 (s / soldier))))))
+
+# ::snt The boys thought that you believed that the soldier heard that the lawyer mentioned that the astronaut won
+# ::tree TP_CP(thought,boys,TP_CP(believed,you,TP_CP(heard,soldier,TP_CP(mentioned,lawyer,TP_intr(won,astronaut)))))
+# ::size0 5
+# ::id deep_recursion_basic_39
+(u_2405 / think-01  :ARG0 (r / boy)  :ARG1 (u_2402 / believe-01  :ARG0 (u_2407 / you)  :ARG1 (u_2401 / hear-01  :ARG0 (s / soldier)  :ARG1 (u_2400 / mention-01  :ARG0 (m / lawyer)  :ARG1 (u_2404 / win-01  :ARG0 (a / astronaut))))))
+
+# ::snt The lawyer thought that the men heard that we thought that the kids mentioned that the girls knew that the doctor slept
+# ::tree TP_CP(thought,lawyer,TP_CP(heard,men,TP_CP(thought,we,TP_CP(mentioned,kids,TP_CP(knew,girls,TP_intr(slept,doctor))))))
+# ::size0 6
+# ::id deep_recursion_basic_40
+(u_2416 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2414 / hear-01  :ARG0 (r / man)  :ARG1 (u_2412 / think-01  :ARG0 (u_2415 / we)  :ARG1 (u_2410 / mention-01  :ARG0 (u_2413 / kid)  :ARG1 (u_2408 / know-01  :ARG0 (u_2411 / girl)  :ARG1 (u_2409 / sleep-01  :ARG0 (d / doctor)))))))
+
+# ::snt The soldier heard that the girls said that I thought that you thought that the women said that we slept
+# ::tree TP_CP(heard,soldier,TP_CP(said,girls,TP_CP(thought,I,TP_CP(thought,you,TP_CP(said,women,TP_intr(slept,we))))))
+# ::size0 6
+# ::id deep_recursion_basic_41
+(u_2426 / hear-01  :ARG0 (s / soldier)  :ARG1 (u_2424 / say-01  :ARG0 (r / girl)  :ARG1 (u_2422 / think-01  :ARG0 (u_2425 / i)  :ARG1 (u_2420 / think-01  :ARG0 (u_2423 / you)  :ARG1 (u_2418 / say-01  :ARG0 (u_2421 / woman)  :ARG1 (u_2417 / sleep-01  :ARG0 (u_2419 / we)))))))
+
+# ::snt You thought that we mentioned that the kids thought that the boys heard that the soldier said that the girls slept
+# ::tree TP_CP(thought,you,TP_CP(mentioned,we,TP_CP(thought,kids,TP_CP(heard,boys,TP_CP(said,soldier,TP_intr(slept,girls))))))
+# ::size0 6
+# ::id deep_recursion_basic_42
+(u_2438 / think-01  :ARG0 (r / you)  :ARG1 (u_2435 / mention-01  :ARG0 (u_2440 / we)  :ARG1 (u_2432 / think-01  :ARG0 (u_2437 / kid)  :ARG1 (u_2429 / hear-01  :ARG0 (u_2434 / boy)  :ARG1 (u_2428 / say-01  :ARG0 (s / soldier)  :ARG1 (u_2427 / sleep-01  :ARG0 (u_2431 / girl)))))))
+
+# ::snt The men mentioned that I heard that we said that the women heard that the soldier mentioned that the kids won
+# ::tree TP_CP(mentioned,men,TP_CP(heard,I,TP_CP(said,we,TP_CP(heard,women,TP_CP(mentioned,soldier,TP_intr(won,kids))))))
+# ::size0 6
+# ::id deep_recursion_basic_43
+(u_2452 / mention-01  :ARG0 (r / man)  :ARG1 (u_2449 / hear-01  :ARG0 (u_2454 / i)  :ARG1 (u_2446 / say-01  :ARG0 (u_2451 / we)  :ARG1 (u_2443 / hear-01  :ARG0 (u_2448 / woman)  :ARG1 (u_2442 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_2441 / win-01  :ARG0 (u_2445 / kid)))))))
+
+# ::snt The girls said that the soldier mentioned that you heard that I heard that the women heard that the lawyer slept
+# ::tree TP_CP(said,girls,TP_CP(mentioned,soldier,TP_CP(heard,you,TP_CP(heard,I,TP_CP(heard,women,TP_intr(slept,lawyer))))))
+# ::size0 6
+# ::id deep_recursion_basic_44
+(u_2462 / say-01  :ARG0 (r / girl)  :ARG1 (u_2461 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_2459 / hear-01  :ARG0 (u_2464 / you)  :ARG1 (u_2457 / hear-01  :ARG0 (u_2460 / i)  :ARG1 (u_2455 / hear-01  :ARG0 (u_2458 / woman)  :ARG1 (u_2456 / sleep-01  :ARG0 (m / lawyer)))))))
+
+# ::snt The men heard that the kids knew that the boys knew that the lawyer thought that I mentioned that the astronaut slept
+# ::tree TP_CP(heard,men,TP_CP(knew,kids,TP_CP(knew,boys,TP_CP(thought,lawyer,TP_CP(mentioned,I,TP_intr(slept,astronaut))))))
+# ::size0 6
+# ::id deep_recursion_basic_45
+(u_2472 / hear-01  :ARG0 (r / man)  :ARG1 (u_2470 / know-01  :ARG0 (u_2473 / kid)  :ARG1 (u_2468 / know-01  :ARG0 (u_2471 / boy)  :ARG1 (u_2467 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2465 / mention-01  :ARG0 (u_2469 / i)  :ARG1 (u_2466 / sleep-01  :ARG0 (a / astronaut)))))))
+
+# ::snt The doctor thought that the astronaut mentioned that the boys said that I said that the soldier said that the women arrived
+# ::tree TP_CP(thought,doctor,TP_CP(mentioned,astronaut,TP_CP(said,boys,TP_CP(said,I,TP_CP(said,soldier,TP_intr(arrived,women))))))
+# ::size0 6
+# ::id deep_recursion_basic_46
+(u_2484 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2482 / mention-01  :ARG0 (a / astronaut)  :ARG1 (u_2479 / say-01  :ARG0 (r / boy)  :ARG1 (u_2476 / say-01  :ARG0 (u_2481 / i)  :ARG1 (u_2475 / say-01  :ARG0 (s / soldier)  :ARG1 (u_2474 / arrive-01  :ARG1 (u_2478 / woman)))))))
+
+# ::snt The soldier said that the girls knew that the boys believed that I thought that the women heard that the astronaut left
+# ::tree TP_CP(said,soldier,TP_CP(knew,girls,TP_CP(believed,boys,TP_CP(thought,I,TP_CP(heard,women,TP_intr(left,astronaut))))))
+# ::size0 6
+# ::id deep_recursion_basic_47
+(u_2494 / say-01  :ARG0 (s / soldier)  :ARG1 (u_2492 / know-01  :ARG0 (r / girl)  :ARG1 (u_2490 / believe-01  :ARG0 (u_2493 / boy)  :ARG1 (u_2488 / think-01  :ARG0 (u_2491 / i)  :ARG1 (u_2486 / hear-01  :ARG0 (u_2489 / woman)  :ARG1 (u_2487 / leave-11  :ARG0 (a / astronaut)))))))
+
+# ::snt You believed that the men knew that the soldier mentioned that the kids said that the doctor said that we slept
+# ::tree TP_CP(believed,you,TP_CP(knew,men,TP_CP(mentioned,soldier,TP_CP(said,kids,TP_CP(said,doctor,TP_intr(slept,we))))))
+# ::size0 6
+# ::id deep_recursion_basic_48
+(u_2503 / believe-01  :ARG0 (r / you)  :ARG1 (u_2500 / know-01  :ARG0 (u_2505 / man)  :ARG1 (u_2499 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_2497 / say-01  :ARG0 (u_2502 / kid)  :ARG1 (u_2496 / say-01  :ARG0 (d / doctor)  :ARG1 (u_2495 / sleep-01  :ARG0 (u_2498 / we)))))))
+
+# ::snt The lawyer thought that the men knew that the kids heard that the doctor said that the astronaut thought that the girls won
+# ::tree TP_CP(thought,lawyer,TP_CP(knew,men,TP_CP(heard,kids,TP_CP(said,doctor,TP_CP(thought,astronaut,TP_intr(won,girls))))))
+# ::size0 6
+# ::id deep_recursion_basic_49
+(u_2513 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2511 / know-01  :ARG0 (r / man)  :ARG1 (u_2509 / hear-01  :ARG0 (u_2512 / kid)  :ARG1 (u_2508 / say-01  :ARG0 (d / doctor)  :ARG1 (u_2507 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_2506 / win-01  :ARG0 (u_2510 / girl)))))))
+
+# ::snt The men believed that the girls said that the women heard that the soldier believed that the doctor mentioned that the boys knew that you arrived
+# ::tree TP_CP(believed,men,TP_CP(said,girls,TP_CP(heard,women,TP_CP(believed,soldier,TP_CP(mentioned,doctor,TP_CP(knew,boys,TP_intr(arrived,you)))))))
+# ::size0 7
+# ::id deep_recursion_basic_50
+(u_2525 / believe-01  :ARG0 (r / man)  :ARG1 (u_2522 / say-01  :ARG0 (u_2527 / girl)  :ARG1 (u_2519 / hear-01  :ARG0 (u_2524 / woman)  :ARG1 (u_2518 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2517 / mention-01  :ARG0 (d / doctor)  :ARG1 (u_2515 / know-01  :ARG0 (u_2521 / boy)  :ARG1 (u_2514 / arrive-01  :ARG1 (u_2516 / you))))))))
+
+# ::snt The women heard that the girls believed that the doctor believed that the lawyer thought that the soldier said that I knew that the boys arrived
+# ::tree TP_CP(heard,women,TP_CP(believed,girls,TP_CP(believed,doctor,TP_CP(thought,lawyer,TP_CP(said,soldier,TP_CP(knew,I,TP_intr(arrived,boys)))))))
+# ::size0 7
+# ::id deep_recursion_basic_51
+(u_2539 / hear-01  :ARG0 (r / woman)  :ARG1 (u_2536 / believe-01  :ARG0 (u_2541 / girl)  :ARG1 (u_2534 / believe-01  :ARG0 (d / doctor)  :ARG1 (u_2532 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2531 / say-01  :ARG0 (s / soldier)  :ARG1 (u_2529 / know-01  :ARG0 (u_2538 / i)  :ARG1 (u_2528 / arrive-01  :ARG1 (u_2530 / boy))))))))
+
+# ::snt The boys thought that the astronaut mentioned that you said that I thought that the women thought that the men mentioned that the kids slept
+# ::tree TP_CP(thought,boys,TP_CP(mentioned,astronaut,TP_CP(said,you,TP_CP(thought,I,TP_CP(thought,women,TP_CP(mentioned,men,TP_intr(slept,kids)))))))
+# ::size0 7
+# ::id deep_recursion_basic_52
+(u_2552 / think-01  :ARG0 (r / boy)  :ARG1 (u_2551 / mention-01  :ARG0 (a / astronaut)  :ARG1 (u_2549 / say-01  :ARG0 (u_2553 / you)  :ARG1 (u_2547 / think-01  :ARG0 (u_2550 / i)  :ARG1 (u_2545 / think-01  :ARG0 (u_2548 / woman)  :ARG1 (u_2543 / mention-01  :ARG0 (u_2546 / man)  :ARG1 (u_2542 / sleep-01  :ARG0 (u_2544 / kid))))))))
+
+# ::snt The women believed that the men thought that the astronaut mentioned that the lawyer knew that the doctor believed that we thought that I left
+# ::tree TP_CP(believed,women,TP_CP(thought,men,TP_CP(mentioned,astronaut,TP_CP(knew,lawyer,TP_CP(believed,doctor,TP_CP(thought,we,TP_intr(left,I)))))))
+# ::size0 7
+# ::id deep_recursion_basic_53
+(u_2562 / believe-01  :ARG0 (r / woman)  :ARG1 (u_2560 / think-01  :ARG0 (u_2563 / man)  :ARG1 (u_2559 / mention-01  :ARG0 (a / astronaut)  :ARG1 (u_2558 / know-01  :ARG0 (m / lawyer)  :ARG1 (u_2557 / believe-01  :ARG0 (d / doctor)  :ARG1 (u_2555 / think-01  :ARG0 (u_2561 / we)  :ARG1 (u_2554 / leave-11  :ARG0 (u_2556 / i))))))))
+
+# ::snt The boys said that the kids said that you said that the men knew that the lawyer said that I thought that the astronaut won
+# ::tree TP_CP(said,boys,TP_CP(said,kids,TP_CP(said,you,TP_CP(knew,men,TP_CP(said,lawyer,TP_CP(thought,I,TP_intr(won,astronaut)))))))
+# ::size0 7
+# ::id deep_recursion_basic_54
+(u_2573 / say-01  :ARG0 (r / boy)  :ARG1 (u_2571 / say-01  :ARG0 (u_2574 / kid)  :ARG1 (u_2569 / say-01  :ARG0 (u_2572 / you)  :ARG1 (u_2567 / know-01  :ARG0 (u_2570 / man)  :ARG1 (u_2566 / say-01  :ARG0 (m / lawyer)  :ARG1 (u_2564 / think-01  :ARG0 (u_2568 / i)  :ARG1 (u_2565 / win-01  :ARG0 (a / astronaut))))))))
+
+# ::snt We said that you thought that the lawyer thought that the soldier thought that the men believed that the kids believed that the women won
+# ::tree TP_CP(said,we,TP_CP(thought,you,TP_CP(thought,lawyer,TP_CP(thought,soldier,TP_CP(believed,men,TP_CP(believed,kids,TP_intr(won,women)))))))
+# ::size0 7
+# ::id deep_recursion_basic_55
+(u_2586 / say-01  :ARG0 (r / we)  :ARG1 (u_2583 / think-01  :ARG0 (u_2588 / you)  :ARG1 (u_2581 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2580 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2578 / believe-01  :ARG0 (u_2585 / man)  :ARG1 (u_2576 / believe-01  :ARG0 (u_2579 / kid)  :ARG1 (u_2575 / win-01  :ARG0 (u_2577 / woman))))))))
+
+# ::snt The men mentioned that the women believed that the girls said that the soldier knew that the astronaut heard that the kids mentioned that the doctor left
+# ::tree TP_CP(mentioned,men,TP_CP(believed,women,TP_CP(said,girls,TP_CP(knew,soldier,TP_CP(heard,astronaut,TP_CP(mentioned,kids,TP_intr(left,doctor)))))))
+# ::size0 7
+# ::id deep_recursion_basic_56
+(u_2599 / mention-01  :ARG0 (r / man)  :ARG1 (u_2596 / believe-01  :ARG0 (u_2601 / woman)  :ARG1 (u_2593 / say-01  :ARG0 (u_2598 / girl)  :ARG1 (u_2592 / know-01  :ARG0 (s / soldier)  :ARG1 (u_2591 / hear-01  :ARG0 (a / astronaut)  :ARG1 (u_2589 / mention-01  :ARG0 (u_2595 / kid)  :ARG1 (u_2590 / leave-11  :ARG0 (d / doctor))))))))
+
+# ::snt The women believed that the kids knew that the doctor thought that the soldier believed that the astronaut heard that the boys thought that I slept
+# ::tree TP_CP(believed,women,TP_CP(knew,kids,TP_CP(thought,doctor,TP_CP(believed,soldier,TP_CP(heard,astronaut,TP_CP(thought,boys,TP_intr(slept,I)))))))
+# ::size0 7
+# ::id deep_recursion_basic_57
+(u_2612 / believe-01  :ARG0 (r / woman)  :ARG1 (u_2609 / know-01  :ARG0 (u_2614 / kid)  :ARG1 (u_2607 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2606 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2605 / hear-01  :ARG0 (a / astronaut)  :ARG1 (u_2603 / think-01  :ARG0 (u_2611 / boy)  :ARG1 (u_2602 / sleep-01  :ARG0 (u_2604 / i))))))))
+
+# ::snt The soldier knew that the men mentioned that the boys heard that the astronaut believed that you believed that the kids thought that the doctor slept
+# ::tree TP_CP(knew,soldier,TP_CP(mentioned,men,TP_CP(heard,boys,TP_CP(believed,astronaut,TP_CP(believed,you,TP_CP(thought,kids,TP_intr(slept,doctor)))))))
+# ::size0 7
+# ::id deep_recursion_basic_58
+(u_2624 / know-01  :ARG0 (s / soldier)  :ARG1 (u_2622 / mention-01  :ARG0 (r / man)  :ARG1 (u_2620 / hear-01  :ARG0 (u_2623 / boy)  :ARG1 (u_2619 / believe-01  :ARG0 (a / astronaut)  :ARG1 (u_2617 / believe-01  :ARG0 (u_2621 / you)  :ARG1 (u_2615 / think-01  :ARG0 (u_2618 / kid)  :ARG1 (u_2616 / sleep-01  :ARG0 (d / doctor))))))))
+
+# ::snt The women said that the doctor knew that the astronaut thought that the girls knew that I said that the soldier knew that you arrived
+# ::tree TP_CP(said,women,TP_CP(knew,doctor,TP_CP(thought,astronaut,TP_CP(knew,girls,TP_CP(said,I,TP_CP(knew,soldier,TP_intr(arrived,you)))))))
+# ::size0 7
+# ::id deep_recursion_basic_59
+(u_2637 / say-01  :ARG0 (r / woman)  :ARG1 (u_2635 / know-01  :ARG0 (d / doctor)  :ARG1 (u_2633 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_2630 / know-01  :ARG0 (u_2639 / girl)  :ARG1 (u_2627 / say-01  :ARG0 (u_2632 / i)  :ARG1 (u_2626 / know-01  :ARG0 (s / soldier)  :ARG1 (u_2625 / arrive-01  :ARG1 (u_2629 / you))))))))
+
+# ::snt I heard that the lawyer thought that the women said that the soldier believed that the kids thought that the doctor knew that you believed that the astronaut left
+# ::tree TP_CP(heard,I,TP_CP(thought,lawyer,TP_CP(said,women,TP_CP(believed,soldier,TP_CP(thought,kids,TP_CP(knew,doctor,TP_CP(believed,you,TP_intr(left,astronaut))))))))
+# ::size0 8
+# ::id deep_recursion_basic_60
+(u_2651 / hear-01  :ARG0 (r / i)  :ARG1 (u_2649 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2646 / say-01  :ARG0 (u_2653 / woman)  :ARG1 (u_2645 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2643 / think-01  :ARG0 (u_2648 / kid)  :ARG1 (u_2642 / know-01  :ARG0 (d / doctor)  :ARG1 (u_2640 / believe-01  :ARG0 (u_2644 / you)  :ARG1 (u_2641 / leave-11  :ARG0 (a / astronaut)))))))))
+
+# ::snt The girls knew that the soldier believed that I knew that we believed that the doctor thought that the men knew that the kids heard that you left
+# ::tree TP_CP(knew,girls,TP_CP(believed,soldier,TP_CP(knew,I,TP_CP(believed,we,TP_CP(thought,doctor,TP_CP(knew,men,TP_CP(heard,kids,TP_intr(left,you))))))))
+# ::size0 8
+# ::id deep_recursion_basic_61
+(u_2665 / know-01  :ARG0 (r / girl)  :ARG1 (u_2664 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2662 / know-01  :ARG0 (u_2667 / i)  :ARG1 (u_2660 / believe-01  :ARG0 (u_2663 / we)  :ARG1 (u_2659 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2657 / know-01  :ARG0 (u_2661 / man)  :ARG1 (u_2655 / hear-01  :ARG0 (u_2658 / kid)  :ARG1 (u_2654 / leave-11  :ARG0 (u_2656 / you)))))))))
+
+# ::snt The lawyer knew that the girls mentioned that you knew that the doctor knew that the soldier believed that the astronaut knew that I said that we left
+# ::tree TP_CP(knew,lawyer,TP_CP(mentioned,girls,TP_CP(knew,you,TP_CP(knew,doctor,TP_CP(believed,soldier,TP_CP(knew,astronaut,TP_CP(said,I,TP_intr(left,we))))))))
+# ::size0 8
+# ::id deep_recursion_basic_62
+(u_2681 / know-01  :ARG0 (m / lawyer)  :ARG1 (u_2678 / mention-01  :ARG0 (r / girl)  :ARG1 (u_2675 / know-01  :ARG0 (u_2680 / you)  :ARG1 (u_2673 / know-01  :ARG0 (d / doctor)  :ARG1 (u_2672 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2671 / know-01  :ARG0 (a / astronaut)  :ARG1 (u_2669 / say-01  :ARG0 (u_2677 / i)  :ARG1 (u_2668 / leave-11  :ARG0 (u_2670 / we)))))))))
+
+# ::snt You thought that the kids thought that the doctor mentioned that I believed that we mentioned that the boys mentioned that the men mentioned that the soldier arrived
+# ::tree TP_CP(thought,you,TP_CP(thought,kids,TP_CP(mentioned,doctor,TP_CP(believed,I,TP_CP(mentioned,we,TP_CP(mentioned,boys,TP_CP(mentioned,men,TP_intr(arrived,soldier))))))))
+# ::size0 8
+# ::id deep_recursion_basic_63
+(u_2700 / think-01  :ARG0 (r / you)  :ARG1 (u_2697 / think-01  :ARG0 (u_2702 / kid)  :ARG1 (u_2695 / mention-01  :ARG0 (d / doctor)  :ARG1 (u_2692 / believe-01  :ARG0 (u_2699 / i)  :ARG1 (u_2689 / mention-01  :ARG0 (u_2694 / we)  :ARG1 (u_2686 / mention-01  :ARG0 (u_2691 / boy)  :ARG1 (u_2683 / mention-01  :ARG0 (u_2688 / man)  :ARG1 (u_2685 / arrive-01  :ARG1 (s / soldier)))))))))
+
+# ::snt I thought that the kids mentioned that you knew that the lawyer knew that the women believed that the men believed that the astronaut mentioned that the girls won
+# ::tree TP_CP(thought,I,TP_CP(mentioned,kids,TP_CP(knew,you,TP_CP(knew,lawyer,TP_CP(believed,women,TP_CP(believed,men,TP_CP(mentioned,astronaut,TP_intr(won,girls))))))))
+# ::size0 8
+# ::id deep_recursion_basic_64
+(u_2714 / think-01  :ARG0 (r / i)  :ARG1 (u_2712 / mention-01  :ARG0 (u_2715 / kid)  :ARG1 (u_2710 / know-01  :ARG0 (u_2713 / you)  :ARG1 (u_2709 / know-01  :ARG0 (m / lawyer)  :ARG1 (u_2707 / believe-01  :ARG0 (u_2711 / woman)  :ARG1 (u_2705 / believe-01  :ARG0 (u_2708 / man)  :ARG1 (u_2704 / mention-01  :ARG0 (a / astronaut)  :ARG1 (u_2703 / win-01  :ARG0 (u_2706 / girl)))))))))
+
+# ::snt We believed that the women thought that the men thought that I heard that the lawyer heard that the boys heard that the kids believed that the astronaut arrived
+# ::tree TP_CP(believed,we,TP_CP(thought,women,TP_CP(thought,men,TP_CP(heard,I,TP_CP(heard,lawyer,TP_CP(heard,boys,TP_CP(believed,kids,TP_intr(arrived,astronaut))))))))
+# ::size0 8
+# ::id deep_recursion_basic_65
+(u_2727 / believe-01  :ARG0 (r / we)  :ARG1 (u_2725 / think-01  :ARG0 (u_2728 / woman)  :ARG1 (u_2723 / think-01  :ARG0 (u_2726 / man)  :ARG1 (u_2721 / hear-01  :ARG0 (u_2724 / i)  :ARG1 (u_2720 / hear-01  :ARG0 (m / lawyer)  :ARG1 (u_2718 / hear-01  :ARG0 (u_2722 / boy)  :ARG1 (u_2716 / believe-01  :ARG0 (u_2719 / kid)  :ARG1 (u_2717 / arrive-01  :ARG1 (a / astronaut)))))))))
+
+# ::snt The men mentioned that the kids believed that the women knew that the soldier heard that we thought that you believed that the girls heard that I slept
+# ::tree TP_CP(mentioned,men,TP_CP(believed,kids,TP_CP(knew,women,TP_CP(heard,soldier,TP_CP(thought,we,TP_CP(believed,you,TP_CP(heard,girls,TP_intr(slept,I))))))))
+# ::size0 8
+# ::id deep_recursion_basic_66
+(u_2743 / mention-01  :ARG0 (r / man)  :ARG1 (u_2740 / believe-01  :ARG0 (u_2745 / kid)  :ARG1 (u_2737 / know-01  :ARG0 (u_2742 / woman)  :ARG1 (u_2736 / hear-01  :ARG0 (s / soldier)  :ARG1 (u_2734 / think-01  :ARG0 (u_2739 / we)  :ARG1 (u_2732 / believe-01  :ARG0 (u_2735 / you)  :ARG1 (u_2730 / hear-01  :ARG0 (u_2733 / girl)  :ARG1 (u_2729 / sleep-01  :ARG0 (u_2731 / i)))))))))
+
+# ::snt The kids said that the boys heard that you believed that the lawyer thought that I knew that the girls mentioned that the astronaut said that the soldier left
+# ::tree TP_CP(said,kids,TP_CP(heard,boys,TP_CP(believed,you,TP_CP(thought,lawyer,TP_CP(knew,I,TP_CP(mentioned,girls,TP_CP(said,astronaut,TP_intr(left,soldier))))))))
+# ::size0 8
+# ::id deep_recursion_basic_67
+(u_2762 / say-01  :ARG0 (r / kid)  :ARG1 (u_2759 / hear-01  :ARG0 (u_2764 / boy)  :ARG1 (u_2756 / believe-01  :ARG0 (u_2761 / you)  :ARG1 (u_2754 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2751 / know-01  :ARG0 (u_2758 / i)  :ARG1 (u_2748 / mention-01  :ARG0 (u_2753 / girl)  :ARG1 (u_2746 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2750 / leave-11  :ARG0 (s / soldier)))))))))
+
+# ::snt The astronaut said that I heard that the soldier thought that the girls knew that you said that the lawyer heard that the kids knew that we won
+# ::tree TP_CP(said,astronaut,TP_CP(heard,I,TP_CP(thought,soldier,TP_CP(knew,girls,TP_CP(said,you,TP_CP(heard,lawyer,TP_CP(knew,kids,TP_intr(won,we))))))))
+# ::size0 8
+# ::id deep_recursion_basic_68
+(u_2777 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2774 / hear-01  :ARG0 (r / i)  :ARG1 (u_2773 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2771 / know-01  :ARG0 (u_2776 / girl)  :ARG1 (u_2769 / say-01  :ARG0 (u_2772 / you)  :ARG1 (u_2768 / hear-01  :ARG0 (m / lawyer)  :ARG1 (u_2766 / know-01  :ARG0 (u_2770 / kid)  :ARG1 (u_2765 / win-01  :ARG0 (u_2767 / we)))))))))
+
+# ::snt The doctor believed that the men believed that the astronaut thought that the girls heard that the soldier believed that I said that we said that the lawyer arrived
+# ::tree TP_CP(believed,doctor,TP_CP(believed,men,TP_CP(thought,astronaut,TP_CP(heard,girls,TP_CP(believed,soldier,TP_CP(said,I,TP_CP(said,we,TP_intr(arrived,lawyer))))))))
+# ::size0 8
+# ::id deep_recursion_basic_69
+(u_2792 / believe-01  :ARG0 (d / doctor)  :ARG1 (u_2789 / believe-01  :ARG0 (r / man)  :ARG1 (u_2787 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_2784 / hear-01  :ARG0 (u_2791 / girl)  :ARG1 (u_2783 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2781 / say-01  :ARG0 (u_2786 / i)  :ARG1 (u_2779 / say-01  :ARG0 (u_2782 / we)  :ARG1 (u_2780 / arrive-01  :ARG1 (m / lawyer)))))))))
+
+# ::snt The soldier believed that we thought that the boys believed that the astronaut believed that the men mentioned that the girls heard that the kids said that you thought that the women won
+# ::tree TP_CP(believed,soldier,TP_CP(thought,we,TP_CP(believed,boys,TP_CP(believed,astronaut,TP_CP(mentioned,men,TP_CP(heard,girls,TP_CP(said,kids,TP_CP(thought,you,TP_intr(won,women)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_70
+(u_2808 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_2806 / think-01  :ARG0 (r / we)  :ARG1 (u_2804 / believe-01  :ARG0 (u_2807 / boy)  :ARG1 (u_2803 / believe-01  :ARG0 (a / astronaut)  :ARG1 (u_2801 / mention-01  :ARG0 (u_2805 / man)  :ARG1 (u_2799 / hear-01  :ARG0 (u_2802 / girl)  :ARG1 (u_2797 / say-01  :ARG0 (u_2800 / kid)  :ARG1 (u_2795 / think-01  :ARG0 (u_2798 / you)  :ARG1 (u_2794 / win-01  :ARG0 (u_2796 / woman))))))))))
+
+# ::snt The women heard that the doctor believed that the kids thought that the lawyer mentioned that the girls said that the soldier said that the astronaut said that the men said that the boys slept
+# ::tree TP_CP(heard,women,TP_CP(believed,doctor,TP_CP(thought,kids,TP_CP(mentioned,lawyer,TP_CP(said,girls,TP_CP(said,soldier,TP_CP(said,astronaut,TP_CP(said,men,TP_intr(slept,boys)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_71
+(u_2824 / hear-01  :ARG0 (r / woman)  :ARG1 (u_2822 / believe-01  :ARG0 (d / doctor)  :ARG1 (u_2819 / think-01  :ARG0 (u_2826 / kid)  :ARG1 (u_2817 / mention-01  :ARG0 (m / lawyer)  :ARG1 (u_2814 / say-01  :ARG0 (u_2821 / girl)  :ARG1 (u_2813 / say-01  :ARG0 (s / soldier)  :ARG1 (u_2812 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2810 / say-01  :ARG0 (u_2816 / man)  :ARG1 (u_2809 / sleep-01  :ARG0 (u_2811 / boy))))))))))
+
+# ::snt The astronaut said that the doctor thought that we believed that the girls mentioned that the lawyer mentioned that the men heard that the soldier said that I said that the women left
+# ::tree TP_CP(said,astronaut,TP_CP(thought,doctor,TP_CP(believed,we,TP_CP(mentioned,girls,TP_CP(mentioned,lawyer,TP_CP(heard,men,TP_CP(said,soldier,TP_CP(said,I,TP_intr(left,women)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_72
+(u_2844 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2842 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2839 / believe-01  :ARG0 (r / we)  :ARG1 (u_2836 / mention-01  :ARG0 (u_2841 / girl)  :ARG1 (u_2834 / mention-01  :ARG0 (m / lawyer)  :ARG1 (u_2831 / hear-01  :ARG0 (u_2838 / man)  :ARG1 (u_2830 / say-01  :ARG0 (s / soldier)  :ARG1 (u_2828 / say-01  :ARG0 (u_2833 / i)  :ARG1 (u_2827 / leave-11  :ARG0 (u_2829 / woman))))))))))
+
+# ::snt The lawyer said that the men thought that the kids heard that the girls mentioned that the women thought that the doctor mentioned that the astronaut knew that I heard that we arrived
+# ::tree TP_CP(said,lawyer,TP_CP(thought,men,TP_CP(heard,kids,TP_CP(mentioned,girls,TP_CP(thought,women,TP_CP(mentioned,doctor,TP_CP(knew,astronaut,TP_CP(heard,I,TP_intr(arrived,we)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_73
+(u_2859 / say-01  :ARG0 (m / lawyer)  :ARG1 (u_2857 / think-01  :ARG0 (r / man)  :ARG1 (u_2855 / hear-01  :ARG0 (u_2858 / kid)  :ARG1 (u_2853 / mention-01  :ARG0 (u_2856 / girl)  :ARG1 (u_2851 / think-01  :ARG0 (u_2854 / woman)  :ARG1 (u_2850 / mention-01  :ARG0 (d / doctor)  :ARG1 (u_2849 / know-01  :ARG0 (a / astronaut)  :ARG1 (u_2847 / hear-01  :ARG0 (u_2852 / i)  :ARG1 (u_2846 / arrive-01  :ARG1 (u_2848 / we))))))))))
+
+# ::snt You mentioned that the soldier thought that I heard that the astronaut said that the men said that the lawyer mentioned that the kids mentioned that the doctor heard that the women arrived
+# ::tree TP_CP(mentioned,you,TP_CP(thought,soldier,TP_CP(heard,I,TP_CP(said,astronaut,TP_CP(said,men,TP_CP(mentioned,lawyer,TP_CP(mentioned,kids,TP_CP(heard,doctor,TP_intr(arrived,women)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_74
+(u_2871 / mention-01  :ARG0 (r / you)  :ARG1 (u_2870 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2868 / hear-01  :ARG0 (u_2873 / i)  :ARG1 (u_2867 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2865 / say-01  :ARG0 (u_2869 / man)  :ARG1 (u_2864 / mention-01  :ARG0 (m / lawyer)  :ARG1 (u_2862 / mention-01  :ARG0 (u_2866 / kid)  :ARG1 (u_2861 / hear-01  :ARG0 (d / doctor)  :ARG1 (u_2860 / arrive-01  :ARG1 (u_2863 / woman))))))))))
+
+# ::snt The doctor thought that the astronaut thought that the women mentioned that the soldier mentioned that I knew that we believed that you mentioned that the men heard that the lawyer slept
+# ::tree TP_CP(thought,doctor,TP_CP(thought,astronaut,TP_CP(mentioned,women,TP_CP(mentioned,soldier,TP_CP(knew,I,TP_CP(believed,we,TP_CP(mentioned,you,TP_CP(heard,men,TP_intr(slept,lawyer)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_75
+(u_2888 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2886 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_2883 / mention-01  :ARG0 (r / woman)  :ARG1 (u_2882 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_2880 / know-01  :ARG0 (u_2885 / i)  :ARG1 (u_2878 / believe-01  :ARG0 (u_2881 / we)  :ARG1 (u_2876 / mention-01  :ARG0 (u_2879 / you)  :ARG1 (u_2874 / hear-01  :ARG0 (u_2877 / man)  :ARG1 (u_2875 / sleep-01  :ARG0 (m / lawyer))))))))))
+
+# ::snt We thought that the kids knew that the soldier thought that the lawyer knew that the men thought that I believed that the boys heard that the astronaut mentioned that the girls left
+# ::tree TP_CP(thought,we,TP_CP(knew,kids,TP_CP(thought,soldier,TP_CP(knew,lawyer,TP_CP(thought,men,TP_CP(believed,I,TP_CP(heard,boys,TP_CP(mentioned,astronaut,TP_intr(left,girls)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_76
+(u_2903 / think-01  :ARG0 (r / we)  :ARG1 (u_2900 / know-01  :ARG0 (u_2905 / kid)  :ARG1 (u_2899 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2898 / know-01  :ARG0 (m / lawyer)  :ARG1 (u_2896 / think-01  :ARG0 (u_2902 / man)  :ARG1 (u_2894 / believe-01  :ARG0 (u_2897 / i)  :ARG1 (u_2892 / hear-01  :ARG0 (u_2895 / boy)  :ARG1 (u_2891 / mention-01  :ARG0 (a / astronaut)  :ARG1 (u_2890 / leave-11  :ARG0 (u_2893 / girl))))))))))
+
+# ::snt The kids believed that you believed that the astronaut heard that the lawyer believed that I believed that the men knew that the girls said that the doctor thought that the women slept
+# ::tree TP_CP(believed,kids,TP_CP(believed,you,TP_CP(heard,astronaut,TP_CP(believed,lawyer,TP_CP(believed,I,TP_CP(knew,men,TP_CP(said,girls,TP_CP(thought,doctor,TP_intr(slept,women)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_77
+(u_2918 / believe-01  :ARG0 (r / kid)  :ARG1 (u_2916 / believe-01  :ARG0 (u_2919 / you)  :ARG1 (u_2915 / hear-01  :ARG0 (a / astronaut)  :ARG1 (u_2914 / believe-01  :ARG0 (m / lawyer)  :ARG1 (u_2912 / believe-01  :ARG0 (u_2917 / i)  :ARG1 (u_2910 / know-01  :ARG0 (u_2913 / man)  :ARG1 (u_2908 / say-01  :ARG0 (u_2911 / girl)  :ARG1 (u_2907 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2906 / sleep-01  :ARG0 (u_2909 / woman))))))))))
+
+# ::snt The men thought that the boys mentioned that we thought that the astronaut said that the soldier knew that I thought that you heard that the lawyer believed that the doctor arrived
+# ::tree TP_CP(thought,men,TP_CP(mentioned,boys,TP_CP(thought,we,TP_CP(said,astronaut,TP_CP(knew,soldier,TP_CP(thought,I,TP_CP(heard,you,TP_CP(believed,lawyer,TP_intr(arrived,doctor)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_78
+(u_2934 / think-01  :ARG0 (r / man)  :ARG1 (u_2931 / mention-01  :ARG0 (u_2936 / boy)  :ARG1 (u_2928 / think-01  :ARG0 (u_2933 / we)  :ARG1 (u_2926 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2925 / know-01  :ARG0 (s / soldier)  :ARG1 (u_2923 / think-01  :ARG0 (u_2930 / i)  :ARG1 (u_2921 / hear-01  :ARG0 (u_2924 / you)  :ARG1 (u_2920 / believe-01  :ARG0 (m / lawyer)  :ARG1 (u_2922 / arrive-01  :ARG1 (d / doctor))))))))))
+
+# ::snt You knew that the boys thought that the men knew that the astronaut said that the doctor thought that the girls knew that the soldier thought that the kids said that we won
+# ::tree TP_CP(knew,you,TP_CP(thought,boys,TP_CP(knew,men,TP_CP(said,astronaut,TP_CP(thought,doctor,TP_CP(knew,girls,TP_CP(thought,soldier,TP_CP(said,kids,TP_intr(won,we)))))))))
+# ::size0 9
+# ::id deep_recursion_basic_79
+(u_2954 / know-01  :ARG0 (r / you)  :ARG1 (u_2951 / think-01  :ARG0 (u_2956 / boy)  :ARG1 (u_2948 / know-01  :ARG0 (u_2953 / man)  :ARG1 (u_2946 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2944 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2941 / know-01  :ARG0 (u_2950 / girl)  :ARG1 (u_2940 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2938 / say-01  :ARG0 (u_2943 / kid)  :ARG1 (u_2937 / win-01  :ARG0 (u_2939 / we))))))))))
+
+# ::snt The women mentioned that the astronaut said that the soldier heard that the girls said that the lawyer said that we knew that the doctor thought that the kids knew that the boys knew that you left
+# ::tree TP_CP(mentioned,women,TP_CP(said,astronaut,TP_CP(heard,soldier,TP_CP(said,girls,TP_CP(said,lawyer,TP_CP(knew,we,TP_CP(thought,doctor,TP_CP(knew,kids,TP_CP(knew,boys,TP_intr(left,you))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_80
+(u_2971 / mention-01  :ARG0 (r / woman)  :ARG1 (u_2969 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_2968 / hear-01  :ARG0 (s / soldier)  :ARG1 (u_2966 / say-01  :ARG0 (u_2973 / girl)  :ARG1 (u_2965 / say-01  :ARG0 (m / lawyer)  :ARG1 (u_2963 / know-01  :ARG0 (u_2967 / we)  :ARG1 (u_2962 / think-01  :ARG0 (d / doctor)  :ARG1 (u_2960 / know-01  :ARG0 (u_2964 / kid)  :ARG1 (u_2958 / know-01  :ARG0 (u_2961 / boy)  :ARG1 (u_2957 / leave-11  :ARG0 (u_2959 / you)))))))))))
+
+# ::snt The lawyer thought that the kids believed that the men heard that the boys thought that I heard that we heard that the astronaut knew that the girls thought that the women believed that the soldier left
+# ::tree TP_CP(thought,lawyer,TP_CP(believed,kids,TP_CP(heard,men,TP_CP(thought,boys,TP_CP(heard,I,TP_CP(heard,we,TP_CP(knew,astronaut,TP_CP(thought,girls,TP_CP(believed,women,TP_intr(left,soldier))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_81
+(u_2997 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_2994 / believe-01  :ARG0 (r / kid)  :ARG1 (u_2991 / hear-01  :ARG0 (u_2996 / man)  :ARG1 (u_2988 / think-01  :ARG0 (u_2993 / boy)  :ARG1 (u_2985 / hear-01  :ARG0 (u_2990 / i)  :ARG1 (u_2982 / hear-01  :ARG0 (u_2987 / we)  :ARG1 (u_2980 / know-01  :ARG0 (a / astronaut)  :ARG1 (u_2977 / think-01  :ARG0 (u_2984 / girl)  :ARG1 (u_2974 / believe-01  :ARG0 (u_2979 / woman)  :ARG1 (u_2976 / leave-11  :ARG0 (s / soldier)))))))))))
+
+# ::snt We knew that you thought that the men thought that the lawyer heard that the doctor heard that the girls knew that the astronaut said that the women said that the soldier thought that I won
+# ::tree TP_CP(knew,we,TP_CP(thought,you,TP_CP(thought,men,TP_CP(heard,lawyer,TP_CP(heard,doctor,TP_CP(knew,girls,TP_CP(said,astronaut,TP_CP(said,women,TP_CP(thought,soldier,TP_intr(won,I))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_82
+(u_3019 / know-01  :ARG0 (r / we)  :ARG1 (u_3016 / think-01  :ARG0 (u_3021 / you)  :ARG1 (u_3013 / think-01  :ARG0 (u_3018 / man)  :ARG1 (u_3011 / hear-01  :ARG0 (m / lawyer)  :ARG1 (u_3009 / hear-01  :ARG0 (d / doctor)  :ARG1 (u_3006 / know-01  :ARG0 (u_3015 / girl)  :ARG1 (u_3004 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_3001 / say-01  :ARG0 (u_3008 / woman)  :ARG1 (u_3000 / think-01  :ARG0 (s / soldier)  :ARG1 (u_2999 / win-01  :ARG0 (u_3003 / i)))))))))))
+
+# ::snt The women said that the boys heard that the soldier mentioned that the astronaut said that you heard that the doctor mentioned that we believed that I knew that the kids knew that the men left
+# ::tree TP_CP(said,women,TP_CP(heard,boys,TP_CP(mentioned,soldier,TP_CP(said,astronaut,TP_CP(heard,you,TP_CP(mentioned,doctor,TP_CP(believed,we,TP_CP(knew,I,TP_CP(knew,kids,TP_intr(left,men))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_83
+(u_3037 / say-01  :ARG0 (r / woman)  :ARG1 (u_3034 / hear-01  :ARG0 (u_3039 / boy)  :ARG1 (u_3033 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_3032 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_3030 / hear-01  :ARG0 (u_3036 / you)  :ARG1 (u_3029 / mention-01  :ARG0 (d / doctor)  :ARG1 (u_3027 / believe-01  :ARG0 (u_3031 / we)  :ARG1 (u_3025 / know-01  :ARG0 (u_3028 / i)  :ARG1 (u_3023 / know-01  :ARG0 (u_3026 / kid)  :ARG1 (u_3022 / leave-11  :ARG0 (u_3024 / man)))))))))))
+
+# ::snt The soldier said that the women thought that we knew that the girls said that the kids heard that I heard that the men said that you knew that the lawyer believed that the doctor won
+# ::tree TP_CP(said,soldier,TP_CP(thought,women,TP_CP(knew,we,TP_CP(said,girls,TP_CP(heard,kids,TP_CP(heard,I,TP_CP(said,men,TP_CP(knew,you,TP_CP(believed,lawyer,TP_intr(won,doctor))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_84
+(u_3055 / say-01  :ARG0 (s / soldier)  :ARG1 (u_3053 / think-01  :ARG0 (r / woman)  :ARG1 (u_3051 / know-01  :ARG0 (u_3054 / we)  :ARG1 (u_3049 / say-01  :ARG0 (u_3052 / girl)  :ARG1 (u_3047 / hear-01  :ARG0 (u_3050 / kid)  :ARG1 (u_3045 / hear-01  :ARG0 (u_3048 / i)  :ARG1 (u_3043 / say-01  :ARG0 (u_3046 / man)  :ARG1 (u_3041 / know-01  :ARG0 (u_3044 / you)  :ARG1 (u_3040 / believe-01  :ARG0 (m / lawyer)  :ARG1 (u_3042 / win-01  :ARG0 (d / doctor)))))))))))
+
+# ::snt The kids thought that the women believed that you believed that the girls knew that the men thought that we said that the astronaut knew that the doctor said that the soldier heard that I arrived
+# ::tree TP_CP(thought,kids,TP_CP(believed,women,TP_CP(believed,you,TP_CP(knew,girls,TP_CP(thought,men,TP_CP(said,we,TP_CP(knew,astronaut,TP_CP(said,doctor,TP_CP(heard,soldier,TP_intr(arrived,I))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_85
+(u_3077 / think-01  :ARG0 (r / kid)  :ARG1 (u_3074 / believe-01  :ARG0 (u_3079 / woman)  :ARG1 (u_3071 / believe-01  :ARG0 (u_3076 / you)  :ARG1 (u_3068 / know-01  :ARG0 (u_3073 / girl)  :ARG1 (u_3065 / think-01  :ARG0 (u_3070 / man)  :ARG1 (u_3062 / say-01  :ARG0 (u_3067 / we)  :ARG1 (u_3060 / know-01  :ARG0 (a / astronaut)  :ARG1 (u_3058 / say-01  :ARG0 (d / doctor)  :ARG1 (u_3057 / hear-01  :ARG0 (s / soldier)  :ARG1 (u_3056 / arrive-01  :ARG1 (u_3064 / i)))))))))))
+
+# ::snt You said that the boys mentioned that the men said that I knew that the girls believed that the women knew that we said that the lawyer thought that the soldier believed that the doctor left
+# ::tree TP_CP(said,you,TP_CP(mentioned,boys,TP_CP(said,men,TP_CP(knew,I,TP_CP(believed,girls,TP_CP(knew,women,TP_CP(said,we,TP_CP(thought,lawyer,TP_CP(believed,soldier,TP_intr(left,doctor))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_86
+(u_3101 / say-01  :ARG0 (r / you)  :ARG1 (u_3098 / mention-01  :ARG0 (u_3103 / boy)  :ARG1 (u_3095 / say-01  :ARG0 (u_3100 / man)  :ARG1 (u_3092 / know-01  :ARG0 (u_3097 / i)  :ARG1 (u_3089 / believe-01  :ARG0 (u_3094 / girl)  :ARG1 (u_3086 / know-01  :ARG0 (u_3091 / woman)  :ARG1 (u_3083 / say-01  :ARG0 (u_3088 / we)  :ARG1 (u_3081 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_3080 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_3085 / leave-11  :ARG0 (d / doctor)))))))))))
+
+# ::snt The kids believed that we said that the women knew that the doctor believed that you knew that the boys heard that the astronaut thought that I thought that the girls mentioned that the soldier left
+# ::tree TP_CP(believed,kids,TP_CP(said,we,TP_CP(knew,women,TP_CP(believed,doctor,TP_CP(knew,you,TP_CP(heard,boys,TP_CP(thought,astronaut,TP_CP(thought,I,TP_CP(mentioned,girls,TP_intr(left,soldier))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_87
+(u_3126 / believe-01  :ARG0 (r / kid)  :ARG1 (u_3123 / say-01  :ARG0 (u_3128 / we)  :ARG1 (u_3120 / know-01  :ARG0 (u_3125 / woman)  :ARG1 (u_3118 / believe-01  :ARG0 (d / doctor)  :ARG1 (u_3115 / know-01  :ARG0 (u_3122 / you)  :ARG1 (u_3112 / hear-01  :ARG0 (u_3117 / boy)  :ARG1 (u_3110 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_3107 / think-01  :ARG0 (u_3114 / i)  :ARG1 (u_3104 / mention-01  :ARG0 (u_3109 / girl)  :ARG1 (u_3106 / leave-11  :ARG0 (s / soldier)))))))))))
+
+# ::snt The men knew that the lawyer knew that the boys mentioned that the women mentioned that the astronaut said that we knew that the doctor mentioned that you knew that the soldier said that the kids slept
+# ::tree TP_CP(knew,men,TP_CP(knew,lawyer,TP_CP(mentioned,boys,TP_CP(mentioned,women,TP_CP(said,astronaut,TP_CP(knew,we,TP_CP(mentioned,doctor,TP_CP(knew,you,TP_CP(said,soldier,TP_intr(slept,kids))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_88
+(u_3149 / know-01  :ARG0 (r / man)  :ARG1 (u_3147 / know-01  :ARG0 (m / lawyer)  :ARG1 (u_3144 / mention-01  :ARG0 (u_3151 / boy)  :ARG1 (u_3141 / mention-01  :ARG0 (u_3146 / woman)  :ARG1 (u_3139 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_3136 / know-01  :ARG0 (u_3143 / we)  :ARG1 (u_3134 / mention-01  :ARG0 (d / doctor)  :ARG1 (u_3131 / know-01  :ARG0 (u_3138 / you)  :ARG1 (u_3130 / say-01  :ARG0 (s / soldier)  :ARG1 (u_3129 / sleep-01  :ARG0 (u_3133 / kid)))))))))))
+
+# ::snt The girls mentioned that the soldier mentioned that the kids knew that the men heard that you believed that the astronaut heard that we mentioned that I believed that the women thought that the boys won
+# ::tree TP_CP(mentioned,girls,TP_CP(mentioned,soldier,TP_CP(knew,kids,TP_CP(heard,men,TP_CP(believed,you,TP_CP(heard,astronaut,TP_CP(mentioned,we,TP_CP(believed,I,TP_CP(thought,women,TP_intr(won,boys))))))))))
+# ::size0 10
+# ::id deep_recursion_basic_89
+(u_3167 / mention-01  :ARG0 (r / girl)  :ARG1 (u_3166 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_3164 / know-01  :ARG0 (u_3169 / kid)  :ARG1 (u_3162 / hear-01  :ARG0 (u_3165 / man)  :ARG1 (u_3160 / believe-01  :ARG0 (u_3163 / you)  :ARG1 (u_3159 / hear-01  :ARG0 (a / astronaut)  :ARG1 (u_3157 / mention-01  :ARG0 (u_3161 / we)  :ARG1 (u_3155 / believe-01  :ARG0 (u_3158 / i)  :ARG1 (u_3153 / think-01  :ARG0 (u_3156 / woman)  :ARG1 (u_3152 / win-01  :ARG0 (u_3154 / boy)))))))))))
+
+# ::snt The astronaut said that the soldier thought that I believed that the boys said that we heard that the men believed that the doctor mentioned that you said that the women heard that the girls believed that the lawyer slept
+# ::tree TP_CP(said,astronaut,TP_CP(thought,soldier,TP_CP(believed,I,TP_CP(said,boys,TP_CP(heard,we,TP_CP(believed,men,TP_CP(mentioned,doctor,TP_CP(said,you,TP_CP(heard,women,TP_CP(believed,girls,TP_intr(slept,lawyer)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_90
+(u_3186 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_3185 / think-01  :ARG0 (s / soldier)  :ARG1 (u_3183 / believe-01  :ARG0 (r / i)  :ARG1 (u_3181 / say-01  :ARG0 (u_3184 / boy)  :ARG1 (u_3179 / hear-01  :ARG0 (u_3182 / we)  :ARG1 (u_3177 / believe-01  :ARG0 (u_3180 / man)  :ARG1 (u_3176 / mention-01  :ARG0 (d / doctor)  :ARG1 (u_3174 / say-01  :ARG0 (u_3178 / you)  :ARG1 (u_3172 / hear-01  :ARG0 (u_3175 / woman)  :ARG1 (u_3170 / believe-01  :ARG0 (u_3173 / girl)  :ARG1 (u_3171 / sleep-01  :ARG0 (m / lawyer))))))))))))
+
+# ::snt I believed that the boys heard that we mentioned that the soldier mentioned that the girls believed that the lawyer believed that the women mentioned that you knew that the men knew that the astronaut said that the doctor won
+# ::tree TP_CP(believed,I,TP_CP(heard,boys,TP_CP(mentioned,we,TP_CP(mentioned,soldier,TP_CP(believed,girls,TP_CP(believed,lawyer,TP_CP(mentioned,women,TP_CP(knew,you,TP_CP(knew,men,TP_CP(said,astronaut,TP_intr(won,doctor)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_91
+(u_3205 / believe-01  :ARG0 (r / i)  :ARG1 (u_3202 / hear-01  :ARG0 (u_3207 / boy)  :ARG1 (u_3199 / mention-01  :ARG0 (u_3204 / we)  :ARG1 (u_3198 / mention-01  :ARG0 (s / soldier)  :ARG1 (u_3196 / believe-01  :ARG0 (u_3201 / girl)  :ARG1 (u_3195 / believe-01  :ARG0 (m / lawyer)  :ARG1 (u_3193 / mention-01  :ARG0 (u_3197 / woman)  :ARG1 (u_3191 / know-01  :ARG0 (u_3194 / you)  :ARG1 (u_3189 / know-01  :ARG0 (u_3192 / man)  :ARG1 (u_3188 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_3190 / win-01  :ARG0 (d / doctor))))))))))))
+
+# ::snt The men knew that the soldier said that the lawyer mentioned that I believed that the women mentioned that the astronaut thought that the kids heard that the boys mentioned that you mentioned that the doctor believed that the girls left
+# ::tree TP_CP(knew,men,TP_CP(said,soldier,TP_CP(mentioned,lawyer,TP_CP(believed,I,TP_CP(mentioned,women,TP_CP(thought,astronaut,TP_CP(heard,kids,TP_CP(mentioned,boys,TP_CP(mentioned,you,TP_CP(believed,doctor,TP_intr(left,girls)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_92
+(u_3223 / know-01  :ARG0 (r / man)  :ARG1 (u_3222 / say-01  :ARG0 (s / soldier)  :ARG1 (u_3221 / mention-01  :ARG0 (m / lawyer)  :ARG1 (u_3219 / believe-01  :ARG0 (u_3225 / i)  :ARG1 (u_3217 / mention-01  :ARG0 (u_3220 / woman)  :ARG1 (u_3216 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_3214 / hear-01  :ARG0 (u_3218 / kid)  :ARG1 (u_3212 / mention-01  :ARG0 (u_3215 / boy)  :ARG1 (u_3210 / mention-01  :ARG0 (u_3213 / you)  :ARG1 (u_3209 / believe-01  :ARG0 (d / doctor)  :ARG1 (u_3208 / leave-11  :ARG0 (u_3211 / girl))))))))))))
+
+# ::snt The girls knew that the kids thought that the boys knew that the astronaut said that you said that the soldier believed that I heard that the doctor believed that the women mentioned that the men mentioned that the lawyer arrived
+# ::tree TP_CP(knew,girls,TP_CP(thought,kids,TP_CP(knew,boys,TP_CP(said,astronaut,TP_CP(said,you,TP_CP(believed,soldier,TP_CP(heard,I,TP_CP(believed,doctor,TP_CP(mentioned,women,TP_CP(mentioned,men,TP_intr(arrived,lawyer)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_93
+(u_3245 / know-01  :ARG0 (r / girl)  :ARG1 (u_3242 / think-01  :ARG0 (u_3247 / kid)  :ARG1 (u_3239 / know-01  :ARG0 (u_3244 / boy)  :ARG1 (u_3237 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_3234 / say-01  :ARG0 (u_3241 / you)  :ARG1 (u_3233 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_3231 / hear-01  :ARG0 (u_3236 / i)  :ARG1 (u_3230 / believe-01  :ARG0 (d / doctor)  :ARG1 (u_3228 / mention-01  :ARG0 (u_3232 / woman)  :ARG1 (u_3226 / mention-01  :ARG0 (u_3229 / man)  :ARG1 (u_3227 / arrive-01  :ARG1 (m / lawyer))))))))))))
+
+# ::snt You believed that the women thought that the men believed that the kids knew that the astronaut said that I said that the doctor thought that the girls thought that we heard that the lawyer thought that the soldier left
+# ::tree TP_CP(believed,you,TP_CP(thought,women,TP_CP(believed,men,TP_CP(knew,kids,TP_CP(said,astronaut,TP_CP(said,I,TP_CP(thought,doctor,TP_CP(thought,girls,TP_CP(heard,we,TP_CP(thought,lawyer,TP_intr(left,soldier)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_94
+(u_3272 / believe-01  :ARG0 (r / you)  :ARG1 (u_3269 / think-01  :ARG0 (u_3274 / woman)  :ARG1 (u_3266 / believe-01  :ARG0 (u_3271 / man)  :ARG1 (u_3263 / know-01  :ARG0 (u_3268 / kid)  :ARG1 (u_3261 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_3258 / say-01  :ARG0 (u_3265 / i)  :ARG1 (u_3256 / think-01  :ARG0 (d / doctor)  :ARG1 (u_3253 / think-01  :ARG0 (u_3260 / girl)  :ARG1 (u_3250 / hear-01  :ARG0 (u_3255 / we)  :ARG1 (u_3248 / think-01  :ARG0 (m / lawyer)  :ARG1 (u_3252 / leave-11  :ARG0 (s / soldier))))))))))))
+
+# ::snt The men thought that we heard that the astronaut mentioned that the boys believed that the girls heard that the kids said that the soldier knew that the lawyer said that you believed that the doctor heard that I arrived
+# ::tree TP_CP(thought,men,TP_CP(heard,we,TP_CP(mentioned,astronaut,TP_CP(believed,boys,TP_CP(heard,girls,TP_CP(said,kids,TP_CP(knew,soldier,TP_CP(said,lawyer,TP_CP(believed,you,TP_CP(heard,doctor,TP_intr(arrived,I)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_95
+(u_3295 / think-01  :ARG0 (r / man)  :ARG1 (u_3292 / hear-01  :ARG0 (u_3297 / we)  :ARG1 (u_3290 / mention-01  :ARG0 (a / astronaut)  :ARG1 (u_3287 / believe-01  :ARG0 (u_3294 / boy)  :ARG1 (u_3284 / hear-01  :ARG0 (u_3289 / girl)  :ARG1 (u_3281 / say-01  :ARG0 (u_3286 / kid)  :ARG1 (u_3280 / know-01  :ARG0 (s / soldier)  :ARG1 (u_3279 / say-01  :ARG0 (m / lawyer)  :ARG1 (u_3277 / believe-01  :ARG0 (u_3283 / you)  :ARG1 (u_3276 / hear-01  :ARG0 (d / doctor)  :ARG1 (u_3275 / arrive-01  :ARG1 (u_3278 / i))))))))))))
+
+# ::snt The kids heard that the women believed that the lawyer said that the soldier knew that the boys knew that you thought that we said that I mentioned that the doctor thought that the girls thought that the men slept
+# ::tree TP_CP(heard,kids,TP_CP(believed,women,TP_CP(said,lawyer,TP_CP(knew,soldier,TP_CP(knew,boys,TP_CP(thought,you,TP_CP(said,we,TP_CP(mentioned,I,TP_CP(thought,doctor,TP_CP(thought,girls,TP_intr(slept,men)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_96
+(u_3316 / hear-01  :ARG0 (r / kid)  :ARG1 (u_3313 / believe-01  :ARG0 (u_3318 / woman)  :ARG1 (u_3311 / say-01  :ARG0 (m / lawyer)  :ARG1 (u_3310 / know-01  :ARG0 (s / soldier)  :ARG1 (u_3308 / know-01  :ARG0 (u_3315 / boy)  :ARG1 (u_3306 / think-01  :ARG0 (u_3309 / you)  :ARG1 (u_3304 / say-01  :ARG0 (u_3307 / we)  :ARG1 (u_3302 / mention-01  :ARG0 (u_3305 / i)  :ARG1 (u_3301 / think-01  :ARG0 (d / doctor)  :ARG1 (u_3299 / think-01  :ARG0 (u_3303 / girl)  :ARG1 (u_3298 / sleep-01  :ARG0 (u_3300 / man))))))))))))
+
+# ::snt The astronaut said that the men mentioned that we mentioned that the kids heard that the boys heard that the women said that the doctor said that you mentioned that the soldier believed that the girls thought that the lawyer slept
+# ::tree TP_CP(said,astronaut,TP_CP(mentioned,men,TP_CP(mentioned,we,TP_CP(heard,kids,TP_CP(heard,boys,TP_CP(said,women,TP_CP(said,doctor,TP_CP(mentioned,you,TP_CP(believed,soldier,TP_CP(thought,girls,TP_intr(slept,lawyer)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_97
+(u_3342 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_3339 / mention-01  :ARG0 (r / man)  :ARG1 (u_3336 / mention-01  :ARG0 (u_3341 / we)  :ARG1 (u_3333 / hear-01  :ARG0 (u_3338 / kid)  :ARG1 (u_3330 / hear-01  :ARG0 (u_3335 / boy)  :ARG1 (u_3327 / say-01  :ARG0 (u_3332 / woman)  :ARG1 (u_3325 / say-01  :ARG0 (d / doctor)  :ARG1 (u_3322 / mention-01  :ARG0 (u_3329 / you)  :ARG1 (u_3321 / believe-01  :ARG0 (s / soldier)  :ARG1 (u_3319 / think-01  :ARG0 (u_3324 / girl)  :ARG1 (u_3320 / sleep-01  :ARG0 (m / lawyer))))))))))))
+
+# ::snt The doctor said that the women believed that you mentioned that I mentioned that the men mentioned that the astronaut heard that the girls heard that we said that the soldier said that the boys heard that the lawyer won
+# ::tree TP_CP(said,doctor,TP_CP(believed,women,TP_CP(mentioned,you,TP_CP(mentioned,I,TP_CP(mentioned,men,TP_CP(heard,astronaut,TP_CP(heard,girls,TP_CP(said,we,TP_CP(said,soldier,TP_CP(heard,boys,TP_intr(won,lawyer)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_98
+(u_3367 / say-01  :ARG0 (d / doctor)  :ARG1 (u_3364 / believe-01  :ARG0 (r / woman)  :ARG1 (u_3361 / mention-01  :ARG0 (u_3366 / you)  :ARG1 (u_3358 / mention-01  :ARG0 (u_3363 / i)  :ARG1 (u_3355 / mention-01  :ARG0 (u_3360 / man)  :ARG1 (u_3353 / hear-01  :ARG0 (a / astronaut)  :ARG1 (u_3350 / hear-01  :ARG0 (u_3357 / girl)  :ARG1 (u_3347 / say-01  :ARG0 (u_3352 / we)  :ARG1 (u_3346 / say-01  :ARG0 (s / soldier)  :ARG1 (u_3344 / hear-01  :ARG0 (u_3349 / boy)  :ARG1 (u_3345 / win-01  :ARG0 (m / lawyer))))))))))))
+
+# ::snt The women heard that you believed that the kids said that the astronaut believed that we knew that the men mentioned that the doctor heard that the soldier thought that the girls said that the lawyer heard that the boys won
+# ::tree TP_CP(heard,women,TP_CP(believed,you,TP_CP(said,kids,TP_CP(believed,astronaut,TP_CP(knew,we,TP_CP(mentioned,men,TP_CP(heard,doctor,TP_CP(thought,soldier,TP_CP(said,girls,TP_CP(heard,lawyer,TP_intr(won,boys)))))))))))
+# ::size0 11
+# ::id deep_recursion_basic_99
+(u_3390 / hear-01  :ARG0 (r / woman)  :ARG1 (u_3387 / believe-01  :ARG0 (u_3392 / you)  :ARG1 (u_3384 / say-01  :ARG0 (u_3389 / kid)  :ARG1 (u_3382 / believe-01  :ARG0 (a / astronaut)  :ARG1 (u_3379 / know-01  :ARG0 (u_3386 / we)  :ARG1 (u_3376 / mention-01  :ARG0 (u_3381 / man)  :ARG1 (u_3374 / hear-01  :ARG0 (d / doctor)  :ARG1 (u_3373 / think-01  :ARG0 (s / soldier)  :ARG1 (u_3371 / say-01  :ARG0 (u_3378 / girl)  :ARG1 (u_3370 / hear-01  :ARG0 (m / lawyer)  :ARG1 (u_3369 / win-01  :ARG0 (u_3372 / boy))))))))))))
+

@@ -1,0 +1,60 @@
+The local ice cream parlor offers raspberry , coffee , blueberry and mango .
+The local ice cream parlor offers coconut , green apple , peach and salted caramel .
+The local ice cream parlor offers salted caramel , orange , coconut and strawberry .
+The local ice cream parlor offers lemon , caramel , stracciatella , mint and lime .
+The local ice cream parlor offers mango , blueberry , pistachio , hazelnut and lime .
+The local ice cream parlor offers mint , caramel , vanilla , strawberry and orange .
+The local ice cream parlor offers blueberry , orange , lime , walnut , green apple and yoghurt .
+The local ice cream parlor offers pistachio , pineapple , peach , watermelon , orange and hazelnut .
+The local ice cream parlor offers lime , coconut , blueberry , mango , walnut and watermelon .
+The local ice cream parlor offers chocolate , banana , strawberry , coconut , blueberry , caramel and hazelnut .
+The local ice cream parlor offers mango , blueberry , vanilla , caramel , pineapple , salted caramel and coconut .
+The local ice cream parlor offers stracciatella , caramel , banana , pistachio , orange , coffee and raspberry .
+The local ice cream parlor offers banana , orange , coffee , walnut , watermelon , mango , pistachio and mint .
+The local ice cream parlor offers orange , walnut , mango , banana , lime , vanilla , peach and caramel .
+The local ice cream parlor offers strawberry , caramel , orange , pineapple , vanilla , raspberry , stracciatella and watermelon .
+The local ice cream parlor offers pineapple , vanilla , peach , banana , green apple , yoghurt , mango , orange and caramel .
+The local ice cream parlor offers walnut , lemon , orange , pistachio , strawberry , caramel , pineapple , yoghurt and banana .
+The local ice cream parlor offers lime , peach , banana , yoghurt , mint , pineapple , raspberry , green apple and chocolate .
+The local ice cream parlor offers green apple , watermelon , chocolate , mint , banana , blueberry , mango , caramel , coconut and pineapple .
+The local ice cream parlor offers vanilla , mint , stracciatella , lemon , mango , caramel , orange , peach , coffee and yoghurt .
+The local ice cream parlor offers salted caramel , orange , lemon , raspberry , pineapple , banana , pistachio , blueberry , hazelnut and lime .
+The local ice cream parlor offers coconut , lime , pineapple , green apple , yoghurt , orange , mango , peach , watermelon , raspberry and hazelnut .
+The local ice cream parlor offers vanilla , coffee , raspberry , blueberry , walnut , banana , hazelnut , green apple , yoghurt , watermelon and strawberry .
+The local ice cream parlor offers pistachio , orange , green apple , strawberry , blueberry , vanilla , pineapple , banana , yoghurt , stracciatella and mint .
+The local ice cream parlor offers peach , orange , strawberry , vanilla , watermelon , chocolate , hazelnut , caramel , coconut , green apple , salted caramel and walnut .
+The local ice cream parlor offers orange , mint , green apple , banana , caramel , raspberry , strawberry , peach , coconut , pineapple , lime and coffee .
+The local ice cream parlor offers lemon , coffee , walnut , blueberry , peach , mango , raspberry , yoghurt , vanilla , chocolate , mint and pineapple .
+The local ice cream parlor offers green apple , vanilla , hazelnut , strawberry , stracciatella , caramel , coconut , salted caramel , peach , pistachio , pineapple , chocolate and mango .
+The local ice cream parlor offers lemon , caramel , peach , vanilla , strawberry , banana , lime , green apple , pineapple , walnut , watermelon , orange and mint .
+The local ice cream parlor offers raspberry , orange , vanilla , green apple , chocolate , yoghurt , salted caramel , banana , mango , stracciatella , watermelon , coffee and coconut .
+The local ice cream parlor offers stracciatella , salted caramel , mint , pistachio , mango , lime , vanilla , banana , lemon , chocolate , strawberry , blueberry , walnut and green apple .
+The local ice cream parlor offers orange , yoghurt , stracciatella , mango , pistachio , walnut , blueberry , banana , coconut , strawberry , lime , hazelnut , vanilla and lemon .
+The local ice cream parlor offers mint , coffee , coconut , pineapple , lime , raspberry , yoghurt , blueberry , salted caramel , vanilla , green apple , mango , banana and watermelon .
+The local ice cream parlor offers green apple , pistachio , walnut , mango , vanilla , yoghurt , mint , strawberry , peach , orange , chocolate , banana , raspberry , hazelnut and coffee .
+The local ice cream parlor offers pineapple , stracciatella , coconut , mango , walnut , caramel , vanilla , yoghurt , mint , strawberry , coffee , lemon , lime , hazelnut and green apple .
+The local ice cream parlor offers caramel , walnut , green apple , coffee , mango , salted caramel , coconut , watermelon , stracciatella , mint , vanilla , banana , lemon , chocolate and lime .
+The local ice cream parlor offers walnut , caramel , lemon , pistachio , vanilla , strawberry , banana , salted caramel , lime , orange , yoghurt , chocolate , pineapple , mango , hazelnut and mint .
+The local ice cream parlor offers peach , orange , caramel , pineapple , green apple , mango , lemon , watermelon , coffee , yoghurt , chocolate , stracciatella , salted caramel , vanilla , mint and coconut .
+The local ice cream parlor offers banana , stracciatella , chocolate , mango , orange , mint , peach , green apple , raspberry , vanilla , lemon , lime , yoghurt , hazelnut , blueberry and salted caramel .
+The local ice cream parlor offers lemon , orange , pineapple , yoghurt , watermelon , green apple , hazelnut , vanilla , raspberry , salted caramel , caramel , mango , chocolate , coconut , strawberry , lime and stracciatella .
+The local ice cream parlor offers mint , caramel , lemon , chocolate , pineapple , peach , yoghurt , green apple , stracciatella , coconut , salted caramel , mango , banana , walnut , watermelon , hazelnut and vanilla .
+The local ice cream parlor offers yoghurt , green apple , vanilla , strawberry , caramel , coffee , blueberry , chocolate , coconut , pineapple , orange , lime , hazelnut , banana , mango , watermelon and raspberry .
+The local ice cream parlor offers mango , caramel , stracciatella , salted caramel , blueberry , orange , chocolate , walnut , strawberry , peach , coconut , lime , raspberry , watermelon , banana , mint , pistachio and coffee .
+The local ice cream parlor offers lemon , watermelon , raspberry , orange , chocolate , hazelnut , pineapple , vanilla , blueberry , coffee , walnut , salted caramel , lime , coconut , stracciatella , banana , caramel and green apple .
+The local ice cream parlor offers pistachio , peach , vanilla , banana , pineapple , orange , caramel , coconut , strawberry , watermelon , blueberry , mango , coffee , salted caramel , stracciatella , lime , hazelnut and chocolate .
+The local ice cream parlor offers banana , vanilla , mint , coffee , lemon , caramel , walnut , coconut , salted caramel , yoghurt , mango , peach , pistachio , hazelnut , blueberry , lime , orange , pineapple and strawberry .
+The local ice cream parlor offers vanilla , raspberry , blueberry , green apple , banana , salted caramel , chocolate , caramel , lemon , orange , yoghurt , mango , lime , stracciatella , hazelnut , strawberry , watermelon , walnut and coconut .
+The local ice cream parlor offers pistachio , vanilla , walnut , lime , strawberry , coconut , raspberry , chocolate , watermelon , peach , mango , lemon , orange , caramel , yoghurt , mint , salted caramel , stracciatella and blueberry .
+The local ice cream parlor offers coconut , mango , walnut , pineapple , orange , vanilla , coffee , banana , pistachio , watermelon , lime , strawberry , green apple , peach , raspberry , lemon , stracciatella , mint , hazelnut and caramel .
+The local ice cream parlor offers banana , coffee , chocolate , pistachio , pineapple , mango , caramel , mint , hazelnut , lemon , strawberry , watermelon , yoghurt , vanilla , coconut , green apple , walnut , raspberry , peach and blueberry .
+The local ice cream parlor offers lemon , salted caramel , orange , mango , peach , chocolate , banana , yoghurt , pineapple , vanilla , blueberry , green apple , strawberry , stracciatella , coffee , mint , lime , raspberry , hazelnut and walnut .
+The local ice cream parlor offers green apple , vanilla , yoghurt , mango , chocolate , pistachio , stracciatella , mint , blueberry , coconut , walnut , salted caramel , strawberry , raspberry , orange , hazelnut , caramel , watermelon , lemon , coffee and lime .
+The local ice cream parlor offers pistachio , coconut , strawberry , chocolate , watermelon , banana , salted caramel , caramel , peach , mint , walnut , raspberry , lemon , blueberry , green apple , yoghurt , hazelnut , pineapple , stracciatella , coffee and vanilla .
+The local ice cream parlor offers lime , stracciatella , mango , peach , caramel , yoghurt , coconut , pistachio , raspberry , salted caramel , green apple , banana , lemon , mint , strawberry , hazelnut , chocolate , pineapple , coffee , orange and blueberry .
+The local ice cream parlor offers coconut , yoghurt , caramel , peach , mint , pineapple , stracciatella , green apple , hazelnut , lemon , vanilla , coffee , walnut , banana , blueberry , chocolate , watermelon , orange , salted caramel , mango , strawberry and lime .
+The local ice cream parlor offers watermelon , caramel , green apple , pistachio , lime , strawberry , peach , coffee , salted caramel , pineapple , orange , chocolate , vanilla , mango , banana , mint , coconut , walnut , lemon , hazelnut , raspberry and yoghurt .
+The local ice cream parlor offers mint , pistachio , lime , yoghurt , coconut , walnut , lemon , peach , vanilla , watermelon , raspberry , banana , chocolate , strawberry , blueberry , caramel , pineapple , orange , coffee , mango , salted caramel and stracciatella .
+The local ice cream parlor offers watermelon , walnut , strawberry , coconut , green apple , peach , blueberry , pineapple , chocolate , salted caramel , hazelnut , coffee , mango , banana , vanilla , orange , pistachio , stracciatella , raspberry , mint , yoghurt , lime and caramel .
+The local ice cream parlor offers hazelnut , coffee , blueberry , banana , chocolate , salted caramel , pistachio , strawberry , mango , raspberry , green apple , peach , orange , mint , yoghurt , pineapple , lemon , vanilla , walnut , coconut , lime , watermelon and stracciatella .
+The local ice cream parlor offers peach , caramel , banana , mint , coffee , vanilla , chocolate , stracciatella , watermelon , coconut , lemon , blueberry , pistachio , mango , orange , lime , green apple , yoghurt , hazelnut , strawberry , raspberry , salted caramel and pineapple .

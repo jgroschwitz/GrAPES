@@ -1,0 +1,36 @@
+PROXY_LTW_ENG_20080727_0030.15	(r / realize-01)	:ARG0	(t / think-tank)	have-org-role-91	:ARG1	epithet	not sure that realize-01 is right for “aware”	pragmatic
+DF-200-192400-625_7557.12	(h2 / have-rel-role-91 :ARG2 (g / girl))	:ARG1	(h / he)	care-01	:ARG0	3coref	since “girl” is first, we care about the pragmatic reentrancy here, due to “care”	
+DF-200-192400-625_7557.12	(l2 / life)	:poss	(h / he)	care-01	:ARG0	3coref	since “he” c-commands “his”	syntactic
+PROXY_XIN_ENG_20020905_0122.16	(a2 / activity-06)	:ARG0	(g / guerrilla)	prepare-01	:ARG0	3coref	3rd person	
+NW_AFP_ENG_0019_2003_0630.20	(a3 / and)	:op2	(p / person)	grant-01	:ARG2	repetition		
+NW_AFP_ENG_0019_2003_0630.20	(c7 / control-01)	:ARG0	(c2 / country :name (n2 / name :op1 "Israel"))	and	:op1	repetition		
+NW_AFP_ENG_0012_2003_0419.4	(b2 / body)	:domain	(f / family)	kill-01	:ARG1	pragmatic		
+PROXY_NYT_ENG_20071115_0274.9	(g / guideline)	:poss	(o / organization)	have-03	:ARG0	epithet		
+wb.eng_0003.10	(l2 / lane-01)	:ARG0	(g / government-organization)	have-org-role-91	:ARG1	epithet		
+wb.eng_0003.10	(h / have-03)	:ARG0	(g / government-organization)	lane-01	:ARG0	3coref	VDOT c-commands “it”	
+PROXY_NYT_ENG_20040724_0084.8	(n2 / need-01)	:ARG0	(a / and)	notify-01	:ARG1	pragmatic		
+PROXY_NYT_ENG_20040724_0084.20	(i2 / impose-01)	:ARG0	(g4 / government-organization)	restrict-01	:ARG0	pragmatic	“self-imposed”	
+PROXY_LTW_ENG_20070831_0072.7	(s / sanction-02)	:ARG0	(a2 / and)	impose-01	:ARG0	pragmatic		
+PROXY_XIN_ENG_20021123_0156.4	(c2 / construct-01)	:ARG1	(o / organization)	have-org-role-91	:ARG1	repetition		
+PROXY_XIN_ENG_20020905_0122.7	(t2 / throughout)	:op1	(c / country)	across	:op1	epithet		
+bolt12_6455_6568.1	(g / guard-01)	:ARG0	(c2 / country :name (n2 / name :op1 "China"))	strengthen-01	:ARG0	pragmatic		
+bolt12_6455_6568.1	(d2 / defend-01)	:ARG1	(w / we)	fight-01	:ARG0	pragmatic	“self-defence”	
+bolt12_6455_6568.1	(i3 / invade-01)	:ARG0	(c5 / country :name (n4 / name :op1 "Japan"))	dare-01	:ARG0	pragmatic		
+PROXY_XIN_ENG_20031107_0242.13	(r / relate-01)	:ARG1	(c5 / country :name (n5 / name :op1 "South" :op2 "Africa"))	government-organization	:mod	repetition		
+PROXY_XIN_ENG_20031107_0242.13	(h / have-03)	:ARG0	(c2 / country :name (n3 / name :op1 "Brazil"))	relate-01	:ARG2	repetition		
+PROXY_XIN_ENG_20021228_0162.7	(b / be-located-at-91)	:ARG2	(s3 / site)	monitor-01	:ARG1	pragmatic	cycle: cause, monitor (and/or declare), site, be-located-at. Chose monitor since it’s closer to site.	
+PROXY_XIN_ENG_20030428_0226.12	(s2 / sell-01)	:ARG0	(c / country :name (n / name :op1 "France"))	upgrade-02	:ARG0	repetition		
+PROXY_XIN_ENG_20030428_0226.12	(m / maintain-01)	:ARG2	(s / system)	upgrade-02	:ARG1	3coref		
+ENG_DF_000170_20050903_C00020J0V_0001.58	(i3 / intersect-01)	:ARG1	(r3 / road :name (n4 / name :op1 "Trinity"))	street-address-91	:ARG2	repetition		
+NW_AFP_ENG_0013_2003_0427.3	(h / hand-01)	:ARG0	(p3 / person)	order-01	:ARG0	pragmatic	or semantic?	
+DF-200-192400-625_7557.14	(s / speak-01)	:ARG2	(b / boy)	relation-03	:ARG2	3coref		
+PROXY_NYT_ENG_20050716_0171.9	(g / grow-02)	:ARG1	(p2 / person :name (n3 / name :op1 "Chavez"))	ally-01	:ARG2	repetition		
+PROXY_NYT_ENG_20050716_0171.9	(c2 / close-13)	:ARG1	(p2 / person :name (n3 / name :op1 "Chavez"))	ally-01	:ARG2	repetition		
+PROXY_NYT_ENG_20050716_0171.9	(c2 / close-13)	:ARG2	(p / person :name (n / name :op1 "Fidel" :op2 "Castro"))	ally-01	:ARG1	repetition		
+ENG_NA_020001_20161020_G0023FSWH_0001.6	(g / get-02)	:ARG1	(h / help-01)	need-01	:ARG1	3coref	proform “any”	
+nw.chtb_0322.8	(p12 / person :name (n7 / name :op1 "Jianhong" :op2 "Wang"))	:mod	(l / level :ord (ordinal-entity :value 7)))	(p8 / person :name (n2 / name :op1 "Changhao" :op2 "Li"))	:mod	repetition		
+PROXY_LTW_ENG_20070831_0072.25	(c2 / collaborate-01)	:ARG0	(o / official)	have-org-role-91	:ARG2	pragmatic		pragmatic
+PROXY_LTW_ENG_20081115_0076.24	(s2 / stop-03)	:ARG1	(c / country :name (n / name :op1 "Iran"))	develop-02	:ARG0	repetition		
+NW_AFP_ENG_0014_2003_0502.8	(n3 / negotiate-01)	:ARG2	(s2 / sell-01)	goal	:domain	pragmatic		
+DF-200-192400-625_6304.20	(m / manage-01)	:ARG0	(y / you)	break-01	:ARG0	pragmatic	“manageable”	
+PROXY_XIN_ENG_20021020_0012.4	(t / talk-01)	:ARG0	(g / guerrilla)	kill-01	:ARG0	repetition		

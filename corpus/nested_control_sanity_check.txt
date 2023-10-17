@@ -1,0 +1,57 @@
+# Systematically sampled sanity checks for the nested control dataset. Created by the grammar nested_control.irtg. 
+
+# ::snt The girl attempted to sleep.
+# ::tree Sent(SubjCtrlTbar(attempted,sleep),girl)
+# ::id nested_control_sanity_check_0
+(u_1 / attempt-01  :ARG0 (r / girl  :ARG0-of (u_2 / sleep-01  :ARG1-of u_1)))
+
+# ::snt The boy wanted to jump.
+# ::tree Sent(SubjCtrlTbar(wanted,jump),boy)
+# ::id nested_control_sanity_check_1
+(u_3 / want-01  :ARG0 (r / boy  :ARG0-of (u_4 / jump-03  :ARG1-of u_3)))
+
+# ::snt The girl hated to attend.
+# ::tree Sent(SubjCtrlTbar(hated,attend),girl)
+# ::id nested_control_sanity_check_2
+(u_5 / hate-01  :ARG0 (r / girl  :ARG0-of (u_6 / attend-01  :ARG1-of u_5)))
+
+# ::snt The boy loved to eat.
+# ::tree Sent(SubjCtrlTbar(loved,eat),boy)
+# ::id nested_control_sanity_check_3
+(u_7 / love-01  :ARG0 (r / boy  :ARG0-of (u_8 / eat-01  :ARG1-of u_7)))
+
+# ::snt The girl refused to focus.
+# ::tree Sent(SubjCtrlTbar(refused,focus),girl)
+# ::id nested_control_sanity_check_4
+(u_9 / refuse-01  :ARG0 (r / girl  :ARG0-of (u_10 / focus-01  :ARG1-of u_9)))
+
+# ::snt The girl persuaded you to sleep.
+# ::tree Sent(ObjCtrlTbar(persuaded,sleep,you),girl)
+# ::id nested_control_sanity_check_5
+(u_11 / persuade-01  :ARG0 (r / girl)  :ARG1 (u_14 / you  :ARG0-of (u_13 / sleep-01  :ARG2-of u_11)))
+
+# ::snt The boy asked me to jump.
+# ::tree Sent(ObjCtrlTbar(asked,jump,me),boy)
+# ::id nested_control_sanity_check_6
+(u_15 / ask-02  :ARG0 (r / boy)  :ARG2 (u_18 / i  :ARG0-of (u_17 / jump-03  :ARG1-of u_15)))
+
+# ::snt The girl begged the monster to attend.
+# ::tree Sent(ObjCtrlTbar(begged,attend,monster),girl)
+# ::id nested_control_sanity_check_7
+(u_19 / beg-01  :ARG0 (r / girl)  :ARG1 (u_22 / monster  :ARG0-of (u_21 / attend-01  :ARG2-of u_19)))
+
+# ::snt The boy forced the doctor to eat.
+# ::tree Sent(ObjCtrlTbar(forced,eat,doctor),boy)
+# ::id nested_control_sanity_check_8
+(u_23 / force-01  :ARG0 (r / boy)  :ARG1 (u_26 / doctor  :ARG0-of (u_25 / eat-01  :ARG2-of u_23)))
+
+# ::snt The girl persuaded the politician to focus.
+# ::tree Sent(ObjCtrlTbar(persuaded,focus,politician),girl)
+# ::id nested_control_sanity_check_9
+(u_27 / persuade-01  :ARG0 (r / girl)  :ARG1 (u_30 / politician  :ARG0-of (u_29 / focus-01  :ARG2-of u_27)))
+
+# ::snt The boy slept and jumped.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,slept,jumped),boy)
+# ::id nested_control_sanity_check_10
+(u_31 / and  :op1 (u_33 / sleep-01  :ARG0 (r / boy  :ARG0-of (u_32 / jump-03  :op2-of u_31))))
+

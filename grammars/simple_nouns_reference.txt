@@ -1,0 +1,10 @@
+astronaut
+doctor
+mechanic
+soldier
+
+boy
+girl
+child
+woman
+man

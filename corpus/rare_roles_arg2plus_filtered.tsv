@@ -1,0 +1,40 @@
+PROXY_NYT_ENG_20050716_0171.10	militarize-01	:ARG2	political-movement	yes	
+DF-200-192400-625_7806.15	mention-01	:ARG2	person	yes	
+DF-200-192400-625_7557.14	forbid-01	:ARG2	i	yes	
+DF-200-192400-625_7744.16	wean-01	:ARG2	habit	yes	
+DF-200-192400-625_6344.2	round-03	:ARG2	bend	yes	
+NW_AFP_ENG_0019_2003_0630.14	run-04	:ARG3	east	yes	
+NW_AFP_ENG_0019_2003_0630.14	run-04	:ARG4	west	yes	
+NW_XIN_ENG_0193_2006_0822.11	assess-01	:ARG2	lose-01	yes	
+PROXY_NYT_ENG_20081008_0040.16	ransom-01	:ARG2	between	yes	
+NW_AFP_ENG_0014_2003_0502.6	stake-01	:ARG2	park	yes	
+PROXY_XIN_ENG_20020725_0113.5	exploit-01	:ARG2	commit-02	yes	
+NW_AFP_ENG_0013_2003_0427.8	punishable-02	:ARG3	die-01	yes	
+NW_AFP_ENG_0019_2003_0630.15	lead-01	:ARG3	town	yes	
+NW_XIN_ENG_0195_2008_0420.8	inundate-01	:ARG2	mud	yes	
+PROXY_NYT_ENG_20040724_0084.17	secure-01	:ARG3	plan	yes	
+PROXY_NYT_ENG_20081008_0040.8	ransom-01	:ARG2	approximately	yes	
+ENG_DF_000170_20050903_C00020J0V_0001.44	drop-off-03	:ARG2	church	yes	
+ENG_DF_000170_20050903_C00020J0V_0001.44	street-address-91	:ARG5	state	yes	
+PROXY_XIN_ENG_20020701_0314.13	bribe-01	:ARG2	switch-01	yes	
+PROXY_XIN_ENG_20020701_0314.13	culminate-01	:ARG2	resign-01	yes	
+DF-200-192400-625_7557.5	cut-01	:ARG3	and	yes	
+DF-200-192400-625_7557.5	rob-01	:ARG2	staple	yes	
+bolt12_6455_6562.17	fall-05	:ARG2	country	yes	
+wb.eng_0003.85	develop-02	:ARG3	we	yes	
+NW_AFP_ENG_0019_2003_0630.11	transform-01	:ARG3	ride	yes	corrected from ordeal (ARG2 and ARG3 switched)
+NW_AFP_ENG_0019_2003_0630.11	trip-03	:ARG2	north	yes	
+NW_AFP_ENG_0017_2003_0607.8	brace-01	:ARG2	drought	yes	
+DF-200-192400-625_7557.7	tempt-01	:ARG3	or	yes	
+wb.eng_0003.19	lag-01	:ARG2	or	yes	
+PROXY_LTW_ENG_20070831_0072.6	mask-01	:ARG2	program	yes	
+PROXY_NYT_ENG_20020406_0118.17	scare-01	:ARG2	threaten-01	yes	
+PROXY_NYT_ENG_20081008_0040.33	unload-02	:ARG2	weapon	yes	
+ENG_NA_020001_20161020_G0023FSUK_0001.5	count-03	:ARG2	assist-01	yes	
+PROXY_LTW_ENG_20070831_0072.16	cede-01	:ARG2	country	yes	
+bolt12_64556_5628.1	bump-02	:ARG5	up	yes	
+bolt12_6455_6561.9	experiment-01	:ARG2	method	yes	not sure if method is right, but I think it is
+PROXY_NYT_ENG_20040724_0084.10	dissuade-01	:ARG2	sign-01	yes	
+DF-199-194215-653_0484.28	text-01	:ARG2	you	yes	
+PROXY_NYT_ENG_20050716_0171.41	mark-02	:ARG2	weapon	yes	
+PROXY_NYT_ENG_20070618_0031.11	hold-04	:ARG2	(p / person :ARG0-of (h / have-org-role-91 :ARG2 (o / official)))	yes	

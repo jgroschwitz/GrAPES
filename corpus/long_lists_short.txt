@@ -1,0 +1,61 @@
+# Ice cream flavor lists. Created by a grammar.
+
+# ::snt The local ice cream parlor offers raspberry , coffee , blueberry and mango .
+# ::id long_lists_short_0
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_811 / and  :op1 (r / raspberry)  :op2 (u_814 / coffee)  :op3 (u_813 / blueberry)  :op4 (u_812 / mango)))
+
+# ::snt The local ice cream parlor offers coconut , green apple , peach and salted caramel .
+# ::id long_lists_short_1
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_815 / and  :op1 (r / coconut)  :op2 (u_818 / apple  :ARG1-of (g / green-02))  :op3 (u_817 / peach)  :op4 (u_816 / caramel  :ARG1-of (s / salt-01))))
+
+# ::snt The local ice cream parlor offers salted caramel , orange , coconut and strawberry .
+# ::id long_lists_short_2
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_819 / and  :op1 (r / caramel  :ARG1-of (s / salt-01))  :op2 (u_822 / orange)  :op3 (u_821 / coconut)  :op4 (u_820 / strawberry)))
+
+# ::snt The local ice cream parlor offers lemon , caramel , stracciatella , mint and lime .
+# ::id long_lists_short_3
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_823 / and  :op1 (r / lemon)  :op2 (u_827 / caramel)  :op3 (u_826 / stracciatella)  :op4 (u_825 / mint)  :op5 (u_824 / lime)))
+
+# ::snt The local ice cream parlor offers mango , blueberry , pistachio , hazelnut and lime .
+# ::id long_lists_short_4
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_828 / and  :op1 (r / mango)  :op2 (u_832 / blueberry)  :op3 (u_831 / pistachio)  :op4 (u_830 / hazelnut)  :op5 (u_829 / lime)))
+
+# ::snt The local ice cream parlor offers mint , caramel , vanilla , strawberry and orange .
+# ::id long_lists_short_5
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_833 / and  :op1 (r / mint)  :op2 (u_837 / caramel)  :op3 (u_836 / vanilla)  :op4 (u_835 / strawberry)  :op5 (u_834 / orange)))
+
+# ::snt The local ice cream parlor offers blueberry , orange , lime , walnut , green apple and yoghurt .
+# ::id long_lists_short_6
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_838 / and  :op1 (r / blueberry)  :op2 (u_843 / orange)  :op3 (u_842 / lime)  :op4 (u_841 / walnut)  :op5 (u_840 / apple  :ARG1-of (g / green-02))  :op6 (u_839 / yoghurt)))
+
+# ::snt The local ice cream parlor offers pistachio , pineapple , peach , watermelon , orange and hazelnut .
+# ::id long_lists_short_7
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_844 / and  :op1 (r / pistachio)  :op2 (u_849 / pineapple)  :op3 (u_848 / peach)  :op4 (u_847 / watermelon)  :op5 (u_846 / orange)  :op6 (u_845 / hazelnut)))
+
+# ::snt The local ice cream parlor offers lime , coconut , blueberry , mango , walnut and watermelon .
+# ::id long_lists_short_8
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_850 / and  :op1 (r / lime)  :op2 (u_855 / coconut)  :op3 (u_854 / blueberry)  :op4 (u_853 / mango)  :op5 (u_852 / walnut)  :op6 (u_851 / watermelon)))
+
+# ::snt The local ice cream parlor offers chocolate , banana , strawberry , coconut , blueberry , caramel and hazelnut .
+# ::id long_lists_short_9
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_856 / and  :op1 (r / chocolate)  :op2 (u_862 / banana)  :op3 (u_861 / strawberry)  :op4 (u_860 / coconut)  :op5 (u_859 / blueberry)  :op6 (u_858 / caramel)  :op7 (u_857 / hazelnut)))
+
+# ::snt The local ice cream parlor offers mango , blueberry , vanilla , caramel , pineapple , salted caramel and coconut .
+# ::id long_lists_short_10
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_863 / and  :op1 (r / mango)  :op2 (u_869 / blueberry)  :op3 (u_868 / vanilla)  :op4 (u_867 / caramel)  :op5 (u_866 / pineapple)  :op6 (u_865 / caramel  :ARG1-of (s / salt-01))  :op7 (u_864 / coconut)))
+
+# ::snt The local ice cream parlor offers stracciatella , caramel , banana , pistachio , orange , coffee and raspberry .
+# ::id long_lists_short_11
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_870 / and  :op1 (r / stracciatella)  :op2 (u_876 / caramel)  :op3 (u_875 / banana)  :op4 (u_874 / pistachio)  :op5 (u_873 / orange)  :op6 (u_872 / coffee)  :op7 (u_871 / raspberry)))
+
+# ::snt The local ice cream parlor offers banana , orange , coffee , walnut , watermelon , mango , pistachio and mint .
+# ::id long_lists_short_12
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_877 / and  :op1 (r / banana)  :op2 (u_884 / orange)  :op3 (u_883 / coffee)  :op4 (u_882 / walnut)  :op5 (u_881 / watermelon)  :op6 (u_880 / mango)  :op7 (u_879 / pistachio)  :op8 (u_878 / mint)))
+
+# ::snt The local ice cream parlor offers orange , walnut , mango , banana , lime , vanilla , peach and caramel .
+# ::id long_lists_short_13
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_885 / and  :op1 (r / orange)  :op2 (u_892 / walnut)  :op3 (u_891 / mango)  :op4 (u_890 / banana)  :op5 (u_889 / lime)  :op6 (u_888 / vanilla)  :op7 (u_887 / peach)  :op8 (u_886 / caramel)))
+
+# ::snt The local ice cream parlor offers strawberry , caramel , orange , pineapple , vanilla , raspberry , stracciatella and watermelon .
+# ::id long_lists_short_14
+(o / offer-01  :ARG0 (p / parlor  :mod (c / cream  :mod (i / ice))  :ARG1-of (l / local-02))  :ARG1 (u_893 / and  :op1 (r / strawberry)  :op2 (u_900 / caramel)  :op3 (u_899 / orange)  :op4 (u_898 / pineapple)  :op5 (u_897 / vanilla)  :op6 (u_896 / raspberry)  :op7 (u_895 / stracciatella)  :op8 (u_894 / watermelon)))

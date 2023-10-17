@@ -1,0 +1,47 @@
+# Systematically sampled sanity checks for the nested centre embedding dataset. Created by the grammar centre_embedding.irtg. 
+
+# ::snt The doctor likes the girl
+# ::tree TP(Vbar_tr(likes,girl),finish_NP(doctor))
+# ::id centre_embedding_sanity_check_0
+(u_44 / like-01  :ARG0 (r / doctor)  :ARG1 (u_45 / girl))
+
+# ::snt The woman saw the child
+# ::tree TP(Vbar_tr(saw,child),finish_NP(woman))
+# ::id centre_embedding_sanity_check_1
+(u_46 / see-01  :ARG0 (r / woman)  :ARG1 (u_47 / child))
+
+# ::snt The astronaut met the boy
+# ::tree TP(Vbar_tr(met,boy),finish_NP(astronaut))
+# ::id centre_embedding_sanity_check_2
+(u_48 / meet-02  :ARG0 (r / astronaut)  :ARG1 (u_49 / boy))
+
+# ::snt The doctor hugged the mechanic
+# ::tree TP(Vbar_tr(hugged,mechanic),finish_NP(doctor))
+# ::id centre_embedding_sanity_check_3
+(u_50 / hug-01  :ARG0 (r / doctor)  :ARG1 (u_51 / mechanic))
+
+# ::snt The woman taught the girl
+# ::tree TP(Vbar_tr(taught,girl),finish_NP(woman))
+# ::id centre_embedding_sanity_check_4
+(u_52 / teach-01  :ARG0 (r / woman)  :ARG2 (u_53 / girl))
+
+# ::snt The astronaut amused the child
+# ::tree TP(Vbar_tr(amused,child),finish_NP(astronaut))
+# ::id centre_embedding_sanity_check_5
+(u_54 / amuse-01  :ARG0 (r / astronaut)  :ARG1 (u_55 / child))
+
+# ::snt The boy left
+# ::tree TP(Vbar_intr(left),finish_NP(boy))
+# ::id centre_embedding_sanity_check_6
+(u_56 / leave-11  :ARG0 (r / boy))
+
+# ::snt The mechanic slept
+# ::tree TP(Vbar_intr(slept),finish_NP(mechanic))
+# ::id centre_embedding_sanity_check_7
+(u_57 / sleep-01  :ARG0 (r / mechanic))
+
+# ::snt The astronaut laughed
+# ::tree TP(Vbar_intr(laughed),finish_NP(astronaut))
+# ::id centre_embedding_sanity_check_8
+(u_58 / laugh-01  :ARG0 (r / astronaut))
+

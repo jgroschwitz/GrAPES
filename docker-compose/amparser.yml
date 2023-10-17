@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  mycontainer:
+    image: amparser:amr30  # TODO add jgroschwitz/
+    build: .
+    volumes:
+      - '/c/Users/jonas/Documents/Work/GitHub/amr-challenge:/mounted'  
+    # command: bash -c "ls /mounted"
+    command: bash -c "bash scripts/predict.sh -f -i example/decomposition/amr/corpus/dev/input.txt -T AMR -o /mounted/amparser-output/debug/"

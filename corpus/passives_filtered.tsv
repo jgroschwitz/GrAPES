@@ -1,0 +1,83 @@
+NW_XIN_ENG_0195_2008_0420.1	evacuate-01	:ARG1	person	passive	
+DF-200-192400-625_7557.7	tempt-01	:ARG1	i	passive	i am tempted to
+DF-200-192400-625_7200.1	diagnose-01	:ARG1	i	passive	
+PROXY_XIN_ENG_20031107_0242.4	schedule-01	:ARG1	discuss-01	passive	reduced relative
+PROXY_NYT_ENG_20071115_0274.12	convert-01	:ARG1	item	passive	
+PROXY_LTW_ENG_20070831_0072.24	make-01	:ARG1	progress-01	passive	
+PROXY_NYT_ENG_20080919_0209.20	bear-02	:ARG1	person	passive	born
+NW_XIN_ENG_0195_2008_0420.17	kill-01	:ARG1	person	passive	
+PROXY_LTW_ENG_20070831_0072.18	use-01	:ARG1	uranium	passive	
+DF-200-192400-625_7200.16	drill-02	:ARG1	person	passive	
+NW_XIN_ENG_0195_2008_0420.3	evacuate-01	:ARG1	person	passive	
+PROXY_XIN_ENG_20040429_0189.17	expect-01	:ARG1	double-01	passive	
+PROXY_LTW_ENG_20070930_0021.8	distribute-01	:ARG1	document	passive	
+bolt12_91455_5322.1	force-01	:ARG1	person	passive	
+bolt12_91455_5322.1	frame-02	:ARG1	person	passive	
+PROXY_XIN_ENG_20040407_0026.14	place-01	:ARG1	alert-01	passive	
+PROXY_XIN_ENG_20020725_0113.21	carry-out-03	:ARG1	action	passive	reduced relative
+PROXY_NYT_ENG_20081128_0005.13	fund-01	:ARG1	effort-01	passive	
+PROXY_NYT_ENG_20080919_0209.10	affect-01	:ARG1	website	passive	
+NW_XIN_ENG_0191_2005_0405.1	blame-01	:ARG1	lack-01	passive	
+bolt12_9145_5531.1	force-01	:ARG1	person	passive	
+PROXY_NYT_ENG_20070618_0031.18	reach-01	:ARG1	agree-01	passive	
+PROXY_NYT_ENG_20080808_0162.32	limit-01	:ARG1	combat-01	passive	
+PROXY_NYT_ENG_20070828_0223.35	use-01	:ARG1	material	passive	
+PROXY_NYT_ENG_20020406_0118.41	cut-02	:ARG1	fund-01	passive	reduced relative
+DF-200-192400-625_7200.13	tell-01	:ARG1	walk-01	passive	
+PROXY_NYT_ENG_20040724_0084.42	use-01	:ARG1	corridor	passive	
+NW_AFP_ENG_0012_2003_0419.7	sweep-up-04	:ARG1	truck	passive	
+PROXY_NYT_ENG_20080919_0209.24	carry-out-03	:ARG1	counterattack-01	passive	
+PROXY_NYT_ENG_20081008_0040.16	hijack-01	:ARG1	ship	passive	
+NW_XIN_ENG_0194_2007_0704.3	confirm-01	:ARG1	die-01	passive	
+NW_XIN_ENG_0189_2003_0324.6	kill-01	:ARG1	civilian	passive	
+PROXY_NYT_ENG_20070828_0223.27	trick-01	:ARG1	organization	passive	
+PROXY_LTW_ENG_20070930_0021.30	recognize-01	:ARG1	country	passive	
+PROXY_NYT_ENG_20071115_0274.15	offer-01	:ARG1	item	passive	
+PROXY_XIN_ENG_20031107_0242.8	hold-04	:ARG1	meet-03	passive	
+PROXY_NYT_ENG_20020406_0118.22	know-01	:ARG1	orchestrate-01	passive	
+NW_XIN_ENG_0193_2006_0822.6	hamper-01	:ARG1	operate-01	passive	
+NW_AFP_ENG_0009_2003_0330.6	release-01	:ARG1	poll-01	passive	
+NW_AFP_ENG_0009_2003_0330.6	survey-01	:ARG1	person	passive	
+NW_AFP_ENG_0013_2003_0427.4	accuse-01	:ARG1	person	passive	
+NW_XIN_ENG_0189_2003_0324.7	kill-01	:ARG1	passenger	passive	
+NW_XIN_ENG_0189_2003_0324.7	injure-01	:ARG1	person	passive	
+PROXY_XIN_ENG_20020701_0314.8	sentence-01	:ARG1	person	passive	
+PROXY_NYT_ENG_20070618_0031.16	lose-02	:ARG1	time	passive	
+PROXY_NYT_ENG_20070618_0031.16	organize-01	:ARG1	transfer-01	passive	
+NW_AFP_ENG_0019_2003_0630.19	allow-01	:ARG1	return-01	passive	
+NW_XIN_ENG_0191_2005_0405.14	dispatch-01	:ARG1	team	passive	
+NW_XIN_ENG_0194_2007_0704.5	treat-01	:ARG1	villager	passive	
+PROXY_NYT_ENG_20070618_0031.8	anticipate-01	:ARG1	shut-down-05	passive	
+PROXY_NYT_ENG_20081008_0040.7	involve-01	:ARG1	person	passive	reduced relative
+PROXY_NYT_ENG_20081008_0040.7	pay-01	:ARG1	multiple	passive	
+NW_AFP_ENG_0009_2003_0330.4	expect-01	:ARG1	show-up-02	passive	reduced relative
+wb.eng_0003.83	plan-01	:ARG1	widen-01	passive	
+wb.eng_0003.83	zone-01	:ARG1	thing	passive	
+wb.eng_0003.83	funnel-01	:ARG1	thing	passive	
+PROXY_XIN_ENG_20030624_0298.13	detain-01	:ARG1	person	passive	
+NW_AFP_ENG_0011_2003_0417.8	believe-01	:ARG1	mix-01	passive	reduced relative
+NW_XIN_ENG_0194_2007_0704.4	find-01	:ARG1	body	passive	
+PROXY_NYT_ENG_20081128_0005.17	process-01	:ARG1	amount	passive	
+NW_XIN_ENG_0192_2005_0906.8	involve-01	:ARG1	thing	passive	reduced relative
+bolt12_64556_5629.1	bear-02	:ARG1	i	passive	born
+PROXY_NYT_ENG_20080919_0209.14	attack-01	:ARG1	site	passive	
+PROXY_XIN_ENG_20030624_0298.14	mark-02	:ARG1	street	passive	reduced relative
+PROXY_XIN_ENG_20030624_0298.14	seize-01	:ARG1	and	passive	
+PROXY_NYT_ENG_20040724_0084.33	apply-02	:ARG1	penalize-01	passive	
+PROXY_XIN_ENG_20040407_0026.9	blacklist-01	:ARG1	person	passive	
+PROXY_XIN_ENG_20021020_0012.11	bring-01	:ARG1	person	passive	
+PROXY_XIN_ENG_20021020_0012.11	mobilize-01	:ARG1	person	passive	
+PROXY_XIN_ENG_20040429_0189.36	resolve-01	:ARG1	dispute-01	passive	
+PROXY_NYT_ENG_20071115_0274.6	charge-05	:ARG1	organization	passive	
+PROXY_NYT_ENG_20071115_0274.6	transfer-01	:ARG1	technology	passive	reduced relative
+PROXY_NYT_ENG_20071115_0274.6	direct-01	:ARG1	technology	passive	
+PROXY_NYT_ENG_20020406_0118.39	restore-01	:ARG1	electricity	passive	
+DF-200-192400-625_7200.10	bear-02	:ARG1	i	passive	born
+DF-200-192400-625_7200.10	straighten-01	:ARG1	toe	passive	
+NW_AFP_ENG_0009_2003_0330.7	publish-01	:ARG1	newspaper	passive	reduced relative
+bolt12_6455_6566.4	update-01	:ARG1	country	passive	
+PROXY_XIN_ENG_20021228_0162.8	carry-out-03	:ARG1	inspect-01	passive	reduced relative
+DF-200-192400-625_6344.14	mean-02	:ARG1	resemble-01	passive	
+PROXY_NYT_ENG_20081008_0040.10	agree-01	:ARG1	detail-01	passive	
+PROXY_XIN_ENG_20030709_0070.11	suspect-01	:ARG1	carry-01	passive	reduced relative
+nw.chtb_0303.2	hold-04	:ARG1	conference	passive	reduced relative

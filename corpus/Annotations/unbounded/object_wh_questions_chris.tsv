@@ -1,0 +1,9 @@
+ID	sentence	source	edge	target	distance	dependency label	comment	category
+xx00.mrg-oq-2	What do the initials CPR stand for ?	(s / stand-08)	:ARG1	(a / amr-unkown)	5	pobj		object wh-question
+xx00.mrg-oq-5	What does target heart rate mean ?	(m / mean-01)	:ARG1	(a / amr-unkown)	5	dobj		object wh-question
+xx00.mrg-oq-6	What is the text of an opera called ?	(c / call-01)	:ARG1	(a / amr-unkown)	7	dobj		object wh-question
+xx00.mrg-oq-7	What did Peter Minuit buy for the equivalent of $ 24.00 ?	(b / buy-01)	:ARG1	(a / amr-unkown)	4	dobj		object wh-question
+xx00.mrg-oq-11	How much vitamin C should you take in a day ?	(t / take-01)	:ARG1	"(s / small-molecule :name (n / name :op1 ""vitamin"" :op2 ""C"")) "	3	dobj		object wh-question
+xx00.mrg-oq-12	What did Edward Binney and Howard Smith invent in 1903 ?	(i / invent-01)	:ARG1	(a / amr-unkown)	7	dobj		object wh-question
+xx00.mrg-oq-17	What state does Martha Stewart live in ?	(l / live-01) 	:ARG1	(s / state)	4	pobj		object wh-question
+xx00.mrg-oq-19	What countries has the IFC financed projects in ?	(f / finance-01)	:ARG1	(c / country)	4	pobj		object wh-question

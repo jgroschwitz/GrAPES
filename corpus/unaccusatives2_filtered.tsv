@@ -1,0 +1,48 @@
+DF-200-192392-456_1160.6	get-05	:ARG1	you	unaccusative	double unaccusative
+DF-200-192400-625_7744.20	increase-01	:ARG1	level	unaccusative	
+DF-200-192400-625_7744.20	disappear-01	:ARG1	disease	unaccusative	
+PROXY_NYT_ENG_20040724_0084.26	close-01	:ARG1	and	unaccusative	
+NW_AFP_ENG_0019_2003_0630.14	run-04	:ARG1	road	unaccusative	double unaccusative
+NW_AFP_ENG_0019_2003_0630.14	pass-03	:ARG1	highway	unaccusative	
+PROXY_XIN_ENG_20030428_0226.19	arrive-01	:ARG1	person	unaccusative	
+bolt12_6455_6562.11	tremble-01	:ARG1	piece	unaccusative	
+bolt12_6455_6562.11	shake-01	:ARG1	piece	unaccusative	
+bolt12_6455_6562.11	move-01	:ARG1	we	unaccusative	
+PROXY_XIN_ENG_20031107_0242.4	arrive-01	:ARG1	person	unaccusative	
+PROXY_XIN_ENG_20040429_0189.17	double-01	:ARG1	trade-01	unaccusative	double unaccusative
+PROXY_NYT_ENG_20081008_0040.23	remain-01	:ARG1	deal-01	unaccusative	double unaccusative
+PROXY_LTW_ENG_20070831_0072.9	reflect-01	:ARG1	thing	unaccusative	
+bolt12_64556_5628.1	come-03	:ARG1	war	unaccusative	
+NW_AFP_ENG_0012_2003_0419.10	start-01	:ARG1	spell	unaccusative	
+bolt12_9145_5531.1	switch-01	:ARG1	person	unaccusative	double unaccusative
+ENG_NA_020001_20161020_G0023FSV5_0001.4	wait-01	:ARG1	we	unaccusative	
+PROXY_NYT_ENG_20040724_0084.42	become-01	:ARG1	corridor	unaccusative	double unaccusative
+NW_XIN_ENG_0189_2003_0324.6	start-01	:ARG1	war	unaccusative	
+PROXY_XIN_ENG_20031107_0242.8	follow-01	:ARG1	visit-01	unaccusative	double unaccusative
+DF-200-192400-625_6304.16	fail-01	:ARG1	i	unaccusative	double unaccusative
+DF-200-192392-456_1160.4	get-03	:ARG1	person	unaccusative	double unaccusative
+NW_XIN_ENG_0189_2003_0324.7	hit-01	:ARG1	bus	unaccusative	double unaccusative
+wb.eng_0003.75	apply-02	:ARG1	logic	unaccusative	double unaccusative
+PROXY_XIN_ENG_20021123_0156.5	progress-01	:ARG1	state	unaccusative	
+DF-200-192400-625_6344.9	turn-02	:ARG1	she	unaccusative	double unaccusative
+PROXY_XIN_ENG_20021020_0012.12	expire-01	:ARG1	state	unaccusative	
+DF-200-192400-625_7806.12	work-09	:ARG1	it	unaccusative	double unaccusative
+bolt12_6455_6561.31	come-03	:ARG1	peace	unaccusative	double unaccusative
+PROXY_NYT_ENG_20081128_0005.16	collapse-01	:ARG1	thing	unaccusative	
+wb.eng_0003.7	double-01	:ARG1	traffic	unaccusative	
+wb.eng_0003.7	open-01	:ARG1	road	unaccusative	
+NW_XIN_ENG_0209_2008_0513.3	come-01	:ARG1	person	unaccusative	
+DF-200-192400-625_7200.10	curl-01	:ARG1	toe	unaccusative	
+nw.chtb_0322.2	start-01	:ARG1	compete-01	unaccusative	
+PROXY_XIN_ENG_20040403_0262.15	operate-01	:ARG1	center	unaccusative	
+PROXY_NYT_ENG_20050716_0171.9	grow-02	:ARG1	person	unaccusative	
+PROXY_LTW_ENG_20070831_0072.12	slow-01	:ARG1	effort-01	unaccusative	
+PROXY_NYT_ENG_20081128_0005.7	retreat-02	:ARG1	cultivate-01	unaccusative	
+PROXY_NYT_ENG_20081128_0005.7	concentrate-01	:ARG1	cultivate-01	unaccusative	
+PROXY_NYT_ENG_20081128_0005.7	remain-01	:ARG1	insurgency	unaccusative	double unaccusative
+PROXY_XIN_ENG_20020905_0122.9	explode-01	:ARG1	bomb	unaccusative	
+PROXY_XIN_ENG_20021228_0162.8	return-01	:ARG1	team	unaccusative	double unaccusative
+PROXY_XIN_ENG_20020905_0122.7	escalate-01	:ARG1	violence	unaccusative	
+PROXY_NYT_ENG_20081008_0040.11	involve-01	:ARG1	request-01	unaccusative	double unaccusative
+PROXY_LTW_ENG_20070930_0021.11	qualify-02	:ARG1	and	unaccusative	double unaccusative
+PROXY_LTW_ENG_20081115_0076.17	progress-01	:ARG1	construct-01	unaccusative	

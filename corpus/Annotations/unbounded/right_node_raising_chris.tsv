@@ -1,0 +1,9 @@
+ID	sentence	source	edge	target	distance	dependency label	comment	category
+cf21.mrg-rnr-1	The waves of a 1923 tsunami in Sagami Bay brought to the surface and battered to death huge numbers of fishes that normally live at a depth of 3,000 feet .	(b / bring-01)	:ARG1	(n / number)	9	dobj		right node raising
+cf21.mrg-rnr-1	The waves of a 1923 tsunami in Sagami Bay brought to the surface and battered to death huge numbers of fishes that normally live at a depth of 3,000 feet .	(b / batter-01)	:ARG1	(n / number)	4	dobj		right node raising
+cf21.mrg-rnr-2	By means of charts showing wave-travel times and depths in the ocean at various locations , it is possible to estimate the rate of approach and probable time of arrival at Hawaii of a tsunami getting under way at any spot in the Pacific .	(r / rate-01)	:ARG1	(t / tsunami)	12	prep		right node raising
+cf21.mrg-rnr-2	By means of charts showing wave-travel times and depths in the ocean at various locations , it is possible to estimate the rate of approach and probable time of arrival at Hawaii of a tsunami getting under way at any spot in the Pacific .	(t / tsunami)	:time	(a / arrive-01)	7	prep		right node raising
+cf23.mrg-rnr-2	The first was that America had become -- or was in danger of becoming -- a second-rate military power .	(b / become-01)	:ARG2	(p / power)	12	dobj		right node raising
+cf23.mrg-rnr-2	The first was that America had become -- or was in danger of becoming -- a second-rate military power .	(b / become-01)	:ARG2	(p / power)	5	dobj		right node raising
+cf07.mrg-rnr-1	Various factors in the setting can still be of great advantage in making the first intercourse a good rather than a bad memory for one or both .	(g / good-02)	:ARG1	(m / memory)	5	amod		right node raising
+cf07.mrg-rnr-1	Various factors in the setting can still be of great advantage in making the first intercourse a good rather than a bad memory for one or both .	(b / bad-07)	:ARG1	(m / memory)	1	amod		right node raising

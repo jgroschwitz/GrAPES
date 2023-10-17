@@ -1,0 +1,50 @@
+DF-200-192400-625_7806.6	(g / good-02 :ARG2-of (h / have-degree-91 :ARG3 (m / most)))	yes	
+PROXY_LTW_ENG_20070831_0072.9	(f / find-01 :ARG1 (t / thing))	yes	
+PROXY_LTW_ENG_20070831_0072.9	(o / official :ARG2-of (h / have-org-role-91 :ARG0 (p2 / person)))	yes	
+bolt12_6455_6566.1	(t2 / too :ARG3-of (h / have-degree-91))	yes	
+NW_AFP_ENG_0015_2003_0514.6	(m / minister :ARG2-of (h2 / have-org-role-91 :ARG0 (p2 / person)))	yes	
+NW_XIN_ENG_0209_2008_0513.16	(d / die-01 :ARG1 (p2 / person))	yes	
+nw.chtb_0322.12	(g / good-02 :ARG2-of (h / have-degree-91 :ARG3 (m / more)))	yes	
+PROXY_NYT_ENG_20081008_0040.22	(e2 / evidence-01 :ARG0 (t / thing))	yes	
+NW_XIN_ENG_0192_2005_0906.4	(s2 / supervise-01 :ARG0 (p2 / person :poss-of (o2 / organization)))	yes	
+NW_XIN_ENG_0192_2005_0906.4	(m / member :ARG2-of (h2 / have-org-role-91 :ARG0 (p3 / person)))	yes	
+NW_XIN_ENG_0192_2005_0906.4	(x9 / 1000 :op1-of (m4 / multiple))	yes	
+NW_XIN_ENG_0192_2005_0906.4	(o / official :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+nw.chtb_0305.6	(r / result-01 :ARG2 (t / thing))	yes	
+PROXY_NYT_ENG_20050716_0171.55	(s / strategize-01 :ARG3-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+PROXY_NYT_ENG_20050716_0171.55	(w / weak-02 :ARG2-of (h2 / have-degree-91 :ARG3 (m2 / more)))	yes	
+PROXY_LTW_ENG_20070831_0072.23	(d / director :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+PROXY_LTW_ENG_20070831_0072.23	(g2 / govern-01 :ARG0 (g / government-organization))	yes	
+PROXY_LTW_ENG_20070831_0072.4	(o2 / official :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+DF-200-192400-625_7046.15	(m2 / mum :ARG2-of (h / have-rel-role-91 :ARG0 (p / person)))	yes	
+ENG_NA_020001_20161020_G0023FSVF_0001.4	(h / wound-01 :ARG1 (p / person))	yes	corrected from have-03 person
+NW_XIN_ENG_0193_2006_0822.9	(m / minister :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+NW_XIN_ENG_0193_2006_0822.11	(g2 / govern-01 :ARG0 (g / government-organization))	yes	
+NW_AFP_ENG_0016_2003_0527.5	(m / minister :ARG2-of (h2 / have-org-role-91))	yes	
+PROXY_LTW_ENG_20070930_0021.25	(m / most :ARG3-of (h / have-degree-91))	yes	
+wb.eng_0003.58	(g / grandmother :ARG2-of (h / have-rel-role-91 :ARG0 (p / person)))	yes	corrected by removing “location” node
+PROXY_LTW_ENG_20070831_0072.6	(o2 / official :ARG2-of (h2 / have-org-role-91 :ARG0 (p2 / person)))	yes	
+PROXY_XIN_ENG_20020701_0314.7	(c3 / chief :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+PROXY_XIN_ENG_20020701_0314.7	(p3 / president :ARG2-of (h2 / have-org-role-91 :ARG0 (p2 / person)))	yes	
+PROXY_NYT_ENG_20020406_0118.6	(o / official :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+PROXY_XIN_ENG_20040403_0262.13	(g2 / govern-01 :ARG0 (g / government-organization))	yes	
+PROXY_NYT_ENG_20071115_0274.17	(d / diplomat :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+PROXY_NYT_ENG_20081128_0005.5	(p4 / price-01 :ARG2 (t / thing))	yes	
+PROXY_XIN_ENG_20030428_0226.5	(m / minister :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+PROXY_XIN_ENG_20030428_0226.5	(l / lead-02 :ARG0 (p2 / person))	yes	
+PROXY_NYT_ENG_20050716_0171.31	(o / official :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+PROXY_NYT_ENG_20050716_0171.31	(g2 / govern-01 :ARG0 (g / government-organization))	yes	
+PROXY_NYT_ENG_20040724_0084.3	(g2 / govern-01 :ARG0 (g / government-organization))	yes	
+nw.chtb_0318.8	(c3 / compete-01 :ARG0 (p / person))	yes	corrected from :prep-as
+bolt12_91455_5327.1	(s / score-01 :ARG1 (p / person))	yes	
+PROXY_NYT_ENG_20040724_0084.16	(g2 / govern-01 :ARG0 (g / government-organization))	yes	
+PROXY_NYT_ENG_20040724_0084.16	(g4 / govern-01 :ARG0 (g3 / government-organization))	yes	
+PROXY_NYT_ENG_20040724_0084.17	(m / minister :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+nw.chtb_0324.6	(c / compete-01 :ARG0 (p / person))	yes	
+nw.chtb_0324.6	(l / low-04 :ARG2-of (h / have-degree-91 :ARG3 (m / more)))	yes	
+DF-200-192400-625_6344.24	(h2 / have-org-role-91 :ARG2 (m / member))	yes	
+bolt12_6455_6561.12	(y / young :ARG2-of (h / have-degree-91 :ARG3 (m2 / more)))	yes	
+DF-200-192400-625_7744.17	(m / more :ARG3-of (h / have-degree-91 :ARG2 (b / bad-05)))	yes	
+PROXY_XIN_ENG_20041010_0024.4	(c2 / chancellor :ARG2-of (h / have-org-role-91 :ARG0 (p / person)))	yes	
+PROXY_XIN_ENG_20041010_0024.4	(g2 / govern-01 :ARG0 (g / government-organization))	yes	
+PROXY_XIN_ENG_20041010_0024.4	(l / lead-02 :ARG0 (p2 / person))	yes	

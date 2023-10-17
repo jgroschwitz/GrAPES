@@ -1,0 +1,302 @@
+# Randomly sampled examples of nested control structures including nesting inside coordination. Created by a grammar.Here, size0 is the depth of the tree. The number of recursions is ??
+
+# ::snt The girl asked the politician to hate to want to sleep.
+# ::tree Sent(ObjCtrlTbar(asked,VbarSubjCtrl(hate,VbarSubjCtrl(want,sleep)),politician),girl)
+# ::size0 4
+# ::id nested_control_0
+(u_499 / ask-02  :ARG0 (r / girl)  :ARG2 (u_502 / politician  :ARG0-of (u_501 / sleep-01  :ARG1-of (u_497 / want-01  :ARG0 u_502  :ARG1-of (u_498 / hate-01  :ARG0 u_502  :ARG1-of u_499)))))
+
+# ::snt The boy asked you to force the politician to refuse to focus.
+# ::tree Sent(ObjCtrlTbar(asked,VbarObjCtrl(force,VbarSubjCtrl(refuse,focus),politician),you),boy)
+# ::size0 4
+# ::id nested_control_1
+(u_507 / ask-02  :ARG0 (r / boy)  :ARG2 (u_509 / you  :ARG0-of (u_504 / force-01  :ARG1 (u_508 / politician  :ARG0-of (u_506 / focus-01  :ARG1-of (u_503 / refuse-01  :ARG0 u_508  :ARG2-of u_504)))  :ARG1-of u_507)))
+
+# ::snt The boy wanted to persuade the politician to want to jump.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarObjCtrl(persuade,VbarSubjCtrl(want,jump),politician)),boy)
+# ::size0 4
+# ::id nested_control_2
+(u_514 / want-01  :ARG0 (r / boy  :ARG0-of (u_511 / persuade-01  :ARG1 (u_515 / politician  :ARG0-of (u_513 / jump-03  :ARG1-of (u_510 / want-01  :ARG0 u_515  :ARG2-of u_511)))  :ARG1-of u_514)))
+
+# ::snt The girl jumped and begged the monster to persuade me to focus.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,jumped,ObjCtrlTbar(begged,VbarObjCtrl(persuade,focus,me),monster)),girl)
+# ::size0 4
+# ::id nested_control_3
+(u_521 / and  :op1 (u_523 / jump-03  :ARG0 (r / girl  :ARG0-of (u_519 / beg-01  :ARG1 (u_522 / monster  :ARG0-of (u_516 / persuade-01  :ARG1 (u_520 / i  :ARG0-of (u_518 / focus-01  :ARG2-of u_516))  :ARG2-of u_519))  :op2-of u_521))))
+
+# ::snt The girl attempted to persuade the doctor to beg you to focus.
+# ::tree Sent(SubjCtrlTbar(attempted,VbarObjCtrl(persuade,VbarObjCtrl(beg,focus,you),doctor)),girl)
+# ::size0 4
+# ::id nested_control_4
+(u_529 / attempt-01  :ARG0 (r / girl  :ARG0-of (u_527 / persuade-01  :ARG1 (u_530 / doctor  :ARG0-of (u_524 / beg-01  :ARG1 (u_528 / you  :ARG0-of (u_526 / focus-01  :ARG2-of u_524))  :ARG2-of u_527))  :ARG1-of u_529)))
+
+# ::snt The boy persuaded the monster to beg you to hate to eat.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarObjCtrl(beg,VbarSubjCtrl(hate,eat),you),monster),boy)
+# ::size0 4
+# ::id nested_control_5
+(u_535 / persuade-01  :ARG0 (r / boy)  :ARG1 (u_537 / monster  :ARG0-of (u_532 / beg-01  :ARG1 (u_536 / you  :ARG0-of (u_534 / eat-01  :ARG1-of (u_531 / hate-01  :ARG0 u_536  :ARG2-of u_532)))  :ARG2-of u_535)))
+
+# ::snt The boy persuaded the politician to force me to attempt to attend.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarObjCtrl(force,VbarSubjCtrl(attempt,attend),me),politician),boy)
+# ::size0 4
+# ::id nested_control_6
+(u_542 / persuade-01  :ARG0 (r / boy)  :ARG1 (u_544 / politician  :ARG0-of (u_539 / force-01  :ARG1 (u_543 / i  :ARG0-of (u_541 / attend-01  :ARG1-of (u_538 / attempt-01  :ARG0 u_543  :ARG2-of u_539)))  :ARG2-of u_542)))
+
+# ::snt The girl asked the monster to jump and wanted to love to eat.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,ObjCtrlTbar(asked,jump,monster),SubjCtrlTbar(wanted,VbarSubjCtrl(love,eat))),girl)
+# ::size0 4
+# ::id nested_control_7
+(u_547 / and  :op1 (u_548 / ask-02  :ARG0 (r / girl  :ARG0-of (u_551 / eat-01  :ARG1-of (u_545 / love-01  :ARG0 r  :ARG1-of (u_546 / want-01  :ARG0 r  :op2-of u_547))))  :ARG2 (u_552 / monster  :ARG0-of (u_550 / jump-03  :ARG1-of u_548))))
+
+# ::snt The boy hated to beg the monster to force me to focus.
+# ::tree Sent(SubjCtrlTbar(hated,VbarObjCtrl(beg,VbarObjCtrl(force,focus,me),monster)),boy)
+# ::size0 4
+# ::id nested_control_8
+(u_558 / hate-01  :ARG0 (r / boy  :ARG0-of (u_556 / beg-01  :ARG1 (u_559 / monster  :ARG0-of (u_553 / force-01  :ARG1 (u_557 / i  :ARG0-of (u_555 / focus-01  :ARG2-of u_553))  :ARG2-of u_556))  :ARG1-of u_558)))
+
+# ::snt The boy begged me to want to attempt to attend.
+# ::tree Sent(ObjCtrlTbar(begged,VbarSubjCtrl(want,VbarSubjCtrl(attempt,attend)),me),boy)
+# ::size0 4
+# ::id nested_control_9
+(u_562 / beg-01  :ARG0 (r / boy)  :ARG1 (u_565 / i  :ARG0-of (u_564 / attend-01  :ARG1-of (u_560 / attempt-01  :ARG0 u_565  :ARG1-of (u_561 / want-01  :ARG0 u_565  :ARG2-of u_562)))))
+
+# ::snt The boy persuaded the monster to ask the doctor to hate to beg you to eat.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarObjCtrl(ask,VbarSubjCtrl(hate,VbarObjCtrl(beg,eat,you)),doctor),monster),boy)
+# ::size0 5
+# ::id nested_control_10
+(u_572 / persuade-01  :ARG0 (r / boy)  :ARG1 (u_575 / monster  :ARG0-of (u_570 / ask-02  :ARG2 (u_574 / doctor  :ARG0-of (u_566 / beg-01  :ARG1 (u_571 / you  :ARG0-of (u_568 / eat-01  :ARG2-of u_566))  :ARG1-of (u_569 / hate-01  :ARG0 u_574  :ARG1-of u_570)))  :ARG2-of u_572)))
+
+# ::snt The girl forced the doctor to refuse to persuade the politician to attend and focused.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,ObjCtrlTbar(forced,VbarSubjCtrl(refuse,VbarObjCtrl(persuade,attend,politician)),doctor),focused),girl)
+# ::size0 5
+# ::id nested_control_11
+(u_576 / and  :op1 (u_581 / force-01  :ARG0 (r / girl  :ARG0-of (u_583 / focus-01  :op2-of u_576))  :ARG1 (u_584 / doctor  :ARG0-of (u_577 / persuade-01  :ARG1 (u_582 / politician  :ARG0-of (u_579 / attend-01  :ARG2-of u_577))  :ARG1-of (u_580 / refuse-01  :ARG0 u_584  :ARG2-of u_581)))))
+
+# ::snt The girl slept and attempted to ask you to love to eat.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,slept,SubjCtrlTbar(attempted,VbarObjCtrl(ask,VbarSubjCtrl(love,eat),you))),girl)
+# ::size0 5
+# ::id nested_control_12
+(u_590 / and  :op1 (u_592 / sleep-01  :ARG0 (r / girl  :ARG0-of (u_586 / ask-02  :ARG2 (u_591 / you  :ARG0-of (u_588 / eat-01  :ARG1-of (u_585 / love-01  :ARG0 u_591  :ARG1-of u_586)))  :ARG1-of (u_589 / attempt-01  :ARG0 r  :op2-of u_590)))))
+
+# ::snt The girl begged the politician to refuse to attempt to love to jump.
+# ::tree Sent(ObjCtrlTbar(begged,VbarSubjCtrl(refuse,VbarSubjCtrl(attempt,VbarSubjCtrl(love,jump))),politician),girl)
+# ::size0 5
+# ::id nested_control_13
+(u_596 / beg-01  :ARG0 (r / girl)  :ARG1 (u_599 / politician  :ARG0-of (u_598 / jump-03  :ARG1-of (u_593 / love-01  :ARG0 u_599  :ARG1-of (u_594 / attempt-01  :ARG0 u_599  :ARG1-of (u_595 / refuse-01  :ARG0 u_599  :ARG2-of u_596))))))
+
+# ::snt The boy wanted to love to persuade the politician to ask you to jump.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarSubjCtrl(love,VbarObjCtrl(persuade,VbarObjCtrl(ask,jump,you),politician))),boy)
+# ::size0 5
+# ::id nested_control_14
+(u_606 / want-01  :ARG0 (r / boy  :ARG0-of (u_603 / persuade-01  :ARG1 (u_607 / politician  :ARG0-of (u_600 / ask-02  :ARG2 (u_604 / you  :ARG0-of (u_602 / jump-03  :ARG1-of u_600))  :ARG2-of u_603))  :ARG1-of (u_605 / love-01  :ARG0 r  :ARG1-of u_606))))
+
+# ::snt The boy ate and begged the monster to persuade you to attempt to eat.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,ate,ObjCtrlTbar(begged,VbarObjCtrl(persuade,VbarSubjCtrl(attempt,eat),you),monster)),boy)
+# ::size0 5
+# ::id nested_control_15
+(u_614 / and  :op1 (u_616 / eat-01  :ARG0 (r / boy  :ARG0-of (u_612 / beg-01  :ARG1 (u_615 / monster  :ARG0-of (u_609 / persuade-01  :ARG1 (u_613 / you  :ARG0-of (u_611 / eat-01  :ARG1-of (u_608 / attempt-01  :ARG0 u_613  :ARG2-of u_609)))  :ARG2-of u_612))  :op2-of u_614))))
+
+# ::snt The girl begged the doctor to persuade me to refuse to want to sleep.
+# ::tree Sent(ObjCtrlTbar(begged,VbarObjCtrl(persuade,VbarSubjCtrl(refuse,VbarSubjCtrl(want,sleep)),me),doctor),girl)
+# ::size0 5
+# ::id nested_control_16
+(u_622 / beg-01  :ARG0 (r / girl)  :ARG1 (u_624 / doctor  :ARG0-of (u_619 / persuade-01  :ARG1 (u_623 / i  :ARG0-of (u_621 / sleep-01  :ARG1-of (u_617 / want-01  :ARG0 u_623  :ARG1-of (u_618 / refuse-01  :ARG0 u_623  :ARG2-of u_619))))  :ARG2-of u_622)))
+
+# ::snt The girl persuaded the doctor to refuse to hate to ask the monster to sleep.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarSubjCtrl(refuse,VbarSubjCtrl(hate,VbarObjCtrl(ask,sleep,monster))),doctor),girl)
+# ::size0 5
+# ::id nested_control_17
+(u_630 / persuade-01  :ARG0 (r / girl)  :ARG1 (u_632 / doctor  :ARG0-of (u_625 / ask-02  :ARG2 (u_631 / monster  :ARG0-of (u_627 / sleep-01  :ARG1-of u_625))  :ARG1-of (u_628 / hate-01  :ARG0 u_632  :ARG1-of (u_629 / refuse-01  :ARG0 u_632  :ARG2-of u_630)))))
+
+# ::snt The boy wanted to force the doctor to refuse to attend and jumped.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,SubjCtrlTbar(wanted,VbarObjCtrl(force,VbarSubjCtrl(refuse,attend),doctor)),jumped),boy)
+# ::size0 5
+# ::id nested_control_18
+(u_633 / and  :op1 (u_638 / want-01  :ARG0 (r / boy  :ARG0-of (u_635 / force-01  :ARG1 (u_640 / doctor  :ARG0-of (u_637 / attend-01  :ARG1-of (u_634 / refuse-01  :ARG0 u_640  :ARG2-of u_635)))  :ARG1-of u_638)  :ARG0-of (u_639 / jump-03  :op2-of u_633))))
+
+# ::snt The girl refused to love to want to ask me to jump.
+# ::tree Sent(SubjCtrlTbar(refused,VbarSubjCtrl(love,VbarSubjCtrl(want,VbarObjCtrl(ask,jump,me)))),girl)
+# ::size0 5
+# ::id nested_control_19
+(u_646 / refuse-01  :ARG0 (r / girl  :ARG0-of (u_641 / ask-02  :ARG2 (u_647 / i  :ARG0-of (u_643 / jump-03  :ARG1-of u_641))  :ARG1-of (u_644 / want-01  :ARG0 r  :ARG1-of (u_645 / love-01  :ARG0 r  :ARG1-of u_646)))))
+
+# ::snt The girl forced me to hate to persuade the doctor to want to attend and jumped.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,ObjCtrlTbar(forced,VbarSubjCtrl(hate,VbarObjCtrl(persuade,VbarSubjCtrl(want,attend),doctor)),me),jumped),girl)
+# ::size0 6
+# ::id nested_control_20
+(u_648 / and  :op1 (u_654 / force-01  :ARG0 (r / girl  :ARG0-of (u_656 / jump-03  :op2-of u_648))  :ARG1 (u_657 / i  :ARG0-of (u_650 / persuade-01  :ARG1 (u_655 / doctor  :ARG0-of (u_652 / attend-01  :ARG1-of (u_649 / want-01  :ARG0 u_655  :ARG2-of u_650)))  :ARG1-of (u_653 / hate-01  :ARG0 u_657  :ARG2-of u_654)))))
+
+# ::snt The boy forced me to attempt to force the monster to hate to want to attend.
+# ::tree Sent(ObjCtrlTbar(forced,VbarSubjCtrl(attempt,VbarObjCtrl(force,VbarSubjCtrl(hate,VbarSubjCtrl(want,attend)),monster)),me),boy)
+# ::size0 6
+# ::id nested_control_21
+(u_664 / force-01  :ARG0 (r / boy)  :ARG1 (u_666 / i  :ARG0-of (u_660 / force-01  :ARG1 (u_665 / monster  :ARG0-of (u_662 / attend-01  :ARG1-of (u_658 / want-01  :ARG0 u_665  :ARG1-of (u_659 / hate-01  :ARG0 u_665  :ARG2-of u_660))))  :ARG1-of (u_663 / attempt-01  :ARG0 u_666  :ARG2-of u_664))))
+
+# ::snt The boy wanted to hate to refuse to attempt to love to sleep.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarSubjCtrl(hate,VbarSubjCtrl(refuse,VbarSubjCtrl(attempt,VbarSubjCtrl(love,sleep))))),boy)
+# ::size0 6
+# ::id nested_control_22
+(u_671 / want-01  :ARG0 (r / boy  :ARG0-of (u_672 / sleep-01  :ARG1-of (u_667 / love-01  :ARG0 r  :ARG1-of (u_668 / attempt-01  :ARG0 r  :ARG1-of (u_669 / refuse-01  :ARG0 r  :ARG1-of (u_670 / hate-01  :ARG0 r  :ARG1-of u_671)))))))
+
+# ::snt The girl begged the politician to eat and attempt to beg you to hate to jump.
+# ::tree Sent(ObjCtrlTbar(begged,Coord_Open_S_inf(and_open_s,eat,VbarSubjCtrl(attempt,VbarObjCtrl(beg,VbarSubjCtrl(hate,jump),you))),politician),girl)
+# ::size0 6
+# ::id nested_control_23
+(u_680 / beg-01  :ARG0 (r / girl)  :ARG1 (u_683 / politician  :ARG0-of (u_682 / eat-01  :op1-of (u_678 / and  :op2 (u_677 / attempt-01  :ARG0 u_683  :ARG1 (u_674 / beg-01  :ARG0 u_683  :ARG1 (u_679 / you  :ARG0-of (u_676 / jump-03  :ARG1-of (u_673 / hate-01  :ARG0 u_679  :ARG2-of u_674)))))  :ARG2-of u_680))))
+
+# ::snt The boy attended and loved to attempt to love to force you to eat.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,attended,SubjCtrlTbar(loved,VbarSubjCtrl(attempt,VbarSubjCtrl(love,VbarObjCtrl(force,eat,you))))),boy)
+# ::size0 6
+# ::id nested_control_24
+(u_690 / and  :op1 (u_692 / attend-01  :ARG0 (r / boy  :ARG0-of (u_684 / force-01  :ARG1 (u_691 / you  :ARG0-of (u_686 / eat-01  :ARG2-of u_684))  :ARG1-of (u_687 / love-01  :ARG0 r  :ARG1-of (u_688 / attempt-01  :ARG0 r  :ARG1-of (u_689 / love-01  :ARG0 r  :op2-of u_690)))))))
+
+# ::snt The boy loved to persuade me to force the politician to love to want to eat.
+# ::tree Sent(SubjCtrlTbar(loved,VbarObjCtrl(persuade,VbarObjCtrl(force,VbarSubjCtrl(love,VbarSubjCtrl(want,eat)),politician),me)),boy)
+# ::size0 6
+# ::id nested_control_25
+(u_700 / love-01  :ARG0 (r / boy  :ARG0-of (u_698 / persuade-01  :ARG1 (u_701 / i  :ARG0-of (u_695 / force-01  :ARG1 (u_699 / politician  :ARG0-of (u_697 / eat-01  :ARG1-of (u_693 / want-01  :ARG0 u_699  :ARG1-of (u_694 / love-01  :ARG0 u_699  :ARG2-of u_695))))  :ARG2-of u_698))  :ARG1-of u_700)))
+
+# ::snt The boy persuaded you to hate to attempt to ask the monster to persuade me to attend.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarSubjCtrl(hate,VbarSubjCtrl(attempt,VbarObjCtrl(ask,VbarObjCtrl(persuade,attend,me),monster))),you),boy)
+# ::size0 6
+# ::id nested_control_26
+(u_709 / persuade-01  :ARG0 (r / boy)  :ARG1 (u_712 / you  :ARG0-of (u_705 / ask-02  :ARG2 (u_711 / monster  :ARG0-of (u_702 / persuade-01  :ARG1 (u_706 / i  :ARG0-of (u_704 / attend-01  :ARG2-of u_702))  :ARG1-of u_705))  :ARG1-of (u_707 / attempt-01  :ARG0 u_712  :ARG1-of (u_708 / hate-01  :ARG0 u_712  :ARG2-of u_709)))))
+
+# ::snt The girl forced me to persuade you to hate to ask the monster to force the doctor to jump.
+# ::tree Sent(ObjCtrlTbar(forced,VbarObjCtrl(persuade,VbarSubjCtrl(hate,VbarObjCtrl(ask,VbarObjCtrl(force,jump,doctor),monster)),you),me),girl)
+# ::size0 6
+# ::id nested_control_27
+(u_722 / force-01  :ARG0 (r / girl)  :ARG1 (u_724 / i  :ARG0-of (u_719 / persuade-01  :ARG1 (u_723 / you  :ARG0-of (u_716 / ask-02  :ARG2 (u_721 / monster  :ARG0-of (u_713 / force-01  :ARG1 (u_717 / doctor  :ARG0-of (u_715 / jump-03  :ARG2-of u_713))  :ARG1-of u_716))  :ARG1-of (u_718 / hate-01  :ARG0 u_723  :ARG2-of u_719)))  :ARG2-of u_722)))
+
+# ::snt The girl attempted to love to want to ask the doctor to attempt to jump.
+# ::tree Sent(SubjCtrlTbar(attempted,VbarSubjCtrl(love,VbarSubjCtrl(want,VbarObjCtrl(ask,VbarSubjCtrl(attempt,jump),doctor)))),girl)
+# ::size0 6
+# ::id nested_control_28
+(u_731 / attempt-01  :ARG0 (r / girl  :ARG0-of (u_726 / ask-02  :ARG2 (u_732 / doctor  :ARG0-of (u_728 / jump-03  :ARG1-of (u_725 / attempt-01  :ARG0 u_732  :ARG1-of u_726)))  :ARG1-of (u_729 / want-01  :ARG0 r  :ARG1-of (u_730 / love-01  :ARG0 r  :ARG1-of u_731)))))
+
+# ::snt The girl loved to love to persuade me to ask you to jump and forced the politician to attend.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,SubjCtrlTbar(loved,VbarSubjCtrl(love,VbarObjCtrl(persuade,VbarObjCtrl(ask,jump,you),me))),ObjCtrlTbar(forced,attend,politician)),girl)
+# ::size0 6
+# ::id nested_control_29
+(u_736 / and  :op1 (u_743 / love-01  :ARG0 (r / girl  :ARG0-of (u_740 / persuade-01  :ARG1 (u_745 / i  :ARG0-of (u_737 / ask-02  :ARG2 (u_741 / you  :ARG0-of (u_739 / jump-03  :ARG1-of u_737))  :ARG2-of u_740))  :ARG1-of (u_742 / love-01  :ARG0 r  :ARG1-of u_743))  :ARG0-of (u_733 / force-01  :ARG1 (u_744 / politician  :ARG0-of (u_735 / attend-01  :ARG2-of u_733))  :op2-of u_736))))
+
+# ::snt The girl attended and forced the doctor to want to refuse to force the monster to ask me to jump.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,attended,ObjCtrlTbar(forced,VbarSubjCtrl(want,VbarSubjCtrl(refuse,VbarObjCtrl(force,VbarObjCtrl(ask,jump,me),monster))),doctor)),girl)
+# ::size0 7
+# ::id nested_control_30
+(u_756 / and  :op1 (u_758 / attend-01  :ARG0 (r / girl  :ARG0-of (u_753 / force-01  :ARG1 (u_757 / doctor  :ARG0-of (u_749 / force-01  :ARG1 (u_755 / monster  :ARG0-of (u_746 / ask-02  :ARG2 (u_750 / i  :ARG0-of (u_748 / jump-03  :ARG1-of u_746))  :ARG2-of u_749))  :ARG1-of (u_751 / refuse-01  :ARG0 u_757  :ARG1-of (u_752 / want-01  :ARG0 u_757  :ARG2-of u_753))))  :op2-of u_756))))
+
+# ::snt The girl loved to beg the doctor to hate to love to persuade the politician to attempt to jump.
+# ::tree Sent(SubjCtrlTbar(loved,VbarObjCtrl(beg,VbarSubjCtrl(hate,VbarSubjCtrl(love,VbarObjCtrl(persuade,VbarSubjCtrl(attempt,jump),politician))),doctor)),girl)
+# ::size0 7
+# ::id nested_control_31
+(u_767 / love-01  :ARG0 (r / girl  :ARG0-of (u_765 / beg-01  :ARG1 (u_768 / doctor  :ARG0-of (u_760 / persuade-01  :ARG1 (u_766 / politician  :ARG0-of (u_762 / jump-03  :ARG1-of (u_759 / attempt-01  :ARG0 u_766  :ARG2-of u_760)))  :ARG1-of (u_763 / love-01  :ARG0 u_768  :ARG1-of (u_764 / hate-01  :ARG0 u_768  :ARG2-of u_765))))  :ARG1-of u_767)))
+
+# ::snt The girl loved to refuse to ask the monster to hate to beg me to eat and attended.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,SubjCtrlTbar(loved,VbarSubjCtrl(refuse,VbarObjCtrl(ask,VbarSubjCtrl(hate,VbarObjCtrl(beg,eat,me)),monster))),attended),girl)
+# ::size0 7
+# ::id nested_control_32
+(u_769 / and  :op1 (u_777 / love-01  :ARG0 (r / girl  :ARG0-of (u_774 / ask-02  :ARG2 (u_779 / monster  :ARG0-of (u_770 / beg-01  :ARG1 (u_775 / i  :ARG0-of (u_772 / eat-01  :ARG2-of u_770))  :ARG1-of (u_773 / hate-01  :ARG0 u_779  :ARG1-of u_774)))  :ARG1-of (u_776 / refuse-01  :ARG0 r  :ARG1-of u_777))  :ARG0-of (u_778 / attend-01  :op2-of u_769))))
+
+# ::snt The boy asked me to force the monster to hate to want to love to refuse to jump.
+# ::tree Sent(ObjCtrlTbar(asked,VbarObjCtrl(force,VbarSubjCtrl(hate,VbarSubjCtrl(want,VbarSubjCtrl(love,VbarSubjCtrl(refuse,jump)))),monster),me),boy)
+# ::size0 7
+# ::id nested_control_33
+(u_787 / ask-02  :ARG0 (r / boy)  :ARG2 (u_789 / i  :ARG0-of (u_784 / force-01  :ARG1 (u_788 / monster  :ARG0-of (u_786 / jump-03  :ARG1-of (u_780 / refuse-01  :ARG0 u_788  :ARG1-of (u_781 / love-01  :ARG0 u_788  :ARG1-of (u_782 / want-01  :ARG0 u_788  :ARG1-of (u_783 / hate-01  :ARG0 u_788  :ARG2-of u_784))))))  :ARG1-of u_787)))
+
+# ::snt The boy hated to force the monster to persuade me to beg the doctor to refuse to love to sleep.
+# ::tree Sent(SubjCtrlTbar(hated,VbarObjCtrl(force,VbarObjCtrl(persuade,VbarObjCtrl(beg,VbarSubjCtrl(refuse,VbarSubjCtrl(love,sleep)),doctor),me),monster)),boy)
+# ::size0 7
+# ::id nested_control_34
+(u_800 / hate-01  :ARG0 (r / boy  :ARG0-of (u_797 / force-01  :ARG1 (u_801 / monster  :ARG0-of (u_795 / persuade-01  :ARG1 (u_799 / i  :ARG0-of (u_792 / beg-01  :ARG1 (u_796 / doctor  :ARG0-of (u_794 / sleep-01  :ARG1-of (u_790 / love-01  :ARG0 u_796  :ARG1-of (u_791 / refuse-01  :ARG0 u_796  :ARG2-of u_792))))  :ARG2-of u_795))  :ARG2-of u_797))  :ARG1-of u_800)))
+
+# ::snt The boy jumped and wanted to force the monster to beg the doctor to attempt to refuse to focus.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,jumped,SubjCtrlTbar(wanted,VbarObjCtrl(force,VbarObjCtrl(beg,VbarSubjCtrl(attempt,VbarSubjCtrl(refuse,focus)),doctor),monster))),boy)
+# ::size0 7
+# ::id nested_control_35
+(u_810 / and  :op1 (u_812 / jump-03  :ARG0 (r / boy  :ARG0-of (u_807 / force-01  :ARG1 (u_811 / monster  :ARG0-of (u_804 / beg-01  :ARG1 (u_808 / doctor  :ARG0-of (u_806 / focus-01  :ARG1-of (u_802 / refuse-01  :ARG0 u_808  :ARG1-of (u_803 / attempt-01  :ARG0 u_808  :ARG2-of u_804))))  :ARG2-of u_807))  :ARG1-of (u_809 / want-01  :ARG0 r  :op2-of u_810)))))
+
+# ::snt The boy focused and persuaded the monster to force the doctor to attempt to persuade the politician to love to focus.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,focused,ObjCtrlTbar(persuaded,VbarObjCtrl(force,VbarSubjCtrl(attempt,VbarObjCtrl(persuade,VbarSubjCtrl(love,focus),politician)),doctor),monster)),boy)
+# ::size0 7
+# ::id nested_control_36
+(u_823 / and  :op1 (u_825 / focus-01  :ARG0 (r / boy  :ARG0-of (u_820 / persuade-01  :ARG1 (u_824 / monster  :ARG0-of (u_818 / force-01  :ARG1 (u_822 / doctor  :ARG0-of (u_814 / persuade-01  :ARG1 (u_819 / politician  :ARG0-of (u_816 / focus-01  :ARG1-of (u_813 / love-01  :ARG0 u_819  :ARG2-of u_814)))  :ARG1-of (u_817 / attempt-01  :ARG0 u_822  :ARG2-of u_818)))  :ARG2-of u_820))  :op2-of u_823))))
+
+# ::snt The girl refused to force the monster to beg you to persuade the doctor to love to attempt to sleep.
+# ::tree Sent(SubjCtrlTbar(refused,VbarObjCtrl(force,VbarObjCtrl(beg,VbarObjCtrl(persuade,VbarSubjCtrl(love,VbarSubjCtrl(attempt,sleep)),doctor),you),monster)),girl)
+# ::size0 7
+# ::id nested_control_37
+(u_836 / refuse-01  :ARG0 (r / girl  :ARG0-of (u_833 / force-01  :ARG1 (u_837 / monster  :ARG0-of (u_831 / beg-01  :ARG1 (u_835 / you  :ARG0-of (u_828 / persuade-01  :ARG1 (u_832 / doctor  :ARG0-of (u_830 / sleep-01  :ARG1-of (u_826 / attempt-01  :ARG0 u_832  :ARG1-of (u_827 / love-01  :ARG0 u_832  :ARG2-of u_828))))  :ARG2-of u_831))  :ARG2-of u_833))  :ARG1-of u_836)))
+
+# ::snt The boy wanted to attend and begged the monster to refuse to love to persuade the politician to hate to sleep.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,SubjCtrlTbar(wanted,attend),ObjCtrlTbar(begged,VbarSubjCtrl(refuse,VbarSubjCtrl(love,VbarObjCtrl(persuade,VbarSubjCtrl(hate,sleep),politician))),monster)),boy)
+# ::size0 7
+# ::id nested_control_38
+(u_846 / and  :op1 (u_847 / want-01  :ARG0 (r / boy  :ARG0-of (u_849 / attend-01  :ARG1-of u_847)  :ARG0-of (u_844 / beg-01  :ARG1 (u_848 / monster  :ARG0-of (u_839 / persuade-01  :ARG1 (u_845 / politician  :ARG0-of (u_841 / sleep-01  :ARG1-of (u_838 / hate-01  :ARG0 u_845  :ARG2-of u_839)))  :ARG1-of (u_842 / love-01  :ARG0 u_848  :ARG1-of (u_843 / refuse-01  :ARG0 u_848  :ARG2-of u_844))))  :op2-of u_846))))
+
+# ::snt The boy persuaded you to persuade the politician to beg me to love to want to refuse to eat.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarObjCtrl(persuade,VbarObjCtrl(beg,VbarSubjCtrl(love,VbarSubjCtrl(want,VbarSubjCtrl(refuse,eat))),me),politician),you),boy)
+# ::size0 7
+# ::id nested_control_39
+(u_858 / persuade-01  :ARG0 (r / boy)  :ARG1 (u_861 / you  :ARG0-of (u_856 / persuade-01  :ARG1 (u_860 / politician  :ARG0-of (u_853 / beg-01  :ARG1 (u_857 / i  :ARG0-of (u_855 / eat-01  :ARG1-of (u_850 / refuse-01  :ARG0 u_857  :ARG1-of (u_851 / want-01  :ARG0 u_857  :ARG1-of (u_852 / love-01  :ARG0 u_857  :ARG2-of u_853)))))  :ARG2-of u_856))  :ARG2-of u_858)))
+
+# ::snt The girl attempted to love to ask me to persuade the politician to want to beg the monster to attend and attended.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,SubjCtrlTbar(attempted,VbarSubjCtrl(love,VbarObjCtrl(ask,VbarObjCtrl(persuade,VbarSubjCtrl(want,VbarObjCtrl(beg,attend,monster)),politician),me))),attended),girl)
+# ::size0 8
+# ::id nested_control_40
+(u_862 / and  :op1 (u_873 / attempt-01  :ARG0 (r / girl  :ARG0-of (u_869 / ask-02  :ARG2 (u_875 / i  :ARG0-of (u_867 / persuade-01  :ARG1 (u_871 / politician  :ARG0-of (u_863 / beg-01  :ARG1 (u_868 / monster  :ARG0-of (u_865 / attend-01  :ARG2-of u_863))  :ARG1-of (u_866 / want-01  :ARG0 u_871  :ARG2-of u_867)))  :ARG1-of u_869))  :ARG1-of (u_872 / love-01  :ARG0 r  :ARG1-of u_873))  :ARG0-of (u_874 / attend-01  :op2-of u_862))))
+
+# ::snt The boy hated to love to ask you to persuade the monster to hate to attempt to force the politician to focus.
+# ::tree Sent(SubjCtrlTbar(hated,VbarSubjCtrl(love,VbarObjCtrl(ask,VbarObjCtrl(persuade,VbarSubjCtrl(hate,VbarSubjCtrl(attempt,VbarObjCtrl(force,focus,politician))),monster),you))),boy)
+# ::size0 8
+# ::id nested_control_41
+(u_887 / hate-01  :ARG0 (r / boy  :ARG0-of (u_883 / ask-02  :ARG2 (u_888 / you  :ARG0-of (u_881 / persuade-01  :ARG1 (u_885 / monster  :ARG0-of (u_876 / force-01  :ARG1 (u_882 / politician  :ARG0-of (u_878 / focus-01  :ARG2-of u_876))  :ARG1-of (u_879 / attempt-01  :ARG0 u_885  :ARG1-of (u_880 / hate-01  :ARG0 u_885  :ARG2-of u_881))))  :ARG1-of u_883))  :ARG1-of (u_886 / love-01  :ARG0 r  :ARG1-of u_887))))
+
+# ::snt The girl slept and forced me to refuse to force you to want to ask the politician to hate to focus.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,slept,ObjCtrlTbar(forced,VbarSubjCtrl(refuse,VbarObjCtrl(force,VbarSubjCtrl(want,VbarObjCtrl(ask,VbarSubjCtrl(hate,focus),politician)),you)),me)),girl)
+# ::size0 8
+# ::id nested_control_42
+(u_900 / and  :op1 (u_902 / sleep-01  :ARG0 (r / girl  :ARG0-of (u_897 / force-01  :ARG1 (u_901 / i  :ARG0-of (u_894 / force-01  :ARG1 (u_899 / you  :ARG0-of (u_890 / ask-02  :ARG2 (u_895 / politician  :ARG0-of (u_892 / focus-01  :ARG1-of (u_889 / hate-01  :ARG0 u_895  :ARG1-of u_890)))  :ARG1-of (u_893 / want-01  :ARG0 u_899  :ARG2-of u_894)))  :ARG1-of (u_896 / refuse-01  :ARG0 u_901  :ARG2-of u_897)))  :op2-of u_900))))
+
+# ::snt The boy loved to attempt to refuse to force me to hate to ask you to beg the doctor to sleep.
+# ::tree Sent(SubjCtrlTbar(loved,VbarSubjCtrl(attempt,VbarSubjCtrl(refuse,VbarObjCtrl(force,VbarSubjCtrl(hate,VbarObjCtrl(ask,VbarObjCtrl(beg,sleep,doctor),you)),me)))),boy)
+# ::size0 8
+# ::id nested_control_43
+(u_914 / love-01  :ARG0 (r / boy  :ARG0-of (u_909 / force-01  :ARG1 (u_915 / i  :ARG0-of (u_906 / ask-02  :ARG2 (u_911 / you  :ARG0-of (u_903 / beg-01  :ARG1 (u_907 / doctor  :ARG0-of (u_905 / sleep-01  :ARG2-of u_903))  :ARG1-of u_906))  :ARG1-of (u_908 / hate-01  :ARG0 u_915  :ARG2-of u_909)))  :ARG1-of (u_912 / refuse-01  :ARG0 r  :ARG1-of (u_913 / attempt-01  :ARG0 r  :ARG1-of u_914)))))
+
+# ::snt The boy hated to ask the politician to love to beg the monster to hate to want to refuse to sleep.
+# ::tree Sent(SubjCtrlTbar(hated,VbarObjCtrl(ask,VbarSubjCtrl(love,VbarObjCtrl(beg,VbarSubjCtrl(hate,VbarSubjCtrl(want,VbarSubjCtrl(refuse,sleep))),monster)),politician)),boy)
+# ::size0 8
+# ::id nested_control_44
+(u_925 / hate-01  :ARG0 (r / boy  :ARG0-of (u_923 / ask-02  :ARG2 (u_926 / politician  :ARG0-of (u_919 / beg-01  :ARG1 (u_924 / monster  :ARG0-of (u_921 / sleep-01  :ARG1-of (u_916 / refuse-01  :ARG0 u_924  :ARG1-of (u_917 / want-01  :ARG0 u_924  :ARG1-of (u_918 / hate-01  :ARG0 u_924  :ARG2-of u_919)))))  :ARG1-of (u_922 / love-01  :ARG0 u_926  :ARG1-of u_923)))  :ARG1-of u_925)))
+
+# ::snt The girl wanted to refuse to love to beg me to want to persuade the doctor to hate to sleep.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarSubjCtrl(refuse,VbarSubjCtrl(love,VbarObjCtrl(beg,VbarSubjCtrl(want,VbarObjCtrl(persuade,VbarSubjCtrl(hate,sleep),doctor)),me)))),girl)
+# ::size0 8
+# ::id nested_control_45
+(u_936 / want-01  :ARG0 (r / girl  :ARG0-of (u_932 / beg-01  :ARG1 (u_937 / i  :ARG0-of (u_928 / persuade-01  :ARG1 (u_933 / doctor  :ARG0-of (u_930 / sleep-01  :ARG1-of (u_927 / hate-01  :ARG0 u_933  :ARG2-of u_928)))  :ARG1-of (u_931 / want-01  :ARG0 u_937  :ARG2-of u_932)))  :ARG1-of (u_934 / love-01  :ARG0 r  :ARG1-of (u_935 / refuse-01  :ARG0 r  :ARG1-of u_936)))))
+
+# ::snt The boy asked me to force the politician to ask the monster to attempt to love to beg you to persuade the doctor to sleep.
+# ::tree Sent(ObjCtrlTbar(asked,VbarObjCtrl(force,VbarObjCtrl(ask,VbarSubjCtrl(attempt,VbarSubjCtrl(love,VbarObjCtrl(beg,VbarObjCtrl(persuade,sleep,doctor),you))),monster),politician),me),boy)
+# ::size0 8
+# ::id nested_control_46
+(u_950 / ask-02  :ARG0 (r / boy)  :ARG2 (u_953 / i  :ARG0-of (u_948 / force-01  :ARG1 (u_952 / politician  :ARG0-of (u_945 / ask-02  :ARG2 (u_949 / monster  :ARG0-of (u_941 / beg-01  :ARG1 (u_947 / you  :ARG0-of (u_938 / persuade-01  :ARG1 (u_942 / doctor  :ARG0-of (u_940 / sleep-01  :ARG2-of u_938))  :ARG2-of u_941))  :ARG1-of (u_943 / love-01  :ARG0 u_949  :ARG1-of (u_944 / attempt-01  :ARG0 u_949  :ARG1-of u_945))))  :ARG2-of u_948))  :ARG1-of u_950)))
+
+# ::snt The girl loved to refuse to attempt to love to ask the doctor to want to persuade me to sleep.
+# ::tree Sent(SubjCtrlTbar(loved,VbarSubjCtrl(refuse,VbarSubjCtrl(attempt,VbarSubjCtrl(love,VbarObjCtrl(ask,VbarSubjCtrl(want,VbarObjCtrl(persuade,sleep,me)),doctor))))),girl)
+# ::size0 8
+# ::id nested_control_47
+(u_963 / love-01  :ARG0 (r / girl  :ARG0-of (u_958 / ask-02  :ARG2 (u_964 / doctor  :ARG0-of (u_954 / persuade-01  :ARG1 (u_959 / i  :ARG0-of (u_956 / sleep-01  :ARG2-of u_954))  :ARG1-of (u_957 / want-01  :ARG0 u_964  :ARG1-of u_958)))  :ARG1-of (u_960 / love-01  :ARG0 r  :ARG1-of (u_961 / attempt-01  :ARG0 r  :ARG1-of (u_962 / refuse-01  :ARG0 r  :ARG1-of u_963))))))
+
+# ::snt The girl loved to force you to hate to beg the monster to ask the doctor to persuade me to want to focus.
+# ::tree Sent(SubjCtrlTbar(loved,VbarObjCtrl(force,VbarSubjCtrl(hate,VbarObjCtrl(beg,VbarObjCtrl(ask,VbarObjCtrl(persuade,VbarSubjCtrl(want,focus),me),doctor),monster)),you)),girl)
+# ::size0 8
+# ::id nested_control_48
+(u_977 / love-01  :ARG0 (r / girl  :ARG0-of (u_975 / force-01  :ARG1 (u_978 / you  :ARG0-of (u_971 / beg-01  :ARG1 (u_976 / monster  :ARG0-of (u_969 / ask-02  :ARG2 (u_973 / doctor  :ARG0-of (u_966 / persuade-01  :ARG1 (u_970 / i  :ARG0-of (u_968 / focus-01  :ARG1-of (u_965 / want-01  :ARG0 u_970  :ARG2-of u_966)))  :ARG1-of u_969))  :ARG2-of u_971))  :ARG1-of (u_974 / hate-01  :ARG0 u_978  :ARG2-of u_975)))  :ARG1-of u_977)))
+
+# ::snt The girl wanted to force you to beg the politician to attempt to love to ask me to persuade the monster to attend.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarObjCtrl(force,VbarObjCtrl(beg,VbarSubjCtrl(attempt,VbarSubjCtrl(love,VbarObjCtrl(ask,VbarObjCtrl(persuade,attend,monster),me))),politician),you)),girl)
+# ::size0 8
+# ::id nested_control_49
+(u_991 / want-01  :ARG0 (r / girl  :ARG0-of (u_989 / force-01  :ARG1 (u_992 / you  :ARG0-of (u_986 / beg-01  :ARG1 (u_990 / politician  :ARG0-of (u_982 / ask-02  :ARG2 (u_988 / i  :ARG0-of (u_979 / persuade-01  :ARG1 (u_983 / monster  :ARG0-of (u_981 / attend-01  :ARG2-of u_979))  :ARG1-of u_982))  :ARG1-of (u_984 / love-01  :ARG0 u_990  :ARG1-of (u_985 / attempt-01  :ARG0 u_990  :ARG2-of u_986))))  :ARG2-of u_989))  :ARG1-of u_991)))
+

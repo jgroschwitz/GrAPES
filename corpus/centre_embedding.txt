@@ -1,0 +1,182 @@
+# Randomly sampled examples of centre embedding. Created by a grammar. Here, size0 is the depth of the tree. The number of centre embeddings is (size0-2) / 2, i.e. the sentences here have 1, 2 or 3 centre embeddings.
+
+# ::snt The boy who the child amused likes the mechanic
+# ::tree TP(Vbar_tr(likes,mechanic),NP_RC(boy,obj_rel(amused,finish_NP(child))))
+# ::size0 4
+# ::id centre_embedding_0
+(u_164 / like-01  :ARG0 (r / boy  :ARG1-of (u_165 / amuse-01  :ARG0 (u_166 / child)))  :ARG1 (u_167 / mechanic))
+
+# ::snt The mechanic who the boy met taught the astronaut
+# ::tree TP(Vbar_tr(taught,astronaut),NP_RC(mechanic,obj_rel(met,finish_NP(boy))))
+# ::size0 4
+# ::id centre_embedding_1
+(u_168 / teach-01  :ARG0 (r / mechanic  :ARG1-of (u_169 / meet-02  :ARG0 (u_170 / boy)))  :ARG2 (u_171 / astronaut))
+
+# ::snt The boy who the girl saw met the woman
+# ::tree TP(Vbar_tr(met,woman),NP_RC(boy,obj_rel(saw,finish_NP(girl))))
+# ::size0 4
+# ::id centre_embedding_2
+(u_172 / meet-02  :ARG0 (r / boy  :ARG1-of (u_173 / see-01  :ARG0 (u_174 / girl)))  :ARG1 (u_175 / woman))
+
+# ::snt The woman who the boy hugged saw the child
+# ::tree TP(Vbar_tr(saw,child),NP_RC(woman,obj_rel(hugged,finish_NP(boy))))
+# ::size0 4
+# ::id centre_embedding_3
+(u_176 / see-01  :ARG0 (r / woman  :ARG1-of (u_177 / hug-01  :ARG0 (u_178 / boy)))  :ARG1 (u_179 / child))
+
+# ::snt The doctor who the astronaut amused left
+# ::tree TP(Vbar_intr(left),NP_RC(doctor,obj_rel(amused,finish_NP(astronaut))))
+# ::size0 4
+# ::id centre_embedding_4
+(u_182 / leave-11  :ARG0 (r / doctor  :ARG1-of (u_180 / amuse-01  :ARG0 (u_181 / astronaut))))
+
+# ::snt The astronaut who the mechanic hugged likes the woman
+# ::tree TP(Vbar_tr(likes,woman),NP_RC(astronaut,obj_rel(hugged,finish_NP(mechanic))))
+# ::size0 4
+# ::id centre_embedding_5
+(u_183 / like-01  :ARG0 (r / astronaut  :ARG1-of (u_184 / hug-01  :ARG0 (u_185 / mechanic)))  :ARG1 (u_186 / woman))
+
+# ::snt The boy who the mechanic met amused the astronaut
+# ::tree TP(Vbar_tr(amused,astronaut),NP_RC(boy,obj_rel(met,finish_NP(mechanic))))
+# ::size0 4
+# ::id centre_embedding_6
+(u_187 / amuse-01  :ARG0 (r / boy  :ARG1-of (u_188 / meet-02  :ARG0 (u_189 / mechanic)))  :ARG1 (u_190 / astronaut))
+
+# ::snt The woman who the astronaut saw left
+# ::tree TP(Vbar_intr(left),NP_RC(woman,obj_rel(saw,finish_NP(astronaut))))
+# ::size0 4
+# ::id centre_embedding_7
+(u_193 / leave-11  :ARG0 (r / woman  :ARG1-of (u_191 / see-01  :ARG0 (u_192 / astronaut))))
+
+# ::snt The child who the astronaut hugged likes the boy
+# ::tree TP(Vbar_tr(likes,boy),NP_RC(child,obj_rel(hugged,finish_NP(astronaut))))
+# ::size0 4
+# ::id centre_embedding_8
+(u_194 / like-01  :ARG0 (r / child  :ARG1-of (u_195 / hug-01  :ARG0 (u_196 / astronaut)))  :ARG1 (u_197 / boy))
+
+# ::snt The astronaut who the doctor met saw the woman
+# ::tree TP(Vbar_tr(saw,woman),NP_RC(astronaut,obj_rel(met,finish_NP(doctor))))
+# ::size0 4
+# ::id centre_embedding_9
+(u_198 / see-01  :ARG0 (r / astronaut  :ARG1-of (u_199 / meet-02  :ARG0 (u_200 / doctor)))  :ARG1 (u_201 / woman))
+
+# ::snt The boy who the doctor who the mechanic met taught left
+# ::tree TP(Vbar_intr(left),NP_RC(boy,obj_rel(taught,NP_RC(doctor,obj_rel(met,finish_NP(mechanic))))))
+# ::size0 6
+# ::id centre_embedding_10
+(u_206 / leave-11  :ARG0 (r / boy  :ARG2-of (u_204 / teach-01  :ARG0 (u_205 / doctor  :ARG1-of (u_202 / meet-02  :ARG0 (u_203 / mechanic))))))
+
+# ::snt The child who the mechanic who the boy met likes laughed
+# ::tree TP(Vbar_intr(laughed),NP_RC(child,obj_rel(likes,NP_RC(mechanic,obj_rel(met,finish_NP(boy))))))
+# ::size0 6
+# ::id centre_embedding_11
+(u_211 / laugh-01  :ARG0 (r / child  :ARG1-of (u_209 / like-01  :ARG0 (u_210 / mechanic  :ARG1-of (u_207 / meet-02  :ARG0 (u_208 / boy))))))
+
+# ::snt The astronaut who the woman who the girl amused taught slept
+# ::tree TP(Vbar_intr(slept),NP_RC(astronaut,obj_rel(taught,NP_RC(woman,obj_rel(amused,finish_NP(girl))))))
+# ::size0 6
+# ::id centre_embedding_12
+(u_216 / sleep-01  :ARG0 (r / astronaut  :ARG2-of (u_214 / teach-01  :ARG0 (u_215 / woman  :ARG1-of (u_212 / amuse-01  :ARG0 (u_213 / girl))))))
+
+# ::snt The doctor who the mechanic who the child met saw amused the boy
+# ::tree TP(Vbar_tr(amused,boy),NP_RC(doctor,obj_rel(saw,NP_RC(mechanic,obj_rel(met,finish_NP(child))))))
+# ::size0 6
+# ::id centre_embedding_13
+(u_217 / amuse-01  :ARG0 (r / doctor  :ARG1-of (u_220 / see-01  :ARG0 (u_221 / mechanic  :ARG1-of (u_218 / meet-02  :ARG0 (u_219 / child)))))  :ARG1 (u_222 / boy))
+
+# ::snt The boy who the girl who the astronaut saw likes met the mechanic
+# ::tree TP(Vbar_tr(met,mechanic),NP_RC(boy,obj_rel(likes,NP_RC(girl,obj_rel(saw,finish_NP(astronaut))))))
+# ::size0 6
+# ::id centre_embedding_14
+(u_223 / meet-02  :ARG0 (r / boy  :ARG1-of (u_226 / like-01  :ARG0 (u_227 / girl  :ARG1-of (u_224 / see-01  :ARG0 (u_225 / astronaut)))))  :ARG1 (u_228 / mechanic))
+
+# ::snt The boy who the woman who the child likes hugged amused the astronaut
+# ::tree TP(Vbar_tr(amused,astronaut),NP_RC(boy,obj_rel(hugged,NP_RC(woman,obj_rel(likes,finish_NP(child))))))
+# ::size0 6
+# ::id centre_embedding_15
+(u_229 / amuse-01  :ARG0 (r / boy  :ARG1-of (u_232 / hug-01  :ARG0 (u_233 / woman  :ARG1-of (u_230 / like-01  :ARG0 (u_231 / child)))))  :ARG1 (u_234 / astronaut))
+
+# ::snt The mechanic who the astronaut who the woman saw likes slept
+# ::tree TP(Vbar_intr(slept),NP_RC(mechanic,obj_rel(likes,NP_RC(astronaut,obj_rel(saw,finish_NP(woman))))))
+# ::size0 6
+# ::id centre_embedding_16
+(u_239 / sleep-01  :ARG0 (r / mechanic  :ARG1-of (u_237 / like-01  :ARG0 (u_238 / astronaut  :ARG1-of (u_235 / see-01  :ARG0 (u_236 / woman))))))
+
+# ::snt The mechanic who the boy who the doctor amused saw left
+# ::tree TP(Vbar_intr(left),NP_RC(mechanic,obj_rel(saw,NP_RC(boy,obj_rel(amused,finish_NP(doctor))))))
+# ::size0 6
+# ::id centre_embedding_17
+(u_244 / leave-11  :ARG0 (r / mechanic  :ARG1-of (u_242 / see-01  :ARG0 (u_243 / boy  :ARG1-of (u_240 / amuse-01  :ARG0 (u_241 / doctor))))))
+
+# ::snt The astronaut who the girl who the boy hugged taught left
+# ::tree TP(Vbar_intr(left),NP_RC(astronaut,obj_rel(taught,NP_RC(girl,obj_rel(hugged,finish_NP(boy))))))
+# ::size0 6
+# ::id centre_embedding_18
+(u_249 / leave-11  :ARG0 (r / astronaut  :ARG2-of (u_247 / teach-01  :ARG0 (u_248 / girl  :ARG1-of (u_245 / hug-01  :ARG0 (u_246 / boy))))))
+
+# ::snt The mechanic who the astronaut who the woman saw amused left
+# ::tree TP(Vbar_intr(left),NP_RC(mechanic,obj_rel(amused,NP_RC(astronaut,obj_rel(saw,finish_NP(woman))))))
+# ::size0 6
+# ::id centre_embedding_19
+(u_254 / leave-11  :ARG0 (r / mechanic  :ARG1-of (u_252 / amuse-01  :ARG0 (u_253 / astronaut  :ARG1-of (u_250 / see-01  :ARG0 (u_251 / woman))))))
+
+# ::snt The woman who the child who the girl who the boy hugged amused met taught the astronaut
+# ::tree TP(Vbar_tr(taught,astronaut),NP_RC(woman,obj_rel(met,NP_RC(child,obj_rel(amused,NP_RC(girl,obj_rel(hugged,finish_NP(boy))))))))
+# ::size0 8
+# ::id centre_embedding_20
+(u_255 / teach-01  :ARG0 (r / woman  :ARG1-of (u_260 / meet-02  :ARG0 (u_261 / child  :ARG1-of (u_258 / amuse-01  :ARG0 (u_259 / girl  :ARG1-of (u_256 / hug-01  :ARG0 (u_257 / boy)))))))  :ARG2 (u_262 / astronaut))
+
+# ::snt The girl who the child who the boy who the woman hugged saw met amused the doctor
+# ::tree TP(Vbar_tr(amused,doctor),NP_RC(girl,obj_rel(met,NP_RC(child,obj_rel(saw,NP_RC(boy,obj_rel(hugged,finish_NP(woman))))))))
+# ::size0 8
+# ::id centre_embedding_21
+(u_263 / amuse-01  :ARG0 (r / girl  :ARG1-of (u_268 / meet-02  :ARG0 (u_269 / child  :ARG1-of (u_266 / see-01  :ARG0 (u_267 / boy  :ARG1-of (u_264 / hug-01  :ARG0 (u_265 / woman)))))))  :ARG1 (u_270 / doctor))
+
+# ::snt The doctor who the woman who the child who the boy saw likes taught slept
+# ::tree TP(Vbar_intr(slept),NP_RC(doctor,obj_rel(taught,NP_RC(woman,obj_rel(likes,NP_RC(child,obj_rel(saw,finish_NP(boy))))))))
+# ::size0 8
+# ::id centre_embedding_22
+(u_277 / sleep-01  :ARG0 (r / doctor  :ARG2-of (u_275 / teach-01  :ARG0 (u_276 / woman  :ARG1-of (u_273 / like-01  :ARG0 (u_274 / child  :ARG1-of (u_271 / see-01  :ARG0 (u_272 / boy))))))))
+
+# ::snt The mechanic who the astronaut who the girl who the doctor met amused hugged slept
+# ::tree TP(Vbar_intr(slept),NP_RC(mechanic,obj_rel(hugged,NP_RC(astronaut,obj_rel(amused,NP_RC(girl,obj_rel(met,finish_NP(doctor))))))))
+# ::size0 8
+# ::id centre_embedding_23
+(u_284 / sleep-01  :ARG0 (r / mechanic  :ARG1-of (u_282 / hug-01  :ARG0 (u_283 / astronaut  :ARG1-of (u_280 / amuse-01  :ARG0 (u_281 / girl  :ARG1-of (u_278 / meet-02  :ARG0 (u_279 / doctor))))))))
+
+# ::snt The woman who the mechanic who the child who the girl saw taught met left
+# ::tree TP(Vbar_intr(left),NP_RC(woman,obj_rel(met,NP_RC(mechanic,obj_rel(taught,NP_RC(child,obj_rel(saw,finish_NP(girl))))))))
+# ::size0 8
+# ::id centre_embedding_24
+(u_291 / leave-11  :ARG0 (r / woman  :ARG1-of (u_289 / meet-02  :ARG0 (u_290 / mechanic  :ARG2-of (u_287 / teach-01  :ARG0 (u_288 / child  :ARG1-of (u_285 / see-01  :ARG0 (u_286 / girl))))))))
+
+# ::snt The boy who the doctor who the mechanic who the woman amused met taught slept
+# ::tree TP(Vbar_intr(slept),NP_RC(boy,obj_rel(taught,NP_RC(doctor,obj_rel(met,NP_RC(mechanic,obj_rel(amused,finish_NP(woman))))))))
+# ::size0 8
+# ::id centre_embedding_25
+(u_298 / sleep-01  :ARG0 (r / boy  :ARG2-of (u_296 / teach-01  :ARG0 (u_297 / doctor  :ARG1-of (u_294 / meet-02  :ARG0 (u_295 / mechanic  :ARG1-of (u_292 / amuse-01  :ARG0 (u_293 / woman))))))))
+
+# ::snt The astronaut who the girl who the mechanic who the woman met saw hugged laughed
+# ::tree TP(Vbar_intr(laughed),NP_RC(astronaut,obj_rel(hugged,NP_RC(girl,obj_rel(saw,NP_RC(mechanic,obj_rel(met,finish_NP(woman))))))))
+# ::size0 8
+# ::id centre_embedding_26
+(u_305 / laugh-01  :ARG0 (r / astronaut  :ARG1-of (u_303 / hug-01  :ARG0 (u_304 / girl  :ARG1-of (u_301 / see-01  :ARG0 (u_302 / mechanic  :ARG1-of (u_299 / meet-02  :ARG0 (u_300 / woman))))))))
+
+# ::snt The doctor who the child who the girl who the mechanic saw amused taught slept
+# ::tree TP(Vbar_intr(slept),NP_RC(doctor,obj_rel(taught,NP_RC(child,obj_rel(amused,NP_RC(girl,obj_rel(saw,finish_NP(mechanic))))))))
+# ::size0 8
+# ::id centre_embedding_27
+(u_312 / sleep-01  :ARG0 (r / doctor  :ARG2-of (u_310 / teach-01  :ARG0 (u_311 / child  :ARG1-of (u_308 / amuse-01  :ARG0 (u_309 / girl  :ARG1-of (u_306 / see-01  :ARG0 (u_307 / mechanic))))))))
+
+# ::snt The doctor who the astronaut who the girl who the boy hugged saw met slept
+# ::tree TP(Vbar_intr(slept),NP_RC(doctor,obj_rel(met,NP_RC(astronaut,obj_rel(saw,NP_RC(girl,obj_rel(hugged,finish_NP(boy))))))))
+# ::size0 8
+# ::id centre_embedding_28
+(u_319 / sleep-01  :ARG0 (r / doctor  :ARG1-of (u_317 / meet-02  :ARG0 (u_318 / astronaut  :ARG1-of (u_315 / see-01  :ARG0 (u_316 / girl  :ARG1-of (u_313 / hug-01  :ARG0 (u_314 / boy))))))))
+
+# ::snt The woman who the astronaut who the mechanic who the girl likes saw met slept
+# ::tree TP(Vbar_intr(slept),NP_RC(woman,obj_rel(met,NP_RC(astronaut,obj_rel(saw,NP_RC(mechanic,obj_rel(likes,finish_NP(girl))))))))
+# ::size0 8
+# ::id centre_embedding_29
+(u_326 / sleep-01  :ARG0 (r / woman  :ARG1-of (u_324 / meet-02  :ARG0 (u_325 / astronaut  :ARG1-of (u_322 / see-01  :ARG0 (u_323 / mechanic  :ARG1-of (u_320 / like-01  :ARG0 (u_321 / girl))))))))
+

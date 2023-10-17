@@ -1,0 +1,79 @@
+bolt12_6455_6561.23	liberal-02	other	
+bolt12_6455_6561.23	and	other	
+bolt12_6455_6561.23	tolerate-01	other	
+bolt12_6455_6562.1	work-01	modifier	
+bolt12_6455_6568.1	guard-01	no	
+bolt12_91455_5321.1	want-01	yes	contrast-01
+bolt12_9145_5531.4	person	no	
+wb.eng_0003.16	location	yes	and
+wb.eng_0003.51	have-purpose-91	no	and
+wb.eng_0003.56	go-02	yes	
+wb.eng_0003.57	get-05	yes	and
+wb.eng_0003.66	have-purpose-91	no	and
+wb.eng_0003.85	possible-01	no	
+DF-199-194215-653_0484.10	together	yes	noisy
+DF-199-194215-653_0484.11	have-03	yes	
+DF-199-194215-653_0484.14	give-in-09	no	interesting
+DF-200-192400-625_6304.12	help-01	yes	
+DF-200-192400-625_6304.13	give-in-09	no	
+DF-200-192400-625_7046.6	this	no	
+DF-200-192400-625_7200.9	symptom	other	contrast-01
+DF-200-192400-625_7744.5	carry-01	other	contrast-01
+DF-200-192400-625_7744.9	truth-value	no	
+DF-200-192400-625_7744.19	manner	no	
+DF-200-192400-625_7744.27	check-01	no	
+ENG_DF_000170_20050903_C00020J0V_0001.12	person	no	
+ENG_DF_000170_20050903_C00020J0V_0001.16	possible-01	no	
+ENG_DF_000170_20050903_C00020J0V_0001.45	cloth	yes	or
+ENG_DF_000170_20050903_C00020J0V_0001.46	+	no	
+ENG_DF_000170_20050903_C00020J0V_0001.46	expressive	no	
+ENG_DF_000170_20050903_C00020J0V_0001.58	service	no	
+ENG_NA_020001_20161020_G0023FSVE_0001.4	help-01	no	
+ENG_NA_020001_20161020_G0023FSVS_0001.4	and	no	
+NW_AFP_ENG_0009_2003_0330.5	protest-01	yes	“others” (coref?)
+NW_AFP_ENG_0011_2003_0417.6	kill-01	no	
+NW_AFP_ENG_0017_2003_0607.2	minister-01	no	
+NW_XIN_ENG_0193_2006_0822.3	person	?	more like world knowledge?
+PROXY_LTW_ENG_20070930_0021.13	measure-02	yes	and
+PROXY_LTW_ENG_20070930_0021.20	record	yes	
+PROXY_LTW_ENG_20080727_0030.14	truth-value	no	
+PROXY_LTW_ENG_20080727_0030.29	number	yes	typo that/than
+PROXY_LTW_ENG_20081115_0076.6	produce-01	no	
+PROXY_LTW_ENG_20081115_0076.29	technology	yes	and
+PROXY_NYT_ENG_20020406_0118.29	bacterium	no	
+PROXY_NYT_ENG_20020406_0118.31	threaten-01	yes	I guess...
+PROXY_NYT_ENG_20020406_0118.40	military	no	
+PROXY_NYT_ENG_20040724_0084.19	aid-01	yes	and
+PROXY_NYT_ENG_20040724_0084.32	problem	yes	and
+PROXY_NYT_ENG_20040724_0084.43	route	no	include-91
+PROXY_NYT_ENG_20040724_0084.45	heroin	no	include-91
+PROXY_NYT_ENG_20040724_0084.45	and	no	
+PROXY_NYT_ENG_20040724_0084.45	cocaine	no	
+PROXY_NYT_ENG_20050716_0171.15	intervene-01	no	2 ARG0s
+PROXY_NYT_ENG_20050716_0171.31	plane	yes	and
+PROXY_NYT_ENG_20050716_0171.42	member	yes	or
+PROXY_NYT_ENG_20050716_0171.42	have-org-role-91	no	same as above
+PROXY_NYT_ENG_20050716_0171.42	person	no	same as above
+PROXY_NYT_ENG_20070618_0031.16	time	no	include-91
+PROXY_NYT_ENG_20071115_0274.11	deny-01	no	include-91
+PROXY_NYT_ENG_20080808_0162.31	force	yes	or
+PROXY_NYT_ENG_20080808_0162.32	soldier	yes	and
+PROXY_XIN_ENG_20020725_0113.8	record-01	yes	and
+PROXY_XIN_ENG_20020725_0113.8	thing	no	same as above
+PROXY_XIN_ENG_20021123_0156.6	issue-02	yes	and
+PROXY_XIN_ENG_20021123_0156.14	task-01	no	include-91
+PROXY_XIN_ENG_20021123_0156.14	thing	no	include-91
+PROXY_XIN_ENG_20030428_0226.18	one	no	
+PROXY_XIN_ENG_20030624_0298.19	build-01	yes	and
+PROXY_XIN_ENG_20040407_0026.9	terrorist	no	have-degree-91
+PROXY_XIN_ENG_20040407_0026.12	travel-01	yes	and
+PROXY_XIN_ENG_20040429_0189.18	enterprise	yes	and
+PROXY_XIN_ENG_20040429_0189.18	size-01	no	same as above
+PROXY_XIN_ENG_20040429_0189.33	recommend-01	yes	and
+PROXY_XIN_ENG_20040922_0123.4	security	yes	and
+PROXY_XIN_ENG_20040922_0123.12	order	yes	and
+PROXY_XIN_ENG_20040922_0123.16	peace	yes	and
+PROXY_XIN_ENG_20041010_0024.14	enterprise	yes	and
+nw.chtb_0302.7	cooperate-01	yes	and
+nw.chtb_0322.16	team	yes	
+nw.chtb_0325.3	point	yes	respectively

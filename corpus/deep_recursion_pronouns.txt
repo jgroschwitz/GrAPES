@@ -1,0 +1,702 @@
+# Randomly sampled examples of deep CP recursion (with 1st person singular/plural coreference). Created by a grammar. Here, size0 is the depth below the CP with the reentrancy (i.e., to get the recursion depth forthe reentrancy part, subtract 1 from the value of size0 given in this file). And size1 is the depth of the whole tree (to get the recursion depth of the tree in total, subtract 1 from size1).
+
+# ::snt You believed that we mentioned that the boys hated us
+# ::tree TP_2(believed,you,TP_resolve_coref_1p(mentioned_resolve_coref,we,TP_tr_1p(hated_us,boys)))
+# ::size0 2
+# ::size1 3
+# ::id deep_recursion_pronouns_0
+(u_4859 / believe-01  :ARG0 (r / you)  :ARG1 (u_4857 / mention-01  :ARG0 (u_4860 / we  :ARG1-of (u_4856 / hate-01  :ARG0 (u_4858 / boy)  :ARG1-of u_4857))))
+
+# ::snt I believed that the women hated me
+# ::tree TP_resolve_coref_1s(believed_resolve_coref,I,TP_tr_1s(hated_me,women))
+# ::size0 2
+# ::size1 2
+# ::id deep_recursion_pronouns_1
+(u_4862 / believe-01  :ARG0 (r / i  :ARG1-of (u_4861 / hate-01  :ARG0 (u_4863 / woman)  :ARG1-of u_4862)))
+
+# ::snt The girls knew that the boys knew that the astronaut thought that you said that we knew that we slept
+# ::tree TP_3p(knew,girls,TP_3p(knew,boys,TP_3p(thought,astronaut,TP_2(said,you,TP_resolve_coref_1p(knew_resolve_coref,we,TP_intr_1p(we_slept))))))
+# ::size0 2
+# ::size1 6
+# ::id deep_recursion_pronouns_2
+(u_4871 / know-01  :ARG0 (r / girl)  :ARG1 (u_4869 / know-01  :ARG0 (u_4872 / boy)  :ARG1 (u_4868 / think-01  :ARG0 (a / astronaut)  :ARG1 (u_4866 / say-01  :ARG0 (u_4870 / you)  :ARG1 (u_4864 / know-01  :ARG0 (u_4867 / we  :ARG0-of (u_4865 / sleep-01  :ARG1-of u_4864)))))))
+
+# ::snt We heard that we slept
+# ::tree TP_resolve_coref_1p(heard_resolve_coref,we,TP_intr_1p(we_slept))
+# ::size0 2
+# ::size1 2
+# ::id deep_recursion_pronouns_3
+(u_4873 / hear-01  :ARG0 (r / we  :ARG0-of (u_4874 / sleep-01  :ARG1-of u_4873)))
+
+# ::snt We knew that the girls hated us
+# ::tree TP_resolve_coref_1p(knew_resolve_coref,we,TP_tr_1p(hated_us,girls))
+# ::size0 2
+# ::size1 2
+# ::id deep_recursion_pronouns_4
+(u_4876 / know-01  :ARG0 (r / we  :ARG1-of (u_4875 / hate-01  :ARG0 (u_4877 / girl)  :ARG1-of u_4876)))
+
+# ::snt The women heard that I heard that the boys thought that the men believed that you knew that the soldier liked you
+# ::tree TP_3p(heard,women,TP_1s(heard,I,TP_3p(thought,boys,TP_3p(believed,men,TP_resolve_coref_2(knew_resolve_coref,you,TP_tr_2(liked_you,soldier))))))
+# ::size0 2
+# ::size1 6
+# ::id deep_recursion_pronouns_5
+(u_4889 / hear-01  :ARG0 (r / woman)  :ARG1 (u_4886 / hear-01  :ARG0 (u_4891 / i)  :ARG1 (u_4883 / think-01  :ARG0 (u_4888 / boy)  :ARG1 (u_4880 / believe-01  :ARG0 (u_4885 / man)  :ARG1 (u_4878 / know-01  :ARG0 (u_4882 / you  :ARG1-of (u_4879 / like-01  :ARG0 (s / soldier)  :ARG1-of u_4878)))))))
+
+# ::snt The girls mentioned that you said that you left
+# ::tree TP_3p(mentioned,girls,TP_resolve_coref_2(said_resolve_coref,you,TP_intr_2(you_left)))
+# ::size0 2
+# ::size1 3
+# ::id deep_recursion_pronouns_6
+(u_4894 / mention-01  :ARG0 (r / girl)  :ARG1 (u_4892 / say-01  :ARG0 (u_4895 / you  :ARG0-of (u_4893 / leave-11  :ARG1-of u_4892))))
+
+# ::snt We thought that we left
+# ::tree TP_resolve_coref_1p(thought_resolve_coref,we,TP_intr_1p(we_left))
+# ::size0 2
+# ::size1 2
+# ::id deep_recursion_pronouns_7
+(u_4896 / think-01  :ARG0 (r / we  :ARG0-of (u_4897 / leave-11  :ARG1-of u_4896)))
+
+# ::snt The astronaut said that the boys said that you knew that you slept
+# ::tree TP_3p(said,astronaut,TP_3p(said,boys,TP_resolve_coref_2(knew_resolve_coref,you,TP_intr_2(you_slept))))
+# ::size0 2
+# ::size1 4
+# ::id deep_recursion_pronouns_8
+(u_4902 / say-01  :ARG0 (a / astronaut)  :ARG1 (u_4900 / say-01  :ARG0 (r / boy)  :ARG1 (u_4898 / know-01  :ARG0 (u_4901 / you  :ARG0-of (u_4899 / sleep-01  :ARG1-of u_4898)))))
+
+# ::snt You knew that you slept
+# ::tree TP_resolve_coref_2(knew_resolve_coref,you,TP_intr_2(you_slept))
+# ::size0 2
+# ::size1 2
+# ::id deep_recursion_pronouns_9
+(u_4903 / know-01  :ARG0 (r / you  :ARG0-of (u_4904 / sleep-01  :ARG1-of u_4903)))
+
+# ::snt We heard that you mentioned that I said that the kids liked you
+# ::tree TP_1p(heard,we,TP_resolve_coref_2(mentioned_resolve_coref,you,TP_CP_2_subj1s(said_coref,I,TP_tr_2(liked_you,kids))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_pronouns_10
+(u_4910 / hear-01  :ARG0 (r / we)  :ARG1 (u_4908 / mention-01  :ARG0 (u_4911 / you  :ARG1-of (u_4905 / like-01  :ARG0 (u_4907 / kid)  :ARG1-of (u_4906 / say-01  :ARG0 (u_4909 / i)  :ARG1-of u_4908)))))
+
+# ::snt I mentioned that the kids thought that the men hated me
+# ::tree TP_resolve_coref_1s(mentioned_resolve_coref,I,TP_CP_1s(thought_coref,kids,TP_tr_1s(hated_me,men)))
+# ::size0 3
+# ::size1 3
+# ::id deep_recursion_pronouns_11
+(u_4915 / mention-01  :ARG0 (r / i  :ARG1-of (u_4912 / hate-01  :ARG0 (u_4914 / man)  :ARG1-of (u_4913 / think-01  :ARG0 (u_4916 / kid)  :ARG1-of u_4915))))
+
+# ::snt The women mentioned that we knew that the astronaut thought that we slept
+# ::tree TP_3p(mentioned,women,TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p(thought_coref,astronaut,TP_intr_1p(we_slept))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_pronouns_12
+(u_4921 / mention-01  :ARG0 (r / woman)  :ARG1 (u_4919 / know-01  :ARG0 (u_4922 / we  :ARG0-of (u_4920 / sleep-01  :ARG1-of (u_4917 / think-01  :ARG0 (a / astronaut)  :ARG1-of u_4919)))))
+
+# ::snt I mentioned that you said that I left
+# ::tree TP_resolve_coref_1s(mentioned_resolve_coref,I,TP_CP_1s_subj2(said_coref,you,TP_intr_1s(I_left)))
+# ::size0 3
+# ::size1 3
+# ::id deep_recursion_pronouns_13
+(u_4926 / mention-01  :ARG0 (r / i  :ARG0-of (u_4925 / leave-11  :ARG1-of (u_4923 / say-01  :ARG0 (u_4927 / you)  :ARG1-of u_4926))))
+
+# ::snt I thought that the girls believed that the astronaut liked me
+# ::tree TP_resolve_coref_1s(thought_resolve_coref,I,TP_CP_1s(believed_coref,girls,TP_tr_1s(liked_me,astronaut)))
+# ::size0 3
+# ::size1 3
+# ::id deep_recursion_pronouns_14
+(u_4930 / think-01  :ARG0 (r / i  :ARG1-of (u_4929 / like-01  :ARG0 (a / astronaut)  :ARG1-of (u_4928 / believe-01  :ARG0 (u_4931 / girl)  :ARG1-of u_4930))))
+
+# ::snt I heard that you thought that we knew that the men hated you
+# ::tree TP_1s(heard,I,TP_resolve_coref_2(thought_resolve_coref,you,TP_CP_2_subj1p(knew_coref,we,TP_tr_2(hated_you,men))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_pronouns_15
+(u_4937 / hear-01  :ARG0 (r / i)  :ARG1 (u_4935 / think-01  :ARG0 (u_4938 / you  :ARG1-of (u_4932 / hate-01  :ARG0 (u_4934 / man)  :ARG1-of (u_4933 / know-01  :ARG0 (u_4936 / we)  :ARG1-of u_4935)))))
+
+# ::snt We thought that the boys thought that we slept
+# ::tree TP_resolve_coref_1p(thought_resolve_coref,we,TP_CP_1p(thought_coref,boys,TP_intr_1p(we_slept)))
+# ::size0 3
+# ::size1 3
+# ::id deep_recursion_pronouns_16
+(u_4942 / think-01  :ARG0 (r / we  :ARG0-of (u_4941 / sleep-01  :ARG1-of (u_4939 / think-01  :ARG0 (u_4943 / boy)  :ARG1-of u_4942))))
+
+# ::snt I thought that you mentioned that I slept
+# ::tree TP_resolve_coref_1s(thought_resolve_coref,I,TP_CP_1s_subj2(mentioned_coref,you,TP_intr_1s(I_slept)))
+# ::size0 3
+# ::size1 3
+# ::id deep_recursion_pronouns_17
+(u_4947 / think-01  :ARG0 (r / i  :ARG0-of (u_4946 / sleep-01  :ARG1-of (u_4944 / mention-01  :ARG0 (u_4948 / you)  :ARG1-of u_4947))))
+
+# ::snt I thought that the men thought that I left
+# ::tree TP_resolve_coref_1s(thought_resolve_coref,I,TP_CP_1s(thought_coref,men,TP_intr_1s(I_left)))
+# ::size0 3
+# ::size1 3
+# ::id deep_recursion_pronouns_18
+(u_4952 / think-01  :ARG0 (r / i  :ARG0-of (u_4951 / leave-11  :ARG1-of (u_4949 / think-01  :ARG0 (u_4953 / man)  :ARG1-of u_4952))))
+
+# ::snt The astronaut believed that you believed that the lawyer thought that the kids liked you
+# ::tree TP_3p(believed,astronaut,TP_resolve_coref_2(believed_resolve_coref,you,TP_CP_2(thought_coref,lawyer,TP_tr_2(liked_you,kids))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_pronouns_19
+(u_4958 / believe-01  :ARG0 (a / astronaut)  :ARG1 (u_4956 / believe-01  :ARG0 (r / you  :ARG1-of (u_4954 / like-01  :ARG0 (u_4957 / kid)  :ARG1-of (u_4955 / think-01  :ARG0 (m / lawyer)  :ARG1-of u_4956)))))
+
+# ::snt You said that I believed that the kids knew that the boys liked you
+# ::tree TP_resolve_coref_2(said_resolve_coref,you,TP_CP_2_subj1s(believed_coref,I,TP_CP_2(knew_coref,kids,TP_tr_2(liked_you,boys))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_pronouns_20
+(u_4964 / say-01  :ARG0 (r / you  :ARG1-of (u_4959 / like-01  :ARG0 (u_4961 / boy)  :ARG1-of (u_4960 / know-01  :ARG0 (u_4963 / kid)  :ARG1-of (u_4962 / believe-01  :ARG0 (u_4965 / i)  :ARG1-of u_4964)))))
+
+# ::snt We said that you heard that the girls believed that we slept
+# ::tree TP_resolve_coref_1p(said_resolve_coref,we,TP_CP_1p_subj2(heard_coref,you,TP_CP_1p(believed_coref,girls,TP_intr_1p(we_slept))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_pronouns_21
+(u_4972 / say-01  :ARG0 (r / we  :ARG0-of (u_4968 / sleep-01  :ARG1-of (u_4966 / believe-01  :ARG0 (u_4971 / girl)  :ARG1-of (u_4969 / hear-01  :ARG0 (u_4973 / you)  :ARG1-of u_4972)))))
+
+# ::snt I thought that the boys believed that the doctor heard that the women liked me
+# ::tree TP_resolve_coref_1s(thought_resolve_coref,I,TP_CP_1s(believed_coref,boys,TP_CP_1s(heard_coref,doctor,TP_tr_1s(liked_me,women))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_pronouns_22
+(u_4978 / think-01  :ARG0 (r / i  :ARG1-of (u_4974 / like-01  :ARG0 (u_4977 / woman)  :ARG1-of (u_4975 / hear-01  :ARG0 (d / doctor)  :ARG1-of (u_4976 / believe-01  :ARG0 (u_4979 / boy)  :ARG1-of u_4978)))))
+
+# ::snt You said that I heard that we believed that the astronaut knew that the soldier believed that the girls liked us
+# ::tree TP_2(said,you,TP_1s(heard,I,TP_resolve_coref_1p(believed_resolve_coref,we,TP_CP_1p(knew_coref,astronaut,TP_CP_1p(believed_coref,soldier,TP_tr_1p(liked_us,girls))))))
+# ::size0 4
+# ::size1 6
+# ::id deep_recursion_pronouns_23
+(u_4989 / say-01  :ARG0 (r / you)  :ARG1 (u_4986 / hear-01  :ARG0 (u_4991 / i)  :ARG1 (u_4984 / believe-01  :ARG0 (u_4988 / we  :ARG1-of (u_4980 / like-01  :ARG0 (u_4985 / girl)  :ARG1-of (u_4981 / believe-01  :ARG0 (s / soldier)  :ARG1-of (u_4982 / know-01  :ARG0 (a / astronaut)  :ARG1-of u_4984)))))))
+
+# ::snt We believed that the soldier heard that you knew that the kids hated us
+# ::tree TP_resolve_coref_1p(believed_resolve_coref,we,TP_CP_1p(heard_coref,soldier,TP_CP_1p_subj2(knew_coref,you,TP_tr_1p(hated_us,kids))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_pronouns_24
+(u_4996 / believe-01  :ARG0 (r / we  :ARG1-of (u_4992 / hate-01  :ARG0 (u_4994 / kid)  :ARG1-of (u_4993 / know-01  :ARG0 (u_4997 / you)  :ARG1-of (u_4995 / hear-01  :ARG0 (s / soldier)  :ARG1-of u_4996)))))
+
+# ::snt The girls heard that I said that the boys thought that you mentioned that we mentioned that the men said that you slept
+# ::tree TP_3p(heard,girls,TP_1s(said,I,TP_3p(thought,boys,TP_resolve_coref_2(mentioned_resolve_coref,you,TP_CP_2_subj1p(mentioned_coref,we,TP_CP_2(said_coref,men,TP_intr_2(you_slept)))))))
+# ::size0 4
+# ::size1 7
+# ::id deep_recursion_pronouns_25
+(u_5010 / hear-01  :ARG0 (r / girl)  :ARG1 (u_5008 / say-01  :ARG0 (u_5011 / i)  :ARG1 (u_5006 / think-01  :ARG0 (u_5009 / boy)  :ARG1 (u_5004 / mention-01  :ARG0 (u_5007 / you  :ARG0-of (u_5000 / sleep-01  :ARG1-of (u_4998 / say-01  :ARG0 (u_5003 / man)  :ARG1-of (u_5001 / mention-01  :ARG0 (u_5005 / we)  :ARG1-of u_5004))))))))
+
+# ::snt We knew that the men heard that the girls thought that we left
+# ::tree TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p(heard_coref,men,TP_CP_1p(thought_coref,girls,TP_intr_1p(we_left))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_pronouns_26
+(u_5018 / know-01  :ARG0 (r / we  :ARG0-of (u_5014 / leave-11  :ARG1-of (u_5012 / think-01  :ARG0 (u_5017 / girl)  :ARG1-of (u_5015 / hear-01  :ARG0 (u_5019 / man)  :ARG1-of u_5018)))))
+
+# ::snt The soldier heard that we believed that the boys mentioned that the women believed that we slept
+# ::tree TP_3p(heard,soldier,TP_resolve_coref_1p(believed_resolve_coref,we,TP_CP_1p(mentioned_coref,boys,TP_CP_1p(believed_coref,women,TP_intr_1p(we_slept)))))
+# ::size0 4
+# ::size1 5
+# ::id deep_recursion_pronouns_27
+(u_5028 / hear-01  :ARG0 (s / soldier)  :ARG1 (u_5026 / believe-01  :ARG0 (r / we  :ARG0-of (u_5022 / sleep-01  :ARG1-of (u_5020 / believe-01  :ARG0 (u_5025 / woman)  :ARG1-of (u_5023 / mention-01  :ARG0 (u_5027 / boy)  :ARG1-of u_5026))))))
+
+# ::snt The kids believed that I mentioned that you knew that the men mentioned that I slept
+# ::tree TP_3p(believed,kids,TP_resolve_coref_1s(mentioned_resolve_coref,I,TP_CP_1s_subj2(knew_coref,you,TP_CP_1s(mentioned_coref,men,TP_intr_1s(I_slept)))))
+# ::size0 4
+# ::size1 5
+# ::id deep_recursion_pronouns_28
+(u_5037 / believe-01  :ARG0 (r / kid)  :ARG1 (u_5035 / mention-01  :ARG0 (u_5038 / i  :ARG0-of (u_5031 / sleep-01  :ARG1-of (u_5029 / mention-01  :ARG0 (u_5034 / man)  :ARG1-of (u_5032 / know-01  :ARG0 (u_5036 / you)  :ARG1-of u_5035))))))
+
+# ::snt I mentioned that the men thought that you believed that the soldier hated me
+# ::tree TP_resolve_coref_1s(mentioned_resolve_coref,I,TP_CP_1s(thought_coref,men,TP_CP_1s_subj2(believed_coref,you,TP_tr_1s(hated_me,soldier))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_pronouns_29
+(u_5045 / mention-01  :ARG0 (r / i  :ARG1-of (u_5041 / hate-01  :ARG0 (s / soldier)  :ARG1-of (u_5039 / believe-01  :ARG0 (u_5044 / you)  :ARG1-of (u_5042 / think-01  :ARG0 (u_5046 / man)  :ARG1-of u_5045)))))
+
+# ::snt I heard that the boys knew that we said that the soldier mentioned that I slept
+# ::tree TP_resolve_coref_1s(heard_resolve_coref,I,TP_CP_1s(knew_coref,boys,TP_CP_1s_subj1p(said_coref,we,TP_CP_1s(mentioned_coref,soldier,TP_intr_1s(I_slept)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_pronouns_30
+(u_5056 / hear-01  :ARG0 (r / i  :ARG0-of (u_5052 / sleep-01  :ARG1-of (u_5047 / mention-01  :ARG0 (s / soldier)  :ARG1-of (u_5050 / say-01  :ARG0 (u_5055 / we)  :ARG1-of (u_5053 / know-01  :ARG0 (u_5057 / boy)  :ARG1-of u_5056))))))
+
+# ::snt I heard that the lawyer said that the men believed that the doctor thought that the soldier liked me
+# ::tree TP_resolve_coref_1s(heard_resolve_coref,I,TP_CP_1s(said_coref,lawyer,TP_CP_1s(believed_coref,men,TP_CP_1s(thought_coref,doctor,TP_tr_1s(liked_me,soldier)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_pronouns_31
+(u_5065 / hear-01  :ARG0 (r / i  :ARG1-of (u_5062 / like-01  :ARG0 (s / soldier)  :ARG1-of (u_5058 / think-01  :ARG0 (d / doctor)  :ARG1-of (u_5060 / believe-01  :ARG0 (u_5066 / man)  :ARG1-of (u_5063 / say-01  :ARG0 (m / lawyer)  :ARG1-of u_5065))))))
+
+# ::snt The men knew that the girls knew that we knew that I said that the boys knew that you heard that we slept
+# ::tree TP_3p(knew,men,TP_3p(knew,girls,TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p_subj1s(said_coref,I,TP_CP_1p(knew_coref,boys,TP_CP_1p_subj2(heard_coref,you,TP_intr_1p(we_slept)))))))
+# ::size0 5
+# ::size1 7
+# ::id deep_recursion_pronouns_32
+(u_5080 / know-01  :ARG0 (r / man)  :ARG1 (u_5078 / know-01  :ARG0 (u_5081 / girl)  :ARG1 (u_5076 / know-01  :ARG0 (u_5079 / we  :ARG0-of (u_5069 / sleep-01  :ARG1-of (u_5067 / hear-01  :ARG0 (u_5072 / you)  :ARG1-of (u_5070 / know-01  :ARG0 (u_5075 / boy)  :ARG1-of (u_5073 / say-01  :ARG0 (u_5077 / i)  :ARG1-of u_5076))))))))
+
+# ::snt The girls heard that we knew that I believed that the women said that the astronaut said that the soldier hated us
+# ::tree TP_3p(heard,girls,TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p_subj1s(believed_coref,I,TP_CP_1p(said_coref,women,TP_CP_1p(said_coref,astronaut,TP_tr_1p(hated_us,soldier))))))
+# ::size0 5
+# ::size1 6
+# ::id deep_recursion_pronouns_33
+(u_5092 / hear-01  :ARG0 (r / girl)  :ARG1 (u_5090 / know-01  :ARG0 (u_5094 / we  :ARG1-of (u_5086 / hate-01  :ARG0 (s / soldier)  :ARG1-of (u_5082 / say-01  :ARG0 (a / astronaut)  :ARG1-of (u_5084 / say-01  :ARG0 (u_5089 / woman)  :ARG1-of (u_5087 / believe-01  :ARG0 (u_5091 / i)  :ARG1-of u_5090)))))))
+
+# ::snt We thought that you heard that I believed that the girls said that the astronaut hated us
+# ::tree TP_resolve_coref_1p(thought_resolve_coref,we,TP_CP_1p_subj2(heard_coref,you,TP_CP_1p_subj1s(believed_coref,I,TP_CP_1p(said_coref,girls,TP_tr_1p(hated_us,astronaut)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_pronouns_34
+(u_5101 / think-01  :ARG0 (r / we  :ARG1-of (u_5096 / hate-01  :ARG0 (a / astronaut)  :ARG1-of (u_5095 / say-01  :ARG0 (u_5098 / girl)  :ARG1-of (u_5097 / believe-01  :ARG0 (u_5100 / i)  :ARG1-of (u_5099 / hear-01  :ARG0 (u_5102 / you)  :ARG1-of u_5101))))))
+
+# ::snt The women heard that I heard that the boys thought that the girls knew that you thought that I left
+# ::tree TP_3p(heard,women,TP_resolve_coref_1s(heard_resolve_coref,I,TP_CP_1s(thought_coref,boys,TP_CP_1s(knew_coref,girls,TP_CP_1s_subj2(thought_coref,you,TP_intr_1s(I_left))))))
+# ::size0 5
+# ::size1 6
+# ::id deep_recursion_pronouns_35
+(u_5114 / hear-01  :ARG0 (r / woman)  :ARG1 (u_5112 / hear-01  :ARG0 (u_5115 / i  :ARG0-of (u_5105 / leave-11  :ARG1-of (u_5103 / think-01  :ARG0 (u_5108 / you)  :ARG1-of (u_5106 / know-01  :ARG0 (u_5111 / girl)  :ARG1-of (u_5109 / think-01  :ARG0 (u_5113 / boy)  :ARG1-of u_5112)))))))
+
+# ::snt We heard that I mentioned that the astronaut believed that the doctor believed that we slept
+# ::tree TP_resolve_coref_1p(heard_resolve_coref,we,TP_CP_1p_subj1s(mentioned_coref,I,TP_CP_1p(believed_coref,astronaut,TP_CP_1p(believed_coref,doctor,TP_intr_1p(we_slept)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_pronouns_36
+(u_5123 / hear-01  :ARG0 (r / we  :ARG0-of (u_5122 / sleep-01  :ARG1-of (u_5116 / believe-01  :ARG0 (d / doctor)  :ARG1-of (u_5118 / believe-01  :ARG0 (a / astronaut)  :ARG1-of (u_5120 / mention-01  :ARG0 (u_5124 / i)  :ARG1-of u_5123))))))
+
+# ::snt The women mentioned that we said that the men knew that I said that the boys believed that we slept
+# ::tree TP_3p(mentioned,women,TP_resolve_coref_1p(said_resolve_coref,we,TP_CP_1p(knew_coref,men,TP_CP_1p_subj1s(said_coref,I,TP_CP_1p(believed_coref,boys,TP_intr_1p(we_slept))))))
+# ::size0 5
+# ::size1 6
+# ::id deep_recursion_pronouns_37
+(u_5136 / mention-01  :ARG0 (r / woman)  :ARG1 (u_5134 / say-01  :ARG0 (u_5137 / we  :ARG0-of (u_5127 / sleep-01  :ARG1-of (u_5125 / believe-01  :ARG0 (u_5130 / boy)  :ARG1-of (u_5128 / say-01  :ARG0 (u_5133 / i)  :ARG1-of (u_5131 / know-01  :ARG0 (u_5135 / man)  :ARG1-of u_5134)))))))
+
+# ::snt The girls heard that I thought that the astronaut heard that the men believed that the boys knew that I left
+# ::tree TP_3p(heard,girls,TP_resolve_coref_1s(thought_resolve_coref,I,TP_CP_1s(heard_coref,astronaut,TP_CP_1s(believed_coref,men,TP_CP_1s(knew_coref,boys,TP_intr_1s(I_left))))))
+# ::size0 5
+# ::size1 6
+# ::id deep_recursion_pronouns_38
+(u_5148 / hear-01  :ARG0 (r / girl)  :ARG1 (u_5146 / think-01  :ARG0 (u_5149 / i  :ARG0-of (u_5140 / leave-11  :ARG1-of (u_5138 / know-01  :ARG0 (u_5143 / boy)  :ARG1-of (u_5141 / believe-01  :ARG0 (u_5147 / man)  :ARG1-of (u_5144 / hear-01  :ARG0 (a / astronaut)  :ARG1-of u_5146)))))))
+
+# ::snt I said that you believed that the men knew that the lawyer mentioned that I left
+# ::tree TP_resolve_coref_1s(said_resolve_coref,I,TP_CP_1s_subj2(believed_coref,you,TP_CP_1s(knew_coref,men,TP_CP_1s(mentioned_coref,lawyer,TP_intr_1s(I_left)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_pronouns_39
+(u_5158 / say-01  :ARG0 (r / i  :ARG0-of (u_5154 / leave-11  :ARG1-of (u_5150 / mention-01  :ARG0 (m / lawyer)  :ARG1-of (u_5152 / know-01  :ARG0 (u_5157 / man)  :ARG1-of (u_5155 / believe-01  :ARG0 (u_5159 / you)  :ARG1-of u_5158))))))
+
+# ::snt I mentioned that the lawyer mentioned that the kids mentioned that we mentioned that the men mentioned that you thought that the girls knew that the astronaut thought that we left
+# ::tree TP_1s(mentioned,I,TP_3p(mentioned,lawyer,TP_3p(mentioned,kids,TP_resolve_coref_1p(mentioned_resolve_coref,we,TP_CP_1p(mentioned_coref,men,TP_CP_1p_subj2(thought_coref,you,TP_CP_1p(knew_coref,girls,TP_CP_1p(thought_coref,astronaut,TP_intr_1p(we_left)))))))))
+# ::size0 6
+# ::size1 9
+# ::id deep_recursion_pronouns_40
+(u_5176 / mention-01  :ARG0 (r / i)  :ARG1 (u_5175 / mention-01  :ARG0 (m / lawyer)  :ARG1 (u_5173 / mention-01  :ARG0 (u_5177 / kid)  :ARG1 (u_5171 / mention-01  :ARG0 (u_5174 / we  :ARG0-of (u_5164 / leave-11  :ARG1-of (u_5160 / think-01  :ARG0 (a / astronaut)  :ARG1-of (u_5162 / know-01  :ARG0 (u_5167 / girl)  :ARG1-of (u_5165 / think-01  :ARG0 (u_5170 / you)  :ARG1-of (u_5168 / mention-01  :ARG0 (u_5172 / man)  :ARG1-of u_5171))))))))))
+
+# ::snt I said that the girls believed that the men knew that we thought that you believed that the doctor liked me
+# ::tree TP_resolve_coref_1s(said_resolve_coref,I,TP_CP_1s(believed_coref,girls,TP_CP_1s(knew_coref,men,TP_CP_1s_subj1p(thought_coref,we,TP_CP_1s_subj2(believed_coref,you,TP_tr_1s(liked_me,doctor))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_pronouns_41
+(u_5186 / say-01  :ARG0 (r / i  :ARG1-of (u_5179 / like-01  :ARG0 (d / doctor)  :ARG1-of (u_5178 / believe-01  :ARG0 (u_5181 / you)  :ARG1-of (u_5180 / think-01  :ARG0 (u_5183 / we)  :ARG1-of (u_5182 / know-01  :ARG0 (u_5185 / man)  :ARG1-of (u_5184 / believe-01  :ARG0 (u_5187 / girl)  :ARG1-of u_5186)))))))
+
+# ::snt I thought that you heard that the doctor knew that the boys believed that we mentioned that I left
+# ::tree TP_resolve_coref_1s(thought_resolve_coref,I,TP_CP_1s_subj2(heard_coref,you,TP_CP_1s(knew_coref,doctor,TP_CP_1s(believed_coref,boys,TP_CP_1s_subj1p(mentioned_coref,we,TP_intr_1s(I_left))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_pronouns_42
+(u_5199 / think-01  :ARG0 (r / i  :ARG0-of (u_5190 / leave-11  :ARG1-of (u_5188 / mention-01  :ARG0 (u_5193 / we)  :ARG1-of (u_5191 / believe-01  :ARG0 (u_5198 / boy)  :ARG1-of (u_5194 / know-01  :ARG0 (d / doctor)  :ARG1-of (u_5196 / hear-01  :ARG0 (u_5200 / you)  :ARG1-of u_5199)))))))
+
+# ::snt We knew that the soldier said that the boys knew that I said that the girls heard that the doctor liked us
+# ::tree TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p(said_coref,soldier,TP_CP_1p(knew_coref,boys,TP_CP_1p_subj1s(said_coref,I,TP_CP_1p(heard_coref,girls,TP_tr_1p(liked_us,doctor))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_pronouns_43
+(u_5208 / know-01  :ARG0 (r / we  :ARG1-of (u_5202 / like-01  :ARG0 (d / doctor)  :ARG1-of (u_5201 / hear-01  :ARG0 (u_5204 / girl)  :ARG1-of (u_5203 / say-01  :ARG0 (u_5206 / i)  :ARG1-of (u_5205 / know-01  :ARG0 (u_5209 / boy)  :ARG1-of (u_5207 / say-01  :ARG0 (s / soldier)  :ARG1-of u_5208)))))))
+
+# ::snt I said that you knew that the girls knew that we knew that the astronaut thought that the kids hated me
+# ::tree TP_resolve_coref_1s(said_resolve_coref,I,TP_CP_1s_subj2(knew_coref,you,TP_CP_1s(knew_coref,girls,TP_CP_1s_subj1p(knew_coref,we,TP_CP_1s(thought_coref,astronaut,TP_tr_1s(hated_me,kids))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_pronouns_44
+(u_5218 / say-01  :ARG0 (r / i  :ARG1-of (u_5210 / hate-01  :ARG0 (u_5213 / kid)  :ARG1-of (u_5211 / think-01  :ARG0 (a / astronaut)  :ARG1-of (u_5212 / know-01  :ARG0 (u_5215 / we)  :ARG1-of (u_5214 / know-01  :ARG0 (u_5217 / girl)  :ARG1-of (u_5216 / know-01  :ARG0 (u_5219 / you)  :ARG1-of u_5218)))))))
+
+# ::snt I heard that we said that the women thought that the men mentioned that the soldier heard that I slept
+# ::tree TP_resolve_coref_1s(heard_resolve_coref,I,TP_CP_1s_subj1p(said_coref,we,TP_CP_1s(thought_coref,women,TP_CP_1s(mentioned_coref,men,TP_CP_1s(heard_coref,soldier,TP_intr_1s(I_slept))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_pronouns_45
+(u_5232 / hear-01  :ARG0 (r / i  :ARG0-of (u_5225 / sleep-01  :ARG1-of (u_5220 / hear-01  :ARG0 (s / soldier)  :ARG1-of (u_5223 / mention-01  :ARG0 (u_5228 / man)  :ARG1-of (u_5226 / think-01  :ARG0 (u_5231 / woman)  :ARG1-of (u_5229 / say-01  :ARG0 (u_5233 / we)  :ARG1-of u_5232)))))))
+
+# ::snt The soldier said that the lawyer believed that we said that I believed that the girls thought that the astronaut said that the men thought that you said that I slept
+# ::tree TP_3p(said,soldier,TP_3p(believed,lawyer,TP_1p(said,we,TP_resolve_coref_1s(believed_resolve_coref,I,TP_CP_1s(thought_coref,girls,TP_CP_1s(said_coref,astronaut,TP_CP_1s(thought_coref,men,TP_CP_1s_subj2(said_coref,you,TP_intr_1s(I_slept)))))))))
+# ::size0 6
+# ::size1 9
+# ::id deep_recursion_pronouns_46
+(u_5250 / say-01  :ARG0 (s / soldier)  :ARG1 (u_5249 / believe-01  :ARG0 (m / lawyer)  :ARG1 (u_5247 / say-01  :ARG0 (r / we)  :ARG1 (u_5245 / believe-01  :ARG0 (u_5248 / i  :ARG0-of (u_5236 / sleep-01  :ARG1-of (u_5234 / say-01  :ARG0 (u_5239 / you)  :ARG1-of (u_5237 / think-01  :ARG0 (u_5244 / man)  :ARG1-of (u_5240 / say-01  :ARG0 (a / astronaut)  :ARG1-of (u_5242 / think-01  :ARG0 (u_5246 / girl)  :ARG1-of u_5245))))))))))
+
+# ::snt We believed that I heard that the doctor thought that the kids said that you said that we left
+# ::tree TP_resolve_coref_1p(believed_resolve_coref,we,TP_CP_1p_subj1s(heard_coref,I,TP_CP_1p(thought_coref,doctor,TP_CP_1p(said_coref,kids,TP_CP_1p_subj2(said_coref,you,TP_intr_1p(we_left))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_pronouns_47
+(u_5262 / believe-01  :ARG0 (r / we  :ARG0-of (u_5253 / leave-11  :ARG1-of (u_5251 / say-01  :ARG0 (u_5256 / you)  :ARG1-of (u_5254 / say-01  :ARG0 (u_5261 / kid)  :ARG1-of (u_5257 / think-01  :ARG0 (d / doctor)  :ARG1-of (u_5259 / hear-01  :ARG0 (u_5263 / i)  :ARG1-of u_5262)))))))
+
+# ::snt You heard that we believed that the boys knew that the lawyer said that the doctor knew that you slept
+# ::tree TP_resolve_coref_2(heard_resolve_coref,you,TP_CP_2_subj1p(believed_coref,we,TP_CP_2(knew_coref,boys,TP_CP_2(said_coref,lawyer,TP_CP_2(knew_coref,doctor,TP_intr_2(you_slept))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_pronouns_48
+(u_5274 / hear-01  :ARG0 (r / you  :ARG0-of (u_5270 / sleep-01  :ARG1-of (u_5264 / know-01  :ARG0 (d / doctor)  :ARG1-of (u_5266 / say-01  :ARG0 (m / lawyer)  :ARG1-of (u_5268 / know-01  :ARG0 (u_5273 / boy)  :ARG1-of (u_5271 / believe-01  :ARG0 (u_5275 / we)  :ARG1-of u_5274)))))))
+
+# ::snt The doctor knew that I believed that the kids believed that the men heard that the lawyer mentioned that the soldier thought that I left
+# ::tree TP_3p(knew,doctor,TP_resolve_coref_1s(believed_resolve_coref,I,TP_CP_1s(believed_coref,kids,TP_CP_1s(heard_coref,men,TP_CP_1s(mentioned_coref,lawyer,TP_CP_1s(thought_coref,soldier,TP_intr_1s(I_left)))))))
+# ::size0 6
+# ::size1 7
+# ::id deep_recursion_pronouns_49
+(u_5289 / know-01  :ARG0 (d / doctor)  :ARG1 (u_5287 / believe-01  :ARG0 (r / i  :ARG0-of (u_5283 / leave-11  :ARG1-of (u_5276 / think-01  :ARG0 (s / soldier)  :ARG1-of (u_5279 / mention-01  :ARG0 (m / lawyer)  :ARG1-of (u_5281 / hear-01  :ARG0 (u_5286 / man)  :ARG1-of (u_5284 / believe-01  :ARG0 (u_5288 / kid)  :ARG1-of u_5287))))))))
+
+# ::snt The kids said that we knew that I said that the women said that the soldier said that the men heard that you heard that we left
+# ::tree TP_3p(said,kids,TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p_subj1s(said_coref,I,TP_CP_1p(said_coref,women,TP_CP_1p(said_coref,soldier,TP_CP_1p(heard_coref,men,TP_CP_1p_subj2(heard_coref,you,TP_intr_1p(we_left))))))))
+# ::size0 7
+# ::size1 8
+# ::id deep_recursion_pronouns_50
+(u_5308 / say-01  :ARG0 (r / kid)  :ARG1 (u_5306 / know-01  :ARG0 (u_5310 / we  :ARG0-of (u_5293 / leave-11  :ARG1-of (u_5291 / hear-01  :ARG0 (u_5296 / you)  :ARG1-of (u_5294 / hear-01  :ARG0 (u_5302 / man)  :ARG1-of (u_5297 / say-01  :ARG0 (s / soldier)  :ARG1-of (u_5300 / say-01  :ARG0 (u_5305 / woman)  :ARG1-of (u_5303 / say-01  :ARG0 (u_5307 / i)  :ARG1-of u_5306)))))))))
+
+# ::snt We heard that the soldier heard that the astronaut believed that you mentioned that the lawyer thought that the girls mentioned that we slept
+# ::tree TP_resolve_coref_1p(heard_resolve_coref,we,TP_CP_1p(heard_coref,soldier,TP_CP_1p(believed_coref,astronaut,TP_CP_1p_subj2(mentioned_coref,you,TP_CP_1p(thought_coref,lawyer,TP_CP_1p(mentioned_coref,girls,TP_intr_1p(we_slept)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_51
+(u_5324 / hear-01  :ARG0 (r / we  :ARG0-of (u_5313 / sleep-01  :ARG1-of (u_5311 / mention-01  :ARG0 (u_5318 / girl)  :ARG1-of (u_5314 / think-01  :ARG0 (m / lawyer)  :ARG1-of (u_5316 / mention-01  :ARG0 (u_5325 / you)  :ARG1-of (u_5319 / believe-01  :ARG0 (a / astronaut)  :ARG1-of (u_5321 / hear-01  :ARG0 (s / soldier)  :ARG1-of u_5324))))))))
+
+# ::snt I believed that the girls mentioned that the kids thought that the women mentioned that you mentioned that the astronaut believed that I left
+# ::tree TP_resolve_coref_1s(believed_resolve_coref,I,TP_CP_1s(mentioned_coref,girls,TP_CP_1s(thought_coref,kids,TP_CP_1s(mentioned_coref,women,TP_CP_1s_subj2(mentioned_coref,you,TP_CP_1s(believed_coref,astronaut,TP_intr_1s(I_left)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_52
+(u_5340 / believe-01  :ARG0 (r / i  :ARG0-of (u_5330 / leave-11  :ARG1-of (u_5326 / believe-01  :ARG0 (a / astronaut)  :ARG1-of (u_5328 / mention-01  :ARG0 (u_5333 / you)  :ARG1-of (u_5331 / mention-01  :ARG0 (u_5336 / woman)  :ARG1-of (u_5334 / think-01  :ARG0 (u_5339 / kid)  :ARG1-of (u_5337 / mention-01  :ARG0 (u_5341 / girl)  :ARG1-of u_5340))))))))
+
+# ::snt We knew that the lawyer believed that the soldier thought that the women said that the girls heard that you thought that we left
+# ::tree TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p(believed_coref,lawyer,TP_CP_1p(thought_coref,soldier,TP_CP_1p(said_coref,women,TP_CP_1p(heard_coref,girls,TP_CP_1p_subj2(thought_coref,you,TP_intr_1p(we_left)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_53
+(u_5356 / know-01  :ARG0 (r / we  :ARG0-of (u_5344 / leave-11  :ARG1-of (u_5342 / think-01  :ARG0 (u_5347 / you)  :ARG1-of (u_5345 / hear-01  :ARG0 (u_5350 / girl)  :ARG1-of (u_5348 / say-01  :ARG0 (u_5357 / woman)  :ARG1-of (u_5351 / think-01  :ARG0 (s / soldier)  :ARG1-of (u_5354 / believe-01  :ARG0 (m / lawyer)  :ARG1-of u_5356))))))))
+
+# ::snt We said that you mentioned that the kids believed that I believed that the doctor believed that the women thought that the men hated us
+# ::tree TP_resolve_coref_1p(said_resolve_coref,we,TP_CP_1p_subj2(mentioned_coref,you,TP_CP_1p(believed_coref,kids,TP_CP_1p_subj1s(believed_coref,I,TP_CP_1p(believed_coref,doctor,TP_CP_1p(thought_coref,women,TP_tr_1p(hated_us,men)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_54
+(u_5368 / say-01  :ARG0 (r / we  :ARG1-of (u_5358 / hate-01  :ARG0 (u_5360 / man)  :ARG1-of (u_5359 / think-01  :ARG0 (u_5363 / woman)  :ARG1-of (u_5361 / believe-01  :ARG0 (d / doctor)  :ARG1-of (u_5362 / believe-01  :ARG0 (u_5365 / i)  :ARG1-of (u_5364 / believe-01  :ARG0 (u_5367 / kid)  :ARG1-of (u_5366 / mention-01  :ARG0 (u_5369 / you)  :ARG1-of u_5368))))))))
+
+# ::snt You heard that the astronaut believed that the soldier said that the kids believed that the men mentioned that the lawyer believed that you left
+# ::tree TP_resolve_coref_2(heard_resolve_coref,you,TP_CP_2(believed_coref,astronaut,TP_CP_2(said_coref,soldier,TP_CP_2(believed_coref,kids,TP_CP_2(mentioned_coref,men,TP_CP_2(believed_coref,lawyer,TP_intr_2(you_left)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_55
+(u_5383 / hear-01  :ARG0 (r / you  :ARG0-of (u_5374 / leave-11  :ARG1-of (u_5370 / believe-01  :ARG0 (m / lawyer)  :ARG1-of (u_5372 / mention-01  :ARG0 (u_5377 / man)  :ARG1-of (u_5375 / believe-01  :ARG0 (u_5384 / kid)  :ARG1-of (u_5378 / say-01  :ARG0 (s / soldier)  :ARG1-of (u_5381 / believe-01  :ARG0 (a / astronaut)  :ARG1-of u_5383))))))))
+
+# ::snt I believed that the soldier believed that the girls mentioned that you thought that the boys thought that the doctor believed that the men hated me
+# ::tree TP_resolve_coref_1s(believed_resolve_coref,I,TP_CP_1s(believed_coref,soldier,TP_CP_1s(mentioned_coref,girls,TP_CP_1s_subj2(thought_coref,you,TP_CP_1s(thought_coref,boys,TP_CP_1s(believed_coref,doctor,TP_tr_1s(hated_me,men)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_56
+(u_5394 / believe-01  :ARG0 (r / i  :ARG1-of (u_5385 / hate-01  :ARG0 (u_5388 / man)  :ARG1-of (u_5386 / believe-01  :ARG0 (d / doctor)  :ARG1-of (u_5387 / think-01  :ARG0 (u_5390 / boy)  :ARG1-of (u_5389 / think-01  :ARG0 (u_5392 / you)  :ARG1-of (u_5391 / mention-01  :ARG0 (u_5395 / girl)  :ARG1-of (u_5393 / believe-01  :ARG0 (s / soldier)  :ARG1-of u_5394))))))))
+
+# ::snt I knew that you believed that the men said that the soldier heard that the kids said that the girls heard that the boys liked me
+# ::tree TP_resolve_coref_1s(knew_resolve_coref,I,TP_CP_1s_subj2(believed_coref,you,TP_CP_1s(said_coref,men,TP_CP_1s(heard_coref,soldier,TP_CP_1s(said_coref,kids,TP_CP_1s(heard_coref,girls,TP_tr_1s(liked_me,boys)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_57
+(u_5408 / know-01  :ARG0 (r / i  :ARG1-of (u_5396 / like-01  :ARG0 (u_5398 / boy)  :ARG1-of (u_5397 / hear-01  :ARG0 (u_5400 / girl)  :ARG1-of (u_5399 / say-01  :ARG0 (u_5404 / kid)  :ARG1-of (u_5401 / hear-01  :ARG0 (s / soldier)  :ARG1-of (u_5402 / say-01  :ARG0 (u_5407 / man)  :ARG1-of (u_5405 / believe-01  :ARG0 (u_5409 / you)  :ARG1-of u_5408))))))))
+
+# ::snt We heard that the lawyer knew that I knew that the women believed that the doctor believed that the kids heard that we slept
+# ::tree TP_resolve_coref_1p(heard_resolve_coref,we,TP_CP_1p(knew_coref,lawyer,TP_CP_1p_subj1s(knew_coref,I,TP_CP_1p(believed_coref,women,TP_CP_1p(believed_coref,doctor,TP_CP_1p(heard_coref,kids,TP_intr_1p(we_slept)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_58
+(u_5423 / hear-01  :ARG0 (r / we  :ARG0-of (u_5412 / sleep-01  :ARG1-of (u_5410 / hear-01  :ARG0 (u_5417 / kid)  :ARG1-of (u_5413 / believe-01  :ARG0 (d / doctor)  :ARG1-of (u_5415 / believe-01  :ARG0 (u_5420 / woman)  :ARG1-of (u_5418 / know-01  :ARG0 (u_5424 / i)  :ARG1-of (u_5421 / know-01  :ARG0 (m / lawyer)  :ARG1-of u_5423))))))))
+
+# ::snt I thought that the astronaut thought that the lawyer mentioned that the doctor knew that the soldier said that the men knew that the women hated me
+# ::tree TP_resolve_coref_1s(thought_resolve_coref,I,TP_CP_1s(thought_coref,astronaut,TP_CP_1s(mentioned_coref,lawyer,TP_CP_1s(knew_coref,doctor,TP_CP_1s(said_coref,soldier,TP_CP_1s(knew_coref,men,TP_tr_1s(hated_me,women)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_pronouns_59
+(u_5435 / think-01  :ARG0 (r / i  :ARG1-of (u_5425 / hate-01  :ARG0 (u_5427 / woman)  :ARG1-of (u_5426 / know-01  :ARG0 (u_5436 / man)  :ARG1-of (u_5428 / say-01  :ARG0 (s / soldier)  :ARG1-of (u_5429 / know-01  :ARG0 (d / doctor)  :ARG1-of (u_5431 / mention-01  :ARG0 (m / lawyer)  :ARG1-of (u_5433 / think-01  :ARG0 (a / astronaut)  :ARG1-of u_5435))))))))
+
+# ::snt I knew that you thought that the girls said that we mentioned that the men believed that the lawyer thought that the kids thought that I slept
+# ::tree TP_resolve_coref_1s(knew_resolve_coref,I,TP_CP_1s_subj2(thought_coref,you,TP_CP_1s(said_coref,girls,TP_CP_1s_subj1p(mentioned_coref,we,TP_CP_1s(believed_coref,men,TP_CP_1s(thought_coref,lawyer,TP_CP_1s(thought_coref,kids,TP_intr_1s(I_slept))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_pronouns_60
+(u_5454 / know-01  :ARG0 (r / i  :ARG0-of (u_5439 / sleep-01  :ARG1-of (u_5437 / think-01  :ARG0 (u_5444 / kid)  :ARG1-of (u_5440 / think-01  :ARG0 (m / lawyer)  :ARG1-of (u_5442 / believe-01  :ARG0 (u_5447 / man)  :ARG1-of (u_5445 / mention-01  :ARG0 (u_5450 / we)  :ARG1-of (u_5448 / say-01  :ARG0 (u_5453 / girl)  :ARG1-of (u_5451 / think-01  :ARG0 (u_5455 / you)  :ARG1-of u_5454)))))))))
+
+# ::snt We knew that the kids mentioned that the doctor believed that the lawyer said that the women knew that the astronaut thought that I heard that we slept
+# ::tree TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p(mentioned_coref,kids,TP_CP_1p(believed_coref,doctor,TP_CP_1p(said_coref,lawyer,TP_CP_1p(knew_coref,women,TP_CP_1p(thought_coref,astronaut,TP_CP_1p_subj1s(heard_coref,I,TP_intr_1p(we_slept))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_pronouns_61
+(u_5471 / know-01  :ARG0 (r / we  :ARG0-of (u_5458 / sleep-01  :ARG1-of (u_5456 / hear-01  :ARG0 (u_5463 / i)  :ARG1-of (u_5459 / think-01  :ARG0 (a / astronaut)  :ARG1-of (u_5461 / know-01  :ARG0 (u_5470 / woman)  :ARG1-of (u_5464 / say-01  :ARG0 (m / lawyer)  :ARG1-of (u_5466 / believe-01  :ARG0 (d / doctor)  :ARG1-of (u_5468 / mention-01  :ARG0 (u_5472 / kid)  :ARG1-of u_5471)))))))))
+
+# ::snt We said that the girls knew that you said that I knew that the astronaut mentioned that the boys knew that the women knew that we slept
+# ::tree TP_resolve_coref_1p(said_resolve_coref,we,TP_CP_1p(knew_coref,girls,TP_CP_1p_subj2(said_coref,you,TP_CP_1p_subj1s(knew_coref,I,TP_CP_1p(mentioned_coref,astronaut,TP_CP_1p(knew_coref,boys,TP_CP_1p(knew_coref,women,TP_intr_1p(we_slept))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_pronouns_62
+(u_5490 / say-01  :ARG0 (r / we  :ARG0-of (u_5475 / sleep-01  :ARG1-of (u_5473 / know-01  :ARG0 (u_5478 / woman)  :ARG1-of (u_5476 / know-01  :ARG0 (u_5483 / boy)  :ARG1-of (u_5479 / mention-01  :ARG0 (a / astronaut)  :ARG1-of (u_5481 / know-01  :ARG0 (u_5486 / i)  :ARG1-of (u_5484 / say-01  :ARG0 (u_5489 / you)  :ARG1-of (u_5487 / know-01  :ARG0 (u_5491 / girl)  :ARG1-of u_5490)))))))))
+
+# ::snt I mentioned that the kids said that we believed that the men thought that the boys thought that the soldier believed that the girls believed that I left
+# ::tree TP_resolve_coref_1s(mentioned_resolve_coref,I,TP_CP_1s(said_coref,kids,TP_CP_1s_subj1p(believed_coref,we,TP_CP_1s(thought_coref,men,TP_CP_1s(thought_coref,boys,TP_CP_1s(believed_coref,soldier,TP_CP_1s(believed_coref,girls,TP_intr_1s(I_left))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_pronouns_63
+(u_5510 / mention-01  :ARG0 (r / i  :ARG0-of (u_5494 / leave-11  :ARG1-of (u_5492 / believe-01  :ARG0 (u_5500 / girl)  :ARG1-of (u_5495 / believe-01  :ARG0 (s / soldier)  :ARG1-of (u_5498 / think-01  :ARG0 (u_5503 / boy)  :ARG1-of (u_5501 / think-01  :ARG0 (u_5506 / man)  :ARG1-of (u_5504 / believe-01  :ARG0 (u_5509 / we)  :ARG1-of (u_5507 / say-01  :ARG0 (u_5511 / kid)  :ARG1-of u_5510)))))))))
+
+# ::snt We thought that you said that I believed that the lawyer thought that the boys heard that the men mentioned that the astronaut heard that the kids liked us
+# ::tree TP_resolve_coref_1p(thought_resolve_coref,we,TP_CP_1p_subj2(said_coref,you,TP_CP_1p_subj1s(believed_coref,I,TP_CP_1p(thought_coref,lawyer,TP_CP_1p(heard_coref,boys,TP_CP_1p(mentioned_coref,men,TP_CP_1p(heard_coref,astronaut,TP_tr_1p(liked_us,kids))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_pronouns_64
+(u_5523 / think-01  :ARG0 (r / we  :ARG1-of (u_5512 / like-01  :ARG0 (u_5515 / kid)  :ARG1-of (u_5513 / hear-01  :ARG0 (a / astronaut)  :ARG1-of (u_5514 / mention-01  :ARG0 (u_5517 / man)  :ARG1-of (u_5516 / hear-01  :ARG0 (u_5520 / boy)  :ARG1-of (u_5518 / think-01  :ARG0 (m / lawyer)  :ARG1-of (u_5519 / believe-01  :ARG0 (u_5522 / i)  :ARG1-of (u_5521 / say-01  :ARG0 (u_5524 / you)  :ARG1-of u_5523)))))))))
+
+# ::snt I heard that you said that the kids knew that the lawyer knew that we heard that the boys believed that the men mentioned that the girls heard that you slept
+# ::tree TP_1s(heard,I,TP_resolve_coref_2(said_resolve_coref,you,TP_CP_2(knew_coref,kids,TP_CP_2(knew_coref,lawyer,TP_CP_2_subj1p(heard_coref,we,TP_CP_2(believed_coref,boys,TP_CP_2(mentioned_coref,men,TP_CP_2(heard_coref,girls,TP_intr_2(you_slept)))))))))
+# ::size0 8
+# ::size1 9
+# ::id deep_recursion_pronouns_65
+(u_5544 / hear-01  :ARG0 (r / i)  :ARG1 (u_5542 / say-01  :ARG0 (u_5545 / you  :ARG0-of (u_5527 / sleep-01  :ARG1-of (u_5525 / hear-01  :ARG0 (u_5530 / girl)  :ARG1-of (u_5528 / mention-01  :ARG0 (u_5533 / man)  :ARG1-of (u_5531 / believe-01  :ARG0 (u_5536 / boy)  :ARG1-of (u_5534 / hear-01  :ARG0 (u_5541 / we)  :ARG1-of (u_5537 / know-01  :ARG0 (m / lawyer)  :ARG1-of (u_5539 / know-01  :ARG0 (u_5543 / kid)  :ARG1-of u_5542))))))))))
+
+# ::snt I heard that the soldier mentioned that the girls thought that we said that you mentioned that the kids mentioned that the men knew that the doctor hated me
+# ::tree TP_resolve_coref_1s(heard_resolve_coref,I,TP_CP_1s(mentioned_coref,soldier,TP_CP_1s(thought_coref,girls,TP_CP_1s_subj1p(said_coref,we,TP_CP_1s_subj2(mentioned_coref,you,TP_CP_1s(mentioned_coref,kids,TP_CP_1s(knew_coref,men,TP_tr_1s(hated_me,doctor))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_pronouns_66
+(u_5557 / hear-01  :ARG0 (r / i  :ARG1-of (u_5547 / hate-01  :ARG0 (d / doctor)  :ARG1-of (u_5546 / know-01  :ARG0 (u_5549 / man)  :ARG1-of (u_5548 / mention-01  :ARG0 (u_5551 / kid)  :ARG1-of (u_5550 / mention-01  :ARG0 (u_5553 / you)  :ARG1-of (u_5552 / say-01  :ARG0 (u_5555 / we)  :ARG1-of (u_5554 / think-01  :ARG0 (u_5558 / girl)  :ARG1-of (u_5556 / mention-01  :ARG0 (s / soldier)  :ARG1-of u_5557)))))))))
+
+# ::snt I knew that the men believed that the boys believed that the women believed that the lawyer said that we knew that you believed that the kids hated me
+# ::tree TP_resolve_coref_1s(knew_resolve_coref,I,TP_CP_1s(believed_coref,men,TP_CP_1s(believed_coref,boys,TP_CP_1s(believed_coref,women,TP_CP_1s(said_coref,lawyer,TP_CP_1s_subj1p(knew_coref,we,TP_CP_1s_subj2(believed_coref,you,TP_tr_1s(hated_me,kids))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_pronouns_67
+(u_5571 / know-01  :ARG0 (r / i  :ARG1-of (u_5559 / hate-01  :ARG0 (u_5561 / kid)  :ARG1-of (u_5560 / believe-01  :ARG0 (u_5563 / you)  :ARG1-of (u_5562 / know-01  :ARG0 (u_5566 / we)  :ARG1-of (u_5564 / say-01  :ARG0 (m / lawyer)  :ARG1-of (u_5565 / believe-01  :ARG0 (u_5568 / woman)  :ARG1-of (u_5567 / believe-01  :ARG0 (u_5570 / boy)  :ARG1-of (u_5569 / believe-01  :ARG0 (u_5572 / man)  :ARG1-of u_5571)))))))))
+
+# ::snt We said that the men knew that I said that the soldier heard that the lawyer knew that the women mentioned that you believed that we left
+# ::tree TP_resolve_coref_1p(said_resolve_coref,we,TP_CP_1p(knew_coref,men,TP_CP_1p_subj1s(said_coref,I,TP_CP_1p(heard_coref,soldier,TP_CP_1p(knew_coref,lawyer,TP_CP_1p(mentioned_coref,women,TP_CP_1p_subj2(believed_coref,you,TP_intr_1p(we_left))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_pronouns_68
+(u_5590 / say-01  :ARG0 (r / we  :ARG0-of (u_5575 / leave-11  :ARG1-of (u_5573 / believe-01  :ARG0 (u_5578 / you)  :ARG1-of (u_5576 / mention-01  :ARG0 (u_5586 / woman)  :ARG1-of (u_5579 / know-01  :ARG0 (m / lawyer)  :ARG1-of (u_5581 / hear-01  :ARG0 (s / soldier)  :ARG1-of (u_5584 / say-01  :ARG0 (u_5589 / i)  :ARG1-of (u_5587 / know-01  :ARG0 (u_5591 / man)  :ARG1-of u_5590)))))))))
+
+# ::snt The boys heard that the men said that I heard that the lawyer believed that the girls believed that the soldier knew that the women heard that we thought that you said that I left
+# ::tree TP_3p(heard,boys,TP_3p(said,men,TP_resolve_coref_1s(heard_resolve_coref,I,TP_CP_1s(believed_coref,lawyer,TP_CP_1s(believed_coref,girls,TP_CP_1s(knew_coref,soldier,TP_CP_1s(heard_coref,women,TP_CP_1s_subj1p(thought_coref,we,TP_CP_1s_subj2(said_coref,you,TP_intr_1s(I_left))))))))))
+# ::size0 8
+# ::size1 10
+# ::id deep_recursion_pronouns_69
+(u_5614 / hear-01  :ARG0 (r / boy)  :ARG1 (u_5611 / say-01  :ARG0 (u_5616 / man)  :ARG1 (u_5609 / hear-01  :ARG0 (u_5613 / i  :ARG0-of (u_5594 / leave-11  :ARG1-of (u_5592 / say-01  :ARG0 (u_5597 / you)  :ARG1-of (u_5595 / think-01  :ARG0 (u_5600 / we)  :ARG1-of (u_5598 / hear-01  :ARG0 (u_5606 / woman)  :ARG1-of (u_5601 / know-01  :ARG0 (s / soldier)  :ARG1-of (u_5604 / believe-01  :ARG0 (u_5610 / girl)  :ARG1-of (u_5607 / believe-01  :ARG0 (m / lawyer)  :ARG1-of u_5609)))))))))))
+
+# ::snt I thought that we believed that the soldier mentioned that you thought that the doctor thought that the lawyer believed that the kids said that the astronaut believed that the women knew that we left
+# ::tree TP_1s(thought,I,TP_resolve_coref_1p(believed_resolve_coref,we,TP_CP_1p(mentioned_coref,soldier,TP_CP_1p_subj2(thought_coref,you,TP_CP_1p(thought_coref,doctor,TP_CP_1p(believed_coref,lawyer,TP_CP_1p(said_coref,kids,TP_CP_1p(believed_coref,astronaut,TP_CP_1p(knew_coref,women,TP_intr_1p(we_left))))))))))
+# ::size0 9
+# ::size1 10
+# ::id deep_recursion_pronouns_70
+(u_5637 / think-01  :ARG0 (r / i)  :ARG1 (u_5635 / believe-01  :ARG0 (u_5639 / we  :ARG0-of (u_5619 / leave-11  :ARG1-of (u_5617 / know-01  :ARG0 (u_5624 / woman)  :ARG1-of (u_5620 / believe-01  :ARG0 (a / astronaut)  :ARG1-of (u_5622 / say-01  :ARG0 (u_5631 / kid)  :ARG1-of (u_5625 / believe-01  :ARG0 (m / lawyer)  :ARG1-of (u_5627 / think-01  :ARG0 (d / doctor)  :ARG1-of (u_5629 / think-01  :ARG0 (u_5636 / you)  :ARG1-of (u_5632 / mention-01  :ARG0 (s / soldier)  :ARG1-of u_5635)))))))))))
+
+# ::snt I heard that we said that the kids knew that you knew that the doctor thought that the girls knew that the lawyer said that the women knew that I left
+# ::tree TP_resolve_coref_1s(heard_resolve_coref,I,TP_CP_1s_subj1p(said_coref,we,TP_CP_1s(knew_coref,kids,TP_CP_1s_subj2(knew_coref,you,TP_CP_1s(thought_coref,doctor,TP_CP_1s(knew_coref,girls,TP_CP_1s(said_coref,lawyer,TP_CP_1s(knew_coref,women,TP_intr_1s(I_left)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_pronouns_71
+(u_5659 / hear-01  :ARG0 (r / i  :ARG0-of (u_5642 / leave-11  :ARG1-of (u_5640 / know-01  :ARG0 (u_5647 / woman)  :ARG1-of (u_5643 / say-01  :ARG0 (m / lawyer)  :ARG1-of (u_5645 / know-01  :ARG0 (u_5652 / girl)  :ARG1-of (u_5648 / think-01  :ARG0 (d / doctor)  :ARG1-of (u_5650 / know-01  :ARG0 (u_5655 / you)  :ARG1-of (u_5653 / know-01  :ARG0 (u_5658 / kid)  :ARG1-of (u_5656 / say-01  :ARG0 (u_5660 / we)  :ARG1-of u_5659))))))))))
+
+# ::snt I knew that the kids said that you believed that the soldier mentioned that the doctor mentioned that the girls thought that the women thought that we believed that I left
+# ::tree TP_resolve_coref_1s(knew_resolve_coref,I,TP_CP_1s(said_coref,kids,TP_CP_1s_subj2(believed_coref,you,TP_CP_1s(mentioned_coref,soldier,TP_CP_1s(mentioned_coref,doctor,TP_CP_1s(thought_coref,girls,TP_CP_1s(thought_coref,women,TP_CP_1s_subj1p(believed_coref,we,TP_intr_1s(I_left)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_pronouns_72
+(u_5681 / know-01  :ARG0 (r / i  :ARG0-of (u_5663 / leave-11  :ARG1-of (u_5661 / believe-01  :ARG0 (u_5666 / we)  :ARG1-of (u_5664 / think-01  :ARG0 (u_5669 / woman)  :ARG1-of (u_5667 / think-01  :ARG0 (u_5677 / girl)  :ARG1-of (u_5670 / mention-01  :ARG0 (d / doctor)  :ARG1-of (u_5672 / mention-01  :ARG0 (s / soldier)  :ARG1-of (u_5675 / believe-01  :ARG0 (u_5680 / you)  :ARG1-of (u_5678 / say-01  :ARG0 (u_5682 / kid)  :ARG1-of u_5681))))))))))
+
+# ::snt You mentioned that the men said that I believed that the girls mentioned that the astronaut mentioned that the kids thought that the doctor heard that we knew that you slept
+# ::tree TP_resolve_coref_2(mentioned_resolve_coref,you,TP_CP_2(said_coref,men,TP_CP_2_subj1s(believed_coref,I,TP_CP_2(mentioned_coref,girls,TP_CP_2(mentioned_coref,astronaut,TP_CP_2(thought_coref,kids,TP_CP_2(heard_coref,doctor,TP_CP_2_subj1p(knew_coref,we,TP_intr_2(you_slept)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_pronouns_73
+(u_5702 / mention-01  :ARG0 (r / you  :ARG0-of (u_5685 / sleep-01  :ARG1-of (u_5683 / know-01  :ARG0 (u_5690 / we)  :ARG1-of (u_5686 / hear-01  :ARG0 (d / doctor)  :ARG1-of (u_5688 / think-01  :ARG0 (u_5695 / kid)  :ARG1-of (u_5691 / mention-01  :ARG0 (a / astronaut)  :ARG1-of (u_5693 / mention-01  :ARG0 (u_5698 / girl)  :ARG1-of (u_5696 / believe-01  :ARG0 (u_5701 / i)  :ARG1-of (u_5699 / say-01  :ARG0 (u_5703 / man)  :ARG1-of u_5702))))))))))
+
+# ::snt I believed that the soldier said that you believed that we heard that the men mentioned that the girls mentioned that the kids knew that the boys said that the women hated me
+# ::tree TP_resolve_coref_1s(believed_resolve_coref,I,TP_CP_1s(said_coref,soldier,TP_CP_1s_subj2(believed_coref,you,TP_CP_1s_subj1p(heard_coref,we,TP_CP_1s(mentioned_coref,men,TP_CP_1s(mentioned_coref,girls,TP_CP_1s(knew_coref,kids,TP_CP_1s(said_coref,boys,TP_tr_1s(hated_me,women)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_pronouns_74
+(u_5718 / believe-01  :ARG0 (r / i  :ARG1-of (u_5704 / hate-01  :ARG0 (u_5706 / woman)  :ARG1-of (u_5705 / say-01  :ARG0 (u_5708 / boy)  :ARG1-of (u_5707 / know-01  :ARG0 (u_5710 / kid)  :ARG1-of (u_5709 / mention-01  :ARG0 (u_5712 / girl)  :ARG1-of (u_5711 / mention-01  :ARG0 (u_5714 / man)  :ARG1-of (u_5713 / hear-01  :ARG0 (u_5716 / we)  :ARG1-of (u_5715 / believe-01  :ARG0 (u_5719 / you)  :ARG1-of (u_5717 / say-01  :ARG0 (s / soldier)  :ARG1-of u_5718))))))))))
+
+# ::snt We said that the lawyer knew that the women believed that the boys said that the astronaut knew that the men thought that I heard that the soldier thought that we slept
+# ::tree TP_resolve_coref_1p(said_resolve_coref,we,TP_CP_1p(knew_coref,lawyer,TP_CP_1p(believed_coref,women,TP_CP_1p(said_coref,boys,TP_CP_1p(knew_coref,astronaut,TP_CP_1p(thought_coref,men,TP_CP_1p_subj1s(heard_coref,I,TP_CP_1p(thought_coref,soldier,TP_intr_1p(we_slept)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_pronouns_75
+(u_5739 / say-01  :ARG0 (r / we  :ARG0-of (u_5725 / sleep-01  :ARG1-of (u_5720 / think-01  :ARG0 (s / soldier)  :ARG1-of (u_5723 / hear-01  :ARG0 (u_5728 / i)  :ARG1-of (u_5726 / think-01  :ARG0 (u_5733 / man)  :ARG1-of (u_5729 / know-01  :ARG0 (a / astronaut)  :ARG1-of (u_5731 / say-01  :ARG0 (u_5736 / boy)  :ARG1-of (u_5734 / believe-01  :ARG0 (u_5740 / woman)  :ARG1-of (u_5737 / know-01  :ARG0 (m / lawyer)  :ARG1-of u_5739))))))))))
+
+# ::snt I believed that the kids said that the lawyer thought that the men said that the astronaut knew that we believed that the doctor said that you believed that I left
+# ::tree TP_resolve_coref_1s(believed_resolve_coref,I,TP_CP_1s(said_coref,kids,TP_CP_1s(thought_coref,lawyer,TP_CP_1s(said_coref,men,TP_CP_1s(knew_coref,astronaut,TP_CP_1s_subj1p(believed_coref,we,TP_CP_1s(said_coref,doctor,TP_CP_1s_subj2(believed_coref,you,TP_intr_1s(I_left)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_pronouns_76
+(u_5759 / believe-01  :ARG0 (r / i  :ARG0-of (u_5743 / leave-11  :ARG1-of (u_5741 / believe-01  :ARG0 (u_5748 / you)  :ARG1-of (u_5744 / say-01  :ARG0 (d / doctor)  :ARG1-of (u_5746 / believe-01  :ARG0 (u_5753 / we)  :ARG1-of (u_5749 / know-01  :ARG0 (a / astronaut)  :ARG1-of (u_5751 / say-01  :ARG0 (u_5758 / man)  :ARG1-of (u_5754 / think-01  :ARG0 (m / lawyer)  :ARG1-of (u_5756 / say-01  :ARG0 (u_5760 / kid)  :ARG1-of u_5759))))))))))
+
+# ::snt The astronaut believed that you heard that we knew that the men thought that the boys believed that I said that the women knew that the girls knew that the lawyer believed that the soldier hated you
+# ::tree TP_3p(believed,astronaut,TP_resolve_coref_2(heard_resolve_coref,you,TP_CP_2_subj1p(knew_coref,we,TP_CP_2(thought_coref,men,TP_CP_2(believed_coref,boys,TP_CP_2_subj1s(said_coref,I,TP_CP_2(knew_coref,women,TP_CP_2(knew_coref,girls,TP_CP_2(believed_coref,lawyer,TP_tr_2(hated_you,soldier))))))))))
+# ::size0 9
+# ::size1 10
+# ::id deep_recursion_pronouns_77
+(u_5783 / believe-01  :ARG0 (a / astronaut)  :ARG1 (u_5781 / hear-01  :ARG0 (r / you  :ARG1-of (u_5765 / hate-01  :ARG0 (s / soldier)  :ARG1-of (u_5761 / believe-01  :ARG0 (m / lawyer)  :ARG1-of (u_5763 / know-01  :ARG0 (u_5768 / girl)  :ARG1-of (u_5766 / know-01  :ARG0 (u_5771 / woman)  :ARG1-of (u_5769 / say-01  :ARG0 (u_5774 / i)  :ARG1-of (u_5772 / believe-01  :ARG0 (u_5777 / boy)  :ARG1-of (u_5775 / think-01  :ARG0 (u_5780 / man)  :ARG1-of (u_5778 / know-01  :ARG0 (u_5782 / we)  :ARG1-of u_5781)))))))))))
+
+# ::snt We said that I mentioned that the astronaut heard that the soldier believed that you knew that the boys thought that the kids mentioned that the girls knew that the women hated us
+# ::tree TP_resolve_coref_1p(said_resolve_coref,we,TP_CP_1p_subj1s(mentioned_coref,I,TP_CP_1p(heard_coref,astronaut,TP_CP_1p(believed_coref,soldier,TP_CP_1p_subj2(knew_coref,you,TP_CP_1p(thought_coref,boys,TP_CP_1p(mentioned_coref,kids,TP_CP_1p(knew_coref,girls,TP_tr_1p(hated_us,women)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_pronouns_78
+(u_5800 / say-01  :ARG0 (r / we  :ARG1-of (u_5785 / hate-01  :ARG0 (u_5787 / woman)  :ARG1-of (u_5786 / know-01  :ARG0 (u_5789 / girl)  :ARG1-of (u_5788 / mention-01  :ARG0 (u_5791 / kid)  :ARG1-of (u_5790 / think-01  :ARG0 (u_5793 / boy)  :ARG1-of (u_5792 / know-01  :ARG0 (u_5799 / you)  :ARG1-of (u_5794 / believe-01  :ARG0 (s / soldier)  :ARG1-of (u_5795 / hear-01  :ARG0 (a / astronaut)  :ARG1-of (u_5797 / mention-01  :ARG0 (u_5801 / i)  :ARG1-of u_5800))))))))))
+
+# ::snt I said that the astronaut mentioned that you believed that the boys thought that the soldier knew that the men thought that we thought that the kids knew that I left
+# ::tree TP_resolve_coref_1s(said_resolve_coref,I,TP_CP_1s(mentioned_coref,astronaut,TP_CP_1s_subj2(believed_coref,you,TP_CP_1s(thought_coref,boys,TP_CP_1s(knew_coref,soldier,TP_CP_1s(thought_coref,men,TP_CP_1s_subj1p(thought_coref,we,TP_CP_1s(knew_coref,kids,TP_intr_1s(I_left)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_pronouns_79
+(u_5822 / say-01  :ARG0 (r / i  :ARG0-of (u_5804 / leave-11  :ARG1-of (u_5802 / know-01  :ARG0 (u_5807 / kid)  :ARG1-of (u_5805 / think-01  :ARG0 (u_5810 / we)  :ARG1-of (u_5808 / think-01  :ARG0 (u_5816 / man)  :ARG1-of (u_5811 / know-01  :ARG0 (s / soldier)  :ARG1-of (u_5814 / think-01  :ARG0 (u_5819 / boy)  :ARG1-of (u_5817 / believe-01  :ARG0 (u_5823 / you)  :ARG1-of (u_5820 / mention-01  :ARG0 (a / astronaut)  :ARG1-of u_5822))))))))))
+
+# ::snt I mentioned that the men knew that you knew that the lawyer said that the women mentioned that we mentioned that the astronaut said that the soldier believed that the girls believed that I left
+# ::tree TP_resolve_coref_1s(mentioned_resolve_coref,I,TP_CP_1s(knew_coref,men,TP_CP_1s_subj2(knew_coref,you,TP_CP_1s(said_coref,lawyer,TP_CP_1s(mentioned_coref,women,TP_CP_1s_subj1p(mentioned_coref,we,TP_CP_1s(said_coref,astronaut,TP_CP_1s(believed_coref,soldier,TP_CP_1s(believed_coref,girls,TP_intr_1s(I_left))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_80
+(u_5846 / mention-01  :ARG0 (r / i  :ARG0-of (u_5826 / leave-11  :ARG1-of (u_5824 / believe-01  :ARG0 (u_5834 / girl)  :ARG1-of (u_5827 / believe-01  :ARG0 (s / soldier)  :ARG1-of (u_5830 / say-01  :ARG0 (a / astronaut)  :ARG1-of (u_5832 / mention-01  :ARG0 (u_5837 / we)  :ARG1-of (u_5835 / mention-01  :ARG0 (u_5842 / woman)  :ARG1-of (u_5838 / say-01  :ARG0 (m / lawyer)  :ARG1-of (u_5840 / know-01  :ARG0 (u_5845 / you)  :ARG1-of (u_5843 / know-01  :ARG0 (u_5847 / man)  :ARG1-of u_5846)))))))))))
+
+# ::snt I knew that the girls heard that the kids believed that the boys believed that you said that the doctor thought that the soldier believed that the lawyer mentioned that the astronaut knew that I slept
+# ::tree TP_resolve_coref_1s(knew_resolve_coref,I,TP_CP_1s(heard_coref,girls,TP_CP_1s(believed_coref,kids,TP_CP_1s(believed_coref,boys,TP_CP_1s_subj2(said_coref,you,TP_CP_1s(thought_coref,doctor,TP_CP_1s(believed_coref,soldier,TP_CP_1s(mentioned_coref,lawyer,TP_CP_1s(knew_coref,astronaut,TP_intr_1s(I_slept))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_81
+(u_5869 / know-01  :ARG0 (r / i  :ARG0-of (u_5859 / sleep-01  :ARG1-of (u_5848 / know-01  :ARG0 (a / astronaut)  :ARG1-of (u_5850 / mention-01  :ARG0 (m / lawyer)  :ARG1-of (u_5852 / believe-01  :ARG0 (s / soldier)  :ARG1-of (u_5855 / think-01  :ARG0 (d / doctor)  :ARG1-of (u_5857 / say-01  :ARG0 (u_5862 / you)  :ARG1-of (u_5860 / believe-01  :ARG0 (u_5865 / boy)  :ARG1-of (u_5863 / believe-01  :ARG0 (u_5868 / kid)  :ARG1-of (u_5866 / hear-01  :ARG0 (u_5870 / girl)  :ARG1-of u_5869)))))))))))
+
+# ::snt The doctor believed that I believed that you mentioned that we said that the kids mentioned that the lawyer said that the soldier thought that the boys believed that the women believed that the girls thought that the men liked me
+# ::tree TP_3p(believed,doctor,TP_resolve_coref_1s(believed_resolve_coref,I,TP_CP_1s_subj2(mentioned_coref,you,TP_CP_1s_subj1p(said_coref,we,TP_CP_1s(mentioned_coref,kids,TP_CP_1s(said_coref,lawyer,TP_CP_1s(thought_coref,soldier,TP_CP_1s(believed_coref,boys,TP_CP_1s(believed_coref,women,TP_CP_1s(thought_coref,girls,TP_tr_1s(liked_me,men)))))))))))
+# ::size0 10
+# ::size1 11
+# ::id deep_recursion_pronouns_82
+(u_5892 / believe-01  :ARG0 (d / doctor)  :ARG1 (u_5890 / believe-01  :ARG0 (r / i  :ARG1-of (u_5871 / like-01  :ARG0 (u_5873 / man)  :ARG1-of (u_5872 / think-01  :ARG0 (u_5875 / girl)  :ARG1-of (u_5874 / believe-01  :ARG0 (u_5877 / woman)  :ARG1-of (u_5876 / believe-01  :ARG0 (u_5883 / boy)  :ARG1-of (u_5878 / think-01  :ARG0 (s / soldier)  :ARG1-of (u_5879 / say-01  :ARG0 (m / lawyer)  :ARG1-of (u_5881 / mention-01  :ARG0 (u_5886 / kid)  :ARG1-of (u_5884 / say-01  :ARG0 (u_5889 / we)  :ARG1-of (u_5887 / mention-01  :ARG0 (u_5891 / you)  :ARG1-of u_5890))))))))))))
+
+# ::snt We heard that the men heard that the soldier thought that the kids thought that you heard that the boys heard that the girls heard that the lawyer mentioned that I knew that the women liked us
+# ::tree TP_resolve_coref_1p(heard_resolve_coref,we,TP_CP_1p(heard_coref,men,TP_CP_1p(thought_coref,soldier,TP_CP_1p(thought_coref,kids,TP_CP_1p_subj2(heard_coref,you,TP_CP_1p(heard_coref,boys,TP_CP_1p(heard_coref,girls,TP_CP_1p(mentioned_coref,lawyer,TP_CP_1p_subj1s(knew_coref,I,TP_tr_1p(liked_us,women))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_83
+(u_5910 / hear-01  :ARG0 (r / we  :ARG1-of (u_5894 / like-01  :ARG0 (u_5896 / woman)  :ARG1-of (u_5895 / know-01  :ARG0 (u_5899 / i)  :ARG1-of (u_5897 / mention-01  :ARG0 (m / lawyer)  :ARG1-of (u_5898 / hear-01  :ARG0 (u_5901 / girl)  :ARG1-of (u_5900 / hear-01  :ARG0 (u_5903 / boy)  :ARG1-of (u_5902 / hear-01  :ARG0 (u_5905 / you)  :ARG1-of (u_5904 / think-01  :ARG0 (u_5909 / kid)  :ARG1-of (u_5906 / think-01  :ARG0 (s / soldier)  :ARG1-of (u_5907 / hear-01  :ARG0 (u_5911 / man)  :ARG1-of u_5910)))))))))))
+
+# ::snt You knew that the kids said that the women believed that the astronaut believed that the doctor knew that we thought that the boys thought that I knew that the men thought that you slept
+# ::tree TP_resolve_coref_2(knew_resolve_coref,you,TP_CP_2(said_coref,kids,TP_CP_2(believed_coref,women,TP_CP_2(believed_coref,astronaut,TP_CP_2(knew_coref,doctor,TP_CP_2_subj1p(thought_coref,we,TP_CP_2(thought_coref,boys,TP_CP_2_subj1s(knew_coref,I,TP_CP_2(thought_coref,men,TP_intr_2(you_slept))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_84
+(u_5934 / know-01  :ARG0 (r / you  :ARG0-of (u_5914 / sleep-01  :ARG1-of (u_5912 / think-01  :ARG0 (u_5917 / man)  :ARG1-of (u_5915 / know-01  :ARG0 (u_5920 / i)  :ARG1-of (u_5918 / think-01  :ARG0 (u_5923 / boy)  :ARG1-of (u_5921 / think-01  :ARG0 (u_5930 / we)  :ARG1-of (u_5924 / know-01  :ARG0 (d / doctor)  :ARG1-of (u_5926 / believe-01  :ARG0 (a / astronaut)  :ARG1-of (u_5928 / believe-01  :ARG0 (u_5933 / woman)  :ARG1-of (u_5931 / say-01  :ARG0 (u_5935 / kid)  :ARG1-of u_5934)))))))))))
+
+# ::snt We believed that the astronaut said that you thought that the girls heard that the doctor thought that I heard that the soldier knew that the kids knew that the women heard that we left
+# ::tree TP_resolve_coref_1p(believed_resolve_coref,we,TP_CP_1p(said_coref,astronaut,TP_CP_1p_subj2(thought_coref,you,TP_CP_1p(heard_coref,girls,TP_CP_1p(thought_coref,doctor,TP_CP_1p_subj1s(heard_coref,I,TP_CP_1p(knew_coref,soldier,TP_CP_1p(knew_coref,kids,TP_CP_1p(heard_coref,women,TP_intr_1p(we_left))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_85
+(u_5958 / believe-01  :ARG0 (r / we  :ARG0-of (u_5938 / leave-11  :ARG1-of (u_5936 / hear-01  :ARG0 (u_5941 / woman)  :ARG1-of (u_5939 / know-01  :ARG0 (u_5947 / kid)  :ARG1-of (u_5942 / know-01  :ARG0 (s / soldier)  :ARG1-of (u_5945 / hear-01  :ARG0 (u_5952 / i)  :ARG1-of (u_5948 / think-01  :ARG0 (d / doctor)  :ARG1-of (u_5950 / hear-01  :ARG0 (u_5955 / girl)  :ARG1-of (u_5953 / think-01  :ARG0 (u_5959 / you)  :ARG1-of (u_5956 / say-01  :ARG0 (a / astronaut)  :ARG1-of u_5958)))))))))))
+
+# ::snt You thought that we knew that the lawyer mentioned that the women heard that the men said that I thought that the doctor believed that the kids heard that the boys believed that the girls liked you
+# ::tree TP_resolve_coref_2(thought_resolve_coref,you,TP_CP_2_subj1p(knew_coref,we,TP_CP_2(mentioned_coref,lawyer,TP_CP_2(heard_coref,women,TP_CP_2(said_coref,men,TP_CP_2_subj1s(thought_coref,I,TP_CP_2(believed_coref,doctor,TP_CP_2(heard_coref,kids,TP_CP_2(believed_coref,boys,TP_tr_2(liked_you,girls))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_86
+(u_5975 / think-01  :ARG0 (r / you  :ARG1-of (u_5960 / like-01  :ARG0 (u_5962 / girl)  :ARG1-of (u_5961 / believe-01  :ARG0 (u_5964 / boy)  :ARG1-of (u_5963 / hear-01  :ARG0 (u_5967 / kid)  :ARG1-of (u_5965 / believe-01  :ARG0 (d / doctor)  :ARG1-of (u_5966 / think-01  :ARG0 (u_5969 / i)  :ARG1-of (u_5968 / say-01  :ARG0 (u_5971 / man)  :ARG1-of (u_5970 / hear-01  :ARG0 (u_5974 / woman)  :ARG1-of (u_5972 / mention-01  :ARG0 (m / lawyer)  :ARG1-of (u_5973 / know-01  :ARG0 (u_5976 / we)  :ARG1-of u_5975)))))))))))
+
+# ::snt We heard that the astronaut thought that the kids said that the women thought that you believed that the boys thought that the lawyer mentioned that the girls believed that the doctor said that the soldier hated us
+# ::tree TP_resolve_coref_1p(heard_resolve_coref,we,TP_CP_1p(thought_coref,astronaut,TP_CP_1p(said_coref,kids,TP_CP_1p(thought_coref,women,TP_CP_1p_subj2(believed_coref,you,TP_CP_1p(thought_coref,boys,TP_CP_1p(mentioned_coref,lawyer,TP_CP_1p(believed_coref,girls,TP_CP_1p(said_coref,doctor,TP_tr_1p(hated_us,soldier))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_87
+(u_5998 / hear-01  :ARG0 (r / we  :ARG1-of (u_5981 / hate-01  :ARG0 (s / soldier)  :ARG1-of (u_5977 / say-01  :ARG0 (d / doctor)  :ARG1-of (u_5979 / believe-01  :ARG0 (u_5986 / girl)  :ARG1-of (u_5982 / mention-01  :ARG0 (m / lawyer)  :ARG1-of (u_5984 / think-01  :ARG0 (u_5989 / boy)  :ARG1-of (u_5987 / believe-01  :ARG0 (u_5992 / you)  :ARG1-of (u_5990 / think-01  :ARG0 (u_5995 / woman)  :ARG1-of (u_5993 / say-01  :ARG0 (u_5999 / kid)  :ARG1-of (u_5996 / think-01  :ARG0 (a / astronaut)  :ARG1-of u_5998)))))))))))
+
+# ::snt You mentioned that the lawyer believed that the soldier mentioned that the girls knew that I heard that the kids mentioned that the boys said that the doctor thought that we said that you left
+# ::tree TP_resolve_coref_2(mentioned_resolve_coref,you,TP_CP_2(believed_coref,lawyer,TP_CP_2(mentioned_coref,soldier,TP_CP_2(knew_coref,girls,TP_CP_2_subj1s(heard_coref,I,TP_CP_2(mentioned_coref,kids,TP_CP_2(said_coref,boys,TP_CP_2(thought_coref,doctor,TP_CP_2_subj1p(said_coref,we,TP_intr_2(you_left))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_88
+(u_6022 / mention-01  :ARG0 (r / you  :ARG0-of (u_6002 / leave-11  :ARG1-of (u_6000 / say-01  :ARG0 (u_6007 / we)  :ARG1-of (u_6003 / think-01  :ARG0 (d / doctor)  :ARG1-of (u_6005 / say-01  :ARG0 (u_6010 / boy)  :ARG1-of (u_6008 / mention-01  :ARG0 (u_6013 / kid)  :ARG1-of (u_6011 / hear-01  :ARG0 (u_6016 / i)  :ARG1-of (u_6014 / know-01  :ARG0 (u_6023 / girl)  :ARG1-of (u_6017 / mention-01  :ARG0 (s / soldier)  :ARG1-of (u_6020 / believe-01  :ARG0 (m / lawyer)  :ARG1-of u_6022)))))))))))
+
+# ::snt I knew that you thought that the girls knew that the women thought that the lawyer believed that the kids said that we thought that the soldier mentioned that the boys believed that the men hated me
+# ::tree TP_resolve_coref_1s(knew_resolve_coref,I,TP_CP_1s_subj2(thought_coref,you,TP_CP_1s(knew_coref,girls,TP_CP_1s(thought_coref,women,TP_CP_1s(believed_coref,lawyer,TP_CP_1s(said_coref,kids,TP_CP_1s_subj1p(thought_coref,we,TP_CP_1s(mentioned_coref,soldier,TP_CP_1s(believed_coref,boys,TP_tr_1s(hated_me,men))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_pronouns_89
+(u_6045 / know-01  :ARG0 (r / i  :ARG1-of (u_6024 / hate-01  :ARG0 (u_6026 / man)  :ARG1-of (u_6025 / believe-01  :ARG0 (u_6030 / boy)  :ARG1-of (u_6027 / mention-01  :ARG0 (s / soldier)  :ARG1-of (u_6028 / think-01  :ARG0 (u_6033 / we)  :ARG1-of (u_6031 / say-01  :ARG0 (u_6038 / kid)  :ARG1-of (u_6034 / believe-01  :ARG0 (m / lawyer)  :ARG1-of (u_6036 / think-01  :ARG0 (u_6041 / woman)  :ARG1-of (u_6039 / know-01  :ARG0 (u_6044 / girl)  :ARG1-of (u_6042 / think-01  :ARG0 (u_6046 / you)  :ARG1-of u_6045)))))))))))
+
+# ::snt The men said that you knew that the astronaut thought that the girls knew that the soldier thought that the boys heard that the lawyer heard that the kids said that I thought that the women heard that we mentioned that you left
+# ::tree TP_3p(said,men,TP_resolve_coref_2(knew_resolve_coref,you,TP_CP_2(thought_coref,astronaut,TP_CP_2(knew_coref,girls,TP_CP_2(thought_coref,soldier,TP_CP_2(heard_coref,boys,TP_CP_2(heard_coref,lawyer,TP_CP_2(said_coref,kids,TP_CP_2_subj1s(thought_coref,I,TP_CP_2(heard_coref,women,TP_CP_2_subj1p(mentioned_coref,we,TP_intr_2(you_left))))))))))))
+# ::size0 11
+# ::size1 12
+# ::id deep_recursion_pronouns_90
+(u_6074 / say-01  :ARG0 (r / man)  :ARG1 (u_6072 / know-01  :ARG0 (u_6076 / you  :ARG0-of (u_6049 / leave-11  :ARG1-of (u_6047 / mention-01  :ARG0 (u_6052 / we)  :ARG1-of (u_6050 / hear-01  :ARG0 (u_6055 / woman)  :ARG1-of (u_6053 / think-01  :ARG0 (u_6058 / i)  :ARG1-of (u_6056 / say-01  :ARG0 (u_6063 / kid)  :ARG1-of (u_6059 / hear-01  :ARG0 (m / lawyer)  :ARG1-of (u_6061 / hear-01  :ARG0 (u_6069 / boy)  :ARG1-of (u_6064 / think-01  :ARG0 (s / soldier)  :ARG1-of (u_6067 / know-01  :ARG0 (u_6073 / girl)  :ARG1-of (u_6070 / think-01  :ARG0 (a / astronaut)  :ARG1-of u_6072)))))))))))))
+
+# ::snt You heard that the women heard that the soldier knew that the lawyer heard that the girls believed that the doctor believed that the boys knew that I believed that the astronaut mentioned that we believed that you slept
+# ::tree TP_resolve_coref_2(heard_resolve_coref,you,TP_CP_2(heard_coref,women,TP_CP_2(knew_coref,soldier,TP_CP_2(heard_coref,lawyer,TP_CP_2(believed_coref,girls,TP_CP_2(believed_coref,doctor,TP_CP_2(knew_coref,boys,TP_CP_2_subj1s(believed_coref,I,TP_CP_2(mentioned_coref,astronaut,TP_CP_2_subj1p(believed_coref,we,TP_intr_2(you_slept)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_91
+(u_6101 / hear-01  :ARG0 (r / you  :ARG0-of (u_6079 / sleep-01  :ARG1-of (u_6077 / believe-01  :ARG0 (u_6084 / we)  :ARG1-of (u_6080 / mention-01  :ARG0 (a / astronaut)  :ARG1-of (u_6082 / believe-01  :ARG0 (u_6087 / i)  :ARG1-of (u_6085 / know-01  :ARG0 (u_6092 / boy)  :ARG1-of (u_6088 / believe-01  :ARG0 (d / doctor)  :ARG1-of (u_6090 / believe-01  :ARG0 (u_6100 / girl)  :ARG1-of (u_6093 / hear-01  :ARG0 (m / lawyer)  :ARG1-of (u_6095 / know-01  :ARG0 (s / soldier)  :ARG1-of (u_6098 / hear-01  :ARG0 (u_6102 / woman)  :ARG1-of u_6101))))))))))))
+
+# ::snt We knew that the women knew that the girls mentioned that the boys said that the soldier heard that the kids heard that I thought that the men believed that the astronaut knew that you said that we left
+# ::tree TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p(knew_coref,women,TP_CP_1p(mentioned_coref,girls,TP_CP_1p(said_coref,boys,TP_CP_1p(heard_coref,soldier,TP_CP_1p(heard_coref,kids,TP_CP_1p_subj1s(thought_coref,I,TP_CP_1p(believed_coref,men,TP_CP_1p(knew_coref,astronaut,TP_CP_1p_subj2(said_coref,you,TP_intr_1p(we_left)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_92
+(u_6129 / know-01  :ARG0 (r / we  :ARG0-of (u_6105 / leave-11  :ARG1-of (u_6103 / say-01  :ARG0 (u_6110 / you)  :ARG1-of (u_6106 / know-01  :ARG0 (a / astronaut)  :ARG1-of (u_6108 / believe-01  :ARG0 (u_6113 / man)  :ARG1-of (u_6111 / think-01  :ARG0 (u_6116 / i)  :ARG1-of (u_6114 / hear-01  :ARG0 (u_6122 / kid)  :ARG1-of (u_6117 / hear-01  :ARG0 (s / soldier)  :ARG1-of (u_6120 / say-01  :ARG0 (u_6125 / boy)  :ARG1-of (u_6123 / mention-01  :ARG0 (u_6128 / girl)  :ARG1-of (u_6126 / know-01  :ARG0 (u_6130 / woman)  :ARG1-of u_6129))))))))))))
+
+# ::snt You said that the kids mentioned that we heard that the girls said that the lawyer heard that the women heard that the astronaut mentioned that I knew that the soldier believed that the boys believed that you left
+# ::tree TP_resolve_coref_2(said_resolve_coref,you,TP_CP_2(mentioned_coref,kids,TP_CP_2_subj1p(heard_coref,we,TP_CP_2(said_coref,girls,TP_CP_2(heard_coref,lawyer,TP_CP_2(heard_coref,women,TP_CP_2(mentioned_coref,astronaut,TP_CP_2_subj1s(knew_coref,I,TP_CP_2(believed_coref,soldier,TP_CP_2(believed_coref,boys,TP_intr_2(you_left)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_93
+(u_6156 / say-01  :ARG0 (r / you  :ARG0-of (u_6133 / leave-11  :ARG1-of (u_6131 / believe-01  :ARG0 (u_6139 / boy)  :ARG1-of (u_6134 / believe-01  :ARG0 (s / soldier)  :ARG1-of (u_6137 / know-01  :ARG0 (u_6144 / i)  :ARG1-of (u_6140 / mention-01  :ARG0 (a / astronaut)  :ARG1-of (u_6142 / hear-01  :ARG0 (u_6149 / woman)  :ARG1-of (u_6145 / hear-01  :ARG0 (m / lawyer)  :ARG1-of (u_6147 / say-01  :ARG0 (u_6152 / girl)  :ARG1-of (u_6150 / hear-01  :ARG0 (u_6155 / we)  :ARG1-of (u_6153 / mention-01  :ARG0 (u_6157 / kid)  :ARG1-of u_6156))))))))))))
+
+# ::snt You mentioned that I thought that the boys heard that the astronaut heard that the girls thought that the kids said that the men heard that we said that the doctor heard that the soldier believed that you slept
+# ::tree TP_resolve_coref_2(mentioned_resolve_coref,you,TP_CP_2_subj1s(thought_coref,I,TP_CP_2(heard_coref,boys,TP_CP_2(heard_coref,astronaut,TP_CP_2(thought_coref,girls,TP_CP_2(said_coref,kids,TP_CP_2(heard_coref,men,TP_CP_2_subj1p(said_coref,we,TP_CP_2(heard_coref,doctor,TP_CP_2(believed_coref,soldier,TP_intr_2(you_slept)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_94
+(u_6183 / mention-01  :ARG0 (r / you  :ARG0-of (u_6165 / sleep-01  :ARG1-of (u_6158 / believe-01  :ARG0 (s / soldier)  :ARG1-of (u_6161 / hear-01  :ARG0 (d / doctor)  :ARG1-of (u_6163 / say-01  :ARG0 (u_6168 / we)  :ARG1-of (u_6166 / hear-01  :ARG0 (u_6171 / man)  :ARG1-of (u_6169 / say-01  :ARG0 (u_6174 / kid)  :ARG1-of (u_6172 / think-01  :ARG0 (u_6179 / girl)  :ARG1-of (u_6175 / hear-01  :ARG0 (a / astronaut)  :ARG1-of (u_6177 / hear-01  :ARG0 (u_6182 / boy)  :ARG1-of (u_6180 / think-01  :ARG0 (u_6184 / i)  :ARG1-of u_6183))))))))))))
+
+# ::snt We knew that the soldier thought that you knew that the girls believed that I said that the boys said that the kids thought that the lawyer mentioned that the men knew that the astronaut knew that we left
+# ::tree TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p(thought_coref,soldier,TP_CP_1p_subj2(knew_coref,you,TP_CP_1p(believed_coref,girls,TP_CP_1p_subj1s(said_coref,I,TP_CP_1p(said_coref,boys,TP_CP_1p(thought_coref,kids,TP_CP_1p(mentioned_coref,lawyer,TP_CP_1p(knew_coref,men,TP_CP_1p(knew_coref,astronaut,TP_intr_1p(we_left)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_95
+(u_6210 / know-01  :ARG0 (r / we  :ARG0-of (u_6189 / leave-11  :ARG1-of (u_6185 / know-01  :ARG0 (a / astronaut)  :ARG1-of (u_6187 / know-01  :ARG0 (u_6194 / man)  :ARG1-of (u_6190 / mention-01  :ARG0 (m / lawyer)  :ARG1-of (u_6192 / think-01  :ARG0 (u_6197 / kid)  :ARG1-of (u_6195 / say-01  :ARG0 (u_6200 / boy)  :ARG1-of (u_6198 / say-01  :ARG0 (u_6203 / i)  :ARG1-of (u_6201 / believe-01  :ARG0 (u_6206 / girl)  :ARG1-of (u_6204 / know-01  :ARG0 (u_6211 / you)  :ARG1-of (u_6207 / think-01  :ARG0 (s / soldier)  :ARG1-of u_6210))))))))))))
+
+# ::snt You heard that we knew that the boys mentioned that the astronaut believed that the kids said that the women believed that the men thought that I believed that the lawyer heard that the doctor knew that you slept
+# ::tree TP_resolve_coref_2(heard_resolve_coref,you,TP_CP_2_subj1p(knew_coref,we,TP_CP_2(mentioned_coref,boys,TP_CP_2(believed_coref,astronaut,TP_CP_2(said_coref,kids,TP_CP_2(believed_coref,women,TP_CP_2(thought_coref,men,TP_CP_2_subj1s(believed_coref,I,TP_CP_2(heard_coref,lawyer,TP_CP_2(knew_coref,doctor,TP_intr_2(you_slept)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_96
+(u_6236 / hear-01  :ARG0 (r / you  :ARG0-of (u_6218 / sleep-01  :ARG1-of (u_6212 / know-01  :ARG0 (d / doctor)  :ARG1-of (u_6214 / hear-01  :ARG0 (m / lawyer)  :ARG1-of (u_6216 / believe-01  :ARG0 (u_6221 / i)  :ARG1-of (u_6219 / think-01  :ARG0 (u_6224 / man)  :ARG1-of (u_6222 / believe-01  :ARG0 (u_6227 / woman)  :ARG1-of (u_6225 / say-01  :ARG0 (u_6232 / kid)  :ARG1-of (u_6228 / believe-01  :ARG0 (a / astronaut)  :ARG1-of (u_6230 / mention-01  :ARG0 (u_6235 / boy)  :ARG1-of (u_6233 / know-01  :ARG0 (u_6237 / we)  :ARG1-of u_6236))))))))))))
+
+# ::snt We heard that the kids knew that the doctor mentioned that the astronaut thought that I mentioned that the women thought that the men thought that the girls mentioned that the soldier believed that you mentioned that we slept
+# ::tree TP_resolve_coref_1p(heard_resolve_coref,we,TP_CP_1p(knew_coref,kids,TP_CP_1p(mentioned_coref,doctor,TP_CP_1p(thought_coref,astronaut,TP_CP_1p_subj1s(mentioned_coref,I,TP_CP_1p(thought_coref,women,TP_CP_1p(thought_coref,men,TP_CP_1p(mentioned_coref,girls,TP_CP_1p(believed_coref,soldier,TP_CP_1p_subj2(mentioned_coref,you,TP_intr_1p(we_slept)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_97
+(u_6263 / hear-01  :ARG0 (r / we  :ARG0-of (u_6240 / sleep-01  :ARG1-of (u_6238 / mention-01  :ARG0 (u_6246 / you)  :ARG1-of (u_6241 / believe-01  :ARG0 (s / soldier)  :ARG1-of (u_6244 / mention-01  :ARG0 (u_6249 / girl)  :ARG1-of (u_6247 / think-01  :ARG0 (u_6252 / man)  :ARG1-of (u_6250 / think-01  :ARG0 (u_6255 / woman)  :ARG1-of (u_6253 / mention-01  :ARG0 (u_6262 / i)  :ARG1-of (u_6256 / think-01  :ARG0 (a / astronaut)  :ARG1-of (u_6258 / mention-01  :ARG0 (d / doctor)  :ARG1-of (u_6260 / know-01  :ARG0 (u_6264 / kid)  :ARG1-of u_6263))))))))))))
+
+# ::snt You believed that the astronaut mentioned that the soldier knew that the women knew that the boys heard that the kids said that we knew that I thought that the men thought that the lawyer heard that you left
+# ::tree TP_resolve_coref_2(believed_resolve_coref,you,TP_CP_2(mentioned_coref,astronaut,TP_CP_2(knew_coref,soldier,TP_CP_2(knew_coref,women,TP_CP_2(heard_coref,boys,TP_CP_2(said_coref,kids,TP_CP_2_subj1p(knew_coref,we,TP_CP_2_subj1s(thought_coref,I,TP_CP_2(thought_coref,men,TP_CP_2(heard_coref,lawyer,TP_intr_2(you_left)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_98
+(u_6290 / believe-01  :ARG0 (r / you  :ARG0-of (u_6269 / leave-11  :ARG1-of (u_6265 / hear-01  :ARG0 (m / lawyer)  :ARG1-of (u_6267 / think-01  :ARG0 (u_6272 / man)  :ARG1-of (u_6270 / think-01  :ARG0 (u_6275 / i)  :ARG1-of (u_6273 / know-01  :ARG0 (u_6278 / we)  :ARG1-of (u_6276 / say-01  :ARG0 (u_6281 / kid)  :ARG1-of (u_6279 / hear-01  :ARG0 (u_6284 / boy)  :ARG1-of (u_6282 / know-01  :ARG0 (u_6291 / woman)  :ARG1-of (u_6285 / know-01  :ARG0 (s / soldier)  :ARG1-of (u_6288 / mention-01  :ARG0 (a / astronaut)  :ARG1-of u_6290))))))))))))
+
+# ::snt We knew that the women heard that the kids mentioned that the boys mentioned that the astronaut thought that you knew that the doctor heard that the girls believed that the soldier said that I said that we slept
+# ::tree TP_resolve_coref_1p(knew_resolve_coref,we,TP_CP_1p(heard_coref,women,TP_CP_1p(mentioned_coref,kids,TP_CP_1p(mentioned_coref,boys,TP_CP_1p(thought_coref,astronaut,TP_CP_1p_subj2(knew_coref,you,TP_CP_1p(heard_coref,doctor,TP_CP_1p(believed_coref,girls,TP_CP_1p(said_coref,soldier,TP_CP_1p_subj1s(said_coref,I,TP_intr_1p(we_slept)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_pronouns_99
+(u_6317 / know-01  :ARG0 (r / we  :ARG0-of (u_6294 / sleep-01  :ARG1-of (u_6292 / say-01  :ARG0 (u_6300 / i)  :ARG1-of (u_6295 / say-01  :ARG0 (s / soldier)  :ARG1-of (u_6298 / believe-01  :ARG0 (u_6305 / girl)  :ARG1-of (u_6301 / hear-01  :ARG0 (d / doctor)  :ARG1-of (u_6303 / know-01  :ARG0 (u_6310 / you)  :ARG1-of (u_6306 / think-01  :ARG0 (a / astronaut)  :ARG1-of (u_6308 / mention-01  :ARG0 (u_6313 / boy)  :ARG1-of (u_6311 / mention-01  :ARG0 (u_6316 / kid)  :ARG1-of (u_6314 / hear-01  :ARG0 (u_6318 / woman)  :ARG1-of u_6317))))))))))))
+

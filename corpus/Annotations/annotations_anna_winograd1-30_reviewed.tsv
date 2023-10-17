@@ -1,0 +1,351 @@
+﻿#	Sentence	Annotation	Comments
+1	The city councilmen refused the demonstrators a permit because they feared violence.	"(r / refuse-01
+      :ARG0 (p / person
+            :ARG0-of (h / have-org-role-91
+                  :ARG1 (c / city)
+                  :ARG2 (c2 / councilman)))
+      :ARG1 (p2 / permit-01)
+      :ARG2 (p3 / person
+            :ARG0-of (d / demonstrate-01))
+      :ARG1-of (c3 / cause-01
+            :ARG0 (f / fear-01
+                  :ARG0 p
+                  :ARG1 (v / violence))))"	
+2	The city councilmen refused the demonstrators a permit because they advocated violence.	"(r / refuse-01
+      :ARG0 (p / person
+            :ARG0-of (h / have-org-role-91
+                  :ARG1 (c / city)
+                  :ARG2 (c2 / councilman)))
+      :ARG1 (p2 / permit-01)
+      :ARG2 (p3 / person
+            :ARG0-of (d / demonstrate-01))
+      :ARG1-of (c3 / cause-01
+            :ARG1 (a / advocate-01
+                  :ARG0 p3
+                  :ARG1 (v / violence))))"	
+3	The trophy doesn't fit into the brown suitcase because it is too large.	"(f / fit-06 :polarity -
+      :ARG1 (t / trophy)
+      :ARG2 (s / suitcase
+            :ARG1-of (b / brown-01))
+      :ARG1-of (c / cause-01
+            :ARG0 (h / have-degree-91
+                  :ARG1 t
+                  :ARG2 (l / large)
+                  :ARG3 (t2 / too))))"	
+4	The trophy doesn't fit into the brown suitcase because it is too small.	"(f / fit-06 :polarity -
+      :ARG1 (t / trophy)
+      :ARG2 (s / suitcase
+            :ARG1-of (b / brown-01))
+      :ARG1-of (c / cause-01
+            :ARG0 (h / have-degree-91
+                  :ARG1 s
+                  :ARG2 (s2 / small)
+                  :ARG3 (t2 / too))))"	
+5	Joan made sure to thank Susan for all the help she had recieved.	"(e / ensure-01
+      :ARG0 (p / person :name (n / name :op1 ""Joan""))
+      :ARG1 (t / thank-01
+            :ARG0 p
+            :ARG1 (p2 / person :name (n2 / name :op1 ""Susan""))
+            :ARG2 (h / help-01
+                  :ARG1-of (r / receive-01
+                        :ARG0 p)
+                  :mod (a / all))))"	
+6	Joan made sure to thank Susan for all the help she had given.	"(e / ensure-01
+      :ARG0 (p / person :name (n / name :op1 ""Joan""))
+      :ARG1 (t / thank-01
+            :ARG0 p
+            :ARG1 (p2 / person :name (n2 / name :op1 ""Susan""))
+            :ARG2 (h / help-01
+                  :ARG1-of (g / give-01
+                        :ARG0 p2)
+                  :mod (a / all))))"	
+7	Paul tried to call George on the phone, but he wasn't successful.	"(c / contrast-01
+      :ARG1 (t / try
+            :ARG0 (p / person :name (n / name :op1 ""Paul""))
+            :ARG1 (c2 / call-02
+                  :ARG0 p
+                  :ARG1 (p2 / person :name (n2 / name :op1 ""George""))
+                  :instrument (p3 / phone)))
+      :ARG2 (s / succeed-01 :polarity -
+            :ARG0 p))"	"change contrast-01 to concession?; ""on the phone"" - :instrument best role? Or :prep-on?"
+8	Paul tried to call George on the phone, but he wasn't available.	"(c / contrast-01
+      :ARG1 (t / try
+            :ARG0 (p / person :name (n / name :op1 ""Paul""))
+            :ARG1 (c2 / call-02
+                  :ARG0 p
+                  :ARG1 (p2 / person :name (n2 / name :op1 ""George""))
+                  :instrument (p3 / phone)))
+      :ARG2 (a / available-02 :polarity -
+            :ARG2 p2))"	"""on the phone"" - :instrument best role? Or :prep-on?"
+9	The lawyer asked the witness a question, but he was reluctant to repeat it.	"(c / contrast-01
+      :ARG1 (a / ask-01
+            :ARG0 (l / lawyer)
+            :ARG1 (q / question-01)
+            :ARG2 (p / person
+                  :ARG0-of (w / witness-01)))
+      :ARG2 (r / reluctant-01
+            :ARG0 l
+            :ARG1 (r2 / repeat-01
+                  :ARG0 l
+                  :ARG1 q)))"	
+10	The lawyer asked the witness a question, but he was reluctant to answer it.	"(c / contrast-01
+      :ARG1 (a / ask-01
+            :ARG0 (l / lawyer)
+            :ARG1 (q / question-01)
+            :ARG2 (p / person
+                  :ARG0-of (w / witness-01)))
+      :ARG2 (r / reluctant-01
+            :ARG0 p
+            :ARG1 (a2 / answer-01
+                  :ARG0 p
+                  :ARG1 q)))"	
+11	The delivery truck zoomed by the school bus because it was going so fast.	"(z / zoom-01
+      :ARG1 (t / truck
+            :purpose (d / deliver-01))
+      :prep-by (b / bus
+            :mod (s / school))
+      :ARG1-of (c / cause-01
+            :ARG0 (g / go-01
+                  :ARG1 t
+                  :manner (f / fast-02
+                        :degree (s2 / so)))))"	
+12	The delivery truck zoomed by the school bus because it was going so slow.	"(z / zoom-01
+      :ARG1 (t / truck
+            :purpose (d / deliver-01))
+      :prep-by (b / bus
+            :mod (s / school))
+      :ARG1-of (c / cause-01
+            :ARG0 (g / go-01
+                  :ARG1 b
+                  :manner (s2 / slow-05
+                        :degree (s3 / so)))))"	
+13	Frank felt vindicated when his longtime rival Bill revealed that he was the winner of the competition.	"(f / feel-01
+      :ARG0 (p / person :name (n / name :op1 ""Frank""))
+      :ARG1 (v / vindicate-01
+            :ARG1 p)
+      :time (r / reveal-01
+            :ARG0 (p2 / person :name (n2 / name :op1 ""Bill"")
+                  :ARG0-of (h / have-rel-role-91
+                        :ARG1 p
+                        :ARG2 (r2 / rival
+                              :duration (l / longtime))))
+            :ARG1 (w / win-01
+                  :ARG0 p
+                  :ARG2 (c / competition))))"	
+14	Frank felt crushed when his longtime rival Bill revealed that he was the winner of the competition.	"(f / feel-01
+      :ARG0 (p / person :name (n / name :op1 ""Frank""))
+      :ARG1 (c2 / crush
+            :ARG1 p)
+      :time (r / reveal-01
+            :ARG0 (p2 / person :name (n2 / name :op1 ""Bill"")
+                  :ARG0-of (h / have-rel-role-91
+                        :ARG1 p
+                        :ARG2 (r2 / rival
+                              :duration (l / longtime))))
+            :ARG1 (w / win-01
+                  :ARG0 p2
+                  :ARG2 (c / competition))))"	
+15	The man couldn't lift his son because he was so weak.	"(p / possible-01 :polarity -
+      :ARG1 (l / lift-01
+            :ARG0 (m / man)
+            :ARG1 (s / son
+                  :ARG0-of (h / have-rel-role-91
+                        :ARG1 m)))
+      :ARG1-of (c / cause-01
+            :ARG0 (w / weak-02
+                  :ARG1 m
+                  :degree (s2 / so))))"	weak-02 doesn't say anything about physical strength
+16	The man couldn't lift his son because he was so heavy.	"(p / possible-01 :polarity -
+      :ARG1 (l / lift-01
+            :ARG0 (m / man)
+            :ARG1 (s / son
+                  :ARG0-of (h / have-rel-role-91
+                        :ARG1 m)))
+      :ARG1-of (c / cause-01
+            :ARG0 (h2 / heavy-01
+                  :ARG1 s
+                  :degree (s2 / so))))"	"added a predicate number for ""heavy"""
+17	The large ball crashed right through the table because it was made of steel.	"(c / crash-01
+      :ARG0 (b / ball
+            :mod (l / large))
+      :path (t / table
+            :mod (r / right-yy))
+      :ARG1-of (c2 / cause-01
+            :ARG0 (m / make-01
+                  :ARG1 b
+                  :ARG2 (s / steel))))"	
+18	The large ball crashed right through the table because it was made of styrofoam.	"(c / crash-01
+      :ARG0 (b / ball
+            :mod (l / large))
+      :path (t / table
+            :mod (r / right-yy))
+      :ARG1-of (c2 / cause-01
+            :ARG0 (m / make-01
+                  :ARG1 t
+                  :ARG2 (s / styrofoam))))"	
+19	John couldn't see the stage with Billy in front of him because he is so short.	"(p / possible-01 :polarity -
+      :ARG1 (s / see-01
+            :ARG0 (p2 / person :name (n / name :op1 ""John""))
+            :ARG1 (s2 / stage))
+      :ARG1-of (c / cause-01
+            :ARG0 (s3 / short-07
+                  :ARG1 p2
+                  :degree (s4 / so)))
+      :ARG1-of (c2 / cause-01
+            :ARG1 (b / be-located-at-91
+                  :ARG1 (p3 / person :name (n2 / name :op1 ""Billy""))
+                  :ARG2 (i2 / in-front-of
+                        :op1 p2))))"	
+20	John couldn't see the stage with Billy in front of him because he is so tall.	"(p / possible-01 :polarity -
+      :ARG1 (s / see-01
+            :ARG0 (p2 / person :name (n / name :op1 ""John""))
+            :ARG1 (s2 / stage))
+      :ARG1-of (c / cause-01
+            :ARG0 (t / tall
+                  :ARG1 p3
+                  :degree (s4 / so)))
+      :ARG1-of (c2 / cause-01
+            :ARG1 (b / be-located-at-91
+                  :ARG1 (p3 / person :name (n2 / name :op1 ""Billy""))
+                  :ARG2 (i2 / in-front-of
+                        :op1 p2))))"	
+21	Tom threw his schoolbag down to Ray after he reached the top of the stairs.	"(t / throw-01
+      :ARG0 (p / person :name (n / name :op1 ""Tom""))
+      :ARG1 (b / bag
+            :purpose (s / school))
+      :ARG2 (p2 / person :name (n2 / name :op1 ""Ray""))
+      :direction (d / down)
+      :time (a / after
+            :op1 (r / reach-01
+                  :ARG0 p
+                  :ARG1 (t2 / top
+                        :part-of (s2 / stairs)))))"	
+22	Tom threw his schoolbag down to Ray after he reached the bottom of the stairs.	"(t / throw-01
+      :ARG0 (p / person :name (n / name :op1 ""Tom""))
+      :ARG1 (b / bag
+            :purpose (s / school))
+      :ARG2 (p2 / person :name (n2 / name :op1 ""Ray""))
+      :direction (d / down)
+      :time (a / after
+            :op1 (r / reach-01
+                  :ARG0 p2
+                  :ARG1 (b2 / bottom
+                        :part-of (s2 / stairs)))))"	
+23	Although they ran at about the same speed, Sue beat Sally because she had such a good start.	"(b / beat-03
+      :ARG0 (p / person :name (n / name :op1 ""Sue""))
+      :ARG1 (p2 / person :name (n2 / name :op1 ""Sally""))
+      :ARG1-of (c / cause-01
+            :ARG0 (h / have-06
+                  :ARG0 p
+                  :ARG1 (s / start-01
+                        :ARG1-of (g / good-02
+                              :mod (s2 / such)))))
+      :concession (s3 / same-01
+            :ARG1 p
+            :ARG2 p2
+            :ARG3 (s4 / speed
+                  :mod (r / run-02))
+            :degree (a / about)))"	
+24	Although they ran at about the same speed, Sue beat Sally because she had such a bad start.	"(b / beat-03
+      :ARG0 (p / person :name (n / name :op1 ""Sue""))
+      :ARG1 (p2 / person :name (n2 / name :op1 ""Sally""))
+      :ARG1-of (c / cause-01
+            :ARG0 (h / have-06
+                  :ARG0 p2
+                  :ARG1 (s / start-01
+                        :ARG1-of (b2 / bad
+                              :mod (s2 / such)))))
+      :concession (s3 / same-01
+            :ARG1 p
+            :ARG2 p2
+            :ARG3 (s4 / speed
+                  :mod (r / run-02))
+            :degree (a / about)))"	
+25	The sculpture rolled off the shelf because it wasn't anchored.	"(r / roll-01
+      :ARG1 (s / sculpture)
+      :direction (o / off
+            :op1 (s2 / shelf))
+      :ARG1-of (c / cause-01
+            :ARG0 (a / anchor-01 :polarity -
+                  :ARG1 s)))"	
+26	The sculpture rolled off the shelf because it wasn't level.	"(r / roll-01
+      :ARG1 (s / sculpture)
+      :direction (o / off
+            :op1 (s2 / shelf))
+      :ARG1-of (c / cause-01
+            :ARG0 (l / level-04 :polarity -
+                  :ARG1 s2)))"	
+27	Sam's drawing was hung just above Tina's and it did look much better with another one below it.	"(a / and
+      :op1 (h / hang-01
+            :ARG1 (d / drawing
+                  :poss (p / person :name (n / name :op1 ""Sam"")))
+            :location (a2 / above
+                  :op1 (d2 / drawing
+                        :poss (p2 / person :name (n2 / name :op1 ""Tina"")))
+                  :mod (j / just)))
+      :op2 (l / look-02
+            :ARG0 d
+            :ARG1 (g / good-02
+                  :ARG2-of (h2 / have-degree-91
+                        :ARG3 (m / more
+                              :quant (m2 / much))))
+            :prep-with (d3 / drawing
+                  :mod (a3 / another)
+                  :location (b / below
+                        :op1 d))))"	
+28	Sam's drawing was hung just above Tina's and it did look much better with another one above it.	"(a / and
+      :op1 (h / hang-01
+            :ARG1 (d / drawing
+                  :poss (p / person :name (n / name :op1 ""Sam"")))
+            :location (a2 / above
+                  :op1 (d2 / drawing
+                        :poss (p2 / person :name (n2 / name :op1 ""Tina"")))
+                  :mod (j / just)))
+      :op2 (l / look-02
+            :ARG0 d2
+            :ARG1 (g / good-02
+                  :ARG2-of (h2 / have-degree-91
+                        :ARG3 (m / more
+                              :quant (m2 / much))))
+            :prep-with (d3 / drawing
+                  :mod (a3 / another)
+                  :location (a4 / above
+                        :op1 d2))))"	
+29	Anna did a lot better than her good friend Lucy on the test because she had studied so hard.	"(h / have-degree-91
+      :ARG1 (d / do-02
+            :ARG0 (p / person :name (n / name :op1 ""Anna""))
+            :ARG2 (t / test))
+      :ARG2 (g / good-02)
+      :ARG3 (m / more
+            :degree (l / lot))
+      :ARG4 (d2 / do-02
+            :ARG0 (p2 / person :name (n2 / name :op1 ""Lucy"")
+                  :ARG0-of (h2 / have-rel-role-91
+                        :ARG1 p
+                        :ARG2 (f / friend
+                              :ARG1-of (g2 / good-02))))
+            :ARG2 t)
+      :ARG1-of (c / cause-01
+            :ARG0 (s / study-01
+                  :ARG0 p
+                  :manner (h3 / hard-02
+                        :degree (s2 / so)))))"	"""a lot"" - :degree or :quant?"
+30	Anna did a lot worse than her good friend Lucy on the test because she had studied so hard.	"(h / have-degree-91
+      :ARG1 (d / do-02
+            :ARG0 (p / person :name (n / name :op1 ""Anna""))
+            :ARG2 (t / test))
+      :ARG2 (g / good-02)
+      :ARG3 (l2 / less
+            :degree (l / lot))
+      :ARG4 (d2 / do-02
+            :ARG0 (p2 / person :name (n2 / name :op1 ""Lucy"")
+                  :ARG0-of (h2 / have-rel-role-91
+                        :ARG1 p
+                        :ARG2 (f / friend
+                              :ARG1-of (g2 / good-02))))
+            :ARG2 t)
+      :ARG1-of (c / cause-01
+            :ARG0 (s / study-01
+                  :ARG0 p2
+                  :manner (h3 / hard-02
+                        :degree (s2 / so)))))"	"""a lot"" - :degree or :quant?"

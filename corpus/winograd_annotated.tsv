@@ -1,0 +1,41 @@
+ID	parent	edge	child	other parent	other parent edge	comments
+annotations_anna_winograd1-30_reviewed.tsv-0	fear-01	:ARG0	(p / person :ARG0-of (h / have-org-role-91 :ARG2 (c2 / councilman)))	refuse-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-1	advocate-01	:ARG0	(p3 / person :ARG0-of (d / demonstrate-01))	refuse-01	:ARG2	
+annotations_anna_winograd1-30_reviewed.tsv-2	have-degree-91	:ARG1	trophy	fit-06	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-3	have-degree-91	:ARG1	suitcase	fit-06	:ARG2	
+annotations_anna_winograd1-30_reviewed.tsv-4	receive-01	:ARG0	(p / person :name (n / name :op1 "Joan"))	ensure-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-5	give-01	:ARG0	(p2 / person :name (n2 / name :op1 "Susan"))	thank-01	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-6	succeed-01	:ARG0	(p / person :name (n / name :op1 "Paul"))	try-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-7	available-02	:ARG2	(p2 / person :name (n2 / name :op1 "George"))	call-02	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-8	reluctant-01	:ARG0	lawyer	ask-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-9	reluctant-01	:ARG0	(p / person :ARG0-of (w / witness-01))	ask-01	:ARG2	
+annotations_anna_winograd1-30_reviewed.tsv-10	go-01	:ARG1	truck	zoom-01	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-11	go-01	:ARG1	bus	zoom-01	:prep-by	
+annotations_anna_winograd1-30_reviewed.tsv-12	win-01	:ARG0	(p / person :name (n / name :op1 "Frank"))	feel-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-13	win-01	:ARG0	(p2 / person :name (n2 / name :op1 "Bill"))	reveal-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-14	weak-02	:ARG1	man	lift-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-15	heavy-01	:ARG1	(p / person :ARG0-of (h / have-rel-role-91 :ARG2 (c2 / son)))	lift-01	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-16	make-01	:ARG1	ball	crash-01	:ARG0	maybe :consist-of could also be valid, but it's pretty consistently make-01 in the training set
+annotations_anna_winograd1-30_reviewed.tsv-17	make-01	:ARG1	table	crash-01	:path	
+annotations_anna_winograd1-30_reviewed.tsv-18	short-07	:ARG1	(p2 / person :name (n / name :op1 "John"))	see-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-19	tall-01	:ARG1	(p3 / person :name (n2 / name :op1 "Billy"))	be-located-at-91	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-20	reach-01	:ARG0	(p / person :name (n / name :op1 "Tom"))	throw-01	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-21	reach-01	:ARG0	(p2 / person :name (n2 / name :op1 "Ray"))	throw-01	:ARG2	
+annotations_anna_winograd1-30_reviewed.tsv-22	have-06	:ARG0	(p / person :name (n / name :op1 "Sue"))	beat-03	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-23	have-06	:ARG0	(p2 / person :name (n2 / name :op1 "Sally"))	beat-03	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-24	anchor-01	:ARG1	sculpture	roll-01	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-25	level-04	:ARG1	shelf	off	:op1	
+annotations_anna_winograd1-30_reviewed.tsv-26	look-02	:ARG0	(d / drawing :poss (p / person :name (n / name :op1 "Sam")))	hang-01	:ARG1	
+annotations_anna_winograd1-30_reviewed.tsv-27	look-02	:ARG0	(d2 / drawing :poss (p2 / person :name (n2 / name :op1 "Tina")))	(a2 / above :location-of (h / hang-01))	:op1	
+annotations_anna_winograd1-30_reviewed.tsv-28	study-01	:ARG0	(p / person :name (n / name :op1 "Anna"))	do-02	:ARG0	
+annotations_anna_winograd1-30_reviewed.tsv-29	study-01	:ARG0	(p2 / person :name (n2 / name :op1 "Lucy"))	do-02	:ARG0	
+annotations_anna_winograd91-110.tsv-0	woman	:domain	(p / person :name (n / name :op1 "Anne"))	bear-02	:ARG0	
+annotations_anna_winograd91-110.tsv-1	baby	:domain	(p2 / person :ARG0-of (h / have-rel-role-91 :ARG2 (d / daughter)))	bear-02	:ARG1	
+annotations_anna_winograd91-110.tsv-2	behave-01	:ARG0	(p / person :name (n / name :op1 "Alice"))	stop-01	:ARG0	
+annotations_anna_winograd91-110.tsv-3	behave-01	:ARG0	(p2 / person :ARG0-of (h / have-rel-role-91 :ARG2 (d / daughter)))	stop-01	:ARG1	
+annotations_anna_winograd91-110.tsv-4	look-02	:ARG0	(p / person :name (n / name :op1 "Jim"))	yell-01	:ARG0	
+annotations_anna_winograd91-110.tsv-5	look-02	:ARG0	guy	yell-01	:ARG1	
+annotations_anna_winograd91-110.tsv-6	hunger-01	:ARG0	fish	eat-01	:ARG0	
+annotations_anna_winograd91-110.tsv-7	tasty	:domain	worm	eat-01	:ARG1	
+annotations_anna_winograd91-110.tsv-8	get-05	:ARG1	key	open-01	:ARG2	
+annotations_anna_winograd91-110.tsv-9	get-05	:ARG1	gum	fill-01	:ARG2	
