@@ -1,0 +1,125 @@
+interpretation string: de.up.ling.irtg.algebra.StringAlgebra
+interpretation graph: de.up.ling.irtg.algebra.graph.ApplyModifyGraphAlgebra
+
+
+// -------------------------------- top-level template rules -------------------------------------------
+
+// NP attachment: X will read object Y by author Z
+F! -> templateReadByAuthor(NP_subject, V_read, NP_book, NP_author) [1.0]
+[string] *(?1,*(will, *(?2, *(?3, *('by', *(?4, '.'))))))
+[graph]  APP_subj(APP_obj(?2, MOD_mod(?3, ?4)), ?1)
+
+// VP attachment: X will read object Y by deadline Z
+F! -> templateReadByDeadline(NP_subject, V_read, NP_book, PP_deadline) [1.0]
+[string] *(?1,*(will, *(?2, *(?3, *('by', *(?4, '.'))))))
+[graph]  APP_subj(APP_obj(MOD_time(?2, ?4), ?3), ?1)
+
+// VP attachment: X will read object Y by (candle/fire)light
+F! -> templateReadByLight(NP_subject, V_read, NP_book, PP_light) [1.0]
+[string] *(?1,*(will, *(?2, *(?3, *('by', *(?4, '.'))))))
+[graph]  APP_subj(APP_obj(MOD_manner(?2, ?4), ?3), ?1)
+
+
+// -------------------------------- subjects --------------------------------
+
+NP_subject -> i [1.0]
+[string] 'I'
+[graph] '(p<root> / i)'
+
+NP_subject -> you [1.0]
+[string] 'You'
+[graph] '(p<root> / you)'
+
+NP_subject -> girl [1.0]
+[string] 'The girl'
+[graph] '(p<root> / girl)'
+
+NP_subject -> student [1.0]
+[string] 'The student'
+[graph] '(p<root> / person :ARG0-of (s / study-01))'
+
+// -------------------------------- verbs --------------------------------
+
+V_read -> read [1.0]
+[string] 'read'
+[graph] '(p<root> / read-01 :ARG0 (s<subj>) :ARG1 (o <obj>))--TYPE--(subj(), obj())'
+
+V_read -> skim [1.0]
+[string] 'skim'
+[graph] '(p<root> / skim-01 :ARG0 (s<subj>) :ARG1 (o <obj>))--TYPE--(subj(), obj())'
+
+V_read -> devour [1.0]
+[string] 'devour'
+[graph] '(p<root> / devour-01 :ARG0 (s<subj>) :ARG1 (o <obj>))--TYPE--(subj(), obj())'
+
+// -------------------------------- NP book --------------------------------
+
+NP_book -> book [1.0]
+[string] 'this book'
+[graph] '(p<root> / book :mod (t / this))'
+
+NP_book -> essay [1.0]
+[string] 'this essay'
+[graph] '(p<root> / essay :mod (t / this))'
+
+NP_book -> novel [1.0]
+[string] 'this novel'
+[graph] '(p<root> / novel :mod (t / this))'
+
+
+// -------------------------------- NP author --------------------------------
+
+NP_author -> Obama [1.0]
+[string] 'Barack Obama'
+[graph] '(p<root> / person :wiki "Barack_Obama" :name (n / name :op1 "Barack" :op2 "Obama") :ARG0-of (a / author-01 :ARG1 (m<mod>)))--TYPE--(mod())'
+
+NP_author -> Austen [1.0]
+[string] 'Jane Austen'
+[graph] '(p<root> / person :wiki "Jane_Austen" :name (n / name :op1 "Jane" :op2 "Austen") :ARG0-of (a / author-01 :ARG1 (m<mod>)))--TYPE--(mod())'
+
+NP_author -> Rowling [1.0]
+[string] 'J. K. Rowling'
+[graph] '(p<root> / person :wiki "J._K._Rowling" :name (n / name :op1 "J." :op2 "K." :op3 "Rowling") :ARG0-of (a / author-01 :ARG1 (m<mod>)))--TYPE--(mod())'
+
+NP_author -> Dickens [1.0]
+[string] 'Charles Dickens'
+[graph] '(p<root> / person :wiki "Charles_Dickens" :name (n / name :op1 "Charles" :op2 "Dickens") :ARG0-of (a / author-01 :ARG1 (m<mod>)))--TYPE--(mod())'
+
+NP_author -> this_young_author [1.0]
+[string] 'this young author'
+[graph] '(p<root> / person :mod (t / this) :mod (y / young) :ARG0-of (a / author-01 :ARG1 (m<mod>)))--TYPE--(mod())'
+
+
+// -------------------------------- PP deadline --------------------------------
+
+PP_deadline -> tomorrow [1.0]
+[string] 'tomorrow'
+[graph] '(b<root> / by :op1 (t / tomorrow) :time-of (t2<time>))--TYPE--(time())'
+
+PP_deadline -> tonight [1.0]
+[string] 'tonight'
+[graph] '(b<root> / by :op1 (t / tonight) :time-of (t2<time>))--TYPE--(time())'
+
+PP_deadline -> monday [1.0]
+[string] 'Monday'
+[graph] '(b<root> / by :op1 (d / date-entity :weekday (m / monday)) :time-of (t2<time>))--TYPE--(time())'
+
+PP_deadline -> tuesday [1.0]
+[string] 'Tuesday'
+[graph] '(b<root> / by :op1 (d / date-entity :weekday (m / tuesday)) :time-of (t2<time>))--TYPE--(time())'
+
+
+// -------------------------------- PP light --------------------------------
+
+PP_light -> candlelight [1.0]
+[string] 'candlelight'
+[graph] '(c <root> / candlelight :manner-of (m<manner>))--TYPE--(manner())'
+
+PP_light -> firelight [1.0]
+[string] 'firelight'
+[graph] '(c <root> / firelight :manner-of (m<manner>))--TYPE--(manner())'
+
+//PP_light -> lamplight [1.0]
+//[string] 'lamplight'
+//[graph] '(c <root> / lamplight :manner-of (m<manner>))--TYPE--(manner())'
+

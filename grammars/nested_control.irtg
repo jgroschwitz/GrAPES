@@ -4,12 +4,11 @@ interpretation graph: de.up.ling.irtg.algebra.graph.ApplyModifyGraphAlgebra
 // non-terminals and their types
 // F!: ()
 // Open_S_inf: (s)  : NT + sleep, jump, attend
-// SubjCrtl: (s, o(s)) : attempt, want, hate
-// ObjCrtl: (s, o, o2(s->o)) : persuade, ask, beg
-// Subj: () : I, we, you
-// Obj: () : girl, boy, child, doctor, her, him, them
-
-// TODO check word senses
+// SubjCrtl: (s, o(s)) : attempt, want, hate, love, refuse
+// ObjCrtl: (s, o, o2(s->o)) : persuade, ask, beg, force
+// Subj: () : girl, boy, kid (Oct 15, 2023: added kid)
+// Obj: () : you, doctor, monster, politician, astronaut, lawyer, soldier
+// Update Oct 15, 2023: removed "me", added last 3 Obj
 
 // -------------------------------- top-level template rules -------------------------------------------
 
@@ -17,15 +16,15 @@ interpretation graph: de.up.ling.irtg.algebra.graph.ApplyModifyGraphAlgebra
 
 // Full sentences
 
-F! -> Sent(Open_S_fin, Subj) [0.5]
+F! -> Sent(Open_S_fin, Subj) [1.0]
 [string] *(*(?2, ?1), '.')
 [graph] APP_subj(?1, ?2)
 
-Open_S_fin -> SubjCtrlTbar(SubjCtrl_fin, Open_S_inf) [0.5]
+Open_S_fin -> SubjCtrlTbar(SubjCtrl_fin, Open_S_inf) [1.0]
 [string] *(?1, ?2)
 [graph] APP_obj(?1, ?2)
 
-Open_S_fin -> ObjCtrlTbar(ObjCtrl_fin, Open_S_inf, Obj) [0.5]
+Open_S_fin -> ObjCtrlTbar(ObjCtrl_fin, Open_S_inf, Obj) [1.0]
 [string] *(?1, *(?3, *(to, ?2)))
 [graph] APP_obj(APP_obj2(?1, ?2), ?3)
 
@@ -33,61 +32,76 @@ Open_S_fin -> ObjCtrlTbar(ObjCtrl_fin, Open_S_inf, Obj) [0.5]
 // ________________________________ V' with missing subject ______________________________________
 
 // recursive rule for nested subject control
-Open_S_inf -> VbarSubjCtrl(SubjCtrl, Open_S_inf) [0.2]
+Open_S_inf -> VbarSubjCtrl(SubjCtrl, Open_S_inf) [0.8]
 [string] *(?1, ?2)
 [graph]  APP_obj(?1, ?2)
 
 // recursive rule for nested object control
-// WARNING: using this adds indefinitely many 3p Objs which some parsers will interpret as the same person, e.g. I persuaded her to get her to leave
-Open_S_inf -> VbarObjCtrl(ObjCtrl, Open_S_inf, Obj) [0.2]
-[string] *(?1, *(?3, ?2))
+// WARNING: using this adds indefinitely many 3p Objs which some parsers will interpret as the same person, e.g. I persuaded her to get her to leave  -- Edit: we should filter this out with the decisions we have made now.
+Open_S_inf -> VbarObjCtrl(ObjCtrl, Open_S_inf, Obj) [0.8]
+[string] *(?1, *(?3, *(to, ?2)))
 [graph]  APP_obj(APP_obj2(?1, ?2), ?3)
 
 
 // constants
-// infinitival
-Open_S_inf -> sleep [0.1]
+// ------------infinitival-----------
+Open_S_inf -> sleep [0.2]
 [string] sleep
 [graph] '(r<root> / sleep-01 :ARG0 (s<subj>))--TYPE--(subj())'
 
-Open_S_inf -> jump [0.1]
+Open_S_inf -> jump [0.2]
 [string] jump
-[graph] '(r<root> / jump-01 :ARG0 (s<subj>))--TYPE--(subj())'
+[graph] '(r<root> / jump-03 :ARG0 (s<subj>))--TYPE--(subj())'
 
-Open_S_inf -> attend [0.1]
+Open_S_inf -> attend [0.2]
 [string] attend
 [graph] '(r<root> / attend-01 :ARG0 (s<subj>))--TYPE--(subj())'
 
-// finite
-Open_S_fin -> slept [0.1]
+Open_S_inf -> eat [0.2]
+[string] eat
+[graph] '(r<root> / eat-01 :ARG0 (s<subj>))--TYPE--(subj())'
+
+Open_S_inf -> focus [0.2]
+[string] focus
+[graph] '(r<root> / focus-01 :ARG0 (s<subj>))--TYPE--(subj())'
+
+// -------- finite ------------
+Open_S_fin -> slept [0.2]
 [string] slept
 [graph] '(r<root> / sleep-01 :ARG0 (s<subj>))--TYPE--(subj())'
 
-Open_S_fin -> jumped [0.1]
+Open_S_fin -> jumped [0.2]
 [string] jumped
-[graph] '(r<root> / jump-01 :ARG0 (s<subj>))--TYPE--(subj())'
+[graph] '(r<root> / jump-03 :ARG0 (s<subj>))--TYPE--(subj())'
 
-Open_S_fin -> attended [0.1]
+Open_S_fin -> attended [0.2]
 [string] attended
 [graph] '(r<root> / attend-01 :ARG0 (s<subj>))--TYPE--(subj())'
 
+Open_S_fin -> ate [0.2]
+[string] ate
+[graph] '(r<root> / eat-01 :ARG0 (s<subj>))--TYPE--(subj())'
 
-// coordinated infinitival VPs
+Open_S_fin -> focused [0.2]
+[string] focused
+[graph] '(r<root> / focus-01 :ARG0 (s<subj>))--TYPE--(subj())'
+
+// ----------- coordinated infinitival VPs --------------
 
 Open_S_inf -> Coord_Open_S_inf(And_Open_S, Open_S_inf, Open_S_inf) [0.25]
 [string] *(?2, *(?1, ?3))
 [graph] APP_op1(APP_op2(?1, ?3), ?2)
 
-Open_S_inf -> Coord_3_Open_S_inf(And_Open_S, Open_S_inf, Open_S_inf, Open_S_inf) [0.25]
+Open_S_inf -> Coord_3_Open_S_inf(And_Open_S_3, Open_S_inf, Open_S_inf, Open_S_inf) [0.1]
 [string] *(?2, *(",", *(?3, *(",", *(?1, ?4)))))
 [graph] APP_op1(APP_op2(APP_op3(?1, ?4), ?3), ?2)
 
 // coordinated finite VPs
-Open_S_fin -> Coord_Open_S_fin(And_Open_S, Open_S_fin, Open_S_fin) [0.25]
+Open_S_fin -> Coord_Open_S_fin(And_Open_S, Open_S_fin, Open_S_fin) [1.0]
 [string] *(?2, *(?1, ?3))
 [graph] APP_op1(APP_op2(?1, ?3), ?2)
 
-Open_S_fin -> Coord_3_Open_S_fin(And_Open_S, Open_S_fin, Open_S_fin, Open_S_fin) [0.25]
+Open_S_fin -> Coord_3_Open_S_fin(And_Open_S_3, Open_S_fin, Open_S_fin, Open_S_fin) [0.5]
 [string] *(?2, *(",", *(?3, *(",", *(?1, ?4)))))
 [graph] APP_op1(APP_op2(APP_op3(?1, ?4), ?3), ?2)
 
@@ -95,41 +109,43 @@ Open_S_fin -> Coord_3_Open_S_fin(And_Open_S, Open_S_fin, Open_S_fin, Open_S_fin)
 
 // -------------------------- coordinated control verbs  --------------------------------------------
 
-// infinitival
+// ------ infinitival ------------
 
-SubjCtrl -> Coord_Subj_Ctrl_V(And_Subj_Control_Verb, SubjCtrl, SubjCtrl) [0.125]
+SubjCtrl -> Coord_Subj_Ctrl_V(And_Subj_Control_Verb, SubjCtrl, SubjCtrl) [0.25]
 [string] *(?2, *(?1, ?3))
 [graph] APP_op1(APP_op2(?1, ?3), ?2)
 
-SubjCtrl -> Coord_3_Subj_Ctrl_V(And_Subj_Control_Verb_3, SubjCtrl, SubjCtrl, SubjCtrl) [0.125]
+SubjCtrl -> Coord_3_Subj_Ctrl_V(And_Subj_Control_Verb_3, SubjCtrl, SubjCtrl, SubjCtrl) [0.1]
 [string] *(?2, *(",", *(?3, *(",", *(?1, ?4)))))
 [graph] APP_op1(APP_op2(APP_op3(?1, ?4), ?3), ?2)
 
-ObjCtrl -> Coord_Obj_Ctrl_V(And_Obj_Control_Verb, ObjCtrl, ObjCtrl) [0.125]
+// don't coordinate object control verbs because they're too ambiguous
+//ObjCtrl -> Coord_Obj_Ctrl_V(And_Obj_Control_Verb, ObjCtrl, ObjCtrl) [0.25]
+//[string] *(?2, *(?1, ?3))
+//[graph] APP_op1(APP_op2(?1, ?3), ?2)
+
+//ObjCtrl -> Coord_3_Obj_Ctrl_V(And_Obj_Control_Verb_3, ObjCtrl, ObjCtrl, ObjCtrl) [0.1]
+//[string] *(?2, *(",", *(?3, *(",", *(?1, ?4)))))
+//[graph] APP_op1(APP_op2(APP_op3(?1, ?4), ?3), ?2)
+
+// ------ finite ------------
+
+SubjCtrl_fin -> Coord_Subj_Ctrl_V_fin(And_Subj_Control_Verb, SubjCtrl_fin, SubjCtrl_fin) [0.25]
 [string] *(?2, *(?1, ?3))
 [graph] APP_op1(APP_op2(?1, ?3), ?2)
 
-ObjCtrl -> Coord_3_Obj_Ctrl_V(And_Obj_Control_Verb_3, ObjCtrl, ObjCtrl, ObjCtrl) [0.125]
+SubjCtrl_fin -> Coord_3_Subj_Ctrl_V_fin(And_Subj_Control_Verb_3, SubjCtrl_fin, SubjCtrl_fin, SubjCtrl_fin) [0.1]
 [string] *(?2, *(",", *(?3, *(",", *(?1, ?4)))))
 [graph] APP_op1(APP_op2(APP_op3(?1, ?4), ?3), ?2)
 
-// finite
+// don't coordinate object control verbs because they're too ambiguous
+//ObjCtrl_fin -> Coord_Obj_Ctrl_V_fin(And_Obj_Control_Verb, ObjCtrl_fin, ObjCtrl_fin) [0.25]
+//[string] *(?2, *(?1, ?3))
+//[graph] APP_op1(APP_op2(?1, ?3), ?2)
 
-SubjCtrl_fin -> Coord_Subj_Ctrl_V_fin(And_Subj_Control_Verb, SubjCtrl_fin, SubjCtrl_fin) [0.125]
-[string] *(?2, *(?1, ?3))
-[graph] APP_op1(APP_op2(?1, ?3), ?2)
-
-SubjCtrl_fin -> Coord_3_Subj_Ctrl_V_fin(And_Subj_Control_Verb_3, SubjCtrl_fin, SubjCtrl_fin, SubjCtrl_fin) [0.125]
-[string] *(?2, *(",", *(?3, *(",", *(?1, ?4)))))
-[graph] APP_op1(APP_op2(APP_op3(?1, ?4), ?3), ?2)
-
-ObjCtrl_fin -> Coord_Obj_Ctrl_V_fin(And_Obj_Control_Verb, ObjCtrl_fin, ObjCtrl_fin) [0.125]
-[string] *(?2, *(?1, ?3))
-[graph] APP_op1(APP_op2(?1, ?3), ?2)
-
-ObjCtrl_fin -> Coord_3_Obj_Ctrl_V_fin(And_Obj_Control_Verb_3, ObjCtrl_fin, ObjCtrl_fin, ObjCtrl_fin) [0.125]
-[string] *(?2, *(",", *(?3, *(",", *(?1, ?4)))))
-[graph] APP_op1(APP_op2(APP_op3(?1, ?4), ?3), ?2)
+//ObjCtrl_fin -> Coord_3_Obj_Ctrl_V_fin(And_Obj_Control_Verb_3, ObjCtrl_fin, ObjCtrl_fin, ObjCtrl_fin) [0.1]
+//[string] *(?2, *(",", *(?3, *(",", *(?1, ?4)))))
+//[graph] APP_op1(APP_op2(APP_op3(?1, ?4), ?3), ?2)
 
 
 
@@ -165,47 +181,47 @@ And_Subj_Control_Verb_3 -> and_3_subj_control_verb [1.0]
 // -------------------------------- subject control verbs -------------------------------------------
 // add "to" here to reduce ambiguity
 
-// infinitival
+// --------- infinitival -------------
 
-SubjCtrl -> attempt [0.34]
+SubjCtrl -> attempt [0.2]
 [string] *(attempt, to)
 [graph] '(r<root> / attempt-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-SubjCtrl -> want [0.33]
+SubjCtrl -> want [0.2]
 [string] *(want, to)
 [graph] '(r<root> / want-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-SubjCtrl -> hate [0.33]
+SubjCtrl -> hate [0.2]
 [string] *(hate, to)
 [graph] '(r<root> / hate-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-SubjCtrl -> love [0.33]
+SubjCtrl -> love [0.2]
 [string] *(love, to)
 [graph] '(r<root> / love-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-SubjCtrl -> refuse [0.33]
+SubjCtrl -> refuse [0.2]
 [string] *(refuse, to)
 [graph] '(r<root> / refuse-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-// finite
+// ----------- finite ----------------
 
-SubjCtrl_fin -> attempted [0.34]
+SubjCtrl_fin -> attempted [0.2]
 [string] *(attempted, to)
 [graph] '(r<root> / attempt-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-SubjCtrl_fin -> wanted [0.33]
+SubjCtrl_fin -> wanted [0.2]
 [string] *(wanted, to)
 [graph] '(r<root> / want-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-SubjCtrl_fin -> hated [0.33]
+SubjCtrl_fin -> hated [0.2]
 [string] *(hated, to)
 [graph] '(r<root> / hate-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-SubjCtrl_fin -> loved [0.33]
+SubjCtrl_fin -> loved [0.2]
 [string] *(loved, to)
 [graph] '(r<root> / love-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
-SubjCtrl_fin -> refused [0.33]
+SubjCtrl_fin -> refused [0.2]
 [string] *(refused, to)
 [graph] '(r<root> / refuse-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(subj))'
 
@@ -215,7 +231,7 @@ SubjCtrl_fin -> refused [0.33]
 // -------------------------------- object control verbs --------------------------------------------
 // for these, add "to" at in ObjCtrlTbar since we can't add them here
 
-// infinitival
+// -------------- infinitival -------------------
 
 ObjCtrl -> persuade [0.34]
 [string] persuade
@@ -233,7 +249,7 @@ ObjCtrl -> force [0.33]
 [string] force
 [graph] '(r<root> / force-01 :ARG0 (s<subj>) :ARG1 (o<obj>) :ARG2 (o2<obj2>))--TYPE--(subj(), obj(), obj2(subj_UNIFY_obj))'
 
-// finite
+// ----------- finite ----------------
 
 ObjCtrl_fin -> persuaded [0.34]
 [string] persuaded
@@ -254,41 +270,49 @@ ObjCtrl_fin -> forced [0.33]
 
 
 // -------------------------------- subjects -------------------------------------------------
-// 1st and 2nd person only
+// 3rd person only to make infinitival verbs unambiguous (if subjects are e.g. first person, then infinitival verbs could be present tense instead)
 
-Subj -> I [0.33]
-[string] I
-[graph] '(r<root> / i)--TYPE--()'
+Subj -> girl [0.33]
+[string] *(The, girl)
+[graph] '(r<root> / girl)--TYPE--()'
 
-Subj -> we [0.33]
-[string] We
-[graph] '(r<root> / we)--TYPE--()'
+Subj -> boy [0.33]
+[string] *(The, boy)
+[graph] '(r<root> / boy)--TYPE--()'
 
-Subj -> you [0.34]
-[string] You
-[graph] '(r<root> / you)--TYPE--()'
+Subj -> kid [0.33]
+[string] *(The, kid)
+[graph] '(r<root> / kid)--TYPE--()'
 
 
 // -------------------------------- objects -------------------------------------------------
-// 3rd person only
+// can be any kind of person, since we don't have pronouns otherwise.
+// Note: added more Oct 15. Weights all left at 0.2
 
-Obj -> them [0.2]
-[string] them
-[graph] '(r<root> / they)--TYPE--()'
+Obj -> you [0.2]
+[string] you
+[graph] '(r<root> / you)--TYPE--()'
 
-Obj -> girl [0.2]
-[string] *(the, girl)
-[graph] '(r<root> / girl)--TYPE--()'
-
-Obj -> child [0.2]
-[string] *(the, child)
-[graph] '(r<root> / child)--TYPE--()'
+Obj -> monster [0.2]
+[string] *(the, monster)
+[graph] '(r<root> / monster)--TYPE--()'
 
 Obj -> doctor [0.2]
 [string] *(the, doctor)
 [graph] '(r<root> / doctor)--TYPE--()'
 
-Obj -> boy [0.2]
-[string] *(the, boy)
-[graph] '(r<root> / boy)--TYPE--()'
+Obj -> politician [0.2]
+[string] *(the, politician)
+[graph] '(r<root> / politician)--TYPE--()'
 
+Obj -> astronaut [0.2]
+[string] *(the, astronaut)
+[graph] '(a<root> / astronaut)'
+
+Obj -> lawyer [0.2]
+[string] *(the, lawyer)
+[graph] '(m<root> / lawyer)'
+
+Obj -> soldier [0.2]
+[string] *(the, soldier)
+[graph] '(s<root> / soldier)'

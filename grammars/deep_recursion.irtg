@@ -168,7 +168,6 @@ Vtr -> liked [1.0]
 [graph] '(r<root> / like-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj())'
 
 
-// TODO check verb
 Vtr -> hated [1.0]
 [string] hated
 [graph] '(r<root> / hate-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj())'
@@ -294,11 +293,11 @@ And -> and  [1.0]
 
 
 // ------------------ Proper Names -------------------------
-DP_3m -> obama [1.0]
-[string] *(Barack, Obama)
+DP_3m -> doctor [1.0]
+[string] *(the, doctor)
 [graph] TODO
 
-DP_3f -> clinton [1.0]
+DP_3f ->  [1.0]
 [string] *(Hillary, Clinton)
 [graph] TODO
 

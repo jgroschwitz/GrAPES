@@ -1,0 +1,333 @@
+interpretation string: de.up.ling.irtg.algebra.StringAlgebra
+interpretation graph: de.up.ling.irtg.algebra.graph.ApplyModifyGraphAlgebra
+
+// COREF doesn't seem to work so I've implemented it as a normal source, in the type system
+// Downstairs TPs can only have 3pl DPs (REs)
+// upstairs can have 1s, 1p, 2s/p, and 3p subjects, but only 1st and 2nd person can have coref
+// 1 and 2 DPs can be full DPs (eg the boys and I)
+
+
+// ------------------------------ Final states -----------------------------------------------
+
+// ------------ No coreference ----------------------
+
+TP! -> TP_3p(V_CPobj, DP, TP)  [2.0]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP! -> TP_1s(V_CPobj, I, TP)  [0.5]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP! -> TP_1p(V_CPobj, We, TP)  [0.5]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP! -> TP_2(V_CPobj, You, TP)  [0.5]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+
+
+
+
+// ------------ with Coref -------------------------
+// --- you ---
+// resolve coref
+TP! -> TP_resolve_coref_2(V_CPobj_resolve_coref, You, TP_coref_2) [0.5]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_coref(APP_obj(?1, ?3), ?2)
+
+
+// --- I ---
+// resolve coref
+TP! -> TP_resolve_coref_1s(V_CPobj_resolve_coref, I, TP_coref_1s) [0.5]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_coref(APP_obj(?1, ?3), ?2)
+
+
+// --- We ----
+// resolve coref
+TP! -> TP_resolve_coref_1p(V_CPobj_resolve_coref, We, TP_coref_1p) [0.5]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_coref(APP_obj(?1, ?3), ?2)
+
+
+
+// --------------------------------- non-final TP --------------------------------------
+
+// track the phi features of the coref pronoun
+// other DPs are full 3rd plural DPs to prevent irrelevant node merging
+// intransitive unary rule for consistency
+
+
+// ----- I ---------
+// Intransitive
+TP_coref_1s -> TP_intr_1s(VP_coref_1s) [0.1]
+[string] ?1
+[graph] ?1
+
+// Transitive: Subject must disagree on phi features
+TP_coref_1s -> TP_tr_1s(Vbar_coref_1s, DP) [0.1]
+[string] *(?2, ?1)
+[graph] APP_subj(?1, ?2)
+
+// recursion
+TP_coref_1s -> TP_CP_1s(V_CPobj_coref, DP, TP_coref_1s) [0.9]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP_coref_1s -> TP_CP_1s_subj1p(V_CPobj_coref, We, TP_coref_1s) [0.33]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP_coref_1s -> TP_CP_1s_subj2(V_CPobj_coref, You, TP_coref_1s) [0.33]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+// ----- We ---------
+// Intransitive
+TP_coref_1p -> TP_intr_1p(VP_coref_1p) [0.1]
+[string] ?1
+[graph] ?1
+
+// Transitive: Subject must disagree on phi features
+TP_coref_1p -> TP_tr_1p(Vbar_coref_1p, DP) [0.1]
+[string] *(?2, ?1)
+[graph] APP_subj(?1, ?2)
+
+// recursion
+TP_coref_1p -> TP_CP_1p(V_CPobj_coref, DP, TP_coref_1p) [0.9]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP_coref_1p -> TP_CP_1p_subj1s(V_CPobj_coref, I, TP_coref_1p) [0.33]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP_coref_1p -> TP_CP_1p_subj2(V_CPobj_coref, You, TP_coref_1p) [0.33]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+
+// ----- You ---------
+// Intransitive
+TP_coref_2 -> TP_intr_2(VP_coref_2) [0.1]
+[string] ?1
+[graph] ?1
+
+// Transitive: Subject must disagree on phi features
+TP_coref_2 -> TP_tr_2(Vbar_coref_2, DP) [0.1]
+[string] *(?2, ?1)
+[graph] APP_subj(?1, ?2)
+
+// recursion
+TP_coref_2 -> TP_CP_2(V_CPobj_coref, DP, TP_coref_2) [0.9]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP_coref_2 -> TP_CP_2_subj1s(V_CPobj_coref, I, TP_coref_2) [0.33]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+TP_coref_2 -> TP_CP_2_subj1p(V_CPobj_coref, We, TP_coref_2) [0.33]
+[string] *(?2, *(?1, *(that, ?3)))
+[graph] APP_subj(APP_obj(?1, ?3), ?2)
+
+// ---------------------------- "downstairs" Verbs ------------------------------
+
+
+// coref
+// argument added to string but not graph (pronouns only)
+// graph has coref source
+// state encodes phi features of argument
+
+// 1p
+VP_coref_1p -> we_slept [0.5]
+[string] *(we, slept)
+[graph] '(r<root> / sleep-01 :ARG0 (s<coref>))--TYPE--(coref())'
+
+Vbar_coref_1p -> liked_us [0.5]
+[string] *(liked, us)
+[graph] '(r<root> / like-01 :ARG0 (s<subj>) :ARG1 (o<coref>))--TYPE--(subj(), coref())'
+
+VP_coref_1p -> we_sneezed [0.5]
+[string] *(we, sneezed)
+[graph] '(r<root> / sneeze-01 :ARG0 (s<coref>))--TYPE--(coref())'
+
+Vbar_coref_1p -> hated_us [0.5]
+[string] *(hated, us)
+[graph] '(r<root> / hate-01 :ARG0 (s<subj>) :ARG1 (o<coref>))--TYPE--(subj(), coref())'
+
+// you
+VP_coref_2 -> you_slept [0.5]
+[string] *(you, slept)
+[graph] '(r<root> / sleep-01 :ARG0 (s<coref>))--TYPE--(coref())'
+
+Vbar_coref_2 -> liked_you [0.5]
+[string] *(liked, you)
+[graph] '(r<root> / like-01 :ARG0 (s<subj>) :ARG1 (o<coref>))--TYPE--(subj(), coref())'
+
+VP_coref_2 -> you_sneezed [0.5]
+[string] *(you, sneezed)
+[graph] '(r<root> / sneeze-01 :ARG0 (s<coref>))--TYPE--(coref())'
+
+Vbar_coref_2 -> hated_you [0.5]
+[string] *(hated, you)
+[graph] '(r<root> / hate-01 :ARG0 (s<subj>) :ARG1 (o<coref>))--TYPE--(subj(), coref())'
+
+// 1s
+VP_coref_1s -> I_slept [0.5]
+[string] *(I, slept)
+[graph] '(r<root> / sleep-01 :ARG0 (s<coref>))--TYPE--(coref())'
+
+Vbar_coref_1s -> liked_me [0.5]
+[string] *(liked, me)
+[graph] '(r<root> / like-01 :ARG0 (s<subj>) :ARG1 (o<coref>))--TYPE--(subj(), coref())'
+
+VP_coref_1s -> I_sneezed [0.5]
+[string] *(I, sneezed)
+[graph] '(r<root> / sneeze-01 :ARG0 (s<coref>))--TYPE--(coref())'
+
+Vbar_coref_1s -> hated_me [0.5]
+[string] *(hated, me)
+[graph] '(r<root> / hate-01 :ARG0 (s<subj>) :ARG1 (o<coref>))--TYPE--(subj(), coref())'
+
+
+//--------------------------------- verbs with CP object -----------------------------------------
+
+// no coref
+V_CPobj -> thought [0.5]
+[string] thought
+[graph] '(r<root> / think-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj())'
+
+V_CPobj -> said [0.5]
+[string] said
+[graph] '(r<root> / say-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj())'
+
+V_CPobj -> believed [0.5]
+[string] believed
+[graph] '(r<root> / believe-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj())'
+
+V_CPobj -> knew [0.5]
+[string] knew
+[graph] '(r<root> / know-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj())'
+
+V_CPobj -> heard [0.5]
+[string] heard
+[graph] '(r<root> / hear-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj())'
+
+V_CPobj -> mentioned [0.5]
+[string] mentioned
+[graph] '(r<root> / mention-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj())'
+
+
+// passes coref up
+V_CPobj_coref -> thought_coref [0.5]
+[string] thought
+[graph] '(r<root> / think-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(coref()))'
+
+V_CPobj_coref -> said_coref [0.5]
+[string] said
+[graph] '(r<root> / say-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(coref()))'
+
+V_CPobj_coref -> believed_coref [0.5]
+[string] believed
+[graph] '(r<root> / believe-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(coref()))'
+
+V_CPobj_coref -> knew_coref [0.5]
+[string] knew
+[graph] '(r<root> / know-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(coref()))'
+
+V_CPobj_coref -> heard_coref [0.5]
+[string] heard
+[graph] '(r<root> / hear-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(coref()))'
+
+V_CPobj_coref -> mentioned_coref [0.5]
+[string] mentioned
+[graph] '(r<root> / mention-01 :ARG0 (s<subj>) :ARG1 (o<obj>))--TYPE--(subj(), obj(coref()))'
+
+
+// resolves coref
+V_CPobj_resolve_coref -> thought_resolve_coref [0.5]
+[string] thought
+[graph] '(r<root> / think-01 :ARG0 (s<coref>) :ARG1 (o<obj>))--TYPE--(coref(), obj(coref()))'
+
+V_CPobj_resolve_coref -> said_resolve_coref [0.5]
+[string] said
+[graph] '(r<root> / say-01 :ARG0 (s<coref>) :ARG1 (o<obj>))--TYPE--(coref(), obj(coref()))'
+
+V_CPobj_resolve_coref -> believed_resolve_coref [0.5]
+[string] believed
+[graph] '(r<root> / believe-01 :ARG0 (s<coref>) :ARG1 (o<obj>))--TYPE--(coref(), obj(coref()))'
+
+V_CPobj_resolve_coref -> knew_resolve_coref [0.5]
+[string] knew
+[graph] '(r<root> / know-01 :ARG0 (s<coref>) :ARG1 (o<obj>))--TYPE--(coref(), obj(coref()))'
+
+V_CPobj_resolve_coref -> heard_resolve_coref [0.5]
+[string] heard
+[graph] '(r<root> / hear-01 :ARG0 (s<coref>) :ARG1 (o<obj>))--TYPE--(coref(), obj(coref()))'
+
+V_CPobj_resolve_coref -> mentioned_resolve_coref [0.5]
+[string] mentioned
+[graph] '(r<root> / mention-01 :ARG0 (s<coref>) :ARG1 (o<obj>))--TYPE--(coref(), obj(coref()))'
+
+
+// -------------------------------- pronouns -----------------------------------
+
+
+We -> we  [1.0]
+[string] we
+[graph] '(r<root> / we)--TYPE--()'
+
+I -> I  [1.0]
+[string] I
+[graph] '(r<root> / i)--TYPE--()'
+
+You -> you  [1.0]
+[string] you
+[graph] '(r<root> / you)--TYPE--()'
+
+
+
+// -------------------------------- plural Nouns --------------------------------
+
+
+DP -> kids [1.0]
+[string] *(the, kids)
+[graph] '(r<root> / kid)--TYPE--()'
+
+DP -> girls [1.0]
+[string] *(the, girls)
+[graph] '(r<root> / girl)--TYPE--()'
+
+DP -> boys [1.0]
+[string] *(the, boys)
+[graph] '(r<root> / boy)--TYPE--()'
+
+DP -> men [1.0]
+[string] *(the, men)
+[graph] '(r<root> / man)--TYPE--()'
+
+DP -> women [1.0]
+[string] *(the, women)
+[graph] '(r<root> / woman)--TYPE--()'
+
+
+// ------------------ singular nouns -------------------------
+DP -> doctor [1.0]
+[string] *(the, doctor)
+[graph] '(d<root> / doctor)'
+
+DP -> astronaut [1.0]
+[string] *(the, astronaut)
+[graph] '(a<root> / astronaut)'
+
+DP -> lawyer [1.0]
+[string] *(the, lawyer)
+[graph] '(m<root> / lawyer)'
+
+DP -> soldier [1.0]
+[string] *(the, soldier)
+[graph] '(s<root> / soldier)'
