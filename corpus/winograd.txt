@@ -818,7 +818,7 @@
 
 # ::id chris_annotation_61_90.tsv-67
 # ::snt I used an old rag to clean the knife, and then I put it in the trash.
-(a / and       :op1 (c / clean-01             :ARG1 (i / i)             :ARG2 (k / knife)             :instrument (r / rag                   :mod (o / old)))       :op2 (p / put-01             :time (t / then)             :ARG1 k             :ARG2 (t / trash)))
+(a / and       :op1 (c / clean-01             :ARG1 (i / i)             :ARG2 (k / knife)             :instrument (r / rag                   :mod (o / old)))       :op2 (p / put-01             :time (t2 / then)             :ARG1 k             :ARG2 (t / trash)))
 
 # ::id chris_annotation_61_90.tsv-68
 # ::snt I used an old rag to clean the knife, and then I put it in the drawer.
@@ -1118,7 +1118,7 @@
 
 # ::id Maria_Winograd2.tsv-1
 # ::snt Bob collapsed on the sidewalk. Soon he saw Carl coming to help. He was very concerned.
-(m / multi-sentence        :snt1 (c / collapse-01              :ARG1 (p / person :name (n / name :op1 "Bob" ))              :ARG4 (s / sidewalk))        :snt2 (s2 / see-01              :ARG0 p              :ARG1 (c2 / come-01                    :ARG1 (p2 / person :name (n2 / name :op1 "Carl"))                    :purpose (h / help-01))              :time (s3 / soon))        :snt3 (c / concern-01              :ARG1 (h / he)              :degree (v / very)))
+(m / multi-sentence        :snt1 (c / collapse-01              :ARG1 (p / person :name (n / name :op1 "Bob" ))              :ARG4 (s / sidewalk))        :snt2 (s2 / see-01              :ARG0 p              :ARG1 (c2 / come-01                    :ARG1 (p2 / person :name (n2 / name :op1 "Carl"))                    :purpose (h2 / help-01))              :time (s3 / soon))        :snt3 (c3 / concern-01              :ARG1 (h / he)              :degree (v / very)))
 
 # ::id Maria_Winograd2.tsv-2
 # ::snt Sam and Amy are passionately in love, but Amy's parents are unhappy about it, because they are fifteen.
