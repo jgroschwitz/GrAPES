@@ -12,7 +12,7 @@ Throughout the rest of this documentation, `path/to/AMR/testset` means the path 
 python #TODO
 ```
 
-If your parser output multiple files, as long as their alphanumeric order is the same, this script should work on your files as well.
+If your parser outputs multiple files, as long as their alphanumeric order is the same, this script should work on your files as well.
 
 If you do not have access to the AMR 3.0 test set, you can still use parts of GrAPES. Instructions are provided below.
 
@@ -25,22 +25,43 @@ python #TODO path/to/your/PTB
 Twelve of the sentences in the Word Disambiguation category are AMR 3.0 test set sentences. To add them to the GrAPES `corpus.txt` file, run the following script:
 
 ```commandline
-python #TODO path/to/the/concatenated/test.txt
+python #TODO path/to/AMR/testset
+```
+
+### Dependencies
+
+GrAPES requires the Python packages `penman` and `prettytable`.
+
+```commandline
+pip install prettytable penman
 ```
 
 ## Usage
 
 ### Evaluate on all categories
 
+To run the full evaluation suite, run the following:
+
+```commandline
+python evaluate_call_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -gg path/to/gold/gRAPES/corpus.txt -pg path/to/your/parser/output/gRAPES/corpus.txt 
+```
+
+You can run it on only the AMR testset, on the GrAPES-provided corpus, or both.
+
 To evaluate with GrAPES on categories drawn from the AMR testset, provide the path to your copy of the AMR testset (`-gt`) and the path to your parser output for the AMR testset (`-pt`).
 
 To evaluate on the additional test items provided by GrAPES, provide the path to the GrAPES file `corpus.txt` (`-gg`) and your parser output on that file (`-pg`).
 
-Therefore, to run the full GrAPES evaluation, provide all four arguments:
+### What do to if you are missing PTB or AMR 3.0
 
-```commandline
-python evaluate_call_categories.py -gt path/to/AMR/testset -pt path/to/your/parser/output/AMR/testset -gg path/to/gold/gRAPES/corpus.txt -pg path/to/your/parser/output/gRAPES/corpus.txt 
-```
+If you don't have AMR 3.0:
+
+* Use only the GrAPES corpus
+* The evaluation script will automatically leave out the Word Disambiguation category (which contains some AMR testset sentences)
+
+If you don't have PTB:
+
+* The evaluation script will automatically leave out the Unbounded Dependencies category
 
 ### Evaluate on a single category
 
@@ -65,6 +86,29 @@ To evaluate on the category Rare Senses, an AMR testset category, run the follow
 
 ```commandline
 python evaluate_single_category.py -c rare_senses -g path/to/AMR/testset -p path/to/parser/AMR/testset/output
+```
+
+#### Category names for the command line
+
+These are also listed if you use the `--help` option.
+
+```
+#TODO
+```
+
+
+## Looking at example outputs
+
+You may find Vulcan #TODO helpful for looking at your parser output and comparing it to the gold graph, when available.
+
+You can Git Clone the repository, and create pickles of the data as follows:
+
+#TODO
+
+You can then view the graphs and sentences side-by-side with Vulcan:
+
+```commandline
+python vulcan.py path/to/pickle
 ```
 
 
