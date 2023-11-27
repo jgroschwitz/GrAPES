@@ -18945,8 +18945,7 @@
            :instrument (r / rag
                           :mod (o / old)))
    :op2 (p / put-01
-           :time (t / trash
-                    / then)
+           :time (t / trash)
            :ARG1 k
            :ARG2 t))
 
@@ -20213,7 +20212,6 @@
 # ::suppl Maria_Winograd2.tsv-1
 (m / multi-sentence
    :snt1 (c / concern-01
-            / collapse-01
             :ARG1 (p / person
                      :name (n / name
                               :op1 "Bob"))
@@ -20226,8 +20224,7 @@
                        :ARG1 (p2 / person
                                  :name (n2 / name
                                            :op1 "Carl"))
-                       :purpose (h / he
-                                   / help-01))
+                       :purpose (h / he))
              :time (s3 / soon))
    :snt3 c)
 

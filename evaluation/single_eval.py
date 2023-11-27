@@ -1,8 +1,8 @@
 import sys
 
 from penman import load
-from pp_attachment import evaluate_pp_attachments
-from long_lists import evaluate_long_lists, evaluate_singletons, evaluate_long_lists_generalization
+from evaluation.pp_attachment import evaluate_pp_attachments
+from evaluation.long_lists import evaluate_long_lists, evaluate_singletons, evaluate_long_lists_generalization
 import prettytable
 from evaluation.corpus_metrics import compute_exact_match_fraction, compute_smatch_f
 

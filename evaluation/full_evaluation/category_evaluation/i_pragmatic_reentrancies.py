@@ -18,7 +18,7 @@ class PragmaticReentrancies(CategoryEvaluation):
                                                                      parent_edge_column=5)
 
     def compute_winograd_results(self, gold_amrs, predicted_amrs):
-        return self.make_results_columns_for_edge_recall_from_graphs("winograd_annotated.tsv",
+        return self.make_results_columns_for_edge_recall_from_graphs("winograd.tsv",
                                                                      gold_amrs, predicted_amrs,
                                                                      parent_column=4,
                                                                      parent_edge_column=5,
