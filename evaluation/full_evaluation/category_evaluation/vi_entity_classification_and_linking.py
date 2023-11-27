@@ -10,15 +10,15 @@ class EntityClassificationAndLinking(CategoryEvaluation):
         prereq, successes, sample_size = get_ne_type_successes_and_sample_size(self.root_dir+"/corpus/seen_ne_types_test.tsv",
                                                                        self.gold_amrs,
                                                                        self.predicted_amrs)
-        self.make_results_column("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
-        self.make_results_column("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
 
         self.set_dataset_name("Types of unseen named entities")
         prereq, successes, sample_size = get_ne_type_successes_and_sample_size(self.root_dir+"/corpus/unseen_ne_types_test.tsv",
                                                                           self.gold_amrs,
                                                                             self.predicted_amrs)
-        self.make_results_column("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
-        self.make_results_column("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
 
         self.set_dataset_name("Seen and/or easy wiki links")
         self.make_results_column_for_node_recall("seen_andor_easy_wiki_test_data.tsv", use_sense=True,

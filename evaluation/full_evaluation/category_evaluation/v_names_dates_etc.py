@@ -11,34 +11,34 @@ class NamesDatesEtc(CategoryEvaluation):
         successes, sample_size = calculate_name_successes_and_sample_size(self.root_dir + "/corpus/seen_names.tsv",
                                                                           self.gold_amrs,
                                                                           self.predicted_amrs)
-        self.make_results_column("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 
         self.set_dataset_name("Unseen names")
         successes, sample_size = calculate_name_successes_and_sample_size(self.root_dir + "/corpus/unseen_names.tsv",
                                                                           self.gold_amrs,
                                                                           self.predicted_amrs)
-        self.make_results_column("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 
         self.set_dataset_name("Seen dates")
         successes, sample_size = calculate_date_successes_and_sample_size(self.root_dir + "/corpus/seen_dates.tsv",
                                                                           self.gold_amrs,
                                                                           self.predicted_amrs)
-        self.make_results_column("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 
         self.set_dataset_name("Unseen dates")
         successes, sample_size = calculate_date_successes_and_sample_size(self.root_dir + "/corpus/unseen_dates.tsv",
                                                                           self.gold_amrs,
                                                                           self.predicted_amrs)
-        self.make_results_column("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 
         self.set_dataset_name("Other seen entities")
         successes, sample_size = calculate_special_entity_successes_and_sample_size(self.root_dir + "/corpus/seen_special_entities.tsv",
                                                                                     self.gold_amrs,
                                                                                     self.predicted_amrs)
-        self.make_results_column("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 
         self.set_dataset_name("Other unseen entities")
         successes, sample_size = calculate_special_entity_successes_and_sample_size(self.root_dir + "/corpus/unseen_special_entities.tsv",
                                                                                     self.gold_amrs,
                                                                                     self.predicted_amrs)
-        self.make_results_column("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])

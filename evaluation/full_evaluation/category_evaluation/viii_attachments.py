@@ -11,9 +11,9 @@ class Attachments(CategoryEvaluation):
         self.set_dataset_name("PP attachment")
         prereqs, unlabeled, recalled, sample_size = get_pp_attachment_success_counters(self.root_dir+"/corpus/",
                                                                                self.root_dir+f"/{self.parser_name}-output/")
-        self.make_results_column("Edge recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
-        self.make_results_column("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE, [unlabeled, sample_size])
-        self.make_results_column("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])
+        self.make_and_append_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
+        self.make_and_append_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE, [unlabeled, sample_size])
+        self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])
 
         # TODO we may want to break this down by category (and maybe also distance) in the more finegrained evaluation
         # category is in column 6; distance is in 5

@@ -108,7 +108,7 @@ def print_pretty_table(result_rows):
                 table.add_row([row[0], row[1], num_to_score(row[3]/row[4]),
                                f"[{num_to_score(wilson_ci[0])}, {num_to_score(wilson_ci[1])}]", row[4]])
             else:
-                print("Divisin by zero!")
+                print("Division by zero!")
                 print(row)
         elif _get_row_evaluation_type(row) == EVAL_TYPE_F1:
             table.add_row([row[0], row[1],  num_to_score(row[3]), "", ""])
