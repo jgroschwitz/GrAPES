@@ -19,6 +19,21 @@ def get_target(edge, graph: Graph):
     return get_node_by_name(edge.target, graph)
 
 
+def get_name(name_node_name, graph):
+    """
+    Gets the attributes of the given node in the graph, returning them joined into a string.
+        Removes quotation marks.
+        Intended to be used with a "name" node and its opi attributes, so the name comes out in order
+    :param name_node_name:
+    :param graph: penman graph
+    :return: " ".join of the attributes in order
+    """
+    ret = []
+    for attribute in sorted(graph.attributes(source=name_node_name), key=lambda x: x.role):
+        ret.append(attribute.target.replace('"', ''))
+    return " ".join(ret)
+
+
 def get_node_by_name(node_name: str, graph: Graph):
     return [n for n in graph.instances() if n.source == node_name][0]
 
@@ -136,3 +151,12 @@ def get_node_name_for_gold_label(gold_label, gold_amr, is_attribute):
     return None
 
 
+def filter_amrs_for_name(name, gold_graphs, predicted_graphs):
+    regular_expression = name+"_[0-9]+"
+    gold_graphs_filtered = []
+    predicted_graphs_filtered = []
+    for g, p in zip(gold_graphs, predicted_graphs):
+        if re.match(regular_expression, g.metadata["id"]):
+            gold_graphs_filtered.append(g)
+            predicted_graphs_filtered.append(p)
+    return gold_graphs_filtered, predicted_graphs_filtered

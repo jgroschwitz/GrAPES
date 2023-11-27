@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('-gt', '--gold_amr_testset_file', type=str, help='Path to gold AMR file (testset). A single '
                                                                          'file containing all AMRs of the AMRBank 3.0'
                                                                          'testset.')
-    parser.add_argument('-gg', '--gold_amr_testset_file', type=str, help='Path to GrAPES gold corpus file')
+    parser.add_argument('-gg', '--gold_amr_grapes_file', type=str, help='Path to GrAPES gold corpus file')
     parser.add_argument('-pt', '--predicted_amr_testset_file', type=str, help='Path to predicted AMR file. Must contain AMRs '
                                                                      'for all sentences in the gold file, in the same '
                                                                      'order.')

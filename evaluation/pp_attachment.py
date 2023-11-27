@@ -2,7 +2,7 @@ from typing import List, Tuple, Set
 
 import penman
 
-from evaluation.util import strip_sense, get_source, get_target
+from evaluation.util import strip_sense, get_source, get_target, filter_amrs_for_name
 
 import re
 
@@ -78,18 +78,18 @@ class PPAttachmentEvaluator:
         labeled_counter: the number of graphs with a correctly-labelled edge or reification node
                             linking the desired source to target. Includes senses
         total_counter: the number of graphs checked
-        gold_directory: the parent directory of the gold corpus
-        predictions_directory: the parent directory of the predictions
+        gold_directory: list of gold graphs
+        predictions_directory: list of predicted graphs
 
     """
 
-    def __init__(self, gold_directory, predictions_directory):
+    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph]):
         self.prerequisites_counter = 0
         self.unlabeled_counter = 0
         self.labeled_counter = 0
         self.total_counter = 0
-        self.gold_directory = gold_directory
-        self.predictions_directory = predictions_directory
+        self.gold_amrs = gold_amrs
+        self.predicted_amrs = predicted_amrs
 
     def evaluate_all(self):
         self._run_all_evaluations_and_update_internal_counters()
@@ -104,29 +104,24 @@ class PPAttachmentEvaluator:
         self.evaluate_give_up_in_graphs()
 
     def evaluate_see_with_graphs(self):
-        golds = load(self.gold_directory+"/see_with.txt")
-        predictions = load(self.predictions_directory+"/see_with.txt")
+        golds, predictions = filter_amrs_for_name("see_with", self.gold_amrs, self.predicted_amrs)
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":poss", ":instrument"})
 
     def evaluate_read_by_graphs(self):
-        golds = load(self.gold_directory + "/read_by.txt")
-        predictions = load(self.predictions_directory + "/read_by.txt")
+        golds, predictions = filter_amrs_for_name("read_by", self.gold_amrs, self.predicted_amrs)
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":time", ":manner"},
                              node_labels_to_evaluate={"author-01"})
 
     def evaluate_bought_for_graphs(self):
-        golds = load(self.gold_directory+"/bought_for.txt")
-        predictions = load(self.predictions_directory+"/bought_for.txt")
+        golds, predictions = filter_amrs_for_name("bought_for", self.gold_amrs, self.predicted_amrs)
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":purpose", ":ARG3"})
 
     def evaluate_keep_from_graphs(self):
-        golds = load(self.gold_directory+"/keep_from.txt")
-        predictions = load(self.predictions_directory+"/keep_from.txt")
+        golds, predictions = filter_amrs_for_name("keep_from", self.gold_amrs, self.predicted_amrs)
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":source", ":ARG2"})
 
     def evaluate_give_up_in_graphs(self):
-        golds = load(self.gold_directory+"/give_up_in.txt")
-        predictions = load(self.predictions_directory+"/give_up_in.txt")
+        golds, predictions = filter_amrs_for_name("give_up_in", self.gold_amrs, self.predicted_amrs)
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":time", ":topic"},
                              node_labels_to_evaluate={"cause-01"})
 
@@ -351,8 +346,8 @@ def evaluate_pp_attachments(gold_directory, predictions_directory):
     return evaluator.evaluate_all()
 
 
-def get_pp_attachment_success_counters(gold_directory, predictions_directory):
-    evaluator = PPAttachmentEvaluator(gold_directory, predictions_directory)
+def get_pp_attachment_success_counters(gold_amrs, predicted_amrs):
+    evaluator = PPAttachmentEvaluator(gold_amrs, predicted_amrs)
     evaluator.evaluate_all()
     return evaluator.prerequisites_counter, evaluator.unlabeled_counter, evaluator.labeled_counter,\
            evaluator.total_counter

@@ -89,7 +89,7 @@ def compute_smatch_f_from_graph_lists(gold_graphs: List[Graph], predicted_graphs
         with tempfile.NamedTemporaryFile(mode="w") as prediction_f:
             penman.dump(gold_graphs, gold_f)
             penman.dump(predicted_graphs, prediction_f)
-            compute_smatch_f(gold_f.name, prediction_f.name)
+            return compute_smatch_f(gold_f.name, prediction_f.name)[2]
 
 
 def calculate_node_label_recall(tsv_file_name, gold_amrs=None, predicted_amrs=None, parser_name=None,
