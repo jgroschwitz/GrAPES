@@ -58,6 +58,8 @@ for corpus_file in os.listdir("corpus"):
                     try:
                         am_predictions = penman.load(f"{am_path}/{corpus_file}")
                         am_full_corpus += am_predictions
+                        if len(am_predictions) != len(category):
+                            print(f"** {category_name} has {len(am_predictions)} in AM vs {len(category)} in Gold")
                     except FileNotFoundError:
                         print("*** not in AM outputs:\n", corpus_file, "\n")
 

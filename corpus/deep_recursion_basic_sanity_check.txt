@@ -3,30 +3,30 @@
 # ::snt The lawyer mentioned that the astronaut won
 # ::tree TP_CP(mentioned,lawyer,TP_intr(won,astronaut))
 # ::id deep_recursion_basic_sanity_check_0
-(u_16 / mention-01  :ARG0 (m / lawyer)  :ARG1 (r / win-01  :ARG0 (a / astronaut)))
+(u_73 / mention-01  :ARG0 (m / lawyer)  :ARG1 (r / win-01  :ARG0 (a / astronaut)))
 
 # ::snt The doctor said that the women slept
 # ::tree TP_CP(said,doctor,TP_intr(slept,women))
 # ::id deep_recursion_basic_sanity_check_1
-(u_18 / say-01  :ARG0 (d / doctor)  :ARG1 (u_17 / sleep-01  :ARG0 (r / woman)))
+(u_75 / say-01  :ARG0 (d / doctor)  :ARG1 (u_74 / sleep-01  :ARG0 (r / woman)))
 
-# ::snt The men believed that the soldier left
-# ::tree TP_CP(believed,men,TP_intr(left,soldier))
+# ::snt The men believed that the soldier sneezed
+# ::tree TP_CP(believed,men,TP_intr(sneezed,soldier))
 # ::id deep_recursion_basic_sanity_check_2
-(u_19 / believe-01  :ARG0 (r / man)  :ARG1 (u_21 / leave-11  :ARG0 (s / soldier)))
+(u_76 / believe-01  :ARG0 (r / man)  :ARG1 (u_78 / sneeze-01  :ARG0 (s / soldier)))
 
 # ::snt We heard that you arrived
 # ::tree TP_CP(heard,we,TP_intr(arrived,you))
 # ::id deep_recursion_basic_sanity_check_3
-(u_23 / hear-01  :ARG0 (r / we)  :ARG1 (u_22 / arrive-01  :ARG1 (u_24 / you)))
+(u_80 / hear-01  :ARG0 (r / we)  :ARG1 (u_79 / arrive-01  :ARG1 (u_81 / you)))
 
 # ::snt I knew that the boys won
 # ::tree TP_CP(knew,I,TP_intr(won,boys))
 # ::id deep_recursion_basic_sanity_check_4
-(u_26 / know-01  :ARG0 (r / i)  :ARG1 (u_25 / win-01  :ARG0 (u_27 / boy)))
+(u_83 / know-01  :ARG0 (r / i)  :ARG1 (u_82 / win-01  :ARG0 (u_84 / boy)))
 
 # ::snt The girls thought that the kids slept
 # ::tree TP_CP(thought,girls,TP_intr(slept,kids))
 # ::id deep_recursion_basic_sanity_check_5
-(u_29 / think-01  :ARG0 (r / girl)  :ARG1 (u_28 / sleep-01  :ARG0 (u_30 / kid)))
+(u_86 / think-01  :ARG0 (r / girl)  :ARG1 (u_85 / sleep-01  :ARG0 (u_87 / kid)))
 
