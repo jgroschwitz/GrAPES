@@ -1,12 +1,13 @@
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
 from evaluation.structural_generalization import get_all_success_counts
-from evaluation.long_lists import evaluate_long_lists, evaluate_long_lists_generalization, compute_conjunct_counts, \
+from evaluation.long_lists import compute_conjunct_counts, \
     compute_generalization_op_counts
-from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, compute_smatch_f, \
-    compute_smatch_f_from_graph_lists
+from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, compute_smatch_f_from_graph_lists
 
 from penman import load
+
+from evaluation.util import filter_amrs_for_name
 
 
 class StructuralGeneralization(CategoryEvaluation):
@@ -171,13 +172,82 @@ class StructuralGeneralization(CategoryEvaluation):
         return [self.make_results_row("Exact match", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size]),
                 self.make_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])]
 
-    def compute_long_list_results(self, gold_graphs, predicted_graphs):
+    def computed_nested_control_and_coordination_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("nested_control", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_nested_control_and_coordination_sanity_check_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("nested_control_sanity_check", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_multiple_adjectives_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("adjectives", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_multiple_adjectives_sanity_check_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("adjectives_sanity_check", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_centre_embedding_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("centre_embedding", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_centre_embedding_sanity_check_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("centre_embedding_sanity_check", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_cp_recursion_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("deep_recursion_basic", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_cp_recursion_sanity_check_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("deep_recursion_basic_sanity_check", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_cp_recursion_with_coref_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("deep_recursion_pronouns", gold_graphs, predicted_graphs)
+        gold_graphs_filtered_2, predicted_graphs_filtered_2 = filter_amrs_for_name("deep_recursion_3s", gold_graphs, predicted_graphs)
+        gold_graphs_filtered += gold_graphs_filtered_2
+        predicted_graphs_filtered += predicted_graphs_filtered_2
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_cp_recursion_with_coref_sanity_check_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("deep_recursion_pronouns_sanity_check", gold_graphs, predicted_graphs)
+        gold_graphs_filtered_2, predicted_graphs_filtered_2 = filter_amrs_for_name("deep_recursion_3s_sanity_check", gold_graphs, predicted_graphs)
+        gold_graphs_filtered += gold_graphs_filtered_2
+        predicted_graphs_filtered += predicted_graphs_filtered_2
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_cp_recursion_with_rc_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("deep_recursion_rc", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_cp_recursion_with_rc_sanity_check_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("deep_recursion_rc_sanity_check", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_cp_recursion_with_rc_and_coref_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("deep_recursion_rc_contrastive_coref", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_cp_recursion_with_rc_and_coref_sanity_check_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name("deep_recursion_rc_contrastive_coref_sanity_check", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_long_lists_sanity_check_results(self, gold_graphs, predicted_graphs):
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name(
+            "long_lists_sanity_check", gold_graphs, predicted_graphs)
+        return self.compute_exact_match_and_f1_results(gold_graphs_filtered, predicted_graphs_filtered)
+
+    def compute_long_lists_results(self, gold_graphs, predicted_graphs):
         """
-        This function can be used for long lists proper. For long list sanity checks,
-         use compute_exact_match_and_f1_results
+        This function is for long lists proper. For long list sanity checks,
+         use compute_long_list_sanity_check_results
         """
-        conj_total_gold, conj_total_predictions, conj_true_predictions = compute_conjunct_counts(gold_graphs,
-                                                                                                 predicted_graphs)
+        gold_graphs_filtered, predicted_graphs_filtered = filter_amrs_for_name(
+            "long_lists", gold_graphs, predicted_graphs)
+        conj_total_gold, conj_total_predictions, conj_true_predictions = compute_conjunct_counts(gold_graphs_filtered,
+                                                                                                 predicted_graphs_filtered)
         ret = []
         ret.append(self.make_results_row("Conjunct recall", EVAL_TYPE_SUCCESS_RATE,
                                          [conj_true_predictions, conj_total_gold]))
@@ -186,7 +256,7 @@ class StructuralGeneralization(CategoryEvaluation):
         print("conj total predictions: ", conj_total_predictions)
 
         opi_gen_total_gold, opi_gen_total_predictions, opi_gen_true_predictions = compute_generalization_op_counts(
-            gold_graphs, predicted_graphs
+            gold_graphs_filtered, predicted_graphs_filtered
         )
         ret.append(self.make_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
                                          [opi_gen_true_predictions, opi_gen_total_gold]))

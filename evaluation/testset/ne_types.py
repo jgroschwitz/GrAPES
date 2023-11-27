@@ -1,6 +1,6 @@
 from evaluation.corpus_metrics import calculate_node_label_recall
 from evaluation.file_utils import load_corpus_from_folder
-from amrbank_analysis.util import get_name, get_node_by_name
+from evaluation.util import get_name, get_node_by_name
 from penman import load
 import csv
 
