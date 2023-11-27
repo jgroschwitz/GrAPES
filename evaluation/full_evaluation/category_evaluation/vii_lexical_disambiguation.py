@@ -25,3 +25,22 @@ class LexicalDisambiguation(CategoryEvaluation):
         successes, sample_size = evaluate_berts_mouth(berts_mouth_gold, berts_mouth_pred)
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 
+    def compute_common_senses_results(self, gold_graphs, predicted_graphs):
+        return [self.make_results_column_for_node_recall_from_graphs("common_senses_filtered.tsv",
+                                                                     gold_graphs,
+                                                                     predicted_graphs,
+                                                                     use_sense=True),
+                self.make_results_column_for_node_recall_from_graphs("common_senses_filtered.tsv",
+                                                                     gold_graphs,
+                                                                     predicted_graphs,
+                                                                     use_sense=False,
+                                                                     metric_label="Prerequisites")]
+
+    def compute_grapes_word_disambiguation_results(self, gold_graphs, predicted_graphs):
+        successes, sample_size = evaluate_word_disambiguation(gold_graphs, predicted_graphs)
+        return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])]
+
+    def compute_berts_mouth_results(self, gold_graphs, predicted_graphs):
+        successes, sample_size = evaluate_berts_mouth(gold_graphs, predicted_graphs)
+        return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])]
+

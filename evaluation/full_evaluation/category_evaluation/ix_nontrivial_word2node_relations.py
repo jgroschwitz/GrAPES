@@ -14,8 +14,7 @@ class NontrivialWord2NodeRelations(CategoryEvaluation):
         self.set_dataset_name("Ellipsis")
         prereqs, recalled, sample_size = get_ellipsis_success_counts(gold_amrs=self.gold_amrs,
                                                                         predicted_amrs=self.predicted_amrs,
-                                                                        root_dir=self.root_dir,
-                                                                     parser_name=self.parser_name)
+                                                                        root_dir=self.root_dir)
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
         self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])
 
@@ -29,8 +28,24 @@ class NontrivialWord2NodeRelations(CategoryEvaluation):
         self.set_dataset_name("Imperatives")
         prereqs, recalled, with_correct_target, sample_size = get_imperative_success_counts(gold_amrs=self.gold_amrs,
                                                                                             predicted_amrs=self.predicted_amrs,
-                                                                                            root_dir=self.root_dir,
-                                                                                            parser_name=self.parser_name)
+                                                                                            root_dir=self.root_dir)
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [with_correct_target, sample_size])
         # self.make_results_column("Marked as imperative", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
         self.make_and_append_results_row("Prerequisite", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])
+
+    def compute_ellipsis_results(self, gold_graphs, predicted_graphs):
+        prereqs, recalled, sample_size = get_ellipsis_success_counts(gold_graphs, predicted_graphs, self.root_dir)
+        return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size]),
+                self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
+
+    def compute_multinode_constants_results(self, gold_graphs, predicted_graphs):
+        recalled, sample_size = calculate_subgraph_existence_successes_and_sample_size("multinode_constants_filtered.tsv",
+                                                                                       gold_graphs,
+                                                                                       predicted_graphs,
+                                                                                       self.root_dir)
+        return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])]
+
+    def compute_imperative_results(self, gold_graphs, predicted_graphs):
+        prereqs, recalled, with_correct_target, sample_size = get_imperative_success_counts(gold_graphs, predicted_graphs, self.root_dir)
+        return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [with_correct_target, sample_size]),
+                self.make_results_row("Prerequisite", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]

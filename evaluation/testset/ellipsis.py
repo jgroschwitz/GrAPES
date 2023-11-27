@@ -5,7 +5,7 @@ from evaluation.file_utils import load_corpus_from_folder
 
 
 def evaluate_ellipsis(gold_amrs=None, predicted_amrs=None, parser_name=None, root_dir="../../"):
-    prereq_recalled, recalled, total = get_ellipsis_success_counts(gold_amrs, parser_name, predicted_amrs, root_dir)
+    prereq_recalled, recalled, total = get_ellipsis_success_counts(gold_amrs, predicted_amrs, root_dir)
 
     prereq_recall = prereq_recalled / total
     recall = recalled / total if total > 0 else 1.0
@@ -13,11 +13,9 @@ def evaluate_ellipsis(gold_amrs=None, predicted_amrs=None, parser_name=None, roo
     return prereq_recall, recall
 
 
-def get_ellipsis_success_counts(gold_amrs, parser_name, predicted_amrs, root_dir):
+def get_ellipsis_success_counts(gold_amrs, predicted_amrs, root_dir):
     if gold_amrs is None:
         gold_amrs = load_corpus_from_folder(f"{root_dir}/external_resources/amrs/split/test/")
-    if predicted_amrs is None:
-        predicted_amrs = load(f"{root_dir}/{parser_name}-output/testset.txt")
     id2labels = dict()
     with open(f"{root_dir}/corpus/ellipsis_filtered.tsv", "r") as f:
         csvreader = csv.reader(f, delimiter='\t', quotechar=None)
