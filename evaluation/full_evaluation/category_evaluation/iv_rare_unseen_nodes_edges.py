@@ -36,3 +36,41 @@ class RareUnseenNodesEdges(CategoryEvaluation):
         self.make_results_columns_for_edge_recall("unseen_roles_new_sentences.tsv", use_sense=True,
                                                   override_gold_amrs=unseen_roles_own_gold,
                                                   override_predicted_amrs=unseen_roles_own_pred)
+
+    def compute_rare_node_label_results(self, gold_amrs, predicted_amrs):
+        return self.make_results_column_for_node_recall_from_graphs("rare_node_labels_test.tsv",
+                                                                     gold_amrs, predicted_amrs,
+                                                                     use_sense=True)
+
+    def compute_unseen_node_label_results(self, gold_amrs, predicted_amrs):
+        return self.make_results_column_for_node_recall_from_graphs("unseen_node_labels_test_filtered.tsv",
+                                                                     gold_amrs, predicted_amrs,
+                                                                     use_sense=True)
+
+    def compute_rare_sense_results(self, gold_amrs, predicted_amrs):
+        return [self.make_results_column_for_node_recall_from_graphs("rare_senses_filtered.tsv",
+                                                                     gold_amrs, predicted_amrs,
+                                                                     use_sense=True),
+                self.make_results_column_for_node_recall_from_graphs("rare_senses_filtered.tsv",
+                                                                        gold_amrs, predicted_amrs,
+                                                                        use_sense=False,
+                                                                        metric_label="Prerequisites")]
+
+    def compute_unseen_sense_results(self, gold_amrs, predicted_amrs):
+        return [self.make_results_column_for_node_recall_from_graphs("unseen_senses_new_sentences.tsv",
+                                                                        gold_amrs, predicted_amrs,
+                                                                        use_sense=True),
+                    self.make_results_column_for_node_recall_from_graphs("unseen_senses_new_sentences.tsv",
+                                                                            gold_amrs, predicted_amrs,
+                                                                            use_sense=False,
+                                                                            metric_label="Prerequisites")]
+
+    def compute_rare_edge_label_results(self, gold_amrs, predicted_amrs):
+        return self.make_results_columns_for_edge_recall_from_graphs("rare_roles_arg2plus_filtered.tsv",
+                                                                      gold_amrs, predicted_amrs,
+                                                                      use_sense=True)
+
+    def compute_unseen_edge_label_results(self, gold_amrs, predicted_amrs):
+        return self.make_results_columns_for_edge_recall_from_graphs("unseen_roles_new_sentences.tsv",
+                                                                      gold_amrs, predicted_amrs,
+                                                                      use_sense=True)

@@ -5,7 +5,6 @@ from penman import load, Graph
 from evaluation.corpus_metrics import calculate_edge_prereq_recall_and_sample_size_counts, \
     calculate_node_label_successes_and_sample_size
 
-
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"
 
@@ -23,7 +22,7 @@ class CategoryEvaluation:
     def set_dataset_name(self, dataset_name):
         self.dataset_name = dataset_name
 
-    def make_results_column(self, metric_name: str, eval_type: str, metric_results: List):
+    def make_and_append_results_row(self, metric_name: str, eval_type: str, metric_results: List):
         """
         If you moved on to a new dataset, then call set_dataset_name() before calling this method.
         :param eval_type: either EVAL_TYPE_SUCCESS_RATE or EVAL_TYPE_F1 (the constants given category_evaluation.py)
@@ -31,12 +30,17 @@ class CategoryEvaluation:
         :param metric_results:
         :return:
         """
+        new_row = self.make_results_row(metric_name, eval_type, metric_results)
+        self.rows.append(new_row)
+
+    def make_results_row(self, metric_name, eval_type, metric_results):
         if self.dataset_name:
             ds_name = self.dataset_name
             self.dataset_name = None
         else:
             ds_name = ""
-        self.rows.append([ds_name, metric_name, eval_type] + metric_results)
+        new_row = [ds_name, metric_name, eval_type] + metric_results
+        return new_row
 
     def make_results_columns_for_edge_recall(self, tsv_filename, graph_id_column=0, source_column=1, edge_column=2,
                                              target_column=3, parent_column=None, parent_edge_column=None,
@@ -55,6 +59,16 @@ class CategoryEvaluation:
         :param parent_edge_column: for  a second parent
         :return:
         """
+        gold_amrs, predicted_amrs = self.manage_override_amrs(override_gold_amrs, override_predicted_amrs)
+        self.rows.extend(self.make_results_columns_for_edge_recall_from_graphs(tsv_filename, gold_amrs, predicted_amrs,
+                                                                               graph_id_column,
+                                                                               source_column, edge_column,
+                                                                               target_column,
+                                                                               parent_column, parent_edge_column,
+                                                                               use_sense,
+                                                                               first_row_is_header))
+
+    def manage_override_amrs(self, override_gold_amrs, override_predicted_amrs):
         if override_gold_amrs:
             gold_amrs = override_gold_amrs
         else:
@@ -63,11 +77,23 @@ class CategoryEvaluation:
             predicted_amrs = override_predicted_amrs
         else:
             predicted_amrs = self.predicted_amrs
+        return gold_amrs, predicted_amrs
+
+    def make_results_columns_for_edge_recall_from_graphs(self, tsv_filename: str,
+                                                         gold_amrs: List[Graph],
+                                                         predicted_amrs: List[Graph],
+                                                         graph_id_column=0,
+                                                         source_column=1,
+                                                         edge_column=2,
+                                                         target_column=3,
+                                                         parent_column=None,
+                                                         parent_edge_column=None,
+                                                         use_sense=False,
+                                                         first_row_is_header=False):
         prereqs, unlabeled_recalled, labeled_recalled, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
             tsv_file_name=tsv_filename,
             gold_amrs=gold_amrs,
             predicted_amrs=predicted_amrs,
-            parser_name=self.parser_name,
             root_dir=self.root_dir,
             graph_id_column=graph_id_column,
             source_column=source_column,
@@ -78,32 +104,36 @@ class CategoryEvaluation:
             use_sense=use_sense,
             first_row_is_header=first_row_is_header
         )
-        self.make_results_column("Edge recall", EVAL_TYPE_SUCCESS_RATE, [labeled_recalled, sample_size])
-        self.make_results_column("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE, [unlabeled_recalled, sample_size])
-        self.make_results_column("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])
+        return [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [labeled_recalled, sample_size]),
+                self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
+                                      [unlabeled_recalled, sample_size]),
+                self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
 
     def make_results_column_for_node_recall(self, tsv_filename, use_sense=False, use_attributes=False,
                                             attribute_label=None, metric_label="Label recall",
                                             override_gold_amrs=None, override_predicted_amrs=None):
-        if override_gold_amrs:
-            gold_amrs = override_gold_amrs
-        else:
-            gold_amrs = self.gold_amrs
-        if override_predicted_amrs:
-            predicted_amrs = override_predicted_amrs
-        else:
-            predicted_amrs = self.predicted_amrs
+        gold_amrs, predicted_amrs = self.manage_override_amrs(override_gold_amrs, override_predicted_amrs)
+        self.rows.append(self.make_results_column_for_node_recall_from_graphs(tsv_filename, gold_amrs, predicted_amrs,
+                                                                                use_sense, use_attributes,
+                                                                                attribute_label, metric_label))
+
+    def make_results_column_for_node_recall_from_graphs(self, tsv_filename: str,
+                                                        gold_amrs: List[Graph],
+                                                        predicted_amrs: List[Graph],
+                                                        use_sense=False,
+                                                        use_attributes=False,
+                                                        attribute_label=None,
+                                                        metric_label="Label recall"):
         success_count, sample_size = calculate_node_label_successes_and_sample_size(
             tsv_file_name=tsv_filename,
             use_sense=use_sense,
             gold_amrs=gold_amrs,
             predicted_amrs=predicted_amrs,
-            parser_name=self.parser_name,
             root_dir=self.root_dir,
             use_attributes=use_attributes,
             attribute_label=attribute_label
         )
-        self.make_results_column(metric_label, EVAL_TYPE_SUCCESS_RATE, [success_count, sample_size])
+        return self.make_results_row(metric_label, EVAL_TYPE_SUCCESS_RATE, [success_count, sample_size])
 
     def get_result_rows(self):
         self._run_all_evaluations()

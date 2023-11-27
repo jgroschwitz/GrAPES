@@ -1,5 +1,6 @@
 import pickle
 from typing import Counter, List, Union, Tuple
+import tempfile
 
 import penman
 import smatch
@@ -82,12 +83,20 @@ def compute_smatch_f(gold_file_path: str, prediction_file_path: str):
     return p, r, f
 
 
+def compute_smatch_f_from_graph_lists(gold_graphs: List[Graph], predicted_graphs: List[Graph]):
+    # write graphs into temporary files, using pythons inbuilt function for temp files
+    with tempfile.NamedTemporaryFile(mode="w") as gold_f:
+        with tempfile.NamedTemporaryFile(mode="w") as prediction_f:
+            penman.dump(gold_graphs, gold_f)
+            penman.dump(predicted_graphs, prediction_f)
+            compute_smatch_f(gold_f.name, prediction_f.name)
+
+
 def calculate_node_label_recall(tsv_file_name, gold_amrs=None, predicted_amrs=None, parser_name=None,
                                 root_dir="../../", use_attributes=False, attribute_label=None, use_sense=True,
                                 error_analysis_output_filename=None, error_analysis_message=None):
     success_count, sample_size = calculate_node_label_successes_and_sample_size(tsv_file_name, gold_amrs,
-                                                                                predicted_amrs,
-                                                                                parser_name, root_dir, use_attributes,
+                                                                                predicted_amrs, root_dir, use_attributes,
                                                                                 attribute_label, use_sense,
                                                                                 error_analysis_output_filename,
                                                                                 error_analysis_message)
@@ -96,13 +105,10 @@ def calculate_node_label_recall(tsv_file_name, gold_amrs=None, predicted_amrs=No
     return recall
 
 
-def calculate_node_label_successes_and_sample_size(tsv_file_name, gold_amrs=None, predicted_amrs=None, parser_name=None,
+def calculate_node_label_successes_and_sample_size(tsv_file_name, gold_amrs=None, predicted_amrs=None,
                                                    root_dir="../../", use_attributes=False, attribute_label=None,
                                                    use_sense=True,
                                                    error_analysis_output_filename=None, error_analysis_message=None):
-    gold_amrs, predicted_amrs = run_checks_and_get_backup_data_if_applicable(attribute_label, gold_amrs, parser_name,
-                                                                             predicted_amrs, root_dir, use_attributes,
-                                                                             use_sense)
     id2labels = read_node_label_tsv(root_dir, tsv_file_name)
     success_count = 0
     sample_size = 0
@@ -197,7 +203,7 @@ def calculate_edge_recall_for_tsv_file(tsv_file_name, gold_amrs=None, predicted_
                                        graph_id_column=0, source_column=1, edge_column=2, target_column=3,
                                        parent_column=None, parent_edge_column=None):
     prereq_successes, unlabeled_successes, recall_successes, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
-        tsv_file_name, gold_amrs, predicted_amrs, parser_name,
+        tsv_file_name, gold_amrs, predicted_amrs,
         root_dir, use_sense,
         error_analysis_output_filename, error_analysis_message,
         graph_id_column, source_column, edge_column, target_column,
@@ -208,7 +214,6 @@ def calculate_edge_recall_for_tsv_file(tsv_file_name, gold_amrs=None, predicted_
 
 
 def calculate_edge_prereq_recall_and_sample_size_counts(tsv_file_name, gold_amrs=None, predicted_amrs=None,
-                                                        parser_name=None,
                                                         root_dir="../../",
                                                         use_sense=True,
                                                         error_analysis_output_filename=None,
@@ -236,9 +241,6 @@ def calculate_edge_prereq_recall_and_sample_size_counts(tsv_file_name, gold_amrs
     :param parent_edge_column:
     :return:
     """
-    gold_amrs, predicted_amrs = run_checks_and_get_backup_data_if_applicable(False, gold_amrs, parser_name,
-                                                                             predicted_amrs, root_dir, False,
-                                                                             False)
     # predicted_amrs = gold_amrs  # this is for debugging: check if the gold matches what is written in the tsv file
     #  (both recall and prerequisites should be 1.0, except if the gold graph has an error and the tsv is correct)
     id2labels = read_edge_tsv(root_dir, tsv_file_name, graph_id_column, source_column, edge_column, target_column,
