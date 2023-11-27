@@ -1,6 +1,7 @@
 """
 Reads in all txt files in the corpus folder and adds them to corpus.txt
 with updated IDs
+Updates TSV files as necessary with new IDs
 """
 
 import os
@@ -14,9 +15,11 @@ for corpus_file in os.listdir("corpus"):
     if corpus_file.endswith(".txt") and corpus_file != "corpus.txt":  # corpus_file == "winograd.txt":
         # print("file", corpus_file, file=sys.stderr)
         category = penman.load(f"corpus/{corpus_file}")
-        changed = False
+        changed = False  # tracking whether we changed any IDs
         category_name = corpus_file[:-4]
         if corpus_file == "word_disambiguation.txt":
+            # there are some test set items in here
+            # that we need to remove for licensing reasons
             word_disambiguation = []
             for i, entry in enumerate(category):
                 # copy old ID to supplementary info
@@ -24,7 +27,6 @@ for corpus_file in os.listdir("corpus"):
                 entry.metadata["id"] = f"{category_name}_{i}"
                 if entry.metadata["suppl"].startswith("word_disambiguation"):
                     word_disambiguation.append(entry)
-
             full_corpus += word_disambiguation
         else:
             for i, entry in enumerate(category):
@@ -41,6 +43,7 @@ for corpus_file in os.listdir("corpus"):
             if changed:
                 print("ids changed in", corpus_file)
 
+        # hard coded -- these ones actually need to up dated because of new IDs
         if corpus_file in ["unseen_senses_new_sentences.txt",
                            "unseen_roles_new_sentences.txt",
                            "winograd.txt"]:
