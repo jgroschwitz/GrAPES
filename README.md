@@ -30,10 +30,10 @@ python #TODO path/to/AMR/testset
 
 ### Dependencies
 
-GrAPES requires the Python packages `penman` and `prettytable`.
+GrAPES requires the Python packages `penman`, `prettytable` `statsmodels`, `smatch`.
 
 ```commandline
-pip install prettytable penman
+pip install prettytable penman statsmodels smatch
 ```
 
 ## Usage
@@ -93,7 +93,52 @@ python evaluate_single_category.py -c rare_senses -g path/to/AMR/testset -p path
 These are also listed if you use the `--help` option.
 
 ```
-#TODO
+pragmatic_coreference_testset
+pragmatic_coreference_winograd
+syntactic_gap_reentrancies
+unambiguous_coreference
+nested_control_and_coordination
+nested_control_and_coordination_sanity_check
+multiple_adjectives
+multiple_adjectives_sanity_check
+centre_embedding
+centre_embedding_sanity_check
+cp_recursion
+cp_recursion_sanity_check
+cp_recursion_plus_coreference
+cp_recursion_plus_coreference_sanity_check
+cp_recursion_plus_rc
+cp_recursion_plus_rc_sanity_check
+cp_recursion_plus_rc_plus_coreference
+cp_recursion_plus_rc_plus_coreference_sanity_check
+long_lists
+long_lists_sanity_check
+rare_node_labels
+unseen_node_labels
+rare_predicate_senses_excl_01
+unseen_predicate_senses_excl_01
+rare_edge_labels
+unseen_edge_labels
+seen_names
+unseen_names
+seen_dates
+unseen_dates
+other_seen_entities
+other_unseen_entities
+types_of_seen_named_entities
+types_of_unseen_named_entities
+seen_andor_easy_wiki_links
+hard_unseen_wiki_links
+frequent_predicate_senses_incl_01
+word_ambiguities_handcrafted
+word_ambiguities_karidi_et_al_2021
+pp_attachment
+unbounded_dependencies
+passives
+unaccusatives
+ellipsis
+multinode_word_meanings
+imperatives
 ```
 
 
@@ -117,6 +162,9 @@ python vulcan.py path/to/pickle
 * All provided corpus files are in `corpus/`, including the main file `corpus.txt`.
 * All required python scripts are at the root level
 * The evaluation modules are in `evaluation/`
+* Code that was used for the paper (but that you don't need to use) is also included. 
+  * You may find that running scripts that are not at the root level gives you `PYTHONPATH` trouble. In Mac and Linux, try prepending `PYTHONPATH=./` to the command. In Windows, try to add the parent directory to the Python Path environment variable.
+
 
 ```
 GrAPES
@@ -156,8 +204,6 @@ GrAPES
 │ ├── preprocessing                         # preprocessing scripts for AM parser and AMRBART
 │ └── single_evaluation.sh                  
 └── amrbank_analysis                        # various scripts and modules used in the creation of GrAPES
-  └── grammar_helpers
-
 ```
 
 ## Credits
