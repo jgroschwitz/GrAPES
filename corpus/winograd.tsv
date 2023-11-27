@@ -1,151 +1,41 @@
-ID	comments
-annotations_anna_winograd1-30_reviewed.tsv-0	
-annotations_anna_winograd1-30_reviewed.tsv-1	
-annotations_anna_winograd1-30_reviewed.tsv-2	
-annotations_anna_winograd1-30_reviewed.tsv-3	
-annotations_anna_winograd1-30_reviewed.tsv-4	
-annotations_anna_winograd1-30_reviewed.tsv-5	
-annotations_anna_winograd1-30_reviewed.tsv-6	
-annotations_anna_winograd1-30_reviewed.tsv-7	
-annotations_anna_winograd1-30_reviewed.tsv-8	
-annotations_anna_winograd1-30_reviewed.tsv-9	
-annotations_anna_winograd1-30_reviewed.tsv-10	
-annotations_anna_winograd1-30_reviewed.tsv-11	
-annotations_anna_winograd1-30_reviewed.tsv-12	
-annotations_anna_winograd1-30_reviewed.tsv-13	
-annotations_anna_winograd1-30_reviewed.tsv-14	
-annotations_anna_winograd1-30_reviewed.tsv-15	
-annotations_anna_winograd1-30_reviewed.tsv-16	
-annotations_anna_winograd1-30_reviewed.tsv-17	
-annotations_anna_winograd1-30_reviewed.tsv-18	
-annotations_anna_winograd1-30_reviewed.tsv-19	
-annotations_anna_winograd1-30_reviewed.tsv-20	
-annotations_anna_winograd1-30_reviewed.tsv-21	
-annotations_anna_winograd1-30_reviewed.tsv-22	
-annotations_anna_winograd1-30_reviewed.tsv-23	
-annotations_anna_winograd1-30_reviewed.tsv-24	
-annotations_anna_winograd1-30_reviewed.tsv-25	
-annotations_anna_winograd1-30_reviewed.tsv-26	
-annotations_anna_winograd1-30_reviewed.tsv-27	
-annotations_anna_winograd1-30_reviewed.tsv-28	
-annotations_anna_winograd1-30_reviewed.tsv-29	
-annotations_anna_winograd91-110.tsv-0	
-annotations_anna_winograd91-110.tsv-1	
-annotations_anna_winograd91-110.tsv-2	
-annotations_anna_winograd91-110.tsv-3	
-annotations_anna_winograd91-110.tsv-4	
-annotations_anna_winograd91-110.tsv-5	
-annotations_anna_winograd91-110.tsv-6	
-annotations_anna_winograd91-110.tsv-7	
-annotations_anna_winograd91-110.tsv-8	
-annotations_anna_winograd91-110.tsv-9	
-annotations_anna_winograd91-110.tsv-10	
-annotations_anna_winograd91-110.tsv-11	
-annotations_anna_winograd91-110.tsv-12	
-annotations_anna_winograd91-110.tsv-13	
-annotations_anna_winograd91-110.tsv-14	
-annotations_anna_winograd91-110.tsv-15	
-annotations_anna_winograd91-110.tsv-16	
-annotations_anna_winograd91-110.tsv-17	
-annotations_anna_winograd91-110.tsv-18	
-annotations_anna_winograd91-110.tsv-19	
-chris_annotation_61_90.tsv-61	
-chris_annotation_61_90.tsv-62	
-chris_annotation_61_90.tsv-63	
-chris_annotation_61_90.tsv-64	
-chris_annotation_61_90.tsv-65	
-chris_annotation_61_90.tsv-66	
-chris_annotation_61_90.tsv-67	Does noun trash invoke roleset trash-01?
-chris_annotation_61_90.tsv-68	
-chris_annotation_61_90.tsv-69	
-chris_annotation_61_90.tsv-70	
-chris_annotation_61_90.tsv-71	
-chris_annotation_61_90.tsv-72	
-chris_annotation_61_90.tsv-73	
-chris_annotation_61_90.tsv-74	
-chris_annotation_61_90.tsv-75	
-chris_annotation_61_90.tsv-76	
-chris_annotation_61_90.tsv-77	
-chris_annotation_61_90.tsv-78	
-chris_annotation_61_90.tsv-79	
-chris_annotation_61_90.tsv-80	
-chris_annotation_61_90.tsv-81	
-chris_annotation_61_90.tsv-82	
-chris_annotation_61_90.tsv-83	
-chris_annotation_61_90.tsv-84	
-chris_annotation_61_90.tsv-85	
-chris_annotation_61_90.tsv-86	
-chris_annotation_61_90.tsv-87	
-chris_annotation_61_90.tsv-88	
-chris_annotation_61_90.tsv-89	impatient-01 is a roleset in PropBank, but wasn't suggested in AMR Editor. I decided to use it. Ref: https://propbank.github.io/v3.4.0/frames/impatient.html#impatient.01
-chris_annotation_61_90.tsv-90	
-chris_annotation_WG_131-150.tsv-13	
-chris_annotation_WG_131-150.tsv-132	
-chris_annotation_WG_131-150.tsv-133	
-chris_annotation_WG_131-150.tsv-134	
-chris_annotation_WG_131-150.tsv-135	
-chris_annotation_WG_131-150.tsv-136	
-chris_annotation_WG_131-150.tsv-137	
-chris_annotation_WG_131-150.tsv-138	
-chris_annotation_WG_131-150.tsv-139	
-chris_annotation_WG_131-150.tsv-140	
-chris_annotation_WG_131-150.tsv-141	
-chris_annotation_WG_131-150.tsv-142	
-chris_annotation_WG_131-150.tsv-143	
-chris_annotation_WG_131-150.tsv-144	
-chris_annotation_WG_131-150.tsv-145	
-chris_annotation_WG_131-150.tsv-146	
-chris_annotation_WG_131-150.tsv-147	
-chris_annotation_WG_131-150.tsv-148	
-chris_annotation_WG_131-150.tsv-149	
-chris_annotation_WG_131-150.tsv-150	
-Maria_Winograd1.tsv-0	cause-01 was added as an argument of :time instead of as an argument of arrive-01. ‘The policeman were coming from so far away’ is the reason for the firemen arriving after the police, not the reason for them arriving at all.
-Maria_Winograd1.tsv-1	
-Maria_Winograd1.tsv-2	
-Maria_Winograd1.tsv-3	
-Maria_Winograd1.tsv-4	
-Maria_Winograd1.tsv-5	
-Maria_Winograd1.tsv-6	
-Maria_Winograd1.tsv-7	
-Maria_Winograd1.tsv-8	
-Maria_Winograd1.tsv-9	
-Maria_Winograd1.tsv-10	
-Maria_Winograd1.tsv-11	
-Maria_Winograd1.tsv-12	
-Maria_Winograd1.tsv-13	
-Maria_Winograd1.tsv-14	
-Maria_Winograd1.tsv-15	
-Maria_Winograd1.tsv-16	
-Maria_Winograd1.tsv-17	
-Maria_Winograd1.tsv-18	
-Maria_Winograd1.tsv-19	
-Maria_Winograd1.tsv-20	
-Maria_Winograd1.tsv-21	
-Maria_Winograd1.tsv-22	
-Maria_Winograd1.tsv-23	
-Maria_Winograd1.tsv-24	
-Maria_Winograd1.tsv-25	
-Maria_Winograd1.tsv-26	
-Maria_Winograd1.tsv-27	
-Maria_Winograd1.tsv-28	
-Maria_Winograd1.tsv-29	
-Maria_Winograd2.tsv-0	 
-Maria_Winograd2.tsv-1	 
-Maria_Winograd2.tsv-2	Because they are fifteen I put the reentrancy on the 'and'.  
-Maria_Winograd2.tsv-3	 
-Maria_Winograd2.tsv-4	 
-Maria_Winograd2.tsv-5	 
-Maria_Winograd2.tsv-6	 
-Maria_Winograd2.tsv-7	 
-Maria_Winograd2.tsv-8	 
-Maria_Winograd2.tsv-9	 
-Maria_Winograd2.tsv-10	 
-Maria_Winograd2.tsv-11	 
-Maria_Winograd2.tsv-12	 
-Maria_Winograd2.tsv-13	 
-Maria_Winograd2.tsv-14	 
-Maria_Winograd2.tsv-15	 
-Maria_Winograd2.tsv-16	 
-Maria_Winograd2.tsv-17	 
-Maria_Winograd2.tsv-18	 
-Maria_Winograd2.tsv-19	
+ID	parent	edge	child	other parent	other parent edge	comments
+winograd_0	fear-01	:ARG0	(p / person :ARG0-of (h / have-org-role-91 :ARG2 (c2 / councilman)))	refuse-01	:ARG0	
+winograd_1	advocate-01	:ARG0	(p3 / person :ARG0-of (d / demonstrate-01))	refuse-01	:ARG2	
+winograd_2	have-degree-91	:ARG1	trophy	fit-06	:ARG1	
+winograd_3	have-degree-91	:ARG1	suitcase	fit-06	:ARG2	
+winograd_4	receive-01	:ARG0	(p / person :name (n / name :op1 "Joan"))	ensure-01	:ARG0	
+winograd_5	give-01	:ARG0	(p2 / person :name (n2 / name :op1 "Susan"))	thank-01	:ARG1	
+winograd_6	succeed-01	:ARG0	(p / person :name (n / name :op1 "Paul"))	try-01	:ARG0	
+winograd_7	available-02	:ARG2	(p2 / person :name (n2 / name :op1 "George"))	call-02	:ARG1	
+winograd_8	reluctant-01	:ARG0	lawyer	ask-01	:ARG0	
+winograd_9	reluctant-01	:ARG0	(p / person :ARG0-of (w / witness-01))	ask-01	:ARG2	
+winograd_10	go-01	:ARG1	truck	zoom-01	:ARG1	
+winograd_11	go-01	:ARG1	bus	zoom-01	:prep-by	
+winograd_12	win-01	:ARG0	(p / person :name (n / name :op1 "Frank"))	feel-01	:ARG0	
+winograd_13	win-01	:ARG0	(p2 / person :name (n2 / name :op1 "Bill"))	reveal-01	:ARG0	
+winograd_14	weak-02	:ARG1	man	lift-01	:ARG0	
+winograd_15	heavy-01	:ARG1	(p / person :ARG0-of (h / have-rel-role-91 :ARG2 (c2 / son)))	lift-01	:ARG1	
+winograd_16	make-01	:ARG1	ball	crash-01	:ARG0	maybe :consist-of could also be valid, but it's pretty consistently make-01 in the training set
+winograd_17	make-01	:ARG1	table	crash-01	:path	
+winograd_18	short-07	:ARG1	(p2 / person :name (n / name :op1 "John"))	see-01	:ARG0	
+winograd_19	tall-01	:ARG1	(p3 / person :name (n2 / name :op1 "Billy"))	be-located-at-91	:ARG1	
+winograd_20	reach-01	:ARG0	(p / person :name (n / name :op1 "Tom"))	throw-01	:ARG0	
+winograd_21	reach-01	:ARG0	(p2 / person :name (n2 / name :op1 "Ray"))	throw-01	:ARG2	
+winograd_22	have-06	:ARG0	(p / person :name (n / name :op1 "Sue"))	beat-03	:ARG0	
+winograd_23	have-06	:ARG0	(p2 / person :name (n2 / name :op1 "Sally"))	beat-03	:ARG1	
+winograd_24	anchor-01	:ARG1	sculpture	roll-01	:ARG1	
+winograd_25	level-04	:ARG1	shelf	off	:op1	
+winograd_26	look-02	:ARG0	(d / drawing :poss (p / person :name (n / name :op1 "Sam")))	hang-01	:ARG1	
+winograd_27	look-02	:ARG0	(d2 / drawing :poss (p2 / person :name (n2 / name :op1 "Tina")))	(a2 / above :location-of (h / hang-01))	:op1	
+winograd_28	study-01	:ARG0	(p / person :name (n / name :op1 "Anna"))	do-02	:ARG0	
+winograd_29	study-01	:ARG0	(p2 / person :name (n2 / name :op1 "Lucy"))	do-02	:ARG0	
+winograd_30	woman	:domain	(p / person :name (n / name :op1 "Anne"))	bear-02	:ARG0	
+winograd_31	baby	:domain	(p2 / person :ARG0-of (h / have-rel-role-91 :ARG2 (d / daughter)))	bear-02	:ARG1	
+winograd_32	behave-01	:ARG0	(p / person :name (n / name :op1 "Alice"))	stop-01	:ARG0	
+winograd_33	behave-01	:ARG0	(p2 / person :ARG0-of (h / have-rel-role-91 :ARG2 (d / daughter)))	stop-01	:ARG1	
+winograd_34	look-02	:ARG0	(p / person :name (n / name :op1 "Jim"))	yell-01	:ARG0	
+winograd_35	look-02	:ARG0	guy	yell-01	:ARG1	
+winograd_36	hunger-01	:ARG0	fish	eat-01	:ARG0	
+winograd_37	tasty	:domain	worm	eat-01	:ARG1	
+winograd_38	get-05	:ARG1	key	open-01	:ARG2	
+winograd_39	get-05	:ARG1	gum	fill-01	:ARG2	

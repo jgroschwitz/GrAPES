@@ -1,0 +1,36 @@
+unseen_roles_new_sentences_1	accelerate-01	:ARG2	further
+unseen_roles_new_sentences_1	accelerate-01	:ARG3	(s / speed-quantity :quant 30 :unit (m / mile-per-hour))
+unseen_roles_new_sentences_1	accelerate-01	:ARG4	(s / speed-quantity :quant 40 :unit (m / mile-per-hour))
+unseen_roles_new_sentences_2	acquire-01 	:ARG2	shop
+unseen_roles_new_sentences_2	acquire-01 	:ARG4	person
+unseen_roles_new_sentences_3	blast-05 	:ARG2	dumpster
+unseen_roles_new_sentences_3	blast-05 	:ARG3	hole
+unseen_roles_new_sentences_4	beef-up-01	:ARG2	vector
+unseen_roles_new_sentences_4	beef-up-01	:ARG3	point
+unseen_roles_new_sentences_5	bounce-01	:ARG2	distance-quantity
+unseen_roles_new_sentences_5	bounce-01	:ARG4	roof
+unseen_roles_new_sentences_6	decode-01	:ARG2	(l / language :name (n / name :op1 "English"))
+unseen_roles_new_sentences_6	decode-01	:ARG3	(l / language :name (n / name :op1 "Sumarian"))
+unseen_roles_new_sentences_7	degenerate-01	:ARG2	(p / point :quant 20)
+unseen_roles_new_sentences_7	degenerate-01	:ARG3	(p / point :quant 80)
+unseen_roles_new_sentences_7	degenerate-01	:ARG4	(p / point :quant 60)
+unseen_roles_new_sentences_8	explode-02	:ARG2	(p / percentage-entity :value 100)
+unseen_roles_new_sentences_8	explode-02	:ARG3	(p / person :quant 4000000000)
+unseen_roles_new_sentences_8	explode-02	:ARG4	(p / person :quant 8000000000)
+unseen_roles_new_sentences_9	fabricate-01	:ARG2	material
+unseen_roles_new_sentences_9	fabricate-01	:ARG3	person
+unseen_roles_new_sentences_10	goosestep-02	:ARG2	station
+unseen_roles_new_sentences_10	goosestep-02	:ARG3	parliament
+unseen_roles_new_sentences_10	goosestep-02	:ARG4	road
+unseen_roles_new_sentences_11	knock-down-02	:ARG2	(p / percentage-entity :value 30)
+unseen_roles_new_sentences_11	knock-down-02	:ARG3	high-02
+unseen_roles_new_sentences_11	knock-down-02	:ARG4	bill
+unseen_roles_new_sentences_12	lease-02	:ARG2	professor
+unseen_roles_new_sentences_12	lease-02	:ARG3	monetary-quantity
+unseen_roles_new_sentences_12	lease-02	:ARG4	temporal-quantity
+unseen_roles_new_sentences_13	organize-01	:ARG2	stack
+unseen_roles_new_sentences_13	organize-01	:ARG4	row
+unseen_roles_new_sentences_14	polish-up-03	:ARG2	cloth
+unseen_roles_new_sentences_14	polish-up-03	:ARG3	shine-01
+unseen_roles_new_sentences_15	win-over-02	:ARG2	side
+unseen_roles_new_sentences_16	vandalize-01	:ARG2	graffiti-01
