@@ -11,12 +11,17 @@ import penman
 
 full_corpus = []
 
+am = True
+am_path = "../amr-challenge/amparser-output"
+am_full_corpus = []
+
 for corpus_file in os.listdir("corpus"):
     if corpus_file.endswith(".txt") and corpus_file not in ["corpus.txt", "word_disambiguation_clean.txt"]:  # corpus_file == "winograd.txt":
         # print("file", corpus_file, file=sys.stderr)
         category = penman.load(f"corpus/{corpus_file}")
         changed = False  # tracking whether we changed any IDs
         category_name = corpus_file[:-4]
+        # print(category_name)
         if corpus_file == "word_disambiguation.txt":
             # there are some test set items in here
             # that we need to remove for licensing reasons
@@ -45,6 +50,16 @@ for corpus_file in os.listdir("corpus"):
             full_corpus += category
             if changed:
                 print("ids changed in", corpus_file)
+            if am:
+                if len(category) == 0:
+                    # if this wasn't an AMR file, we just get an empty list when we read it in
+                    print("*** not an AMR file:\n", corpus_file, "\n")
+                else:
+                    try:
+                        am_predictions = penman.load(f"{am_path}/{corpus_file}")
+                        am_full_corpus += am_predictions
+                    except FileNotFoundError:
+                        print("*** not in AM outputs:\n", corpus_file, "\n")
 
         # hard coded -- these ones actually need to up dated because of new IDs
         if corpus_file in ["unseen_senses_new_sentences.txt",
@@ -69,4 +84,7 @@ for corpus_file in os.listdir("corpus"):
 
 
 penman.dump(full_corpus, "corpus/corpus.txt")
+
+if am:
+    penman.dump(am_full_corpus, f"{am_path}/full_corpus.txt")
 
