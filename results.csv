@@ -1,0 +1,64 @@
+1,Pragmatic coreference (testset),Edge recall,6,2,18,36
+1,Pragmatic coreference (testset),Prerequisites,50,34,66,36
+1,Pragmatic coreference (Winograd),Edge recall,2,0,13,40
+1,Pragmatic coreference (Winograd),Prerequisites,78,62,88,40
+2,Syntactic (gap) reentrancies,Edge recall,24,14,39,41
+2,Syntactic (gap) reentrancies,Prerequisites,54,39,68,41
+2,Unambiguous coreference,Edge recall,10,3,25,31
+2,Unambiguous coreference,Prerequisites,71,53,84,31
+3,Nested control and coordination,Exact match,48,35,61,50
+3,Sanity check,Exact match,100,77,100,13
+3,Multiple adjectives,Exact match,72,57,84,40
+3,Sanity check,Exact match,100,74,100,11
+3,Centre embedding,Exact match,30,17,48,30
+3,Sanity check,Exact match,85,58,96,13
+3,CP recursion,Exact match,58,48,67,100
+3,Sanity check,Exact match,100,61,100,6
+3,CP recursion + coreference,Exact match,1,0,4,182
+3,Sanity check,Exact match,29,15,49,24
+3,CP recursion + relative clause (RC),Exact match,17,9,28,60
+3,Sanity check,Exact match,75,30,95,4
+3,CP recursion + RC + coreference,Exact match,0,0,5,70
+3,Sanity check,Exact match,0,0,43,5
+3,Long lists,Conjunct recall,2,2,3,1872
+3,Long lists,Conjunct precision,93,82,98,45
+3,Long lists,Unseen :opi recall,0,0,1,408
+3,Sanity check,Exact match,97,92,99,111
+4,Rare node labels,Label recall,62,59,66,676
+4,Unseen node labels,Label recall,60,51,68,117
+4,Rare predicate senses (excl. -01),Label recall,36,24,49,56
+4,Rare predicate senses (excl. -01),Prerequisites,89,79,95,56
+4,Unseen predicate senses (excl. -01),Label recall,5,1,17,40
+4,Unseen predicate senses (excl. -01),Prerequisites,88,74,95,40
+4,Rare edge labels (ARG2+),Edge recall,10,4,23,40
+4,Rare edge labels (ARG2+),Prerequisites,57,42,71,40
+4,Unseen edge labels (ARG2+),Edge recall,8,3,22,36
+4,Unseen edge labels (ARG2+),Prerequisites,44,30,60,36
+5,Seen names,Recall,86,85,88,1788
+5,Unseen names,Recall,68,65,71,910
+5,Seen dates,Recall,79,73,84,233
+5,Unseen dates,Recall,47,40,54,204
+5,Other seen entities,Recall,80,75,85,237
+5,Other unseen entities,Recall,74,65,82,109
+6,Types of seen named entities,Recall,83,81,85,1628
+6,Types of seen named entities,Prerequisites,85,83,86,1628
+6,Types of unseen named entities,Recall,35,32,39,659
+6,Types of unseen named entities,Prerequisites,59,55,63,659
+6,Seen and/or easy wiki links,Recall,70,68,72,2064
+6,Hard unseen wiki links,Recall,0,0,1,277
+7,Frequent predicate senses (incl. -01),Label recall,81,79,83,1654
+7,Frequent predicate senses (incl. -01),Prerequisites,92,90,93,1654
+7,Word ambiguities (handcrafted),N/A,N/A,N/A,N/A,N/A
+7,"Word ambiguities (Karidi et al., 2021)",Recall,75,65,82,95
+8,PP attachment,Edge recall,53,48,59,325
+8,PP attachment,Prerequisites,94,91,96,325
+8,Unbounded dependencies,N/A,N/A,N/A,N/A,N/A
+8,Passives,Edge recall,55,45,66,83
+8,Passives,Prerequisites,75,64,83,83
+8,Unaccusatives,Edge recall,50,36,64,48
+8,Unaccusatives,Prerequisites,71,57,82,48
+9,Ellipsis,Recall,3,1,15,33
+9,Ellipsis,Prerequisites,91,76,97,33
+9,Multinode word meanings,Recall,58,44,71,50
+9,Imperatives,Recall,34,25,45,76
+9,Imperatives,Prerequisite,82,71,89,76

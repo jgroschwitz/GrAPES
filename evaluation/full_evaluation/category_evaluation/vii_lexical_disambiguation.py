@@ -1,3 +1,4 @@
+from evaluation import util
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
 
@@ -41,6 +42,7 @@ class LexicalDisambiguation(CategoryEvaluation):
         return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])]
 
     def compute_berts_mouth_results(self, gold_graphs, predicted_graphs):
-        successes, sample_size = evaluate_berts_mouth(gold_graphs, predicted_graphs)
+        filtered_gold, filtered_pred = util.filter_amrs_for_name("berts_mouth", gold_graphs, predicted_graphs)
+        successes, sample_size = evaluate_berts_mouth(filtered_gold, filtered_pred)
         return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])]
 

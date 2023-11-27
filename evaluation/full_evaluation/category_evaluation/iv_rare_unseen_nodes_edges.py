@@ -38,14 +38,14 @@ class RareUnseenNodesEdges(CategoryEvaluation):
                                                   override_predicted_amrs=unseen_roles_own_pred)
 
     def compute_rare_node_label_results(self, gold_amrs, predicted_amrs):
-        return self.make_results_column_for_node_recall_from_graphs("rare_node_labels_test.tsv",
+        return [self.make_results_column_for_node_recall_from_graphs("rare_node_labels_test.tsv",
                                                                      gold_amrs, predicted_amrs,
-                                                                     use_sense=True)
+                                                                     use_sense=True)]
 
     def compute_unseen_node_label_results(self, gold_amrs, predicted_amrs):
-        return self.make_results_column_for_node_recall_from_graphs("unseen_node_labels_test_filtered.tsv",
+        return [self.make_results_column_for_node_recall_from_graphs("unseen_node_labels_test_filtered.tsv",
                                                                      gold_amrs, predicted_amrs,
-                                                                     use_sense=True)
+                                                                     use_sense=True)]
 
     def compute_rare_sense_results(self, gold_amrs, predicted_amrs):
         return [self.make_results_column_for_node_recall_from_graphs("rare_senses_filtered.tsv",

@@ -33,7 +33,7 @@ def evaluate_berts_mouth(gold_amrs: List[Graph], predicted_amrs: List[Graph]):
     success_count = 0
     for gold, pred in zip(gold_amrs, predicted_amrs):
         sample_size += 1
-        if gold.metadata["id"] in IDS_FOR_EXACT_MATCH:
+        if gold.metadata["suppl"] in IDS_FOR_EXACT_MATCH:
             if equals_modulo_isomorphy(gold, pred):
                 success_count += 1
             continue
