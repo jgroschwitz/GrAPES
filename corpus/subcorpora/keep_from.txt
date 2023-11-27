@@ -1,0 +1,756 @@
+# ::snt For thirty years, she has kept this knowledge from Jenny.
+# ::tree templateKeepInformationFromPerson(she,knowledge,jenny)
+# ::id keep_from_0
+# ::suppl keep_from_0
+(k / keep-04
+   :duration (u_1135 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1136 / knowledge
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Jenny")))
+
+# ::snt For thirty years, the fool has kept this knowledge from the police.
+# ::tree templateKeepInformationFromPerson(fool,knowledge,police)
+# ::id keep_from_1
+# ::suppl keep_from_1
+(k / keep-04
+   :duration (u_1138 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1139 / knowledge
+                 :mod (t / this))
+   :ARG2 (p2 / police))
+
+# ::snt For thirty years, the hero has kept this information from Mark.
+# ::tree templateKeepInformationFromPerson(hero,information,mark)
+# ::id keep_from_2
+# ::suppl keep_from_2
+(k / keep-04
+   :duration (u_1143 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1144 / information
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Mark")))
+
+# ::snt For thirty years, the hero has kept this information from the children.
+# ::tree templateKeepInformationFromPerson(hero,information,children)
+# ::id keep_from_3
+# ::suppl keep_from_3
+(k / keep-04
+   :duration (u_1146 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1147 / information
+                 :mod (t / this))
+   :ARG2 (p2 / child))
+
+# ::snt For thirty years, the hero has kept this wisdom from the children.
+# ::tree templateKeepInformationFromPerson(hero,wisdom,children)
+# ::id keep_from_4
+# ::suppl keep_from_4
+(k / keep-04
+   :duration (u_1149 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1150 / wisdom
+                 :mod (t / this))
+   :ARG2 (p2 / child))
+
+# ::snt For thirty years, the hero has kept this knowledge from the police.
+# ::tree templateKeepInformationFromPerson(hero,knowledge,police)
+# ::id keep_from_5
+# ::suppl keep_from_5
+(k / keep-04
+   :duration (u_1152 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1153 / knowledge
+                 :mod (t / this))
+   :ARG2 (p2 / police))
+
+# ::snt For thirty years, she has kept this news from Jenny.
+# ::tree templateKeepInformationFromPerson(she,news,jenny)
+# ::id keep_from_6
+# ::suppl keep_from_6
+(k / keep-04
+   :duration (u_1157 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1158 / news
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Jenny")))
+
+# ::snt For thirty years, the hero has kept this news from the children.
+# ::tree templateKeepInformationFromPerson(hero,news,children)
+# ::id keep_from_7
+# ::suppl keep_from_7
+(k / keep-04
+   :duration (u_1160 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1161 / news
+                 :mod (t / this))
+   :ARG2 (p2 / child))
+
+# ::snt For thirty years, she has kept this information from Jenny.
+# ::tree templateKeepInformationFromPerson(she,information,jenny)
+# ::id keep_from_8
+# ::suppl keep_from_8
+(k / keep-04
+   :duration (u_1165 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1166 / information
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Jenny")))
+
+# ::snt For thirty years, the fool has kept this wisdom from Mark.
+# ::tree templateKeepInformationFromPerson(fool,wisdom,mark)
+# ::id keep_from_9
+# ::suppl keep_from_9
+(k / keep-04
+   :duration (u_1170 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1171 / wisdom
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Mark")))
+
+# ::snt For thirty years, the fool has kept this news from Jenny.
+# ::tree templateKeepInformationFromPerson(fool,news,jenny)
+# ::id keep_from_10
+# ::suppl keep_from_10
+(k / keep-04
+   :duration (u_1175 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1176 / news
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Jenny")))
+
+# ::snt For thirty years, she has kept this wisdom from the children.
+# ::tree templateKeepInformationFromPerson(she,wisdom,children)
+# ::id keep_from_11
+# ::suppl keep_from_11
+(k / keep-04
+   :duration (u_1178 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1179 / wisdom
+                 :mod (t / this))
+   :ARG2 (p2 / child))
+
+# ::snt For thirty years, the fool has kept this news from the children.
+# ::tree templateKeepInformationFromPerson(fool,news,children)
+# ::id keep_from_12
+# ::suppl keep_from_12
+(k / keep-04
+   :duration (u_1181 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1182 / news
+                 :mod (t / this))
+   :ARG2 (p2 / child))
+
+# ::snt For thirty years, the hero has kept this knowledge from the children.
+# ::tree templateKeepInformationFromPerson(hero,knowledge,children)
+# ::id keep_from_13
+# ::suppl keep_from_13
+(k / keep-04
+   :duration (u_1184 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1185 / knowledge
+                 :mod (t / this))
+   :ARG2 (p2 / child))
+
+# ::snt For thirty years, she has kept this knowledge from the children.
+# ::tree templateKeepInformationFromPerson(she,knowledge,children)
+# ::id keep_from_14
+# ::suppl keep_from_14
+(k / keep-04
+   :duration (u_1187 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1188 / knowledge
+                 :mod (t / this))
+   :ARG2 (p2 / child))
+
+# ::snt For thirty years, the fool has kept this information from the police.
+# ::tree templateKeepInformationFromPerson(fool,information,police)
+# ::id keep_from_15
+# ::suppl keep_from_15
+(k / keep-04
+   :duration (u_1190 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1191 / information
+                 :mod (t / this))
+   :ARG2 (p2 / police))
+
+# ::snt For thirty years, the fool has kept this knowledge from Jenny.
+# ::tree templateKeepInformationFromPerson(fool,knowledge,jenny)
+# ::id keep_from_16
+# ::suppl keep_from_16
+(k / keep-04
+   :duration (u_1195 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1196 / knowledge
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Jenny")))
+
+# ::snt For thirty years, the hero has kept this knowledge from Mark.
+# ::tree templateKeepInformationFromPerson(hero,knowledge,mark)
+# ::id keep_from_17
+# ::suppl keep_from_17
+(k / keep-04
+   :duration (u_1200 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1201 / knowledge
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Mark")))
+
+# ::snt For thirty years, the hero has kept this news from Jenny.
+# ::tree templateKeepInformationFromPerson(hero,news,jenny)
+# ::id keep_from_18
+# ::suppl keep_from_18
+(k / keep-04
+   :duration (u_1205 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1206 / news
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Jenny")))
+
+# ::snt For thirty years, the hero has kept this knowledge from Jenny.
+# ::tree templateKeepInformationFromPerson(hero,knowledge,jenny)
+# ::id keep_from_19
+# ::suppl keep_from_19
+(k / keep-04
+   :duration (u_1210 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1211 / knowledge
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Jenny")))
+
+# ::snt For thirty years, the hero has kept this information from the police.
+# ::tree templateKeepInformationFromPerson(hero,information,police)
+# ::id keep_from_20
+# ::suppl keep_from_20
+(k / keep-04
+   :duration (u_1213 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1214 / information
+                 :mod (t / this))
+   :ARG2 (p2 / police))
+
+# ::snt For thirty years, the hero has kept this news from Mark.
+# ::tree templateKeepInformationFromPerson(hero,news,mark)
+# ::id keep_from_21
+# ::suppl keep_from_21
+(k / keep-04
+   :duration (u_1218 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1219 / news
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Mark")))
+
+# ::snt For thirty years, the fool has kept this wisdom from the children.
+# ::tree templateKeepInformationFromPerson(fool,wisdom,children)
+# ::id keep_from_22
+# ::suppl keep_from_22
+(k / keep-04
+   :duration (u_1221 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1222 / wisdom
+                 :mod (t / this))
+   :ARG2 (p2 / child))
+
+# ::snt For thirty years, she has kept this news from Mark.
+# ::tree templateKeepInformationFromPerson(she,news,mark)
+# ::id keep_from_23
+# ::suppl keep_from_23
+(k / keep-04
+   :duration (u_1226 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1227 / news
+                 :mod (t / this))
+   :ARG2 (p2 / person
+             :wiki -
+             :name (n / name
+                      :op1 "Mark")))
+
+# ::snt For thirty years, she has kept this news from the police.
+# ::tree templateKeepInformationFromPerson(she,news,police)
+# ::id keep_from_24
+# ::suppl keep_from_24
+(k / keep-04
+   :duration (u_1229 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1230 / news
+                 :mod (t / this))
+   :ARG2 (p2 / police))
+
+# ::snt For thirty years, she has kept this souvenir from Munich.
+# ::tree templateKeepObject(she,souvenir,Munich)
+# ::id keep_from_25
+# ::suppl keep_from_25
+(k / keep-01
+   :duration (u_1235 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1236 / souvenir
+                 :mod (t / this)
+                 :source (u_1234 / city
+                                 :wiki "Munich"
+                                 :name (n / name
+                                          :op1 "Munich"))))
+
+# ::snt For thirty years, the hero has kept this souvenir from Haiti.
+# ::tree templateKeepObject(hero,souvenir,Haiti)
+# ::id keep_from_26
+# ::suppl keep_from_26
+(k / keep-01
+   :duration (u_1241 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1242 / souvenir
+                 :mod (t / this)
+                 :source (u_1240 / country
+                                 :wiki "Haiti"
+                                 :name (n / name
+                                          :op1 "Haiti"))))
+
+# ::snt For thirty years, the hero has kept this postcard from Haiti.
+# ::tree templateKeepObject(hero,postcard,Haiti)
+# ::id keep_from_27
+# ::suppl keep_from_27
+(k / keep-01
+   :duration (u_1247 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1248 / postcard
+                 :mod (t / this)
+                 :source (u_1246 / country
+                                 :wiki "Haiti"
+                                 :name (n / name
+                                          :op1 "Haiti"))))
+
+# ::snt For thirty years, the hero has kept this souvenir from Munich.
+# ::tree templateKeepObject(hero,souvenir,Munich)
+# ::id keep_from_28
+# ::suppl keep_from_28
+(k / keep-01
+   :duration (u_1253 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1254 / souvenir
+                 :mod (t / this)
+                 :source (u_1252 / city
+                                 :wiki "Munich"
+                                 :name (n / name
+                                          :op1 "Munich"))))
+
+# ::snt For thirty years, the fool has kept this letter from Haiti.
+# ::tree templateKeepObject(fool,letter,Haiti)
+# ::id keep_from_29
+# ::suppl keep_from_29
+(k / keep-01
+   :duration (u_1259 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1260 / letter
+                 :mod (t / this)
+                 :source (u_1258 / country
+                                 :wiki "Haiti"
+                                 :name (n / name
+                                          :op1 "Haiti"))))
+
+# ::snt For thirty years, she has kept this postcard from Haiti.
+# ::tree templateKeepObject(she,postcard,Haiti)
+# ::id keep_from_30
+# ::suppl keep_from_30
+(k / keep-01
+   :duration (u_1265 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1266 / postcard
+                 :mod (t / this)
+                 :source (u_1264 / country
+                                 :wiki "Haiti"
+                                 :name (n / name
+                                          :op1 "Haiti"))))
+
+# ::snt For thirty years, she has kept this letter from Haiti.
+# ::tree templateKeepObject(she,letter,Haiti)
+# ::id keep_from_31
+# ::suppl keep_from_31
+(k / keep-01
+   :duration (u_1271 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1272 / letter
+                 :mod (t / this)
+                 :source (u_1270 / country
+                                 :wiki "Haiti"
+                                 :name (n / name
+                                          :op1 "Haiti"))))
+
+# ::snt For thirty years, the hero has kept this souvenir from Minsk.
+# ::tree templateKeepObject(hero,souvenir,Minsk)
+# ::id keep_from_32
+# ::suppl keep_from_32
+(k / keep-01
+   :duration (u_1277 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1278 / souvenir
+                 :mod (t / this)
+                 :source (u_1276 / city
+                                 :wiki "Minsk"
+                                 :name (n / name
+                                          :op1 "Minsk"))))
+
+# ::snt For thirty years, the hero has kept this necklace from Minsk.
+# ::tree templateKeepObject(hero,necklace,Minsk)
+# ::id keep_from_33
+# ::suppl keep_from_33
+(k / keep-01
+   :duration (u_1283 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1284 / necklace
+                 :mod (t / this)
+                 :source (u_1282 / city
+                                 :wiki "Minsk"
+                                 :name (n / name
+                                          :op1 "Minsk"))))
+
+# ::snt For thirty years, the fool has kept this necklace from Haiti.
+# ::tree templateKeepObject(fool,necklace,Haiti)
+# ::id keep_from_34
+# ::suppl keep_from_34
+(k / keep-01
+   :duration (u_1289 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1290 / necklace
+                 :mod (t / this)
+                 :source (u_1288 / country
+                                 :wiki "Haiti"
+                                 :name (n / name
+                                          :op1 "Haiti"))))
+
+# ::snt For thirty years, the hero has kept this postcard from Munich.
+# ::tree templateKeepObject(hero,postcard,Munich)
+# ::id keep_from_35
+# ::suppl keep_from_35
+(k / keep-01
+   :duration (u_1295 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1296 / postcard
+                 :mod (t / this)
+                 :source (u_1294 / city
+                                 :wiki "Munich"
+                                 :name (n / name
+                                          :op1 "Munich"))))
+
+# ::snt For thirty years, the fool has kept this necklace from Minsk.
+# ::tree templateKeepObject(fool,necklace,Minsk)
+# ::id keep_from_36
+# ::suppl keep_from_36
+(k / keep-01
+   :duration (u_1301 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1302 / necklace
+                 :mod (t / this)
+                 :source (u_1300 / city
+                                 :wiki "Minsk"
+                                 :name (n / name
+                                          :op1 "Minsk"))))
+
+# ::snt For thirty years, the hero has kept this letter from Munich.
+# ::tree templateKeepObject(hero,letter,Munich)
+# ::id keep_from_37
+# ::suppl keep_from_37
+(k / keep-01
+   :duration (u_1307 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1308 / letter
+                 :mod (t / this)
+                 :source (u_1306 / city
+                                 :wiki "Munich"
+                                 :name (n / name
+                                          :op1 "Munich"))))
+
+# ::snt For thirty years, the fool has kept this postcard from Minsk.
+# ::tree templateKeepObject(fool,postcard,Minsk)
+# ::id keep_from_38
+# ::suppl keep_from_38
+(k / keep-01
+   :duration (u_1313 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1314 / postcard
+                 :mod (t / this)
+                 :source (u_1312 / city
+                                 :wiki "Minsk"
+                                 :name (n / name
+                                          :op1 "Minsk"))))
+
+# ::snt For thirty years, the fool has kept this postcard from Munich.
+# ::tree templateKeepObject(fool,postcard,Munich)
+# ::id keep_from_39
+# ::suppl keep_from_39
+(k / keep-01
+   :duration (u_1319 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1320 / postcard
+                 :mod (t / this)
+                 :source (u_1318 / city
+                                 :wiki "Munich"
+                                 :name (n / name
+                                          :op1 "Munich"))))
+
+# ::snt For thirty years, the fool has kept this postcard from Haiti.
+# ::tree templateKeepObject(fool,postcard,Haiti)
+# ::id keep_from_40
+# ::suppl keep_from_40
+(k / keep-01
+   :duration (u_1325 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1326 / postcard
+                 :mod (t / this)
+                 :source (u_1324 / country
+                                 :wiki "Haiti"
+                                 :name (n / name
+                                          :op1 "Haiti"))))
+
+# ::snt For thirty years, she has kept this souvenir from Haiti.
+# ::tree templateKeepObject(she,souvenir,Haiti)
+# ::id keep_from_41
+# ::suppl keep_from_41
+(k / keep-01
+   :duration (u_1331 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1332 / souvenir
+                 :mod (t / this)
+                 :source (u_1330 / country
+                                 :wiki "Haiti"
+                                 :name (n / name
+                                          :op1 "Haiti"))))
+
+# ::snt For thirty years, the fool has kept this necklace from that adventure.
+# ::tree templateKeepObject(fool,necklace,that_adventure)
+# ::id keep_from_42
+# ::suppl keep_from_42
+(k / keep-01
+   :duration (u_1336 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1337 / necklace
+                 :mod (t / this)
+                 :source (u_1334 / adventure
+                                 :mod (u_1335 / that))))
+
+# ::snt For thirty years, the fool has kept this souvenir from Minsk.
+# ::tree templateKeepObject(fool,souvenir,Minsk)
+# ::id keep_from_43
+# ::suppl keep_from_43
+(k / keep-01
+   :duration (u_1342 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1343 / souvenir
+                 :mod (t / this)
+                 :source (u_1341 / city
+                                 :wiki "Minsk"
+                                 :name (n / name
+                                          :op1 "Minsk"))))
+
+# ::snt For thirty years, the fool has kept this letter from that adventure.
+# ::tree templateKeepObject(fool,letter,that_adventure)
+# ::id keep_from_44
+# ::suppl keep_from_44
+(k / keep-01
+   :duration (u_1347 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1348 / letter
+                 :mod (t / this)
+                 :source (u_1345 / adventure
+                                 :mod (u_1346 / that))))
+
+# ::snt For thirty years, the fool has kept this souvenir from Munich.
+# ::tree templateKeepObject(fool,souvenir,Munich)
+# ::id keep_from_45
+# ::suppl keep_from_45
+(k / keep-01
+   :duration (u_1353 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / fool)
+   :ARG1 (u_1354 / souvenir
+                 :mod (t / this)
+                 :source (u_1352 / city
+                                 :wiki "Munich"
+                                 :name (n / name
+                                          :op1 "Munich"))))
+
+# ::snt For thirty years, she has kept this necklace from Munich.
+# ::tree templateKeepObject(she,necklace,Munich)
+# ::id keep_from_46
+# ::suppl keep_from_46
+(k / keep-01
+   :duration (u_1359 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1360 / necklace
+                 :mod (t / this)
+                 :source (u_1358 / city
+                                 :wiki "Munich"
+                                 :name (n / name
+                                          :op1 "Munich"))))
+
+# ::snt For thirty years, she has kept this letter from Munich.
+# ::tree templateKeepObject(she,letter,Munich)
+# ::id keep_from_47
+# ::suppl keep_from_47
+(k / keep-01
+   :duration (u_1365 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / she)
+   :ARG1 (u_1366 / letter
+                 :mod (t / this)
+                 :source (u_1364 / city
+                                 :wiki "Munich"
+                                 :name (n / name
+                                          :op1 "Munich"))))
+
+# ::snt For thirty years, the hero has kept this postcard from Minsk.
+# ::tree templateKeepObject(hero,postcard,Minsk)
+# ::id keep_from_48
+# ::suppl keep_from_48
+(k / keep-01
+   :duration (u_1371 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1372 / postcard
+                 :mod (t / this)
+                 :source (u_1370 / city
+                                 :wiki "Minsk"
+                                 :name (n / name
+                                          :op1 "Minsk"))))
+
+# ::snt For thirty years, the hero has kept this letter from Minsk.
+# ::tree templateKeepObject(hero,letter,Minsk)
+# ::id keep_from_49
+# ::suppl keep_from_49
+(k / keep-01
+   :duration (u_1377 / temporal-quantity
+                     :quant 30
+                     :unit (y / year))
+   :ARG0 (p / hero)
+   :ARG1 (u_1378 / letter
+                 :mod (t / this)
+                 :source (u_1376 / city
+                                 :wiki "Minsk"
+                                 :name (n / name
+                                          :op1 "Minsk"))))

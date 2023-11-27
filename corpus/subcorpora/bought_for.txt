@@ -1,0 +1,613 @@
+# ::snt Dana bought tomatoes for a few dollars.
+# ::tree templateBuyForAmount(Dana,bought_for,tomatoes,few_dollars)
+# ::id bought_for_0
+# ::suppl bought_for_0
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / tomato)
+   :ARG3 (m / monetary-quantity
+            :quant (f / few)
+            :unit (d / dollar)))
+
+# ::snt Dana acquired tomatoes for a few dollars.
+# ::tree templateBuyForAmount(Dana,acquired_for,tomatoes,few_dollars)
+# ::id bought_for_1
+# ::suppl bought_for_1
+(a / acquire-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / tomato)
+   :ARG3 (m / monetary-quantity
+            :quant (f / few)
+            :unit (d / dollar)))
+
+# ::snt Kim purchased carrots for a few dollars.
+# ::tree templateBuyForAmount(Kim,purchased_for,carrots,few_dollars)
+# ::id bought_for_2
+# ::suppl bought_for_2
+(u_764 / purchase-01
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / carrot)
+       :ARG3 (m / monetary-quantity
+                :quant (f / few)
+                :unit (d / dollar)))
+
+# ::snt Kim picked up tomatoes for a few dollars.
+# ::tree templateBuyForAmount(Kim,picked_up_for,tomatoes,few_dollars)
+# ::id bought_for_3
+# ::suppl bought_for_3
+(u_767 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / tomato)
+       :ARG3 (m / monetary-quantity
+                :quant (f / few)
+                :unit (d / dollar)))
+
+# ::snt Kim acquired mushrooms for a few dollars.
+# ::tree templateBuyForAmount(Kim,acquired_for,mushrooms,few_dollars)
+# ::id bought_for_4
+# ::suppl bought_for_4
+(a / acquire-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / mushroom)
+   :ARG3 (m / monetary-quantity
+            :quant (f / few)
+            :unit (d / dollar)))
+
+# ::snt Dana acquired mushrooms for an unreasonable amount of money.
+# ::tree templateBuyForAmount(Dana,acquired_for,mushrooms,unreasonable_amount)
+# ::id bought_for_5
+# ::suppl bought_for_5
+(a / acquire-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / mushroom)
+   :ARG3 (m2 / monetary-quantity
+             :ARG1-of (u / reasonable-02
+                         :polarity -)))
+
+# ::snt Kim bought carrots for $10.
+# ::tree templateBuyForAmount(Kim,bought_for,carrots,ten_dollars)
+# ::id bought_for_6
+# ::suppl bought_for_6
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / carrot)
+   :ARG3 (m / monetary-quantity
+            :quant 10
+            :unit (d / dollar)))
+
+# ::snt Kim acquired mushrooms for $5.
+# ::tree templateBuyForAmount(Kim,acquired_for,mushrooms,five_dollars)
+# ::id bought_for_7
+# ::suppl bought_for_7
+(a / acquire-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / mushroom)
+   :ARG3 (m / monetary-quantity
+            :quant 5
+            :unit (d / dollar)))
+
+# ::snt Dana picked up mushrooms for a few dollars.
+# ::tree templateBuyForAmount(Dana,picked_up_for,mushrooms,few_dollars)
+# ::id bought_for_8
+# ::suppl bought_for_8
+(u_781 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Dana"))
+       :ARG1 (p2 / mushroom)
+       :ARG3 (m / monetary-quantity
+                :quant (f / few)
+                :unit (d / dollar)))
+
+# ::snt The chef acquired carrots for a few dollars.
+# ::tree templateBuyForAmount(chef,acquired_for,carrots,few_dollars)
+# ::id bought_for_9
+# ::suppl bought_for_9
+(a / acquire-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / carrot)
+   :ARG3 (m / monetary-quantity
+            :quant (f / few)
+            :unit (d / dollar)))
+
+# ::snt Kim picked up mushrooms for a few dollars.
+# ::tree templateBuyForAmount(Kim,picked_up_for,mushrooms,few_dollars)
+# ::id bought_for_10
+# ::suppl bought_for_10
+(u_784 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / mushroom)
+       :ARG3 (m / monetary-quantity
+                :quant (f / few)
+                :unit (d / dollar)))
+
+# ::snt Dana bought carrots for almost nothing.
+# ::tree templateBuyForAmount(Dana,bought_for,carrots,almost_nothing)
+# ::id bought_for_11
+# ::suppl bought_for_11
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / carrot)
+   :ARG3 (a / almost
+            :op1 (n2 / nothing)))
+
+# ::snt Dana bought tomatoes for almost nothing.
+# ::tree templateBuyForAmount(Dana,bought_for,tomatoes,almost_nothing)
+# ::id bought_for_12
+# ::suppl bought_for_12
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / tomato)
+   :ARG3 (a / almost
+            :op1 (n2 / nothing)))
+
+# ::snt The chef purchased carrots for almost nothing.
+# ::tree templateBuyForAmount(chef,purchased_for,carrots,almost_nothing)
+# ::id bought_for_13
+# ::suppl bought_for_13
+(u_789 / purchase-01
+       :ARG0 (p / chef)
+       :ARG1 (p2 / carrot)
+       :ARG3 (a / almost
+                :op1 (n2 / nothing)))
+
+# ::snt Kim acquired carrots for almost nothing.
+# ::tree templateBuyForAmount(Kim,acquired_for,carrots,almost_nothing)
+# ::id bought_for_14
+# ::suppl bought_for_14
+(u_790 / acquire-01
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / carrot)
+       :ARG3 (a / almost
+                :op1 (n2 / nothing)))
+
+# ::snt The chef purchased mushrooms for $10.
+# ::tree templateBuyForAmount(chef,purchased_for,mushrooms,ten_dollars)
+# ::id bought_for_15
+# ::suppl bought_for_15
+(u_794 / purchase-01
+       :ARG0 (p / chef)
+       :ARG1 (p2 / mushroom)
+       :ARG3 (m / monetary-quantity
+                :quant 10
+                :unit (d / dollar)))
+
+# ::snt Kim bought tomatoes for an unreasonable amount of money.
+# ::tree templateBuyForAmount(Kim,bought_for,tomatoes,unreasonable_amount)
+# ::id bought_for_16
+# ::suppl bought_for_16
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / tomato)
+   :ARG3 (m2 / monetary-quantity
+             :ARG1-of (u / reasonable-02
+                         :polarity -)))
+
+# ::snt Kim picked up carrots for an unreasonable amount of money.
+# ::tree templateBuyForAmount(Kim,picked_up_for,carrots,unreasonable_amount)
+# ::id bought_for_17
+# ::suppl bought_for_17
+(u_801 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / carrot)
+       :ARG3 (m2 / monetary-quantity
+                 :ARG1-of (u / reasonable-02
+                             :polarity -)))
+
+# ::snt The chef picked up carrots for an unreasonable amount of money.
+# ::tree templateBuyForAmount(chef,picked_up_for,carrots,unreasonable_amount)
+# ::id bought_for_18
+# ::suppl bought_for_18
+(u_803 / pick-up-04
+       :ARG0 (p / chef)
+       :ARG1 (p2 / carrot)
+       :ARG3 (m2 / monetary-quantity
+                 :ARG1-of (u / reasonable-02
+                             :polarity -)))
+
+# ::snt The chef picked up tomatoes for almost nothing.
+# ::tree templateBuyForAmount(chef,picked_up_for,tomatoes,almost_nothing)
+# ::id bought_for_19
+# ::suppl bought_for_19
+(u_804 / pick-up-04
+       :ARG0 (p / chef)
+       :ARG1 (p2 / tomato)
+       :ARG3 (a / almost
+                :op1 (n2 / nothing)))
+
+# ::snt The chef bought tomatoes for $5.
+# ::tree templateBuyForAmount(chef,bought_for,tomatoes,five_dollars)
+# ::id bought_for_20
+# ::suppl bought_for_20
+(b / buy-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / tomato)
+   :ARG3 (m / monetary-quantity
+            :quant 5
+            :unit (d / dollar)))
+
+# ::snt The chef bought mushrooms for almost nothing.
+# ::tree templateBuyForAmount(chef,bought_for,mushrooms,almost_nothing)
+# ::id bought_for_21
+# ::suppl bought_for_21
+(b / buy-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / mushroom)
+   :ARG3 (a / almost
+            :op1 (n2 / nothing)))
+
+# ::snt Kim acquired carrots for a few dollars.
+# ::tree templateBuyForAmount(Kim,acquired_for,carrots,few_dollars)
+# ::id bought_for_22
+# ::suppl bought_for_22
+(a / acquire-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / carrot)
+   :ARG3 (m / monetary-quantity
+            :quant (f / few)
+            :unit (d / dollar)))
+
+# ::snt The chef bought mushrooms for a few dollars.
+# ::tree templateBuyForAmount(chef,bought_for,mushrooms,few_dollars)
+# ::id bought_for_23
+# ::suppl bought_for_23
+(b / buy-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / mushroom)
+   :ARG3 (m / monetary-quantity
+            :quant (f / few)
+            :unit (d / dollar)))
+
+# ::snt Dana picked up mushrooms for almost nothing.
+# ::tree templateBuyForAmount(Dana,picked_up_for,mushrooms,almost_nothing)
+# ::id bought_for_24
+# ::suppl bought_for_24
+(u_810 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Dana"))
+       :ARG1 (p2 / mushroom)
+       :ARG3 (a / almost
+                :op1 (n2 / nothing)))
+
+# ::snt Kim picked up tomatoes for the soup.
+# ::tree templateBuyForDish(Kim,picked_up,tomatoes,soup)
+# ::id bought_for_25
+# ::suppl bought_for_25
+(u_811 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / tomato
+                 :purpose (u_814 / soup)))
+
+# ::snt Dana purchased carrots for the salad.
+# ::tree templateBuyForDish(Dana,purchased,carrots,salad)
+# ::id bought_for_26
+# ::suppl bought_for_26
+(u_815 / purchase-01
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Dana"))
+       :ARG1 (p2 / carrot
+                 :purpose (u_818 / salad)))
+
+# ::snt Kim bought carrots for the pasta sauce.
+# ::tree templateBuyForDish(Kim,bought,carrots,pasta_sauce)
+# ::id bought_for_27
+# ::suppl bought_for_27
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / carrot
+             :purpose (u_821 / sauce
+                             :mod (t / pasta))))
+
+# ::snt Dana purchased mushrooms for the salad.
+# ::tree templateBuyForDish(Dana,purchased,mushrooms,salad)
+# ::id bought_for_28
+# ::suppl bought_for_28
+(u_822 / purchase-01
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Dana"))
+       :ARG1 (p2 / mushroom
+                 :purpose (u_825 / salad)))
+
+# ::snt The chef purchased carrots for the salad.
+# ::tree templateBuyForDish(chef,purchased,carrots,salad)
+# ::id bought_for_29
+# ::suppl bought_for_29
+(u_826 / purchase-01
+       :ARG0 (p / chef)
+       :ARG1 (p2 / carrot
+                 :purpose (u_827 / salad)))
+
+# ::snt Kim purchased carrots for the pasta sauce.
+# ::tree templateBuyForDish(Kim,purchased,carrots,pasta_sauce)
+# ::id bought_for_30
+# ::suppl bought_for_30
+(u_828 / purchase-01
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / carrot
+                 :purpose (u_831 / sauce
+                                 :mod (t / pasta))))
+
+# ::snt The chef acquired mushrooms for the pasta sauce.
+# ::tree templateBuyForDish(chef,acquired,mushrooms,pasta_sauce)
+# ::id bought_for_31
+# ::suppl bought_for_31
+(a / acquire-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / mushroom
+             :purpose (u_832 / sauce
+                             :mod (t / pasta))))
+
+# ::snt Dana picked up carrots for the pasta sauce.
+# ::tree templateBuyForDish(Dana,picked_up,carrots,pasta_sauce)
+# ::id bought_for_32
+# ::suppl bought_for_32
+(u_833 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Dana"))
+       :ARG1 (p2 / carrot
+                 :purpose (u_836 / sauce
+                                 :mod (t / pasta))))
+
+# ::snt Dana acquired mushrooms for the pasta sauce.
+# ::tree templateBuyForDish(Dana,acquired,mushrooms,pasta_sauce)
+# ::id bought_for_33
+# ::suppl bought_for_33
+(a / acquire-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / mushroom
+             :purpose (u_839 / sauce
+                             :mod (t / pasta))))
+
+# ::snt Kim bought carrots for the salad.
+# ::tree templateBuyForDish(Kim,bought,carrots,salad)
+# ::id bought_for_34
+# ::suppl bought_for_34
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / carrot
+             :purpose (u_842 / salad)))
+
+# ::snt Dana bought tomatoes for the salad.
+# ::tree templateBuyForDish(Dana,bought,tomatoes,salad)
+# ::id bought_for_35
+# ::suppl bought_for_35
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / tomato
+             :purpose (u_845 / salad)))
+
+# ::snt Dana bought mushrooms for the pasta sauce.
+# ::tree templateBuyForDish(Dana,bought,mushrooms,pasta_sauce)
+# ::id bought_for_36
+# ::suppl bought_for_36
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / mushroom
+             :purpose (u_848 / sauce
+                             :mod (t / pasta))))
+
+# ::snt Kim picked up carrots for the pasta sauce.
+# ::tree templateBuyForDish(Kim,picked_up,carrots,pasta_sauce)
+# ::id bought_for_37
+# ::suppl bought_for_37
+(u_849 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / carrot
+                 :purpose (u_852 / sauce
+                                 :mod (t / pasta))))
+
+# ::snt Kim picked up carrots for the soup.
+# ::tree templateBuyForDish(Kim,picked_up,carrots,soup)
+# ::id bought_for_38
+# ::suppl bought_for_38
+(u_853 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / carrot
+                 :purpose (u_856 / soup)))
+
+# ::snt The chef bought carrots for the pasta sauce.
+# ::tree templateBuyForDish(chef,bought,carrots,pasta_sauce)
+# ::id bought_for_39
+# ::suppl bought_for_39
+(b / buy-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / carrot
+             :purpose (u_857 / sauce
+                             :mod (t / pasta))))
+
+# ::snt The chef acquired tomatoes for the soup.
+# ::tree templateBuyForDish(chef,acquired,tomatoes,soup)
+# ::id bought_for_40
+# ::suppl bought_for_40
+(a / acquire-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / tomato
+             :purpose (u_858 / soup)))
+
+# ::snt The chef acquired carrots for the salad.
+# ::tree templateBuyForDish(chef,acquired,carrots,salad)
+# ::id bought_for_41
+# ::suppl bought_for_41
+(a / acquire-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / carrot
+             :purpose (u_859 / salad)))
+
+# ::snt Dana purchased mushrooms for the pasta sauce.
+# ::tree templateBuyForDish(Dana,purchased,mushrooms,pasta_sauce)
+# ::id bought_for_42
+# ::suppl bought_for_42
+(u_860 / purchase-01
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Dana"))
+       :ARG1 (p2 / mushroom
+                 :purpose (u_863 / sauce
+                                 :mod (t / pasta))))
+
+# ::snt Kim purchased mushrooms for the pasta sauce.
+# ::tree templateBuyForDish(Kim,purchased,mushrooms,pasta_sauce)
+# ::id bought_for_43
+# ::suppl bought_for_43
+(u_864 / purchase-01
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Kim"))
+       :ARG1 (p2 / mushroom
+                 :purpose (u_867 / sauce
+                                 :mod (t / pasta))))
+
+# ::snt Dana acquired carrots for the pasta sauce.
+# ::tree templateBuyForDish(Dana,acquired,carrots,pasta_sauce)
+# ::id bought_for_44
+# ::suppl bought_for_44
+(a / acquire-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / carrot
+             :purpose (u_870 / sauce
+                             :mod (t / pasta))))
+
+# ::snt Kim acquired mushrooms for the salad.
+# ::tree templateBuyForDish(Kim,acquired,mushrooms,salad)
+# ::id bought_for_45
+# ::suppl bought_for_45
+(a / acquire-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / mushroom
+             :purpose (u_873 / salad)))
+
+# ::snt The chef acquired carrots for the pasta sauce.
+# ::tree templateBuyForDish(chef,acquired,carrots,pasta_sauce)
+# ::id bought_for_46
+# ::suppl bought_for_46
+(a / acquire-01
+   :ARG0 (p / chef)
+   :ARG1 (p2 / carrot
+             :purpose (u_874 / sauce
+                             :mod (t / pasta))))
+
+# ::snt Dana picked up mushrooms for the pasta sauce.
+# ::tree templateBuyForDish(Dana,picked_up,mushrooms,pasta_sauce)
+# ::id bought_for_47
+# ::suppl bought_for_47
+(u_875 / pick-up-04
+       :ARG0 (p / person
+                :wiki -
+                :name (n / name
+                         :op1 "Dana"))
+       :ARG1 (p2 / mushroom
+                 :purpose (u_878 / sauce
+                                 :mod (t / pasta))))
+
+# ::snt Dana bought mushrooms for the salad.
+# ::tree templateBuyForDish(Dana,bought,mushrooms,salad)
+# ::id bought_for_48
+# ::suppl bought_for_48
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Dana"))
+   :ARG1 (p2 / mushroom
+             :purpose (u_881 / salad)))
+
+# ::snt Kim bought carrots for the soup.
+# ::tree templateBuyForDish(Kim,bought,carrots,soup)
+# ::id bought_for_49
+# ::suppl bought_for_49
+(b / buy-01
+   :ARG0 (p / person
+            :wiki -
+            :name (n / name
+                     :op1 "Kim"))
+   :ARG1 (p2 / carrot
+             :purpose (u_884 / soup)))

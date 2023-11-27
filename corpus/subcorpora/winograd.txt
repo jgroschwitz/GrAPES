@@ -1,0 +1,2728 @@
+# ::id winograd_0
+# ::snt The city councilmen refused the demonstrators a permit because they feared violence.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-0
+(r / refuse-01
+   :ARG0 (p / person
+            :ARG0-of (h / have-org-role-91
+                        :ARG1 (c / city)
+                        :ARG2 (c2 / councilman)))
+   :ARG1 (p2 / permit-01)
+   :ARG2 (p3 / person
+             :ARG0-of (d / demonstrate-01))
+   :ARG1-of (c3 / cause-01
+                :ARG0 (f / fear-01
+                         :ARG0 p
+                         :ARG1 (v / violence))))
+
+# ::id winograd_1
+# ::snt The city councilmen refused the demonstrators a permit because they advocated violence.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-1
+(r / refuse-01
+   :ARG0 (p / person
+            :ARG0-of (h / have-org-role-91
+                        :ARG1 (c / city)
+                        :ARG2 (c2 / councilman)))
+   :ARG1 (p2 / permit-01)
+   :ARG2 (p3 / person
+             :ARG0-of (d / demonstrate-01))
+   :ARG1-of (c3 / cause-01
+                :ARG1 (a / advocate-01
+                         :ARG0 p3
+                         :ARG1 (v / violence))))
+
+# ::id winograd_2
+# ::snt The trophy doesn't fit into the brown suitcase because it is too large.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-2
+(f / fit-06
+   :polarity -
+   :ARG1 (t / trophy)
+   :ARG2 (s / suitcase
+            :ARG1-of (b / brown-01))
+   :ARG1-of (c / cause-01
+               :ARG0 (h / have-degree-91
+                        :ARG1 t
+                        :ARG2 (l / large)
+                        :ARG3 (t2 / too))))
+
+# ::id winograd_3
+# ::snt The trophy doesn't fit into the brown suitcase because it is too small.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-3
+(f / fit-06
+   :polarity -
+   :ARG1 (t / trophy)
+   :ARG2 (s / suitcase
+            :ARG1-of (b / brown-01))
+   :ARG1-of (c / cause-01
+               :ARG0 (h / have-degree-91
+                        :ARG1 s
+                        :ARG2 (s2 / small)
+                        :ARG3 (t2 / too))))
+
+# ::id winograd_4
+# ::snt Joan made sure to thank Susan for all the help she had recieved.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-4
+(e / ensure-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Joan"))
+   :ARG1 (t / thank-01
+            :ARG0 p
+            :ARG1 (p2 / person
+                      :name (n2 / name
+                                :op1 "Susan"))
+            :ARG2 (h / help-01
+                     :ARG1-of (r / receive-01
+                                 :ARG0 p)
+                     :mod (a / all))))
+
+# ::id winograd_5
+# ::snt Joan made sure to thank Susan for all the help she had given.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-5
+(e / ensure-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Joan"))
+   :ARG1 (t / thank-01
+            :ARG0 p
+            :ARG1 (p2 / person
+                      :name (n2 / name
+                                :op1 "Susan"))
+            :ARG2 (h / help-01
+                     :ARG1-of (g / give-01
+                                 :ARG0 p2)
+                     :mod (a / all))))
+
+# ::id winograd_6
+# ::snt Paul tried to call George on the phone, but he wasn't successful.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-6
+(c / contrast-01
+   :ARG1 (t / try-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Paul"))
+            :ARG1 (c2 / call-02
+                      :ARG0 p
+                      :ARG1 (p2 / person
+                                :name (n2 / name
+                                          :op1 "George"))
+                      :instrument (p3 / phone)))
+   :ARG2 (s / succeed-01
+            :polarity -
+            :ARG0 p))
+
+# ::id winograd_7
+# ::snt Paul tried to call George on the phone, but he wasn't available.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-7
+(c / contrast-01
+   :ARG1 (t / try-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Paul"))
+            :ARG1 (c2 / call-02
+                      :ARG0 p
+                      :ARG1 (p2 / person
+                                :name (n2 / name
+                                          :op1 "George"))
+                      :instrument (p3 / phone)))
+   :ARG2 (a / available-02
+            :polarity -
+            :ARG2 p2))
+
+# ::id winograd_8
+# ::snt The lawyer asked the witness a question, but he was reluctant to repeat it.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-8
+(c / contrast-01
+   :ARG1 (a / ask-01
+            :ARG0 (l / lawyer)
+            :ARG1 (q / question-01)
+            :ARG2 (p / person
+                     :ARG0-of (w / witness-01)))
+   :ARG2 (r / reluctant-01
+            :ARG0 l
+            :ARG1 (r2 / repeat-01
+                      :ARG0 l
+                      :ARG1 q)))
+
+# ::id winograd_9
+# ::snt The lawyer asked the witness a question, but he was reluctant to answer it.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-9
+(c / contrast-01
+   :ARG1 (a / ask-01
+            :ARG0 (l / lawyer)
+            :ARG1 (q / question-01)
+            :ARG2 (p / person
+                     :ARG0-of (w / witness-01)))
+   :ARG2 (r / reluctant-01
+            :ARG0 p
+            :ARG1 (a2 / answer-01
+                      :ARG0 p
+                      :ARG1 q)))
+
+# ::id winograd_10
+# ::snt The delivery truck zoomed by the school bus because it was going so fast.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-10
+(z / zoom-01
+   :ARG1 (t / truck
+            :purpose (d / deliver-01))
+   :prep-by (b / bus
+               :mod (s / school))
+   :ARG1-of (c / cause-01
+               :ARG0 (g / go-01
+                        :ARG1 t
+                        :manner (f / fast-02
+                                   :degree (s2 / so)))))
+
+# ::id winograd_11
+# ::snt The delivery truck zoomed by the school bus because it was going so slow.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-11
+(z / zoom-01
+   :ARG1 (t / truck
+            :purpose (d / deliver-01))
+   :prep-by (b / bus
+               :mod (s / school))
+   :ARG1-of (c / cause-01
+               :ARG0 (g / go-01
+                        :ARG1 b
+                        :manner (s2 / slow-05
+                                    :degree (s3 / so)))))
+
+# ::id winograd_12
+# ::snt Frank felt vindicated when his longtime rival Bill revealed that he was the winner of the competition.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-12
+(f / feel-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Frank"))
+   :ARG1 (v / vindicate-01
+            :ARG1 p)
+   :time (r / reveal-01
+            :ARG0 (p2 / person
+                      :name (n2 / name
+                                :op1 "Bill")
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG1 p
+                                  :ARG2 (r2 / rival
+                                            :duration (l / longtime))))
+            :ARG1 (w / win-01
+                     :ARG0 p
+                     :ARG2 (c / competition))))
+
+# ::id winograd_13
+# ::snt Frank felt crushed when his longtime rival Bill revealed that he was the winner of the competition.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-13
+(f / feel-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Frank"))
+   :ARG1 (c2 / crush
+             :ARG1 p)
+   :time (r / reveal-01
+            :ARG0 (p2 / person
+                      :name (n2 / name
+                                :op1 "Bill")
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG1 p
+                                  :ARG2 (r2 / rival
+                                            :duration (l / longtime))))
+            :ARG1 (w / win-01
+                     :ARG0 p2
+                     :ARG2 (c / competition))))
+
+# ::id winograd_14
+# ::snt The man couldn't lift his son because he was so weak.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-14
+(p / possible-01
+   :polarity -
+   :ARG1 (l / lift-01
+            :ARG0 (m / man)
+            :ARG1 (p2 / person
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG2 (s / son)
+                                  :ARG1 m)))
+   :ARG1-of (c / cause-01
+               :ARG0 (w / weak-02
+                        :ARG1 m
+                        :degree (s2 / so))))
+
+# ::id winograd_15
+# ::snt The man couldn't lift his son because he was so heavy.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-15
+(p / possible-01
+   :polarity -
+   :ARG1 (l / lift-01
+            :ARG0 (m / man)
+            :ARG1 (p2 / person
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG2 (s / son)
+                                  :ARG1 m)))
+   :ARG1-of (c / cause-01
+               :ARG0 (h2 / heavy-01
+                         :ARG1 p2
+                         :degree (s2 / so))))
+
+# ::id winograd_16
+# ::snt The large ball crashed right through the table because it was made of steel.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-16
+(c / crash-01
+   :ARG0 (b / ball
+            :mod (l / large))
+   :path (t / table
+            :mod (r / right-yy))
+   :ARG1-of (c2 / cause-01
+                :ARG0 (m / make-01
+                         :ARG1 b
+                         :ARG2 (s / steel))))
+
+# ::id winograd_17
+# ::snt The large ball crashed right through the table because it was made of styrofoam.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-17
+(c / crash-01
+   :ARG0 (b / ball
+            :mod (l / large))
+   :path (t / table
+            :mod (r / right-yy))
+   :ARG1-of (c2 / cause-01
+                :ARG0 (m / make-01
+                         :ARG1 t
+                         :ARG2 (s / styrofoam))))
+
+# ::id winograd_18
+# ::snt John couldn't see the stage with Billy in front of him because he is so short.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-18
+(p / possible-01
+   :polarity -
+   :ARG1 (s / see-01
+            :ARG0 (p2 / person
+                      :name (n / name
+                               :op1 "John"))
+            :ARG1 (s2 / stage))
+   :ARG1-of (c / cause-01
+               :ARG0 (s3 / short-07
+                         :ARG1 p2
+                         :degree (s4 / so)))
+   :ARG1-of (c2 / cause-01
+                :ARG1 (b / be-located-at-91
+                         :ARG1 (p3 / person
+                                   :name (n2 / name
+                                             :op1 "Billy"))
+                         :ARG2 (i2 / in-front-of
+                                   :op1 p2))))
+
+# ::id winograd_19
+# ::snt John couldn't see the stage with Billy in front of him because he is so tall.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-19
+(p / possible-01
+   :polarity -
+   :ARG1 (s / see-01
+            :ARG0 (p2 / person
+                      :name (n / name
+                               :op1 "John"))
+            :ARG1 (s2 / stage))
+   :ARG1-of (c / cause-01
+               :ARG0 (t / tall-01
+                        :ARG1 p3
+                        :degree (s4 / so)))
+   :ARG1-of (c2 / cause-01
+                :ARG1 (b / be-located-at-91
+                         :ARG1 (p3 / person
+                                   :name (n2 / name
+                                             :op1 "Billy"))
+                         :ARG2 (i2 / in-front-of
+                                   :op1 p2))))
+
+# ::id winograd_20
+# ::snt Tom threw his schoolbag down to Ray after he reached the top of the stairs.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-20
+(t / throw-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Tom"))
+   :ARG1 (b / bag
+            :purpose (s / school))
+   :ARG2 (p2 / person
+             :name (n2 / name
+                       :op1 "Ray"))
+   :direction (d / down)
+   :time (a / after
+            :op1 (r / reach-01
+                    :ARG0 p
+                    :ARG1 (t2 / top
+                              :part-of (s2 / stairs)))))
+
+# ::id winograd_21
+# ::snt Tom threw his schoolbag down to Ray after he reached the bottom of the stairs.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-21
+(t / throw-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Tom"))
+   :ARG1 (b / bag
+            :purpose (s / school))
+   :ARG2 (p2 / person
+             :name (n2 / name
+                       :op1 "Ray"))
+   :direction (d / down)
+   :time (a / after
+            :op1 (r / reach-01
+                    :ARG0 p2
+                    :ARG1 (b2 / bottom
+                              :part-of (s2 / stairs)))))
+
+# ::id winograd_22
+# ::snt Although they ran at about the same speed, Sue beat Sally because she had such a good start.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-22
+(b / beat-03
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sue"))
+   :ARG1 (p2 / person
+             :name (n2 / name
+                       :op1 "Sally"))
+   :ARG1-of (c / cause-01
+               :ARG0 (h / have-06
+                        :ARG0 p
+                        :ARG1 (s / start-01
+                                 :ARG1-of (g / good-02
+                                             :mod (s2 / such)))))
+   :concession (s3 / same-01
+                   :ARG1 p
+                   :ARG2 p2
+                   :ARG3 (s4 / speed
+                             :mod (r / run-02))
+                   :degree (a / about)))
+
+# ::id winograd_23
+# ::snt Although they ran at about the same speed, Sue beat Sally because she had such a bad start.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-23
+(b / beat-03
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sue"))
+   :ARG1 (p2 / person
+             :name (n2 / name
+                       :op1 "Sally"))
+   :ARG1-of (c / cause-01
+               :ARG0 (h / have-06
+                        :ARG0 p2
+                        :ARG1 (s / start-01
+                                 :ARG1-of (b2 / bad
+                                              :mod (s2 / such)))))
+   :concession (s3 / same-01
+                   :ARG1 p
+                   :ARG2 p2
+                   :ARG3 (s4 / speed
+                             :mod (r / run-02))
+                   :degree (a / about)))
+
+# ::id winograd_24
+# ::snt The sculpture rolled off the shelf because it wasn't anchored.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-24
+(r / roll-01
+   :ARG1 (s / sculpture)
+   :direction (o / off
+                 :op1 (s2 / shelf))
+   :ARG1-of (c / cause-01
+               :ARG0 (a / anchor-01
+                        :polarity -
+                        :ARG1 s)))
+
+# ::id winograd_25
+# ::snt The sculpture rolled off the shelf because it wasn't level.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-25
+(r / roll-01
+   :ARG1 (s / sculpture)
+   :direction (o / off
+                 :op1 (s2 / shelf))
+   :ARG1-of (c / cause-01
+               :ARG0 (l / level-04
+                        :polarity -
+                        :ARG1 s2)))
+
+# ::id winograd_26
+# ::snt Sam's drawing was hung just above Tina's and it did look much better with another one below it.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-26
+(a / and
+   :op1 (h / hang-01
+           :ARG1 (d / drawing
+                    :poss (p / person
+                             :name (n / name
+                                      :op1 "Sam")))
+           :location (a2 / above
+                         :op1 (d2 / drawing
+                                  :poss (p2 / person
+                                            :name (n2 / name
+                                                      :op1 "Tina")))
+                         :mod (j / just)))
+   :op2 (l / look-02
+           :ARG0 d
+           :ARG1 (g / good-02
+                    :ARG2-of (h2 / have-degree-91
+                                 :ARG3 (m / more
+                                          :quant (m2 / much))))
+           :prep-with (d3 / drawing
+                          :mod (a3 / another)
+                          :location (b / below
+                                       :op1 d))))
+
+# ::id winograd_27
+# ::snt Sam's drawing was hung just above Tina's and it did look much better with another one above it.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-27
+(a / and
+   :op1 (h / hang-01
+           :ARG1 (d / drawing
+                    :poss (p / person
+                             :name (n / name
+                                      :op1 "Sam")))
+           :location (a2 / above
+                         :op1 (d2 / drawing
+                                  :poss (p2 / person
+                                            :name (n2 / name
+                                                      :op1 "Tina")))
+                         :mod (j / just)))
+   :op2 (l / look-02
+           :ARG0 d2
+           :ARG1 (g / good-02
+                    :ARG2-of (h2 / have-degree-91
+                                 :ARG3 (m / more
+                                          :quant (m2 / much))))
+           :prep-with (d3 / drawing
+                          :mod (a3 / another)
+                          :location (a4 / above
+                                        :op1 d2))))
+
+# ::id winograd_28
+# ::snt Anna did a lot better than her good friend Lucy on the test because she had studied so hard.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-28
+(h / have-degree-91
+   :ARG1 (d / do-02
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Anna"))
+            :ARG2 (t / test))
+   :ARG2 (g / good-02)
+   :ARG3 (m / more
+            :degree (l / lot))
+   :ARG4 (d2 / do-02
+             :ARG0 (p2 / person
+                       :name (n2 / name
+                                 :op1 "Lucy")
+                       :ARG0-of (h2 / have-rel-role-91
+                                    :ARG1 p
+                                    :ARG2 (f / friend
+                                             :ARG1-of (g2 / good-02))))
+             :ARG2 t)
+   :ARG1-of (c / cause-01
+               :ARG0 (s / study-01
+                        :ARG0 p
+                        :manner (h3 / hard-02
+                                    :degree (s2 / so)))))
+
+# ::id winograd_29
+# ::snt Anna did a lot worse than her good friend Lucy on the test because she had studied so hard.
+# ::suppl annotations_anna_winograd1-30_reviewed.tsv-29
+(h / have-degree-91
+   :ARG1 (d / do-02
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Anna"))
+            :ARG2 (t / test))
+   :ARG2 (g / good-02)
+   :ARG3 (l2 / less
+             :degree (l / lot))
+   :ARG4 (d2 / do-02
+             :ARG0 (p2 / person
+                       :name (n2 / name
+                                 :op1 "Lucy")
+                       :ARG0-of (h2 / have-rel-role-91
+                                    :ARG1 p
+                                    :ARG2 (f / friend
+                                             :ARG1-of (g2 / good-02))))
+             :ARG2 t)
+   :ARG1-of (c / cause-01
+               :ARG0 (s / study-01
+                        :ARG0 p2
+                        :manner (h3 / hard-02
+                                    :degree (s2 / so)))))
+
+# ::id winograd_30
+# ::snt Anne gave birth to a daughter last month. She is a very charming woman.
+# ::suppl annotations_anna_winograd91-110.tsv-0
+(m / multi-sentence
+   :snt1 (b / bear-02
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Anne"))
+            :ARG1 (p2 / person
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG1 p
+                                  :ARG2 (d / daughter)))
+            :time (m2 / month
+                      :mod (l / last)))
+   :snt2 (w / woman
+            :domain p
+            :ARG0-of (c / charm-01
+                        :degree (v / very))))
+
+# ::id winograd_31
+# ::snt Anne gave birth to a daughter last month. She is a very charming baby.
+# ::suppl annotations_anna_winograd91-110.tsv-1
+(m / multi-sentence
+   :snt1 (b / bear-02
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Anne"))
+            :ARG1 (p2 / person
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG1 p
+                                  :ARG2 (d / daughter)))
+            :time (m2 / month
+                      :mod (l / last)))
+   :snt2 (b2 / baby
+             :domain p2
+             :ARG0-of (c / charm-01
+                         :degree (v / very))))
+
+# ::id winograd_32
+# ::snt Alice tried frantically to stop her daughter from chatting at the party, leaving us to wonder why she was behaving so strangely.
+# ::suppl annotations_anna_winograd91-110.tsv-2
+(t / try-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Alice"))
+   :ARG1 (s / stop-03
+            :ARG0 p
+            :ARG1 (p2 / person
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG1 p
+                                  :ARG2 (d / daughter)))
+            :ARG2 (c / chat-01
+                     :location (p3 / party)))
+   :ARG0-of (l / leave-13
+               :ARG1 (w / wonder-01
+                        :ARG0 (w2 / we)
+                        :ARG1 (t2 / thing
+                                  :ARG0-of (c2 / cause-01
+                                               :ARG1 (b / behave-01
+                                                        :ARG0 p
+                                                        :ARG1 (s2 / strange))))))
+   :manner (f / frantic))
+
+# ::id winograd_33
+# ::snt Alice tried frantically to stop her daughter from barking at the party, leaving us to wonder why she was behaving so strangely.
+# ::suppl annotations_anna_winograd91-110.tsv-3
+(t / try-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Alice"))
+   :ARG1 (s / stop-03
+            :ARG0 p
+            :ARG1 (p2 / person
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG1 p
+                                  :ARG2 (d / daughter)))
+            :ARG2 (b2 / bark-01
+                      :location (p3 / party)))
+   :ARG0-of (l / leave-13
+               :ARG1 (w / wonder-01
+                        :ARG0 (w2 / we)
+                        :ARG1 (t2 / thing
+                                  :ARG0-of (c2 / cause-01
+                                               :ARG1 (b / behave-01
+                                                        :ARG0 p2
+                                                        :ARG1 (s2 / strange))))))
+   :manner (f / frantic))
+
+# ::id winograd_34
+# ::snt I saw Jim yelling at some guy in a military uniform with a huge red beard. I don't know why he was, but he looked very unhappy.
+# ::suppl annotations_anna_winograd91-110.tsv-4
+(m / multi-sentence
+   :snt1 (s / see-01
+            :ARG0 (i / i)
+            :ARG1 (y / yell-01
+                     :ARG0 (p / person
+                              :name (n / name
+                                       :op1 "Jim"))
+                     :ARG2 (g / guy
+                              :mod (s2 / some)
+                              :prep-in (u / uniform
+                                          :mod (m2 / military))
+                              :ARG0-of (h / have-03
+                                          :ARG1 (b / beard
+                                                   :ARG1-of (r / red-02)
+                                                   :mod (h2 / huge))))))
+   :snt2 (c / contrast-01
+            :ARG1 (k / know-01
+                     :polarity -
+                     :ARG0 i
+                     :ARG1 (t / thing
+                              :ARG0-of (c2 / cause-01
+                                           :ARG1 y)))
+            :ARG2 (l / look-02
+                     :ARG0 p
+                     :ARG1 (h3 / happy-01
+                               :polarity -
+                               :degree (v / very)))))
+
+# ::id winograd_35
+# ::snt I saw Jim yelling at some guy in a military uniform with a huge red beard. I don't know who he was, but he looked very unhappy.
+# ::suppl annotations_anna_winograd91-110.tsv-5
+(m / multi-sentence
+   :snt1 (s / see-01
+            :ARG0 (i / i)
+            :ARG1 (y / yell-01
+                     :ARG0 (p / person
+                              :name (n / name
+                                       :op1 "Jim"))
+                     :ARG2 (g / guy
+                              :mod (s2 / some)
+                              :prep-in (u / uniform
+                                          :mod (m2 / military))
+                              :ARG0-of (h / have-03
+                                          :ARG1 (b / beard
+                                                   :ARG1-of (r / red-02)
+                                                   :mod (h2 / huge))))))
+   :snt2 (c / contrast-01
+            :ARG1 (k / know-01
+                     :polarity -
+                     :ARG0 i
+                     :ARG1 (p2 / person
+                               :domain g))
+            :ARG2 (l / look-02
+                     :ARG0 g
+                     :ARG1 (h3 / happy-01
+                               :polarity -
+                               :degree (v / very)))))
+
+# ::id winograd_36
+# ::snt The fish ate the worm. It was hungry.
+# ::suppl annotations_anna_winograd91-110.tsv-6
+(m / multi-sentence
+   :snt1 (e / eat-01
+            :ARG0 (f / fish)
+            :ARG1 (w / worm))
+   :snt2 (h / hunger-01
+            :ARG0 f))
+
+# ::id winograd_37
+# ::snt The fish ate the worm. It was tasty.
+# ::suppl annotations_anna_winograd91-110.tsv-7
+(m / multi-sentence
+   :snt1 (e / eat-01
+            :ARG0 (f / fish)
+            :ARG1 (w / worm))
+   :snt2 (t / tasty
+            :domain w))
+
+# ::id winograd_38
+# ::snt I was trying to open the lock with the key, but someone had filled the keyhole with chewing gum, and I couldn't get it in.
+# ::suppl annotations_anna_winograd91-110.tsv-8
+(c / contrast-01
+   :ARG1 (t / try-01
+            :ARG0 (i / i)
+            :ARG1 (o / open-01
+                     :ARG1 (l / lock)
+                     :ARG2 (k / key)))
+   :ARG2 (a / and
+            :op1 (f / fill-01
+                    :ARG0 (s / someone)
+                    :ARG1 (k2 / keyhole)
+                    :ARG2 (g / gum
+                             :ARG1-of (c2 / chew-01)))
+            :op2 (p / possible-01
+                    :polarity -
+                    :ARG1 (g2 / get-05
+                              :ARG0 i
+                              :ARG1 k
+                              :ARG2 (i2 / inside)))))
+
+# ::id winograd_39
+# ::snt I was trying to open the lock with the key, but someone had filled the keyhole with chewing gum, and I couldn't get it out.
+# ::suppl annotations_anna_winograd91-110.tsv-9
+(c / contrast-01
+   :ARG1 (t / try-01
+            :ARG0 (i / i)
+            :ARG1 (o / open-01
+                     :ARG1 (l / lock)
+                     :ARG2 (k / key)))
+   :ARG2 (a / and
+            :op1 (f / fill-01
+                    :ARG0 (s / someone)
+                    :ARG1 (k2 / keyhole)
+                    :ARG2 (g / gum
+                             :ARG1-of (c2 / chew-01)))
+            :op2 (p / possible-01
+                    :polarity -
+                    :ARG1 (g2 / get-05
+                              :ARG0 i
+                              :ARG1 g
+                              :ARG2 (o2 / out-06)))))
+
+# ::id winograd_40
+# ::snt The dog chased the cat, which ran up a tree. It waited at the bottom.
+# ::suppl annotations_anna_winograd91-110.tsv-10
+(m / multi-sentence
+   :snt1 (c / chase-01
+            :ARG0 (d / dog)
+            :ARG1 (c2 / cat
+                      :ARG0-of (r / run-02
+                                  :direction (u / up
+                                                :op1 (t / tree)))))
+   :snt2 (w / wait-01
+            :ARG1 d
+            :location (b / bottom)))
+
+# ::id winograd_41
+# ::snt The dog chased the cat, which ran up a tree. It waited at the top.
+# ::suppl annotations_anna_winograd91-110.tsv-11
+(m / multi-sentence
+   :snt1 (c / chase-01
+            :ARG0 (d / dog)
+            :ARG1 (c2 / cat
+                      :ARG0-of (r / run-02
+                                  :direction (u / up
+                                                :op1 (t / tree)))))
+   :snt2 (w / wait-01
+            :ARG1 c2
+            :location (t2 / top)))
+
+# ::id winograd_42
+# ::snt In the storm, the tree fell down and crashed through the roof of my house. Now, I have to get it removed.
+# ::suppl annotations_anna_winograd91-110.tsv-12
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (f / fall-01
+                    :ARG1 (t / tree)
+                    :direction (d / down))
+            :op2 (c / crash-01
+                    :direction (t2 / through
+                                   :op1 (r / roof
+                                           :part-of (h / house
+                                                       :poss (i / i)))))
+            :time (s / storm-01))
+   :snt2 (o / obligate-01
+            :ARG2 (g / get-04
+                     :ARG0 i
+                     :ARG1 (r2 / remove-01
+                               :ARG1 t))
+            :time (n / now)))
+
+# ::id winograd_43
+# ::snt In the storm, the tree fell down and crashed through the roof of my house. Now, I have to get it repaired.
+# ::suppl annotations_anna_winograd91-110.tsv-13
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (f / fall-01
+                    :ARG1 (t / tree)
+                    :direction (d / down))
+            :op2 (c / crash-01
+                    :direction (t2 / through
+                                   :op1 (r / roof
+                                           :part-of (h / house
+                                                       :poss (i / i)))))
+            :time (s / storm-01))
+   :snt2 (o / obligate-01
+            :ARG2 (g / get-04
+                     :ARG0 i
+                     :ARG1 (r2 / repair-01
+                               :ARG1 r))
+            :time (n / now)))
+
+# ::id winograd_44
+# ::snt The customer walked into the bank and stabbed one of the tellers. He was immediately taken to the police station.
+# ::suppl annotations_anna_winograd91-110.tsv-14
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (w / walk-01
+                    :ARG0 (c / customer)
+                    :direction (b / bank))
+            :op2 (s / stab-01
+                    :ARG0 c
+                    :ARG1 (t2 / teller
+                              :quant 1
+                              :ARG1-of (i2 / include-91
+                                           :ARG2 (t3 / teller)))))
+   :snt2 (t / take-01
+            :ARG1 c
+            :ARG3 (s2 / station
+                      :mod (p / police))
+            :time (i3 / immediate)))
+
+# ::id winograd_45
+# ::snt The customer walked into the bank and stabbed one of the tellers. He was immediately taken to the hospital.
+# ::suppl annotations_anna_winograd91-110.tsv-15
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (w / walk-01
+                    :ARG0 (c / customer)
+                    :direction (b / bank))
+            :op2 (s / stab-01
+                    :ARG0 c
+                    :ARG1 (t2 / teller
+                              :quant 1
+                              :ARG1-of (i2 / include-91
+                                           :ARG2 (t3 / teller)))))
+   :snt2 (t / take-01
+            :ARG1 t2
+            :ARG3 (h / hospital)
+            :time (i3 / immediate)))
+
+# ::id winograd_46
+# ::snt John was doing research in the library when he heard a man humming and whistling. He was very annoyed.
+# ::suppl annotations_anna_winograd91-110.tsv-16
+(m / multi-sentence
+   :snt1 (h / hear-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "John"))
+            :ARG1 (a2 / and
+                      :op1 (h2 / hum-02)
+                      :op2 (w / whistle-01))
+            :ARG2 (m2 / man)
+            :time (d / do-02
+                     :ARG0 p
+                     :ARG1 (r / research-01)
+                     :location (l / library)))
+   :snt2 (a / annoy-01
+            :ARG1 p
+            :degree (v / very)))
+
+# ::id winograd_47
+# ::snt John was doing research in the library when he heard a man humming and whistling. He was very annoying.
+# ::suppl annotations_anna_winograd91-110.tsv-17
+(m / multi-sentence
+   :snt1 (h / hear-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "John"))
+            :ARG1 (a2 / and
+                      :op1 (h2 / hum-02)
+                      :op2 (w / whistle-01))
+            :ARG2 (m2 / man)
+            :time (d / do-02
+                     :ARG0 p
+                     :ARG1 (r / research-01)
+                     :location (l / library)))
+   :snt2 (a / annoy-01
+            :ARG0 m2
+            :degree (v / very)))
+
+# ::id winograd_48
+# ::snt John was jogging through the park when he saw a man juggling watermelons. He was very impressed.
+# ::suppl annotations_anna_winograd91-110.tsv-18
+(m / multi-sentence
+   :snt1 (s / see-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "John"))
+            :ARG1 (m2 / man)
+            :ARG2 (j2 / juggle-01
+                      :ARG1 (w / watermelon))
+            :time (j / jog-01
+                     :ARG0 p
+                     :ARG1 (p2 / park)))
+   :snt2 (i2 / impress-01
+             :ARG1 p
+             :degree (v / very)))
+
+# ::id winograd_49
+# ::snt John was jogging through the park when he saw a man juggling watermelons. He was very impressive.
+# ::suppl annotations_anna_winograd91-110.tsv-19
+(m / multi-sentence
+   :snt1 (s / see-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "John"))
+            :ARG1 (m2 / man)
+            :ARG2 (j2 / juggle-01
+                      :ARG1 (w / watermelon))
+            :time (j / jog-01
+                     :ARG0 p
+                     :ARG1 (p2 / park)))
+   :snt2 (i2 / impress-01
+             :ARG0 m2
+             :degree (v / very)))
+
+# ::id winograd_50
+# ::snt There is a pillar between me and the stage, and I can't see around it.
+# ::suppl chris_annotation_61_90.tsv-61
+(a / and
+   :op1 (b / be-located-at-91
+           :ARG1 (p / pillar)
+           :ARG2 (b2 / between
+                     :op1 (i / i)
+                     :op2 (s / stage)))
+   :op2 (s2 / see-01
+            :polarity -
+            :ARG0 i
+            :ARG1 (a2 / around
+                      :op1 p)))
+
+# ::id winograd_51
+# ::snt There is a pillar between me and the stage, and I can't see it.
+# ::suppl chris_annotation_61_90.tsv-62
+(a / and
+   :op1 (b / be-located-at-91
+           :ARG1 (p / pillar)
+           :ARG2 (b2 / between
+                     :op1 (i / i)
+                     :op2 (s / stage)))
+   :op2 (s2 / see-01
+            :polarity -
+            :ARG0 i
+            :ARG1 s))
+
+# ::id winograd_52
+# ::snt They broadcast an announcement, but a subway came into the station and I couldn't hear it.
+# ::suppl chris_annotation_61_90.tsv-63
+(c / contrast-01
+   :ARG1 (b / broadcast-01
+            :ARG0 (t / they)
+            :ARG1 (a / announce-01))
+   :ARG2 (c2 / come-01
+             :ARG1 (s / subway)
+             :location (s2 / station)
+             :ARG0-of (c3 / cause-01
+                          :ARG1 (h / hear-01
+                                   :polarity -
+                                   :ARG0 (i / i)
+                                   :ARG1 a))))
+
+# ::id winograd_53
+# ::snt They broadcast an announcement, but a subway came into the station and I couldn't hear over it.
+# ::suppl chris_annotation_61_90.tsv-64
+(c / contrast-01
+   :ARG1 (b / broadcast-01
+            :ARG0 (t / they)
+            :ARG1 (a / announce-01))
+   :ARG2 (c2 / come-01
+             :ARG1 (s / subway)
+             :location (s2 / station)
+             :ARG0-of (c3 / cause-01
+                          :ARG1 (h / hear-01
+                                   :polarity -
+                                   :ARG0 (i / i)
+                                   :ARG1 (o / over
+                                            :op1 s)))))
+
+# ::id winograd_54
+# ::snt In the middle of the outdoor concert, the rain started falling, but it continued until 10.
+# ::suppl chris_annotation_61_90.tsv-65
+(c / contrast-01
+   :ARG1 (b / be-temporally-at-91
+            :ARG1 (r / rain-01
+                     :ARG1-of (f / fall-01))
+            :ARG2 (m / middle
+                     :op1 (c3 / concert
+                              :location (o2 / outdoor))))
+   :ARG2 (c2 / continue-01
+             :ARG1 r
+             :time (u / until
+                      :op1 (o / temporal-quantity
+                              :quant 10))))
+
+# ::id winograd_55
+# ::snt In the middle of the outdoor concert, the rain started falling, and it continued until 10.
+# ::suppl chris_annotation_61_90.tsv-66
+(a / and
+   :op1 (b / be-temporally-at-91
+           :ARG1 (r / rain-01
+                    :ARG1-of (f / fall-01))
+           :ARG2 (m / middle
+                    :op1 (c3 / concert
+                             :location (o2 / outdoor))))
+   :op2 (c2 / continue-01
+            :ARG1 r
+            :time (u / until
+                     :op1 (o / temporal-quantity
+                             :quant 10))))
+
+# ::id winograd_56
+# ::snt I used an old rag to clean the knife, and then I put it in the trash.
+# ::suppl chris_annotation_61_90.tsv-67
+(a / and
+   :op1 (c / clean-01
+           :ARG1 (i / i)
+           :ARG2 (k / knife)
+           :instrument (r / rag
+                          :mod (o / old)))
+   :op2 (p / put-01
+           :time (t2 / then)
+           :ARG1 k
+           :ARG2 (t / trash)))
+
+# ::id winograd_57
+# ::snt I used an old rag to clean the knife, and then I put it in the drawer.
+# ::suppl chris_annotation_61_90.tsv-68
+(a / and
+   :op1 (c / clean-01
+           :ARG1 (i / i)
+           :ARG2 (k / knife)
+           :instrument (r / rag
+                          :mod (o / old)))
+   :op2 (p / put-01
+           :time (t / then)
+           :ARG1 k
+           :ARG2 (d / drawer)))
+
+# ::id winograd_58
+# ::snt Ann asked Mary what time the library closes, because she had forgotten.
+# ::suppl chris_annotation_61_90.tsv-69
+(a / ask-01
+   :ARG0 (p / person
+            :name "Ann")
+   :ARG1 (a2 / amr-unkown
+             :time-of (c / close-01
+                         :ARG1 (l / library)))
+   :ARG2 (p2 / person
+             :name "Mary")
+   :ARG1-of (c2 / cause-01
+                :ARG1 (f / forget-01
+                         :ARG0 p)))
+
+# ::id winograd_59
+# ::snt Ann asked Mary what time the library closes, but she had forgotten.
+# ::suppl chris_annotation_61_90.tsv-70
+(c / contrast-01
+   :ARG1 (a / ask-01
+            :ARG0 (p / person
+                     :name "Ann")
+            :ARG1 (a2 / amr-unkown
+                      :time-of (c2 / close-01
+                                   :ARG1 (l / library)))
+            :ARG2 (p2 / person
+                      :name "Mary"))
+   :ARG2 (f / forget-01
+            :ARG0 p))
+
+# ::id winograd_60
+# ::snt I took the water bottle out of the backpack so that it would be handy.
+# ::suppl chris_annotation_61_90.tsv-71
+(t / take-01
+   :ARG0 (i / i)
+   :ARG1 (b / bottle-01
+            :mod (w / water))
+   :ARG2 (b2 / backpack)
+   :purpose (l / handy-02
+               :ARG1 b))
+
+# ::id winograd_61
+# ::snt I took the water bottle out of the backpack so that it would be lighter.
+# ::suppl chris_annotation_61_90.tsv-72
+(t / take-01
+   :ARG0 (i / i)
+   :ARG1 (b / bottle-01
+            :mod (w / water))
+   :ARG2 (b2 / backpack)
+   :purpose (l / lighten-01
+               :ARG1 b2))
+
+# ::id winograd_62
+# ::snt I couldn't put the pot on the shelf because it was too tall.
+# ::suppl chris_annotation_61_90.tsv-73
+(p / possible-01
+   :polarity -
+   :ARG1 (p2 / put-01
+             :ARG0 (i / i)
+             :ARG1 (p3 / pot)
+             :ARG2 (o / on
+                      :op1 (s / shelf))
+             :ARG1-of (c / cause-01
+                         :ARG0 (h / have-degree-91
+                                  :ARG1 p3
+                                  :ARG2 (t2 / tall)
+                                  :ARG3 (t / too)))))
+
+# ::id winograd_63
+# ::snt I couldn't put the pot on the shelf because it was too high.
+# ::suppl chris_annotation_61_90.tsv-74
+(p / possible-01
+   :polarity -
+   :ARG1 (p2 / put-01
+             :ARG0 (i / i)
+             :ARG1 (p3 / pot)
+             :ARG2 (o / on
+                      :op1 (s / shelf))
+             :ARG1-of (c / cause-01
+                         :ARG0 (h / have-degree-91
+                                  :ARG1 s
+                                  :ARG2 (h2 / high)
+                                  :ARG3 (t / too)))))
+
+# ::id winograd_64
+# ::snt I'm sure that my map will show this building; it is very good.
+# ::suppl chris_annotation_61_90.tsv-75
+(m2 / multi-sentence
+    :snt1 (s / sure-02
+             :ARG0 (i / i)
+             :ARG1 (s2 / show-01
+                       :ARG0 (m / map
+                                :poss i)
+                       :ARG1 (b2 / building
+                                 :mod (t / this))))
+    :snt2 (g / good-02
+             :ARG1 (i2 / it)
+             :degree (v / very)))
+
+# ::id winograd_65
+# ::snt I'm sure that my map will show this building; it is very famous.
+# ::suppl chris_annotation_61_90.tsv-76
+(m2 / multi-sentence
+    :snt1 (s / sure-02
+             :ARG0 (i / i)
+             :ARG1 (s2 / show-01
+                       :ARG0 (m / map
+                                :poss i)
+                       :ARG1 (b2 / building
+                                 :mod (t / this))))
+    :snt2 (f / fame-01
+             :ARG1 (i2 / it)
+             :degree (v / very)))
+
+# ::id winograd_66
+# ::snt Bob paid for Charlie's college education. He is very generous.
+# ::suppl chris_annotation_61_90.tsv-77
+(m / multi-sentence
+   :snt1 (p / pay-01
+            :ARG0 (p3 / person)
+            :ARG3 (e / education
+                     :poss (p4 / person
+                               :name "Charlie")
+                     :mod (c / college)))
+   :snt2 (g / generous-01
+            :ARG0 (h / he)
+            :degree (v / very)))
+
+# ::id winograd_67
+# ::snt Bob paid for Charlie's college education. He is very grateful.
+# ::suppl chris_annotation_61_90.tsv-78
+(m / multi-sentence
+   :snt1 (p / pay-01
+            :ARG0 (p3 / person)
+            :ARG3 (e / education
+                     :poss (p4 / person
+                               :name "Charlie")
+                     :mod (c / college)))
+   :snt2 (t / thankful-02
+            :ARG0 (h / he)
+            :degree (v / very)))
+
+# ::id winograd_68
+# ::snt Bob paid for Charlie's college education, but now acts as though it never happened. He is very hurt.
+# ::suppl chris_annotation_61_90.tsv-79
+(m / multi-sentence
+   :snt1 (c / contrast-01
+            :ARG1 (p / pay-01
+                     :ARG0 (p3 / person
+                               :name "Bob")
+                     :ARG3 (e / education
+                              :mod (c2 / college)
+                              :poss (p4 / person
+                                        :name "Charlie")))
+            :ARG2 (a / act-01
+                     :ARG0 (p5 / person
+                               :name "Charlie")
+                     :ARG1 (h / happen-01
+                              :polarity -)))
+   :snt2 (t / hurt-02
+            :ARG1 (h3 / he)
+            :degree (v / very)))
+
+# ::id winograd_69
+# ::snt Bob paid for Charlie's college education, but now acts as though it never happened. He is very ungrateful.
+# ::suppl chris_annotation_61_90.tsv-80
+(m / multi-sentence
+   :snt1 (c / contrast-01
+            :ARG1 (p / pay-01
+                     :ARG0 (p3 / person
+                               :name "Bob")
+                     :ARG3 (e / education
+                              :mod (c2 / college)
+                              :poss (p4 / person
+                                        :name "Charlie")))
+            :ARG2 (a / act-01
+                     :ARG0 (p5 / person
+                               :name "Charlie")
+                     :ARG1 (h / happen-01
+                              :polarity -)))
+   :snt2 (t / thankful-02
+            :polarity -
+            :ARG1 (h3 / he)
+            :degree (v / very)))
+
+# ::id winograd_70
+# ::snt Bob was playing cards with Adam and was way ahead. If Adam hadn't had a sudden run of good luck, he would have won.
+# ::suppl chris_annotation_61_90.tsv-81
+(m / multi-sentence
+   :snt1 (p / play-01
+            :ARG0 (p3 / person
+                      :name "Bob")
+            :ARG1 (c / cards)
+            :ARG3 (p4 / person
+                      :name "Adam")
+            :mod (a / ahead
+                    :degree (w / way)))
+   :snt2 (h / have-condition-91
+            :ARG1 (h2 / have-03
+                      :polarity -
+                      :ARG0 (p5 / person
+                                :name "Adam")
+                      :ARG1 (r / run-07
+                               :ARG1 (l / luck
+                                        :mod (g / good-02))
+                               :mod (s / sudden)))
+            :ARG2 (w2 / win-01
+                      :ARG0 p5)))
+
+# ::id winograd_71
+# ::snt Bob was playing cards with Adam and was way ahead. If Adam hadn't had a sudden run of good luck, he would have lost.
+# ::suppl chris_annotation_61_90.tsv-82
+(m / multi-sentence
+   :snt1 (p / play-01
+            :ARG0 (p3 / person
+                      :name "Bob")
+            :ARG1 (c / cards)
+            :ARG3 (p4 / person
+                      :name "Adam")
+            :mod (a / ahead
+                    :degree (w / way)))
+   :snt2 (h / have-condition-91
+            :ARG1 (h2 / have-03
+                      :polarity -
+                      :ARG0 (p5 / person
+                                :name "Adam")
+                      :ARG1 (r / run-07
+                               :ARG1 (l / luck
+                                        :mod (g / good-02))
+                               :mod (s / sudden)))
+            :ARG2 (l2 / lose-02
+                      :ARG0 p3)))
+
+# ::id winograd_72
+# ::snt Adam can't leave work here until bob arrives to replace him. If Bob had left home for work on time, he would be gone by this time.
+# ::suppl chris_annotation_61_90.tsv-83
+(m / multi-sentence
+   :snt1 (l / leave-11
+            :polarity -
+            :ARG0 (p / person
+                     :name "Adam")
+            :ARG1 (w / work
+                     :location (h / here))
+            :time (u / until
+                     :op1 (a / arrive-01
+                             :ARG1 (p4 / person
+                                       :name "Bob"
+                                       :ARG0-of (r / replace-01
+                                                   :ARG1 p)))))
+   :snt2 (h2 / have-condition-91
+             :ARG1 (l2 / leave-11
+                       :ARG0 (p5 / person
+                                 :name "Bob")
+                       :ARG1 (h3 / home)
+                       :ARG2 (w2 / work))
+             :ARG2 (g / go-02
+                      :ARG0 (p6 / person
+                                :name "Adam"
+                                :time (t / time
+                                         :mod (t2 / this))))))
+
+# ::id winograd_73
+# ::snt Adam can't leave work here until Bob arrives to replace him. If Bob had left home for work on time, he would be here by this time.
+# ::suppl chris_annotation_61_90.tsv-84
+(m / multi-sentence
+   :snt1 (l / leave-11
+            :polarity -
+            :ARG0 (p / person
+                     :name "Adam")
+            :ARG1 (w / work
+                     :location (h / here))
+            :time (u / until
+                     :op1 (a / arrive-01
+                             :ARG1 (p4 / person
+                                       :name "Bob"
+                                       :ARG0-of (r / replace-01
+                                                   :ARG1 p)))))
+   :snt2 (h2 / have-condition-91
+             :ARG1 (l2 / leave-11
+                       :ARG0 (p5 / person
+                                 :name "Bob")
+                       :ARG1 (h3 / home)
+                       :ARG2 (w2 / work))
+             :ARG2 (a2 / arrive-01
+                       :ARG1 p5
+                       :time (t / time
+                                :mod (t2 / this)))))
+
+# ::id winograd_74
+# ::snt If the con artist has succeeded in fooling Sam, he would have gotten a lot of money.
+# ::suppl chris_annotation_61_90.tsv-85
+(h / have-condition-91
+   :ARG1 (s / succeed-01
+            :ARG0 (a / artist
+                     :mod (c / con))
+            :ARG0 (f / fool-01
+                     :ARG1 (p / person
+                              :name "Sam")))
+   :ARG2 (g / get-01
+            :ARG0 a
+            :ARG1 (m / money
+                     :quant (l / lot))))
+
+# ::id winograd_75
+# ::snt If the con artist has succeeded in fooling Sam, he would have lost a lot of money.
+# ::suppl chris_annotation_61_90.tsv-86
+(h / have-condition-91
+   :ARG1 (s / succeed-01
+            :ARG0 (a / artist
+                     :mod (c / con))
+            :ARG0 (f / fool-01
+                     :ARG1 (p / person
+                              :name "Sam")))
+   :ARG2 (l2 / lose-02
+             :ARG0 p
+             :ARG1 (m / money
+                      :quant (l / lot))))
+
+# ::id winograd_76
+# ::snt It was a summer afternoon, and the dog was sitting in the middle of the lawn. After a while, it got up and moved to a spot under the tree, because it was hot.
+# ::suppl chris_annotation_61_90.tsv-87
+(m / multi-sentence
+   :snt1 (a2 / and
+             :op1 (d / date-entity
+                     :season (s / summer))
+             :op2 (s2 / sit-01
+                      :ARG1 (d2 / dog)
+                      :ARG2 (l / lawn
+                               :location (m2 / middle))))
+   :snt2 (c / cause-01
+            :ARG0 (h / hot-05
+                     :ARG0 (i2 / it))
+            :ARG1 (a3 / and
+                      :op1 (g / get-up-26
+                              :ARG1 (i3 / it))
+                      :op2 (m3 / move-01
+                               :ARG0 i3
+                               :ARG1 (s3 / spot
+                                         :location (u / under
+                                                      :op1 (t / tree)))))
+            :time (a4 / after
+                      :op1 (w / while
+                              :quant 1))))
+
+# ::id winograd_77
+# ::snt It was a summer afternoon, and the dog was sitting in the middle of the lawn. After a while, it got up and moved to a spot under the tree, because it was cooler.
+# ::suppl chris_annotation_61_90.tsv-88
+(m / multi-sentence
+   :snt1 (a2 / and
+             :op1 (d / date-entity
+                     :season (s / summer))
+             :op2 (s2 / sit-01
+                      :ARG1 (d2 / dog)
+                      :ARG2 (l / lawn
+                               :location (m2 / middle))))
+   :snt2 (c / cause-01
+            :ARG0 (c2 / cool-06
+                      :ARG0 (i2 / it))
+            :ARG1 (a3 / and
+                      :op1 (g / get-up-26
+                              :ARG1 (i3 / it))
+                      :op2 (m3 / move-01
+                               :ARG0 i3
+                               :ARG1 (s3 / spot
+                                         :location (u / under
+                                                      :op1 (t / tree)))))
+            :time (a4 / after
+                      :op1 (w / while
+                              :quant 1))))
+
+# ::id winograd_78
+# ::snt The cat was lying by the mouse hole waiting for the mouse, but it was too impatient.
+# ::suppl chris_annotation_61_90.tsv-89
+(c / contrast-01
+   :ARG1 (l / lay-01
+            :ARG0 (c2 / cat)
+            :ARG2 (h / hole
+                     :mod (m / mouse))
+            :purpose (w / wait-01
+                        :ARG2 (m2 / mouse)))
+   :ARG2 (i2 / impatient-01
+             :ARG0 c2
+             :degree (t / too)))
+
+# ::id winograd_79
+# ::snt The cat was lying by the mouse hole waiting for the mouse, but it was too cautious.
+# ::suppl chris_annotation_61_90.tsv-90
+(c / contrast-01
+   :ARG1 (l / lay-01
+            :ARG0 (c2 / cat)
+            :ARG2 (h / hole
+                     :mod (m / mouse))
+            :purpose (w / wait-01
+                        :ARG2 (m2 / mouse)))
+   :ARG2 (c4 / cautious-02
+             :ARG0 m2
+             :degree (t / too)))
+
+# ::id winograd_80
+# ::snt Jane knocked on Susan's door, but there was no answer. She was disappointed.
+# ::suppl chris_annotation_WG_131-150.tsv-13
+(m / multi-sentence
+   :snt1 (c / contrast-01
+            :ARG1 (k / knock-01
+                     :ARG0 (p / person
+                              :name "Jane")
+                     :ARG1 (d2 / door
+                               :poss (p2 / person
+                                         :name "Susan")))
+            :ARG2 (a / answer-01
+                     :polarity -))
+   :snt2 (d / disappoint-01
+            :ARG1 p))
+
+# ::id winograd_81
+# ::snt Jane knocked on Susan's door, but there was no answer. She was out.
+# ::suppl chris_annotation_WG_131-150.tsv-132
+(m / multi-sentence
+   :snt1 (c / contrast-01
+            :ARG1 (k / knock-01
+                     :ARG0 (p / person
+                              :name "Jane")
+                     :ARG1 (d2 / door
+                               :poss (p2 / person
+                                         :name "Susan")))
+            :ARG2 (a / answer-01
+                     :polarity -))
+   :snt2 (o / out-06
+            :ARG1 p2))
+
+# ::id winograd_82
+# ::snt Jane knocked on the door, and Susan answered it. She invited her to come out.
+# ::suppl chris_annotation_WG_131-150.tsv-133
+(m / multi-sentence
+   :snt1 (a2 / and
+             :op1 (k / knock-01
+                     :ARG0 (p / person
+                              :name "Jane")
+                     :ARG1 (d2 / door))
+             :op2 (a / answer-01
+                     :ARG0 (p3 / person
+                               :name "Susan")
+                     :ARG1 k))
+   :snt2 (i2 / invite-01
+             :ARG0 p
+             :ARG1 p3
+             :ARG2 (c / come-out-09)))
+
+# ::id winograd_83
+# ::snt Jane knocked on the door, and Susan answered it. She invited her to come in.
+# ::suppl chris_annotation_WG_131-150.tsv-134
+(m / multi-sentence
+   :snt1 (a2 / and
+             :op1 (k / knock-01
+                     :ARG0 (p / person
+                              :name "Jane")
+                     :ARG1 (d2 / door))
+             :op2 (a / answer-01
+                     :ARG0 (p3 / person
+                               :name "Susan")
+                     :ARG1 k))
+   :snt2 (i2 / invite-01
+             :ARG0 p
+             :ARG1 p3
+             :ARG2 (c / come-in-07)))
+
+# ::id winograd_84
+# ::snt Sam took French classes from Adam, because he was eager to speak it fluently.
+# ::suppl chris_annotation_WG_131-150.tsv-135
+(c / cause-01
+   :ARG0 (t / take-01
+            :ARG0 (p / person
+                     :name "Sam")
+            :ARG1 (c2 / class
+                      :mod (f / french))
+            :ARG2 (p2 / person
+                      :name "Adam"))
+   :ARG1 (e / eager-01
+            :ARG0 p
+            :ARG1 (s / speak-01
+                     :ARG1 (l / language
+                              :name "French")
+                     :manner (f2 / fluent))))
+
+# ::id winograd_85
+# ::snt Sam took French classes from Adam, because he was known to speak if fluently.
+# ::suppl chris_annotation_WG_131-150.tsv-136
+(c / cause-01
+   :ARG0 (t / take-01
+            :ARG0 (p / person
+                     :name "Sam")
+            :ARG1 (c2 / class
+                      :mod (f / french))
+            :ARG2 (p2 / person
+                      :name "Adam"))
+   :ARG1 (k / know-03
+            :ARG0 p2
+            :ARG1 (s / speak-01
+                     :ARG1 (l / language
+                              :name "French")
+                     :manner (f2 / fluent))))
+
+# ::id winograd_86
+# ::snt The path to the lake was blocked, so we couldn't use it.
+# ::suppl chris_annotation_WG_131-150.tsv-137
+(c / cause-01
+   :ARG0 (b / block-01
+            :ARG1 (p2 / path
+                      :destination (l / lake)))
+   :ARG1 (p3 / possible-01
+             :polarity -
+             :ARG1 (u / use-01
+                      :ARG0 (w / we)
+                      :ARG1 p2)))
+
+# ::id winograd_87
+# ::snt The path to the lake was blocked, so we couldn't reach it.
+# ::suppl chris_annotation_WG_131-150.tsv-138
+(c / cause-01
+   :ARG0 (b / block-01
+            :ARG1 (p2 / path
+                      :destination (l / lake)))
+   :ARG1 (p3 / possible-01
+             :polarity -
+             :ARG1 (r / reach-01
+                      :ARG0 (w / we)
+                      :ARG1 l)))
+
+# ::id winograd_88
+# ::snt The sun was covered by a thick cloud all morning, but luckily, by the time the picnic started, it was out.
+# ::suppl chris_annotation_WG_131-150.tsv-139
+(c / contrast-01
+   :ARG1 (c2 / cover-02
+             :ARG1 (s / sun)
+             :ARG2 (c3 / cloud
+                       :mod (t / thick-03))
+             :time (m / morning
+                      :mod (a / all)))
+   :ARG2 (o / out-06
+            :ARG0-of (l / lucky-02)
+            :ARG1 c3
+            :time (s2 / start-01
+                      :ARG0 (p3 / picnic))))
+
+# ::id winograd_89
+# ::snt The sun was covered by a thick cloud all morning, but luckily, by the time the picnic started, it was gone.
+# ::suppl chris_annotation_WG_131-150.tsv-140
+(c / contrast-01
+   :ARG1 (c2 / cover-02
+             :ARG1 (s / sun)
+             :ARG2 (c3 / cloud
+                       :mod (t / thick-03))
+             :time (m / morning
+                      :mod (a / all)))
+   :ARG2 (o / out-06
+            :ARG0-of (l / lucky-02)
+            :ARG1 c3
+            :time (s2 / start-01
+                      :ARG0 (p3 / picnic))))
+
+# ::id winograd_90
+# ::snt We went to the lake, because a shark had been seen at the ocean beach, so it was a safer place to swim.
+# ::suppl chris_annotation_WG_131-150.tsv-141
+(c / cause-01
+   :ARG0 (c2 / cause-01
+             :ARG0 (s / shark
+                      :ARG1-of (s4 / see-01
+                                   :ARG2 (b / beach
+                                            :mod (o / ocean))))
+             :ARG1 (s2 / swim-01
+                       :ARG1 l
+                       :mod (s3 / safe-01)))
+   :ARG1 (g / go-01
+            :ARG1 (w / we)
+            :ARG3 (l / lake)))
+
+# ::id winograd_91
+# ::snt We went to the lake, because a shark had been seen at the ocean beach, so it was a dangerous place to swim.
+# ::suppl chris_annotation_WG_131-150.tsv-142
+(c / cause-01
+   :ARG0 (c2 / cause-01
+             :ARG0 (s / shark
+                      :ARG1-of (s4 / see-01
+                                   :ARG2 (b / beach
+                                            :mod (o / ocean))))
+             :ARG1 (s2 / swim-01
+                       :ARG1 b
+                       :mod (e / endanger-01)))
+   :ARG1 (g / go-01
+            :ARG1 (w / we)
+            :ARG3 (l / lake)))
+
+# ::id winograd_92
+# ::snt Sam tried to paint a picture of shepherds with sheep, but they ended up looking more like golfers.
+# ::suppl chris_annotation_WG_131-150.tsv-143
+(c / contrast-01
+   :ARG1 (t / try-01
+            :ARG0 (p2 / person
+                      :name "Sam")
+            :ARG1 (p / paint-02
+                     :ARG1 (s / shepherd
+                              :accompanier (s2 / sheep))))
+   :ARG2 (e / end-up-03
+            :ARG1 s
+            :ARG2 (h / have-degree-of-resemblance-91
+                     :ARG1 s
+                     :ARG2 (g / golfer)
+                     :ARG4 (m / more))))
+
+# ::id winograd_93
+# ::snt Sam tried to paint a picture of shepherds with sheep, but they ended up looking more like dogs.
+# ::suppl chris_annotation_WG_131-150.tsv-144
+(c / contrast-01
+   :ARG1 (t / try-01
+            :ARG0 (p2 / person
+                      :name "Sam")
+            :ARG1 (p / paint-02
+                     :ARG1 (s / shepherd
+                              :accompanier (s2 / sheep))))
+   :ARG2 (e / end-up-03
+            :ARG1 s
+            :ARG2 (h / have-degree-of-resemblance-91
+                     :ARG1 s2
+                     :ARG2 (g / dog)
+                     :ARG4 (m / more))))
+
+# ::id winograd_94
+# ::snt Mary tucked her daughter Anne into bed, so that she could work.
+# ::suppl chris_annotation_WG_131-150.tsv-145
+(c / cause-01
+   :ARG0 (t / tuck-01
+            :ARG0 (p2 / person
+                      :name "Mary")
+            :ARG1 (p3 / person
+                      :name "Anne")
+            :ARG2 (b / bed))
+   :ARG1 (p / possible-01
+            :ARG1 (w / work-01
+                     :ARG0 p2)))
+
+# ::id winograd_95
+# ::snt Mary tucked her daughter Anne into bed, so that she could sleep.
+# ::suppl chris_annotation_WG_131-150.tsv-146
+(c / cause-01
+   :ARG0 (t / tuck-01
+            :ARG0 (p2 / person
+                      :name "Mary")
+            :ARG1 (p3 / person
+                      :name "Anne")
+            :ARG2 (b / bed))
+   :ARG1 (p / possible-01
+            :ARG1 (s / sleep-01
+                     :ARG0 p3)))
+
+# ::id winograd_96
+# ::snt Fred and Alice had very warm down coats, but they were not prepared for the cold in Alaska.
+# ::suppl chris_annotation_WG_131-150.tsv-147
+(c / contrast-01
+   :ARG1 (h / have-03
+            :ARG0 (a / and
+                     :op1 (p / person
+                             :name "Fred")
+                     :op2 (p2 / person
+                              :name "Alice"))
+            :ARG1 (c2 / coat
+                      :mod (d / down)
+                      :mod (w / warm)))
+   :ARG2 (p3 / prepare-02
+             :polarity -
+             :ARG1 a
+             :ARG2 (c3 / cold-01
+                       :location (s / state
+                                    :name "Alaska"))))
+
+# ::id winograd_97
+# ::snt Fred and Alice had very warm down coats, but they were not enough for the cold in Alaska.
+# ::suppl chris_annotation_WG_131-150.tsv-148
+(c / contrast-01
+   :ARG1 (h / have-03
+            :ARG0 (a / and
+                     :op1 (p / person
+                             :name "Fred")
+                     :op2 (p2 / person
+                              :name "Alice"))
+            :ARG1 (c2 / coat
+                      :mod (d / down)
+                      :mod (w / warm)))
+   :ARG2 (e / enough-01
+            :polarity -
+            :ARG1 c2
+            :ARG2 (c3 / cold-01
+                      :location (s / state
+                                   :name "Alaska"))))
+
+# ::id winograd_98
+# ::snt Thomson visited Cooper's grave in 1765. At that date he had been traveling for five years.
+# ::suppl chris_annotation_WG_131-150.tsv-149
+(m / multi-sentence
+   :snt1 (v / visit-01
+            :ARG0 (p / person
+                     :name "Thomson")
+            :ARG1 (g / grave
+                     :poss (p3 / person
+                               :name "Cooper"))
+            :time (d / date-entity
+                     :year 1765))
+   :snt2 (t / travel-01
+            :ARG0 p
+            :time d
+            :duration (t2 / temporal-quantity
+                          :quant 5
+                          :unit (y / year))))
+
+# ::id winograd_99
+# ::snt Thomson visited Cooper's grave in 1765. At that date he had been dead for five years.
+# ::suppl chris_annotation_WG_131-150.tsv-150
+(m / multi-sentence
+   :snt1 (v / visit-01
+            :ARG0 (p / person
+                     :name "Thomson")
+            :ARG1 (g / grave
+                     :poss (p3 / person
+                               :name "Cooper"))
+            :time (d / date-entity
+                     :year 1765))
+   :snt2 (d2 / dead-01
+             :ARG0 p3
+             :time d
+             :duration (t2 / temporal-quantity
+                           :quant 5
+                           :unit (y / year))))
+
+# ::id winograd_100
+# ::snt The firemen arrived after the police because they were coming from so far away.
+# ::suppl Maria_Winograd1.tsv-0
+(a / arrive-01
+   :ARG1 (f / firemen)
+   :time (a2 / after
+             :op1 (p / police)
+             :ARG1-of (c / cause-01
+                         :ARG0 (c2 / come-01
+                                   :ARG1 f
+                                   :ARG3 (f2 / far
+                                             :direction (a3 / away)
+                                             :degree (s / so))))))
+
+# ::id winograd_101
+# ::snt The firemen arrived before the police because they were coming from so far away.
+# ::suppl Maria_Winograd1.tsv-1
+(a / arrive-01
+   :ARG1 (f / firemen)
+   :time (b / before
+            :op1 (p / police)
+            :ARG1-of (c / cause-01
+                        :ARG0 (c2 / come-01
+                                  :ARG1 p
+                                  :ARG3 (f2 / far
+                                            :direction (a2 / away)
+                                            :degree (s / so))))))
+
+# ::id winograd_102
+# ::snt Frank was upset with Tom because the toaster he had bought from him didn't work.
+# ::suppl Maria_Winograd1.tsv-2
+(u / upset-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Tom"))
+   :ARG1 (p2 / person
+             :name (n2 / name
+                       :op1 "Frank"))
+   :ARG1-of (c / cause-01
+               :ARG0 (w / work-09
+                        :polarity -
+                        :ARG1 (t / toaster
+                                 :ARG1-of (b / buy-01
+                                             :ARG0 p2
+                                             :ARG2 p)))))
+
+# ::id winograd_103
+# ::snt Frank was upset with Tom because the toaster he had sold him didn't work.
+# ::suppl Maria_Winograd1.tsv-3
+(u / upset-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Tom"))
+   :ARG1 (p2 / person
+             :name (n2 / name
+                       :op1 "Frank"))
+   :ARG1-of (c / cause-01
+               :ARG0 (w / work-09
+                        :polarity -
+                        :ARG1 (t / toaster
+                                 :ARG1-of (s / sell-01
+                                             :ARG0 p
+                                             :ARG2 p2)))))
+
+# ::id winograd_104
+# ::snt Jim yelled at Kevin because he was so upset.
+# ::suppl Maria_Winograd1.tsv-4
+(y / yell-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Jim"))
+   :ARG2 (p2 / person
+             :name (n2 / name
+                       :op1 "Kevin"))
+   :ARG1-of (c / cause-01
+               :ARG0 (u / upset-01
+                        :ARG1 p
+                        :degree (s / so))))
+
+# ::id winograd_105
+# ::snt Jim comforted Kevin because he was so upset.
+# ::suppl Maria_Winograd1.tsv-5
+(c / comfort-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Jim"))
+   :ARG1 (p2 / person
+             :name (n2 / name
+                       :op1 "Kevin"))
+   :ARG1-of (c2 / cause-01
+                :ARG0 (u / upset-01
+                         :ARG1 p2
+                         :degree (s / so))))
+
+# ::id winograd_106
+# ::snt The sack of potatoes had been placed above the bag of flour, so it had to be moved first.
+# ::suppl Maria_Winograd1.tsv-6
+(p / place-01
+   :ARG1 (p2 / potato
+             :quant (s / sack))
+   :ARG2 (a / above
+            :op1 (f / flour
+                    :quant (b / bag)))
+   :ARG0-of (c / cause-01
+               :ARG1 (o / obligate-01
+                        :ARG2 (m / move-01
+                                 :ARG1 p2
+                                 :time (f2 / first)))))
+
+# ::id winograd_107
+# ::snt The sack of potatoes had been placed below the bag of flour, so it had to be moved first.
+# ::suppl Maria_Winograd1.tsv-7
+(p / place-01
+   :ARG1 (p2 / potato
+             :quant (s / sack))
+   :ARG2 (b / below
+            :op1 (f / flour
+                    :quant (b2 / bag)))
+   :ARG0-of (c / cause-01
+               :ARG1 (o / obligate-01
+                        :ARG2 (m / move-01
+                                 :ARG1 f
+                                 :time (f2 / first)))))
+
+# ::id winograd_108
+# ::snt Pete envies Martin although he is very successful.
+# ::suppl Maria_Winograd1.tsv-8
+(e / envy-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Pete"))
+   :ARG1 (p2 / person
+             :name (n2 / name
+                       :op1 "Martin"))
+   :concession (s / succeed-01
+                  :ARG0 p
+                  :degree (v / very)))
+
+# ::id winograd_109
+# ::snt Pete envies Martin because he is very successful.
+# ::suppl Maria_Winograd1.tsv-9
+(e / envy-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Pete"))
+   :ARG1 (p2 / person
+             :name (n2 / name
+                       :op1 "Martin"))
+   :ARG1-of (c / cause-01
+               :ARG0 (s / succeed-01
+                        :ARG0 p2
+                        :degree (v / very))))
+
+# ::id winograd_110
+# ::snt The older students were bullying the younger ones, so we punished them.
+# ::suppl Maria_Winograd1.tsv-10
+(b / bully-01
+   :ARG0 (s / student
+            :mod (o / older))
+   :ARG1 (s2 / student
+             :mod (y / younger))
+   :ARG2-of (p / punish-01
+               :ARG0 (w / we)
+               :ARG1 s))
+
+# ::id winograd_111
+# ::snt The older students were bullying the younger ones, so we rescued them.
+# ::suppl Maria_Winograd1.tsv-11
+(b / bully-01n
+   :ARG0 (s / student
+            :mod (o / older))
+   :ARG1 (s2 / student
+             :mod (y / younger))
+   :ARG0-of (c / cause-01
+               :ARG1 (r / rescue-01
+                        :ARG0 (w / we)
+                        :ARG1 s2)))
+
+# ::id winograd_112
+# ::snt I poured water from the bottle into the cup until it was empty.
+# ::suppl Maria_Winograd1.tsv-12
+(p / pour-01
+   :ARG0 (i / i)
+   :ARG1 (w / water)
+   :ARG2 (b / bottle)
+   :ARG3 (c / cup)
+   :time (u / until
+            :op1 (e / empty
+                    :domain b)))
+
+# ::id winograd_113
+# ::snt I poured water from the bottle into the cup until it was full.
+# ::suppl Maria_Winograd1.tsv-13
+(p / pour-01
+   :ARG0 (i / i)
+   :ARG1 (w / water)
+   :ARG2 (b / bottle)
+   :ARG3 (c / cup)
+   :time (u / until
+            :op1 (f / full
+                    :domain c)))
+
+# ::id winograd_114
+# ::snt Susan knows all about Ann's personal problems because she is nosy.
+# ::suppl Maria_Winograd1.tsv-14
+(k / know-02
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Susan"))
+   :ARG1 (p2 / problem
+             :poss (p3 / person
+                       :name (n2 / name
+                                 :op1 "Ann"))
+             :ARG1-of (p4 / personal-02))
+   :ARG1-of (c / cause-01
+               :ARG0 (n3 / nosy-02
+                         :ARG0 p)))
+
+# ::id winograd_115
+# ::snt Susan knows all about Ann's personal problems because she is indiscreet.
+# ::suppl Maria_Winograd1.tsv-15
+(k / know-02
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Susan"))
+   :ARG1 (p2 / problem
+             :poss (p3 / person
+                       :name (n2 / name
+                                 :op1 "Ann"))
+             :ARG1-of (p4 / personal-02))
+   :ARG1-of (c / cause-01
+               :ARG0 (i2 / indiscreet
+                         :ARG0 p3)))
+
+# ::id winograd_116
+# ::snt Sid explained his theory to Mark but he couldn't convince him.
+# ::suppl Maria_Winograd1.tsv-16
+(c / contrast-01
+   :ARG1 (e / explain-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Sid"))
+            :ARG1 (t / theory
+                     :poss p)
+            :ARG2 (p2 / person
+                      :name (n2 / name
+                                :op1 "Mark")))
+   :ARG2 (p3 / possible-01
+             :polarity -
+             :ARG1 (c2 / convince-01
+                       :ARG0 p
+                       :ARG1 p2)))
+
+# ::id winograd_117
+# ::snt Sid explained his theory to Mark but he couldn't understand him.
+# ::suppl Maria_Winograd1.tsv-17
+(c / contrast-01
+   :ARG1 (e / explain-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Sid"))
+            :ARG1 (t / theory
+                     :poss p)
+            :ARG2 (p2 / person
+                      :name (n2 / name
+                                :op1 "Mark")))
+   :ARG2 (p3 / possible-01
+             :polarity -
+             :ARG1 (u / understand-01
+                      :ARG0 p2
+                      :ARG1 p)))
+
+# ::id winograd_118
+# ::snt Susan knew that Ann's son had been in a car accident, so she told her about it.
+# ::suppl Maria_Winograd1.tsv-18
+(k / know-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Susan"))
+   :ARG1 (s / son
+            :poss (p2 / person
+                      :name (n2 / name
+                                :op1 "Ann"))
+            :location (a / accident
+                         :mod (c / car)))
+   :ARG0-of (c2 / cause-01
+                :ARG1 (t / tell-01
+                         :ARG0 p
+                         :ARG1 s
+                         :ARG2 p2)))
+
+# ::id winograd_119
+# ::snt Susan knew that Ann's son had been in a car accident, because she told her about it.
+# ::suppl Maria_Winograd1.tsv-19
+(k / know-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Susan"))
+   :ARG1 (s / son
+            :poss (p2 / person
+                      :name (n2 / name
+                                :op1 "Ann"))
+            :location (a / accident
+                         :mod (c / car)))
+   :ARG1-of (c2 / cause-01
+                :ARG0 (t / tell-01
+                         :ARG0 p2
+                         :ARG1 s
+                         :ARG2 p)))
+
+# ::id winograd_120
+# ::snt Joe's uncle can still beat him at tennis, even though he is 30 years younger.
+# ::suppl Maria_Winograd1.tsv-20
+(p / possible-01
+   :ARG1 (b / beat-03
+            :ARG0 (p2 / person
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG1 p3
+                                  :ARG2 (u / uncle)))
+            :ARG1 (p3 / person
+                      :name (n2 / name
+                                :op1 "Joe"))
+            :ARG2 (t / tennis))
+   :concession (h2 / have-degree-91
+                   :ARG1 p3
+                   :ARG2 (y / young)
+                   :ARG3 (m / more
+                            :op1 (t2 / temporal-quantity
+                                     :quant 30
+                                     :unit (y2 / year)))
+                   :ARG4 p2))
+
+# ::id winograd_121
+# ::snt Joe's uncle can still beat him at tennis, even though he is 30 years older.
+# ::suppl Maria_Winograd1.tsv-21
+(p / possible-01
+   :ARG1 (b / beat-03
+            :ARG0 (p2 / person
+                      :ARG0-of (h / have-rel-role-91
+                                  :ARG1 p3
+                                  :ARG2 (u / uncle)))
+            :ARG1 (p3 / person
+                      :name (n / name
+                               :op1 "Joe"))
+            :ARG2 (t / tennis))
+   :concession (h2 / have-degree-91
+                   :ARG1 p2
+                   :ARG2 (o / old)
+                   :ARG3 (m / more
+                            :op1 (t2 / temporal-quantity
+                                     :quant 30
+                                     :unit (y / year)))
+                   :ARG4 p3))
+
+# ::id winograd_122
+# ::snt The painting in Mark's living room shows an oak tree. It is to the right of the bookcase.
+# ::suppl Maria_Winograd1.tsv-22
+(m / multi-sentence
+   :snt1 (s / show-01
+            :ARG0 (p / painting
+                     :location (r / room
+                                  :mod (l / living)
+                                  :poss (p2 / person
+                                            :name (n / name
+                                                     :op1 "Mark"))))
+            :ARG1 (t / tree
+                     :mod (o / oak)))
+   :snt2 (b / be-located-at-91
+            :ARG1 p
+            :ARG2 (r2 / relative-position
+                      :op1 (b2 / bookcase)
+                      :direction (r3 / right))))
+
+# ::id winograd_123
+# ::snt The painting in Mark's living room shows an oak tree. It is to the right of a house.
+# ::suppl Maria_Winograd1.tsv-23
+(m / multi-sentence
+   :snt1 (s / show-01
+            :ARG0 (p / painting
+                     :location (r / room
+                                  :mod (l / living)
+                                  :poss (p2 / person
+                                            :name (n / name
+                                                     :op1 "Mark"))))
+            :ARG1 (t / tree
+                     :mod (o / oak)))
+   :snt2 (b / be-located-at-91
+            :ARG1 t
+            :ARG2 (r2 / relative-position
+                      :op1 (h / house)
+                      :direction (r3 / right))))
+
+# ::id winograd_124
+# ::snt There is a gap in the wall. You can see the garden through it.
+# ::suppl Maria_Winograd1.tsv-24
+(m / multi-sentence
+   :snt1 (g / gap
+            :location (w / wall))
+   :snt2 (p / possible-01
+            :ARG1 (s / see-01
+                     :ARG0 (y / you)
+                     :ARG1 (g2 / garden)
+                     :path g)))
+
+# ::id winograd_125
+# ::snt There is a gap in the wall. You can see the garden behind it.
+# ::suppl Maria_Winograd1.tsv-25
+(m / multi-sentence
+   :snt1 (g / gap
+            :location (w / wall))
+   :snt2 (p / possible-01
+            :ARG1 (s / see-01
+                     :ARG0 (y / you)
+                     :ARG1 (g2 / garden
+                               :location (r / relative-position
+                                            :op1 w
+                                            :direction (b / behind))))))
+
+# ::id winograd_126
+# ::snt The drain is clogged with hair. It has to be cleaned.
+# ::suppl Maria_Winograd1.tsv-26
+(m / multi-sentence
+   :snt1 (c / clog-02
+            :ARG1 (d / drain)
+            :ARG2 (h / hair))
+   :snt2 (o / obligate-01
+            :ARG2 (c2 / clean-01
+                      :ARG1 d)))
+
+# ::id winograd_127
+# ::snt The drain is clogged with hair. It has to be removed.
+# ::suppl Maria_Winograd1.tsv-27
+(m / multi-sentence
+   :snt1 (c / clog-02
+            :ARG1 (d / drain)
+            :ARG2 (h / hair))
+   :snt2 (o / obligate-01
+            :ARG2 (r / remove-01
+                     :ARG1 h
+                     :ARG2 d)))
+
+# ::id winograd_128
+# ::snt My meeting started at 4:00 and I needed to catch the train at 4:30, so there wasn't much time. Luckily, it was short, so it worked out.
+# ::suppl Maria_Winograd1.tsv-28
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (s / start-01
+                    :time "16:00"
+                    :ARG1 (m2 / meeting
+                              :poss (i / i)))
+            :op2 (o / obligate-01
+                    :ARG1 i
+                    :ARG2 (c / catch-01
+                             :time "16:30"
+                             :ARG1 (t / train)))
+            :ARG0-of (c2 / cause-01
+                         :ARG1 (t2 / time
+                                   :quant (m3 / much
+                                              :polarity -))))
+   :snt2 (s2 / short
+             :domain m2
+             :ARG0-of (c3 / cause-01
+                          :ARG1 (w / work-out-02
+                                   :ARG1 c))
+             :manner (l / lucky)))
+
+# ::id winograd_129
+# ::snt My meeting started at 4:00 and I needed to catch the train at 4:30, so there wasn't much time. Luckily, it was delayed, so it worked out.
+# ::suppl Maria_Winograd1.tsv-29
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (s / start-01
+                    :time "16:00"
+                    :ARG1 (m2 / meeting
+                              :poss (i / i)))
+            :op2 (o / obligate-01
+                    :ARG1 i
+                    :ARG2 (c / catch-01
+                             :time "16:30"
+                             :ARG1 (t / train)))
+            :ARG0-of (c2 / cause-01
+                         :ARG1 (t2 / time
+                                   :quant (m3 / much
+                                              :polarity -))))
+   :snt2 (d / delay-01
+            :ARG1 t
+            :manner (l / lucky)
+            :ARG0-of (c3 / cause-01
+                         :ARG1 (w / work-out-02
+                                  :ARG1 c))))
+
+# ::id winograd_130
+# ::snt Bob collapsed on the sidewalk. Soon he saw Carl coming to help. He was very ill.
+# ::suppl Maria_Winograd2.tsv-0
+(m / multi-sentence
+   :snt1 (c / collapse-01
+            :ARG1 (p / person
+                     :name (n / name
+                              :op1 "Bob"))
+            :ARG4 (s / sidewalk))
+   :snt2 (s2 / see-01
+             :ARG0 p
+             :ARG1 (c2 / come-01
+                       :ARG1 (p2 / person
+                                 :name (n2 / name
+                                           :op1 "Carl"))
+                       :purpose (h / help-01))
+             :time (s3 / soon))
+   :snt3 (i2 / ill
+             :domain p
+             :degree (v / very)))
+
+# ::id winograd_131
+# ::snt Bob collapsed on the sidewalk. Soon he saw Carl coming to help. He was very concerned.
+# ::suppl Maria_Winograd2.tsv-1
+(m / multi-sentence
+   :snt1 (c / collapse-01
+            :ARG1 (p / person
+                     :name (n / name
+                              :op1 "Bob"))
+            :ARG4 (s / sidewalk))
+   :snt2 (s2 / see-01
+             :ARG0 p
+             :ARG1 (c2 / come-01
+                       :ARG1 (p2 / person
+                                 :name (n2 / name
+                                           :op1 "Carl"))
+                       :purpose (h2 / help-01))
+             :time (s3 / soon))
+   :snt3 (c3 / concern-01
+             :ARG1 (h / he)
+             :degree (v / very)))
+
+# ::id winograd_132
+# ::snt Sam and Amy are passionately in love, but Amy's parents are unhappy about it, because they are fifteen.
+# ::suppl Maria_Winograd2.tsv-2
+(l / love-01
+   :ARG0 (a / and
+            :op1 (p / person
+                    :name (n / name
+                             :op1 "Sam"))
+            :op2 (p2 / person
+                     :name (n2 / name
+                               :op1 "Amy")))
+   :ARG1 (o / other
+            :mod (e / each))
+   :manner (p3 / passionate)
+   :concession (h / happy-01
+                  :polarity -
+                  :ARG1 (p4 / parent
+                            :poss p2)
+                  :topic l
+                  :ARG1-of (c / cause-01
+                              :ARG0 (f / fifteen
+                                       :domain a))))
+
+# ::id winograd_133
+# ::snt Sam and Amy are passionately in love, but Amy's parents are unhappy about it, because they are snobs.
+# ::suppl Maria_Winograd2.tsv-3
+(l / love-01
+   :ARG0 (a / and
+            :op1 (p / person
+                    :name (n / name
+                             :op1 "Sam"))
+            :op2 (p2 / person
+                     :name (n2 / name
+                               :op1 "Amy")))
+   :ARG1 (o / other
+            :mod (e / each))
+   :manner (p3 / passionate)
+   :concession (h / happy-01
+                  :polarity -
+                  :ARG1 (p4 / parent
+                            :poss p2)
+                  :topic l
+                  :ARG1-of (c / cause-01
+                              :ARG0 (s / snob
+                                       :domain p4))))
+
+# ::id winograd_134
+# ::snt Mark told Pete many lies about himself, which Pete included in his book. He should have been more truthful.
+# ::suppl Maria_Winograd2.tsv-4
+(m / multi-sentence
+   :snt1 (l / lie-08
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Mark"))
+            :ARG2 (p2 / person
+                      :name (n2 / name
+                                :op1 "Pete"))
+            :ARG3 p
+            :ARG1-of (i2 / include-01
+                         :ARG0 p2
+                         :ARG2 (b / book
+                                  :poss p2)))
+   :snt2 (r / recommend-01
+            :ARG1 (t / truthful
+                     :ARG2-of (h / have-degree-91
+                                 :ARG1 p
+                                 :ARG3 (m2 / more)))))
+
+# ::id winograd_135
+# ::snt Mark told Pete many lies about himself, which Pete included in his book. He should have been more skeptical.
+# ::suppl Maria_Winograd2.tsv-5
+(m / multi-sentence
+   :snt1 (l / lie-08
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Mark"))
+            :ARG2 (p2 / person
+                      :name (n2 / name
+                                :op1 "Pete"))
+            :ARG3 p
+            :ARG1-of (i2 / include-01
+                         :ARG0 p2
+                         :ARG2 (b / book
+                                  :poss p2)))
+   :snt2 (r / recommend-01
+            :ARG1 (s / skeptical
+                     :ARG2-of (h / have-degree-91
+                                 :ARG1 p2
+                                 :ARG3 (m2 / more)))))
+
+# ::id winograd_136
+# ::snt Joe has sold his house and bought a new one a few miles away. He will be moving out of it on Thursday.
+# ::suppl Maria_Winograd2.tsv-6
+(m / multi-sentence
+   :op1 (a / and
+           :op1 (s / sell-01
+                   :ARG0 (p / person
+                            :name (n / name
+                                     :op1 "Joe"))
+                   :ARG1 (h / house
+                            :poss p))
+           :op2 (b / buy-01
+                   :ARG0 p
+                   :ARG1 (h2 / house
+                             :mod (n2 / new)
+                             :location (r / relative-position
+                                          :op1 (a2 / away)
+                                          :quant (d / distance-quantity
+                                                    :unit (m2 / mile
+                                                              :quant (f / few)))))))
+   :op2 (m3 / move-01
+            :ARG0 p
+            :ARG2 (o / out-05
+                     :ARG2 h)
+            :time (t / thursday)))
+
+# ::id winograd_137
+# ::snt Joe has sold his house and bought a new one a few miles away. He will be moving into it on Thursday.
+# ::suppl Maria_Winograd2.tsv-7
+(m / multi-sentence
+   :op1 (a / and
+           :op1 (s / sell-01
+                   :ARG0 (p / person
+                            :name (n / name
+                                     :op1 "Joe"))
+                   :ARG1 (h / house
+                            :poss p))
+           :op2 (b / buy-01
+                   :ARG0 p
+                   :ARG1 (h2 / house
+                             :mod (n2 / new)
+                             :location (r / relative-position
+                                          :op1 (a2 / away)
+                                          :quant (d / distance-quantity
+                                                    :unit (m2 / mile
+                                                              :quant (f / few)))))))
+   :op2 (m3 / move-01
+            :ARG0 p
+            :ARG2 h2
+            :time (t / thursday)))
+
+# ::id winograd_138
+# ::snt Many people start to read Paul's books and can't put them down. They are gripped because Paul writes so well.
+# ::suppl Maria_Winograd2.tsv-8
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (s / start-01
+                    :ARG0 (p / person
+                             :quant (m2 / many))
+                    :ARG2 (r / read-01
+                             :ARG1 (b / book
+                                      :poss (p2 / person
+                                                :name (n / name
+                                                         :op1 "Paul")))))
+            :op2 (p3 / possible-01
+                     :polarity -
+                     :ARG1 (p4 / put-01
+                               :ARG1 b
+                               :ARG2 (d / down))))
+   :snt2 (g / grip-01
+            :ARG1 p
+            :ARG1-of (c / cause-01
+                        :ARG0 (g2 / good
+                                  :mod-of (w / write-01
+                                             :ARG0 p2)))))
+
+# ::id winograd_139
+# ::snt Many people start to read Paul's books and can't put them down. They are popular because Paul writes so well.
+# ::suppl Maria_Winograd2.tsv-9
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (s / start-01
+                    :ARG0 (p / person
+                             :quant (m2 / many))
+                    :ARG2 (r / read-01
+                             :ARG1 (b / book
+                                      :poss (p2 / person
+                                                :name (n / name
+                                                         :op1 "Paul")))))
+            :op2 (p3 / possible-01
+                     :polarity -
+                     :ARG1 (p4 / put-01
+                               :ARG1 b
+                               :ARG2 (d / down))))
+   :snt2 (w / write-01
+            :ARG0 p2
+            :mod (g / good)
+            :ARG0-of (c / cause-01
+                        :ARG1 (p5 / popular
+                                  :domain b))))
+
+# ::id winograd_140
+# ::snt Mary took out her flute and played one of her favorite pieces. She has had it since she was a child.
+# ::suppl Maria_Winograd2.tsv-10
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (t / take-01
+                    :ARG0 (p / person
+                             :name (n / name
+                                      :op1 "Mary"))
+                    :ARG1 (f / flute
+                             :poss p)
+                    :ARG2 (o / out))
+            :op2 (p2 / play-11
+                     :ARG0 p
+                     :ARG1 (p3 / piece
+                               :ARG1-of (i2 / include-91
+                                            :ARG2 (f2 / favorite
+                                                      :domain (p4 / piece))))))
+   :snt2 (h / have-03
+            :ARG0 p
+            :ARG1 f
+            :time (s / since
+                     :op1 (c / child
+                             :domain p))))
+
+# ::id winograd_141
+# ::snt Mary took out her flute and played one of her favorite pieces. She has loved it since she was a child.
+# ::suppl Maria_Winograd2.tsv-11
+(m / multi-sentence
+   :snt1 (a / and
+            :op1 (t / take-01
+                    :ARG0 (p / person
+                             :name (n / name
+                                      :op1 "Mary"))
+                    :ARG1 (f / flute
+                             :poss p)
+                    :ARG2 (o / out))
+            :op2 (p2 / play-11
+                     :ARG0 p
+                     :ARG1 (p3 / piece
+                               :ARG1-of (i2 / include-91
+                                            :ARG2 (f2 / favorite
+                                                      :domain (p4 / piece))))))
+   :snt2 (l / love-01
+            :ARG0 p
+            :ARG1 p3
+            :time (s / since
+                     :op1 (c / child
+                             :domain p))))
+
+# ::id winograd_142
+# ::snt Sam pulled up a chair to the piano, but it was broken, so he had to stand instead.
+# ::suppl Maria_Winograd2.tsv-12
+(p / pull-01
+   :ARG0 (p2 / person
+             :name (n / name
+                      :op1 "Sam"))
+   :ARG1 (c / chair)
+   :ARG2 (p3 / piano)
+   :concession (b / break-01
+                  :ARG1 c
+                  :ARG0-of (c2 / cause-01
+                               :ARG1 (o / obligate-01
+                                        :ARG1 p2
+                                        :ARG2 (s / stand-01)))))
+
+# ::id winograd_143
+# ::snt Sam pulled up a chair to the piano, but it was broken, so he had to sing instead.
+# ::suppl Maria_Winograd2.tsv-13
+(p / pull-01
+   :ARG0 (p2 / person
+             :name (n / name
+                      :op1 "Sam"))
+   :ARG1 (c / chair)
+   :ARG2 (p3 / piano)
+   :concession (b / break-01
+                  :ARG1 p3
+                  :ARG0-of (c2 / cause-01
+                               :ARG1 (o / obligate-01
+                                        :ARG1 p2
+                                        :ARG2 (s / sing-01)))))
+
+# ::id winograd_144
+# ::snt Since it was raining, I carried the newspaper in my backpack to keep it dry.
+# ::suppl Maria_Winograd2.tsv-14
+(c2 / carry-01
+    :ARG0 (i / i)
+    :ARG1 (n / newspaper)
+    :ARG2 (b / backpack
+             :poss i)
+    :purpose (k / keep-01
+                :ARG1 (d / dry
+                         :domain n))
+    :ARG1-of (c3 / cause-01
+                 :ARG0 (r / rain-01)))
+
+# ::id winograd_145
+# ::snt Since it was raining, I carried the newspaper over my backpack to keep it dry.
+# ::suppl Maria_Winograd2.tsv-15
+(c2 / carry-01
+    :ARG0 (i / i)
+    :ARG1 (n / newspaper)
+    :purpose (k / keep-01
+                :ARG1 (d / dry
+                         :domain b))
+    :ARG1-of (c3 / cause-01
+                 :ARG0 (r / rain-01))
+    :location (o / over
+                 :op1 (b / backpack
+                         :poss i)))
+
+# ::id winograd_146
+# ::snt Sara borrowed the book from the library because she needs it for an article she is working on. She reads it when she gets home from work.
+# ::suppl Maria_Winograd2.tsv-16
+(m / multi-sentence
+   :snt1 (b / borrow-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Sara"))
+            :ARG1 (b2 / book)
+            :ARG2 (l / library)
+            :ARG1-of (c2 / cause-01
+                         :ARG0 (n2 / need-01
+                                   :ARG0 p
+                                   :ARG1 (a / article
+                                            :ARG1-of (w / work-10
+                                                        :ARG0 p)))))
+   :snt2 (r / read-01
+            :ARG0 p
+            :ARG1 b2
+            :time (g / get-05
+                     :ARG1 p
+                     :ARG2 (h / home)
+                     :source (w2 / work-01))))
+
+# ::id winograd_147
+# ::snt Sara borrowed the book from the library because she needs it for an article she is working on. She writes it when she gets home from work.
+# ::suppl Maria_Winograd2.tsv-17
+(m / multi-sentence
+   :snt1 (b / borrow-01
+            :ARG0 (p / person
+                     :name (n / name
+                              :op1 "Sara"))
+            :ARG1 (b2 / book)
+            :ARG2 (l / library)
+            :ARG1-of (c2 / cause-01
+                         :ARG0 (n2 / need-01
+                                   :ARG0 p
+                                   :ARG1 (a / article
+                                            :ARG1-of (w / work-10
+                                                        :ARG0 p)))))
+   :snt2 (w3 / write-01
+             :ARG0 p
+             :ARG1 a
+             :time (g / get-05
+                      :ARG1 p
+                      :ARG2 (h / home)
+                      :source (w2 / work-01))))
+
+# ::id winograd_148
+# ::snt This morning, Joey built a sand castle on the beach, and put a toy flag in the highest tower, but this afternoon the tide knocked it down.
+# ::suppl Maria_Winograd2.tsv-18
+(a / and
+   :op1 (b / build-01
+           :ARG0 (p / person
+                    :name (n / name
+                             :op1 "Joey"))
+           :ARG1 (c2 / castle
+                     :mod (s / sand))
+           :location (b2 / beach))
+   :op2 (p2 / put-01
+            :ARG1 (f / flag
+                     :mod (t / toy))
+            :ARG2 (t2 / tower
+                      :ARG1-of (h / have-degree-91
+                                  :ARG2 (h2 / high)
+                                  :ARG3 (m / most))))
+   :time (m2 / morning)
+   :concession (k / knock-down-02
+                  :ARG0 (t3 / tide)
+                  :ARG1 c2
+                  :time (a2 / afternoon)))
+
+# ::id winograd_149
+# ::snt This morning, Joey built a sand castle on the beach, and put a toy flag in the highest tower, but this afternoon the wind knocked it down.
+# ::suppl Maria_Winograd2.tsv-19
+(a / and
+   :op1 (b / build-01
+           :ARG0 (p / person
+                    :name (n / name
+                             :op1 "Joey"))
+           :ARG1 (c2 / castle
+                     :mod (s / sand))
+           :location (b2 / beach))
+   :op2 (p2 / put-01
+            :ARG1 (f / flag
+                     :mod (t / toy))
+            :ARG2 (t2 / tower
+                      :ARG1-of (h / have-degree-91
+                                  :ARG2 (h2 / high)
+                                  :ARG3 (m / most))))
+   :time (m2 / morning)
+   :concession (k / knock-down-02
+                  :ARG0 (w / wind)
+                  :ARG1 f
+                  :time (a2 / afternoon)))

@@ -1,0 +1,691 @@
+# ::id berts_mouth_0
+# ::snt The clip is about a horse.
+# ::suppl Maria_Bertsmouth1.tsv-0
+(c / clip
+   :topic (h / horse))
+
+# ::id berts_mouth_1
+# ::snt The clip is about a queen.
+# ::suppl Maria_Bertsmouth1.tsv-1
+(c / clip
+   :topic (q / queen))
+
+# ::id berts_mouth_2
+# ::snt The clip is about a cat.
+# ::suppl Maria_Bertsmouth1.tsv-2
+(c / clip
+   :topic (c2 / cat))
+
+# ::id berts_mouth_3
+# ::snt The clip is about a king.
+# ::suppl Maria_Bertsmouth1.tsv-3
+(c / clip
+   :topic (k / king))
+
+# ::id berts_mouth_4
+# ::snt The clip is about a prince.
+# ::suppl Maria_Bertsmouth1.tsv-4
+(c / clip
+   :topic (p / prince))
+
+# ::id berts_mouth_5
+# ::snt The clip is about an hour.
+# ::suppl Maria_Bertsmouth1.tsv-5
+(c / clip
+   :duration (a / about
+                :op1 (t / temporal-quantity
+                        :quant 1
+                        :unit (h / hour))))
+
+# ::id berts_mouth_6
+# ::snt The clip is about a minute.
+# ::suppl Maria_Bertsmouth1.tsv-6
+(c / clip
+   :duration (a / about
+                :op1 (t / temporal-quantity
+                        :quant 1
+                        :unit (h / hour))))
+
+# ::id berts_mouth_7
+# ::snt The clip is about a second.
+# ::suppl Maria_Bertsmouth1.tsv-7
+(c / clip
+   :duration (a / about
+                :op1 (t / temporal-quantity
+                        :quant 1
+                        :unit (s / second))))
+
+# ::id berts_mouth_8
+# ::snt It lasted for hours.
+# ::suppl Maria_Bertsmouth1.tsv-8
+(l / last-01
+   :ARG2 (t / temporal-quantity
+            :unit (h / hour)))
+
+# ::id berts_mouth_9
+# ::snt It lasted for decades.
+# ::suppl Maria_Bertsmouth1.tsv-9
+(l / last-01
+   :ARG2 (t / temporal-quantity
+            :unit (d / decade)))
+
+# ::id berts_mouth_10
+# ::snt It lasted for weeks.
+# ::suppl Maria_Bertsmouth1.tsv-10
+(l / last-01
+   :ARG2 (t / temporal-quantity
+            :unit (w / week)))
+
+# ::id berts_mouth_11
+# ::snt It lasted for months.
+# ::suppl Maria_Bertsmouth1.tsv-11
+(l / last-01
+   :ARG2 (t / temporal-quantity
+            :unit (m / month)))
+
+# ::id berts_mouth_12
+# ::snt It lasted for seconds.
+# ::suppl Maria_Bertsmouth1.tsv-12
+(l / last-01
+   :ARG2 (t / temporal-quantity
+            :unit (s / second)))
+
+# ::id berts_mouth_13
+# ::snt The book is for Lisa.
+# ::suppl Maria_Bertsmouth1.tsv-13
+(b / book
+   :beneficiary (p / person
+                   :name (n / name
+                            :op1 "Lisa")))
+
+# ::id berts_mouth_14
+# ::snt The book is for John.
+# ::suppl Maria_Bertsmouth1.tsv-14
+(b / book
+   :beneficiary (p / person
+                   :name (n / name
+                            :op1 "John")))
+
+# ::id berts_mouth_15
+# ::snt The book is for him.
+# ::suppl Maria_Bertsmouth1.tsv-15
+(b / book
+   :beneficiary (h / he))
+
+# ::id berts_mouth_16
+# ::snt The book is for her.
+# ::suppl Maria_Bertsmouth1.tsv-16
+(b / book
+   :beneficiary (s / she))
+
+# ::id berts_mouth_17
+# ::snt The book is for me.
+# ::suppl Maria_Bertsmouth1.tsv-17
+(b / book
+   :beneficiary (i / i))
+
+# ::id berts_mouth_18
+# ::snt The book is for reading.
+# ::suppl Maria_Bertsmouth1.tsv-18
+(b / book
+   :purpose (r / read-01))
+
+# ::id berts_mouth_19
+# ::snt The book is for learning.
+# ::suppl Maria_Bertsmouth1.tsv-19
+(b / book
+   :purpose (l / learn-01))
+
+# ::id berts_mouth_20
+# ::snt The book is for viewing.
+# ::suppl Maria_Bertsmouth1.tsv-20
+(b / book
+   :purpose (v / view-01))
+
+# ::id berts_mouth_21
+# ::snt The book is for studying.
+# ::suppl Maria_Bertsmouth1.tsv-21
+(b / book
+   :purpose (s / study-01))
+
+# ::id berts_mouth_22
+# ::snt The book is for enjoying.
+# ::suppl Maria_Bertsmouth1.tsv-22
+(b / book
+   :purpose (e / enjoy-01))
+
+# ::id berts_mouth_23
+# ::snt The event is in January.
+# ::suppl 54
+(b / be-temporally-at-91
+   :ARG1 (e / event)
+   :ARG2 (d / date-entity
+            :month 1))
+
+# ::id berts_mouth_24
+# ::snt The dinner is on the table.
+# ::suppl 55
+(b / be-located-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (o / on
+            :op1 (t / table)))
+
+# ::id berts_mouth_25
+# ::snt The dinner is on the stove.
+# ::suppl 56
+(b / be-located-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (o / on
+            :op1 (s / stove)))
+
+# ::id berts_mouth_26
+# ::snt The dinner is on the counter.
+# ::suppl 57
+(b / be-located-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (o / on
+            :op1 (c / counter)))
+
+# ::id berts_mouth_27
+# ::snt The dinner is on the plate.
+# ::suppl 58
+(b / be-located-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (o / on
+            :op1 (p / plate)))
+
+# ::id berts_mouth_28
+# ::snt The dinner is on Sunday.
+# ::suppl 59
+(b / be-temporally-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (d2 / date-entity
+             :weekday "sunday"))
+
+# ::id berts_mouth_29
+# ::snt The dinner is on Monday.
+# ::suppl 60
+(b / be-temporally-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (d2 / date-entity
+             :weekday "monday"))
+
+# ::id berts_mouth_30
+# ::snt The dinner is on Tuesday.
+# ::suppl 61
+(b / be-temporally-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (d2 / date-entity
+             :weekday "tuesday"))
+
+# ::id berts_mouth_31
+# ::snt The dinner is on Wednesday.
+# ::suppl 62
+(b / be-temporally-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (d2 / date-entity
+             :weekday "wednesday"))
+
+# ::id berts_mouth_32
+# ::snt The dinner is on Saturday.
+# ::suppl 63
+(b / be-temporally-at-91
+   :ARG1 (d / dinner)
+   :ARG2 (d2 / date-entity
+             :weekday "saturday"))
+
+# ::id berts_mouth_33
+# ::snt I will run the study.
+# ::suppl 64
+(r / run-01
+   :ARG0 (i / i)
+   :ARG1 (s / study))
+
+# ::id berts_mouth_34
+# ::snt I will run the restaurant.
+# ::suppl 65
+(r / run-01
+   :ARG0 (i / i)
+   :ARG1 (r2 / restaurant))
+
+# ::id berts_mouth_35
+# ::snt I will run the store.
+# ::suppl 66
+(r / run-01
+   :ARG0 (i / i)
+   :ARG1 (s / store))
+
+# ::id berts_mouth_36
+# ::snt I will run the lab.
+# ::suppl 67
+(r / run-01
+   :ARG0 (i / i)
+   :ARG1 (l / lab))
+
+# ::id berts_mouth_37
+# ::snt I will run the shop.
+# ::suppl 68
+(r / run-01
+   :ARG0 (i / i)
+   :ARG1 (s / shop))
+
+# ::id berts_mouth_38
+# ::snt I will run the business.
+# ::suppl 69
+(r / run-01
+   :ARG0 (i / i)
+   :ARG1 (b / business))
+
+# ::id berts_mouth_39
+# ::snt I will run the race.
+# ::suppl 70
+(r / run-02
+   :ARG0 (i / i)
+   :ARG1 (r2 / race))
+
+# ::id berts_mouth_40
+# ::snt I will run the marathon.
+# ::suppl 71
+(r / run-02
+   :ARG0 (i / i)
+   :ARG1 (m / marathon))
+
+# ::id berts_mouth_41
+# ::snt I will run the course.
+# ::suppl 72
+(r / run-02
+   :ARG0 (i / i)
+   :ARG1 (c / course))
+
+# ::id berts_mouth_42
+# ::snt I will run the trail.
+# ::suppl 73
+(r / run-02
+   :ARG0 (i / i)
+   :ARG1 (t / trail))
+
+# ::id berts_mouth_43
+# ::snt I will run the mile.
+# ::suppl 74
+(r / run-02
+   :ARG0 (i / i)
+   :ARG1 (d / distance-quantity
+            :quant 1
+            :unit (m / mile)))
+
+# ::id berts_mouth_44
+# ::snt I started the car.
+# ::suppl 75
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (c / car))
+
+# ::id berts_mouth_45
+# ::snt I started truck.
+# ::suppl 76
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (t / truck))
+
+# ::id berts_mouth_46
+# ::snt I started the engine.
+# ::suppl 77
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (e / engine))
+
+# ::id berts_mouth_47
+# ::snt I started the bus.
+# ::suppl 78
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (b / bus))
+
+# ::id berts_mouth_48
+# ::snt I started the boat.
+# ::suppl 79
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (b / boat))
+
+# ::id berts_mouth_49
+# ::snt I started the book.
+# ::suppl 80
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (b / book))
+
+# ::id berts_mouth_50
+# ::snt I started the journal.
+# ::suppl 81
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (j / journal))
+
+# ::id berts_mouth_51
+# ::snt I started the magazine.
+# ::suppl 82
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (m / magazine))
+
+# ::id berts_mouth_52
+# ::snt I started the movie.
+# ::suppl 83
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (m / movie))
+
+# ::id berts_mouth_53
+# ::snt I started the episode.
+# ::suppl 84
+(s / start-01
+   :ARG0 (i / i)
+   :ARG1 (e / episode))
+
+# ::id berts_mouth_54
+# ::snt I ate salad with a fork.
+# ::suppl 85
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :instrument (f / fork))
+
+# ::id berts_mouth_55
+# ::snt I ate salad with a spoon.
+# ::suppl 86
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :instrument (s2 / spoon))
+
+# ::id berts_mouth_56
+# ::snt I ate salad with a knife.
+# ::suppl 87
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :instrument (k / knife))
+
+# ::id berts_mouth_57
+# ::snt I ate salad with enthusiasm.
+# ::suppl 88
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :manner (e2 / enthusiastic-03))
+
+# ::id berts_mouth_58
+# ::snt I ate salad with enjoyment.
+# ::suppl 89
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :manner (e2 / enjoy-01))
+
+# ::id berts_mouth_59
+# ::snt I ate salad with gusto.
+# ::suppl 90
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :manner (g / gusto))
+
+# ::id berts_mouth_60
+# ::snt I ate salad with pleasure.
+# ::suppl 91
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :manner (p / please-01))
+
+# ::id berts_mouth_61
+# ::snt I ate salad with him.
+# ::suppl 92
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :accompanier (h / he))
+
+# ::id berts_mouth_62
+# ::snt I ate salad with John.
+# ::suppl 93
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :accompanier (p / person
+                   :name "John"))
+
+# ::id berts_mouth_63
+# ::snt I ate salad with Lisa.
+# ::suppl 94
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :accompanier (p / person
+                   :name "Lisa"))
+
+# ::id berts_mouth_64
+# ::snt I ate salad with her.
+# ::suppl 95
+(e / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad)
+   :accompanier (s2 / she))
+
+# ::id berts_mouth_65
+# ::snt I had slept.
+# ::suppl anna_bert_fixed.tsv-0
+(s / sleep-01
+   :ARG0 (i / i))
+
+# ::id berts_mouth_66
+# ::snt I had seen.
+# ::suppl anna_bert_fixed.tsv-1
+(s / see-01
+   :ARG0 (i / i))
+
+# ::id berts_mouth_67
+# ::snt I had eaten.
+# ::suppl anna_bert_fixed.tsv-2
+(e / eat-01
+   :ARG0 (i / i))
+
+# ::id berts_mouth_68
+# ::snt I had gone.
+# ::suppl anna_bert_fixed.tsv-3
+(g / go-02
+   :ARG0 (i / i))
+
+# ::id berts_mouth_69
+# ::snt I had a party.
+# ::suppl anna_bert_fixed.tsv-4
+(h / party-01
+   :ARG0 (i / i))
+
+# ::id berts_mouth_70
+# ::snt I had a reception.
+# ::suppl anna_bert_fixed.tsv-5
+(h / have-06
+   :ARG0 (i / i)
+   :ARG1 (r / reception))
+
+# ::id berts_mouth_71
+# ::snt I had a ceremony.
+# ::suppl anna_bert_fixed.tsv-6
+(h / have-06
+   :ARG0 (i / i)
+   :ARG1 (c / ceremony))
+
+# ::id berts_mouth_72
+# ::snt I had a wedding.
+# ::suppl anna_bert_fixed.tsv-7
+(h / have-06
+   :ARG0 (i / i)
+   :ARG1 (w / wedding))
+
+# ::id berts_mouth_73
+# ::snt I had a meeting.
+# ::suppl anna_bert_fixed.tsv-8
+(m / meet-03
+   :ARG0 (i / i))
+
+# ::id berts_mouth_74
+# ::snt I had pizza.
+# ::suppl anna_bert_fixed.tsv-9
+(h / eat-01
+   :ARG0 (i / i)
+   :ARG1 (p / pizza))
+
+# ::id berts_mouth_75
+# ::snt I had salad.
+# ::suppl anna_bert_fixed.tsv-10
+(h / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / salad))
+
+# ::id berts_mouth_76
+# ::snt I had coffee.
+# ::suppl anna_bert_fixed.tsv-11
+(h / drink-01
+   :ARG0 (i / i)
+   :ARG1 (c / coffee))
+
+# ::id berts_mouth_77
+# ::snt I had cake.
+# ::suppl anna_bert_fixed.tsv-12
+(h / eat-01
+   :ARG0 (i / i)
+   :ARG1 (c / cake))
+
+# ::id berts_mouth_78
+# ::snt I had sushi.
+# ::suppl anna_bert_fixed.tsv-13
+(h / eat-01
+   :ARG0 (i / i)
+   :ARG1 (s / sushi))
+
+# ::id berts_mouth_79
+# ::snt I had a meeting.
+# ::suppl anna_bert_fixed.tsv-14
+(m / meet-03
+   :ARG0 (i / i))
+
+# ::id berts_mouth_80
+# ::snt I had a blister.
+# ::suppl anna_bert_fixed.tsv-15
+(h / have-03
+   :ARG0 (i / i)
+   :ARG1 (b / blister))
+
+# ::id berts_mouth_81
+# ::snt I had a fever.
+# ::suppl anna_bert_fixed.tsv-16
+(h / have-03
+   :ARG0 (i / i)
+   :ARG1 (f / fever))
+
+# ::id berts_mouth_82
+# ::snt I had a headache.
+# ::suppl anna_bert_fixed.tsv-17
+(h / have-03
+   :ARG0 (i / i)
+   :ARG1 (h2 / headache))
+
+# ::id berts_mouth_83
+# ::snt I had a cold.
+# ::suppl anna_bert_fixed.tsv-18
+(h / have-03
+   :ARG0 (i / i)
+   :ARG1 (c / cold))
+
+# ::id berts_mouth_84
+# ::snt I had a cough.
+# ::suppl anna_bert_fixed.tsv-19
+(h / have-03
+   :ARG0 (i / i)
+   :ARG1 (c / cough-01))
+
+# ::id berts_mouth_85
+# ::snt The event is in London.
+# ::suppl anna_bert_fixed.tsv-20
+(b / be-located-at-91
+   :ARG1 (e / event)
+   :ARG2 (c / city
+            :wiki "London"
+            :name (n / name
+                     :op1 "London")))
+
+# ::id berts_mouth_86
+# ::snt The event is in here.
+# ::suppl anna_bert_fixed.tsv-21
+(b / be-located-at-91
+   :ARG1 (e / event)
+   :ARG2 (h / here))
+
+# ::id berts_mouth_87
+# ::snt The event is in Paris.
+# ::suppl anna_bert_fixed.tsv-22
+(b / be-located-at-91
+   :ARG1 (e / event)
+   :ARG2 (c / city
+            :wiki "Paris"
+            :name (n / name
+                     :op1 "Paris")))
+
+# ::id berts_mouth_88
+# ::snt The event is in there.
+# ::suppl anna_bert_fixed.tsv-23
+(b / be-located-at-91
+   :ARG1 (e / event)
+   :ARG2 (t / there))
+
+# ::id berts_mouth_89
+# ::snt The event is in Canada.
+# ::suppl anna_bert_fixed.tsv-24
+(b / be-located-at-91
+   :ARG1 (e / event)
+   :ARG2 (c / country
+            :wiki "Canada"
+            :name (n / name
+                     :op1 "Canada")))
+
+# ::id berts_mouth_90
+# ::snt The event is in August.
+# ::suppl anna_bert_fixed.tsv-25
+(b / be-temporally-at-91
+   :ARG1 (e / event)
+   :ARG2 (d / date-entity
+            :month 8))
+
+# ::id berts_mouth_91
+# ::snt The event is in July.
+# ::suppl anna_bert_fixed.tsv-26
+(b / be-temporally-at-91
+   :ARG1 (e / event)
+   :ARG2 (d / date-entity
+            :month 7))
+
+# ::id berts_mouth_92
+# ::snt The event is in October.
+# ::suppl anna_bert_fixed.tsv-27
+(b / be-temporally-at-91
+   :ARG1 (e / event)
+   :ARG2 (d / date-entity
+            :month 10))
+
+# ::id berts_mouth_93
+# ::snt The event is in June.
+# ::suppl anna_bert_fixed.tsv-28
+(b / be-temporally-at-91
+   :ARG1 (e / event)
+   :ARG2 (d / date-entity
+            :month 6))
+
+# ::id berts_mouth_94
+# ::snt The event is in January.
+# ::suppl anna_bert_fixed.tsv-29
+(b / be-temporally-at-91
+   :ARG1 (e / event)
+   :ARG2 (d / date-entity
+            :month 1))

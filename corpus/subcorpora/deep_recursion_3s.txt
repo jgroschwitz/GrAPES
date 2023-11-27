@@ -1,0 +1,1723 @@
+# ::snt The doctor heard that the girls thought that you thought that I mentioned that the astronaut said that the soldier hated her, the astronaut
+# ::tree TP_CP(heard,make_singular(doctor),TP_CP(thought,girls,TP_CP(thought,you,TP_CP(mentioned,I,TP_resolve_coref(said_resolve_coref,astronaut,TP_tr(hated_her,make_singular(soldier)))))))
+# ::size0 3
+# ::size1 7
+# ::id deep_recursion_3s_0
+# ::suppl deep_recursion_3s_0
+(u_7218 / hear-01
+        :ARG0 (d / doctor)
+        :ARG1 (u_7215 / think-01
+                      :ARG0 (r / girl)
+                      :ARG1 (u_7212 / think-01
+                                    :ARG0 (u_7217 / you)
+                                    :ARG1 (u_7209 / mention-01
+                                                  :ARG0 (u_7214 / i)
+                                                  :ARG1 (u_7208 / say-01
+                                                                :ARG0 (a / astronaut
+                                                                         :ARG1-of (u_7211 / hate-01
+                                                                                          :ARG0 (s / soldier)
+                                                                                          :ARG1-of u_7208)))))))
+
+# ::snt The boys knew that the kids heard that the doctor knew that I said that we saw her, the doctor
+# ::tree TP_CP(knew,boys,TP_CP(heard,kids,TP_resolve_coref(knew_resolve_coref,doctor,TP_CP_coref(said_coref,I,TP_tr(saw_her,we)))))
+# ::size0 3
+# ::size1 5
+# ::id deep_recursion_3s_1
+# ::suppl deep_recursion_3s_1
+(u_7226 / know-01
+        :ARG0 (r / boy)
+        :ARG1 (u_7224 / hear-01
+                      :ARG0 (u_7227 / kid)
+                      :ARG1 (u_7223 / know-01
+                                    :ARG0 (d / doctor
+                                             :ARG1-of (u_7220 / see-01
+                                                              :ARG0 (u_7222 / we)
+                                                              :ARG1-of (u_7221 / say-01
+                                                                               :ARG0 (u_7225 / i)
+                                                                               :ARG1-of u_7223))))))
+
+# ::snt The girls knew that the astronaut thought that the lawyer amused him, the astronaut
+# ::tree TP_CP(knew,girls,TP_resolve_coref(thought_resolve_coref,astronaut,TP_tr(amused_him,make_singular(lawyer))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_3s_2
+# ::suppl deep_recursion_3s_2
+(u_7229 / know-01
+        :ARG0 (r / girl)
+        :ARG1 (u_7228 / think-01
+                      :ARG0 (a / astronaut
+                               :ARG1-of (u_7230 / amuse-01
+                                                :ARG0 (m / lawyer)
+                                                :ARG1-of u_7228))))
+
+# ::snt The boys mentioned that the doctor mentioned that the soldier hated her, the doctor
+# ::tree TP_CP(mentioned,boys,TP_resolve_coref(mentioned_resolve_coref,doctor,TP_tr(hated_her,make_singular(soldier))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_3s_3
+# ::suppl deep_recursion_3s_3
+(u_7232 / mention-01
+        :ARG0 (r / boy)
+        :ARG1 (u_7231 / mention-01
+                      :ARG0 (d / doctor
+                               :ARG1-of (u_7234 / hate-01
+                                                :ARG0 (s / soldier)
+                                                :ARG1-of u_7231))))
+
+# ::snt The lawyer believed that the astronaut amused him, the lawyer
+# ::tree TP_resolve_coref(believed_resolve_coref,lawyer,TP_tr(amused_him,make_singular(astronaut)))
+# ::size0 3
+# ::size1 3
+# ::id deep_recursion_3s_4
+# ::suppl deep_recursion_3s_4
+(u_7235 / believe-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (r / amuse-01
+                             :ARG0 (a / astronaut)
+                             :ARG1-of u_7235)))
+
+# ::snt The astronaut thought that the doctor heard that I believed that we liked him, the doctor
+# ::tree TP_CP(thought,make_singular(astronaut),TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(believed_coref,I,TP_tr(liked_him,we))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_3s_5
+# ::suppl deep_recursion_3s_5
+(u_7240 / think-01
+        :ARG0 (a / astronaut)
+        :ARG1 (u_7239 / hear-01
+                      :ARG0 (d / doctor
+                               :ARG1-of (u_7236 / like-01
+                                                :ARG0 (u_7238 / we)
+                                                :ARG1-of (u_7237 / believe-01
+                                                                 :ARG0 (r / i)
+                                                                 :ARG1-of u_7239)))))
+
+# ::snt We knew that the lawyer knew that the astronaut believed that I liked him, the lawyer
+# ::tree TP_CP(knew,we,TP_resolve_coref(knew_resolve_coref,lawyer,TP_CP_coref(believed_coref,make_singular(astronaut),TP_tr(liked_him,I))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_3s_6
+# ::suppl deep_recursion_3s_6
+(u_7244 / know-01
+        :ARG0 (r / we)
+        :ARG1 (u_7243 / know-01
+                      :ARG0 (m / lawyer
+                               :ARG1-of (u_7241 / like-01
+                                                :ARG0 (u_7245 / i)
+                                                :ARG1-of (u_7242 / believe-01
+                                                                 :ARG0 (a / astronaut)
+                                                                 :ARG1-of u_7243)))))
+
+# ::snt The kids thought that the soldier thought that the boys thought that the girls saw him, the soldier
+# ::tree TP_CP(thought,kids,TP_resolve_coref(thought_resolve_coref,soldier,TP_CP_coref(thought_coref,boys,TP_tr(saw_him,girls))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_3s_7
+# ::suppl deep_recursion_3s_7
+(u_7250 / think-01
+        :ARG0 (r / kid)
+        :ARG1 (u_7249 / think-01
+                      :ARG0 (s / soldier
+                               :ARG1-of (u_7246 / see-01
+                                                :ARG0 (u_7248 / girl)
+                                                :ARG1-of (u_7247 / think-01
+                                                                 :ARG0 (u_7252 / boy)
+                                                                 :ARG1-of u_7249)))))
+
+# ::snt The boys heard that the astronaut said that you said that the girls hated him, the astronaut
+# ::tree TP_CP(heard,boys,TP_resolve_coref(said_resolve_coref,astronaut,TP_CP_coref(said_coref,you,TP_tr(hated_him,girls))))
+# ::size0 3
+# ::size1 4
+# ::id deep_recursion_3s_8
+# ::suppl deep_recursion_3s_8
+(u_7257 / hear-01
+        :ARG0 (r / boy)
+        :ARG1 (u_7256 / say-01
+                      :ARG0 (a / astronaut
+                               :ARG1-of (u_7253 / hate-01
+                                                :ARG0 (u_7255 / girl)
+                                                :ARG1-of (u_7254 / say-01
+                                                                 :ARG0 (u_7258 / you)
+                                                                 :ARG1-of u_7256)))))
+
+# ::snt The boys heard that we thought that the astronaut mentioned that the doctor amused her, the astronaut
+# ::tree TP_CP(heard,boys,TP_CP(thought,we,TP_resolve_coref(mentioned_resolve_coref,astronaut,TP_tr(amused_her,make_singular(doctor)))))
+# ::size0 3
+# ::size1 5
+# ::id deep_recursion_3s_9
+# ::suppl deep_recursion_3s_9
+(u_7262 / hear-01
+        :ARG0 (r / boy)
+        :ARG1 (u_7260 / think-01
+                      :ARG0 (u_7263 / we)
+                      :ARG1 (u_7259 / mention-01
+                                    :ARG0 (a / astronaut
+                                             :ARG1-of (u_7261 / amuse-01
+                                                              :ARG0 (d / doctor)
+                                                              :ARG1-of u_7259)))))
+
+# ::snt The soldier heard that we knew that the lawyer saw him, the soldier
+# ::tree TP_resolve_coref(heard_resolve_coref,soldier,TP_CP_coref(knew_coref,we,TP_tr(saw_him,make_singular(lawyer))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_3s_10
+# ::suppl deep_recursion_3s_10
+(u_7266 / hear-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7265 / see-01
+                                  :ARG0 (m / lawyer)
+                                  :ARG1-of (u_7264 / know-01
+                                                   :ARG0 (r / we)
+                                                   :ARG1-of u_7266))))
+
+# ::snt The kids heard that the soldier knew that we knew that I believed that you liked him, the soldier
+# ::tree TP_CP(heard,kids,TP_resolve_coref(knew_resolve_coref,soldier,TP_CP_coref(knew_coref,we,TP_CP_coref(believed_coref,I,TP_tr(liked_him,you)))))
+# ::size0 4
+# ::size1 5
+# ::id deep_recursion_3s_11
+# ::suppl deep_recursion_3s_11
+(u_7273 / hear-01
+        :ARG0 (r / kid)
+        :ARG1 (u_7272 / know-01
+                      :ARG0 (s / soldier
+                               :ARG1-of (u_7267 / like-01
+                                                :ARG0 (u_7269 / you)
+                                                :ARG1-of (u_7268 / believe-01
+                                                                 :ARG0 (u_7271 / i)
+                                                                 :ARG1-of (u_7270 / know-01
+                                                                                  :ARG0 (u_7275 / we)
+                                                                                  :ARG1-of u_7272))))))
+
+# ::snt The doctor knew that the kids mentioned that the lawyer liked him, the doctor
+# ::tree TP_resolve_coref(knew_resolve_coref,doctor,TP_CP_coref(mentioned_coref,kids,TP_tr(liked_him,make_singular(lawyer))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_3s_12
+# ::suppl deep_recursion_3s_12
+(u_7278 / know-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7277 / like-01
+                                  :ARG0 (m / lawyer)
+                                  :ARG1-of (u_7276 / mention-01
+                                                   :ARG0 (r / kid)
+                                                   :ARG1-of u_7278))))
+
+# ::snt The astronaut heard that the doctor believed that the boys believed that we liked him, the astronaut
+# ::tree TP_resolve_coref(heard_resolve_coref,astronaut,TP_CP_coref(believed_coref,make_singular(doctor),TP_CP_coref(believed_coref,boys,TP_tr(liked_him,we))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_3s_13
+# ::suppl deep_recursion_3s_13
+(u_7283 / hear-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7279 / like-01
+                                  :ARG0 (u_7281 / we)
+                                  :ARG1-of (u_7280 / believe-01
+                                                   :ARG0 (r / boy)
+                                                   :ARG1-of (u_7282 / believe-01
+                                                                    :ARG0 (d / doctor)
+                                                                    :ARG1-of u_7283)))))
+
+# ::snt I thought that the doctor heard that we mentioned that the lawyer mentioned that the girls hated him, the doctor
+# ::tree TP_CP(thought,I,TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(mentioned_coref,we,TP_CP_coref(mentioned_coref,make_singular(lawyer),TP_tr(hated_him,girls)))))
+# ::size0 4
+# ::size1 5
+# ::id deep_recursion_3s_14
+# ::suppl deep_recursion_3s_14
+(u_7289 / think-01
+        :ARG0 (r / i)
+        :ARG1 (u_7288 / hear-01
+                      :ARG0 (d / doctor
+                               :ARG1-of (u_7284 / hate-01
+                                                :ARG0 (u_7287 / girl)
+                                                :ARG1-of (u_7285 / mention-01
+                                                                 :ARG0 (m / lawyer)
+                                                                 :ARG1-of (u_7286 / mention-01
+                                                                                  :ARG0 (u_7290 / we)
+                                                                                  :ARG1-of u_7288))))))
+
+# ::snt The astronaut knew that the boys heard that I said that we hated him, the astronaut
+# ::tree TP_resolve_coref(knew_resolve_coref,astronaut,TP_CP_coref(heard_coref,boys,TP_CP_coref(said_coref,I,TP_tr(hated_him,we))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_3s_15
+# ::suppl deep_recursion_3s_15
+(u_7296 / know-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7291 / hate-01
+                                  :ARG0 (u_7293 / we)
+                                  :ARG1-of (u_7292 / say-01
+                                                   :ARG0 (u_7295 / i)
+                                                   :ARG1-of (u_7294 / hear-01
+                                                                    :ARG0 (r / boy)
+                                                                    :ARG1-of u_7296)))))
+
+# ::snt The lawyer knew that the boys mentioned that the girls said that the kids liked her, the lawyer
+# ::tree TP_resolve_coref(knew_resolve_coref,lawyer,TP_CP_coref(mentioned_coref,boys,TP_CP_coref(said_coref,girls,TP_tr(liked_her,kids))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_3s_16
+# ::suppl deep_recursion_3s_16
+(u_7302 / know-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7297 / like-01
+                                  :ARG0 (u_7299 / kid)
+                                  :ARG1-of (u_7298 / say-01
+                                                   :ARG0 (u_7301 / girl)
+                                                   :ARG1-of (u_7300 / mention-01
+                                                                    :ARG0 (r / boy)
+                                                                    :ARG1-of u_7302)))))
+
+# ::snt The astronaut mentioned that the kids said that you knew that the girls hated her, the astronaut
+# ::tree TP_resolve_coref(mentioned_resolve_coref,astronaut,TP_CP_coref(said_coref,kids,TP_CP_coref(knew_coref,you,TP_tr(hated_her,girls))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_3s_17
+# ::suppl deep_recursion_3s_17
+(u_7308 / mention-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7303 / hate-01
+                                  :ARG0 (u_7305 / girl)
+                                  :ARG1-of (u_7304 / know-01
+                                                   :ARG0 (u_7307 / you)
+                                                   :ARG1-of (u_7306 / say-01
+                                                                    :ARG0 (r / kid)
+                                                                    :ARG1-of u_7308)))))
+
+# ::snt The soldier said that the boys heard that the astronaut hated him, the soldier
+# ::tree TP_resolve_coref(said_resolve_coref,soldier,TP_CP_coref(heard_coref,boys,TP_tr(hated_him,make_singular(astronaut))))
+# ::size0 4
+# ::size1 4
+# ::id deep_recursion_3s_18
+# ::suppl deep_recursion_3s_18
+(u_7311 / say-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7310 / hate-01
+                                  :ARG0 (a / astronaut)
+                                  :ARG1-of (u_7309 / hear-01
+                                                   :ARG0 (r / boy)
+                                                   :ARG1-of u_7311))))
+
+# ::snt I mentioned that the lawyer said that the girls said that the kids knew that we hated her, the lawyer
+# ::tree TP_CP(mentioned,I,TP_resolve_coref(said_resolve_coref,lawyer,TP_CP_coref(said_coref,girls,TP_CP_coref(knew_coref,kids,TP_tr(hated_her,we)))))
+# ::size0 4
+# ::size1 5
+# ::id deep_recursion_3s_19
+# ::suppl deep_recursion_3s_19
+(u_7318 / mention-01
+        :ARG0 (r / i)
+        :ARG1 (u_7317 / say-01
+                      :ARG0 (m / lawyer
+                               :ARG1-of (u_7312 / hate-01
+                                                :ARG0 (u_7314 / we)
+                                                :ARG1-of (u_7313 / know-01
+                                                                 :ARG0 (u_7316 / kid)
+                                                                 :ARG1-of (u_7315 / say-01
+                                                                                  :ARG0 (u_7319 / girl)
+                                                                                  :ARG1-of u_7317))))))
+
+# ::snt The lawyer heard that the kids believed that the astronaut said that the boys said that you hated her, the lawyer
+# ::tree TP_resolve_coref(heard_resolve_coref,lawyer,TP_CP_coref(believed_coref,kids,TP_CP_coref(said_coref,make_singular(astronaut),TP_CP_coref(said_coref,boys,TP_tr(hated_her,you)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_3s_20
+# ::suppl deep_recursion_3s_20
+(u_7326 / hear-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7320 / hate-01
+                                  :ARG0 (u_7322 / you)
+                                  :ARG1-of (u_7321 / say-01
+                                                   :ARG0 (u_7325 / boy)
+                                                   :ARG1-of (u_7323 / say-01
+                                                                    :ARG0 (a / astronaut)
+                                                                    :ARG1-of (u_7324 / believe-01
+                                                                                     :ARG0 (r / kid)
+                                                                                     :ARG1-of u_7326))))))
+
+# ::snt The soldier believed that I knew that the boys mentioned that we heard that the girls liked her, the soldier
+# ::tree TP_resolve_coref(believed_resolve_coref,soldier,TP_CP_coref(knew_coref,I,TP_CP_coref(mentioned_coref,boys,TP_CP_coref(heard_coref,we,TP_tr(liked_her,girls)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_3s_21
+# ::suppl deep_recursion_3s_21
+(u_7334 / believe-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7327 / like-01
+                                  :ARG0 (u_7329 / girl)
+                                  :ARG1-of (u_7328 / hear-01
+                                                   :ARG0 (u_7331 / we)
+                                                   :ARG1-of (u_7330 / mention-01
+                                                                    :ARG0 (u_7333 / boy)
+                                                                    :ARG1-of (u_7332 / know-01
+                                                                                     :ARG0 (r / i)
+                                                                                     :ARG1-of u_7334))))))
+
+# ::snt The lawyer thought that we said that the girls heard that the kids believed that I amused him, the lawyer
+# ::tree TP_resolve_coref(thought_resolve_coref,lawyer,TP_CP_coref(said_coref,we,TP_CP_coref(heard_coref,girls,TP_CP_coref(believed_coref,kids,TP_tr(amused_him,I)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_3s_22
+# ::suppl deep_recursion_3s_22
+(u_7342 / think-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7335 / amuse-01
+                                  :ARG0 (u_7337 / i)
+                                  :ARG1-of (u_7336 / believe-01
+                                                   :ARG0 (u_7339 / kid)
+                                                   :ARG1-of (u_7338 / hear-01
+                                                                    :ARG0 (u_7341 / girl)
+                                                                    :ARG1-of (u_7340 / say-01
+                                                                                     :ARG0 (r / we)
+                                                                                     :ARG1-of u_7342))))))
+
+# ::snt The lawyer believed that the astronaut heard that we knew that you believed that the boys liked her, the lawyer
+# ::tree TP_resolve_coref(believed_resolve_coref,lawyer,TP_CP_coref(heard_coref,make_singular(astronaut),TP_CP_coref(knew_coref,we,TP_CP_coref(believed_coref,you,TP_tr(liked_her,boys)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_3s_23
+# ::suppl deep_recursion_3s_23
+(u_7349 / believe-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7343 / like-01
+                                  :ARG0 (u_7345 / boy)
+                                  :ARG1-of (u_7344 / believe-01
+                                                   :ARG0 (u_7347 / you)
+                                                   :ARG1-of (u_7346 / know-01
+                                                                    :ARG0 (r / we)
+                                                                    :ARG1-of (u_7348 / hear-01
+                                                                                     :ARG0 (a / astronaut)
+                                                                                     :ARG1-of u_7349))))))
+
+# ::snt The astronaut said that you said that the girls believed that I heard that we hated him, the astronaut
+# ::tree TP_resolve_coref(said_resolve_coref,astronaut,TP_CP_coref(said_coref,you,TP_CP_coref(believed_coref,girls,TP_CP_coref(heard_coref,I,TP_tr(hated_him,we)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_3s_24
+# ::suppl deep_recursion_3s_24
+(u_7357 / say-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7350 / hate-01
+                                  :ARG0 (u_7352 / we)
+                                  :ARG1-of (u_7351 / hear-01
+                                                   :ARG0 (u_7354 / i)
+                                                   :ARG1-of (u_7353 / believe-01
+                                                                    :ARG0 (u_7356 / girl)
+                                                                    :ARG1-of (u_7355 / say-01
+                                                                                     :ARG0 (r / you)
+                                                                                     :ARG1-of u_7357))))))
+
+# ::snt The soldier thought that the lawyer knew that the boys heard that the kids said that we saw her, the soldier
+# ::tree TP_resolve_coref(thought_resolve_coref,soldier,TP_CP_coref(knew_coref,make_singular(lawyer),TP_CP_coref(heard_coref,boys,TP_CP_coref(said_coref,kids,TP_tr(saw_her,we)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_3s_25
+# ::suppl deep_recursion_3s_25
+(u_7364 / think-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7358 / see-01
+                                  :ARG0 (u_7360 / we)
+                                  :ARG1-of (u_7359 / say-01
+                                                   :ARG0 (u_7362 / kid)
+                                                   :ARG1-of (u_7361 / hear-01
+                                                                    :ARG0 (r / boy)
+                                                                    :ARG1-of (u_7363 / know-01
+                                                                                     :ARG0 (m / lawyer)
+                                                                                     :ARG1-of u_7364))))))
+
+# ::snt The doctor believed that the boys said that the girls believed that the lawyer amused him, the doctor
+# ::tree TP_resolve_coref(believed_resolve_coref,doctor,TP_CP_coref(said_coref,boys,TP_CP_coref(believed_coref,girls,TP_tr(amused_him,make_singular(lawyer)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_3s_26
+# ::suppl deep_recursion_3s_26
+(u_7369 / believe-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7366 / amuse-01
+                                  :ARG0 (m / lawyer)
+                                  :ARG1-of (u_7365 / believe-01
+                                                   :ARG0 (u_7368 / girl)
+                                                   :ARG1-of (u_7367 / say-01
+                                                                    :ARG0 (r / boy)
+                                                                    :ARG1-of u_7369)))))
+
+# ::snt I said that the astronaut mentioned that the doctor mentioned that the girls thought that we mentioned that the kids amused him, the astronaut
+# ::tree TP_CP(said,I,TP_resolve_coref(mentioned_resolve_coref,astronaut,TP_CP_coref(mentioned_coref,make_singular(doctor),TP_CP_coref(thought_coref,girls,TP_CP_coref(mentioned_coref,we,TP_tr(amused_him,kids))))))
+# ::size0 5
+# ::size1 6
+# ::id deep_recursion_3s_27
+# ::suppl deep_recursion_3s_27
+(u_7377 / say-01
+        :ARG0 (r / i)
+        :ARG1 (u_7376 / mention-01
+                      :ARG0 (a / astronaut
+                               :ARG1-of (u_7370 / amuse-01
+                                                :ARG0 (u_7372 / kid)
+                                                :ARG1-of (u_7371 / mention-01
+                                                                 :ARG0 (u_7374 / we)
+                                                                 :ARG1-of (u_7373 / think-01
+                                                                                  :ARG0 (u_7378 / girl)
+                                                                                  :ARG1-of (u_7375 / mention-01
+                                                                                                   :ARG0 (d / doctor)
+                                                                                                   :ARG1-of u_7376)))))))
+
+# ::snt The doctor thought that the soldier said that the lawyer heard that the kids believed that I knew that the girls hated him, the soldier
+# ::tree TP_CP(thought,make_singular(doctor),TP_resolve_coref(said_resolve_coref,soldier,TP_CP_coref(heard_coref,make_singular(lawyer),TP_CP_coref(believed_coref,kids,TP_CP_coref(knew_coref,I,TP_tr(hated_him,girls))))))
+# ::size0 5
+# ::size1 6
+# ::id deep_recursion_3s_28
+# ::suppl deep_recursion_3s_28
+(u_7386 / think-01
+        :ARG0 (d / doctor)
+        :ARG1 (u_7385 / say-01
+                      :ARG0 (s / soldier
+                               :ARG1-of (u_7379 / hate-01
+                                                :ARG0 (u_7381 / girl)
+                                                :ARG1-of (u_7380 / know-01
+                                                                 :ARG0 (u_7383 / i)
+                                                                 :ARG1-of (u_7382 / believe-01
+                                                                                  :ARG0 (r / kid)
+                                                                                  :ARG1-of (u_7384 / hear-01
+                                                                                                   :ARG0 (m / lawyer)
+                                                                                                   :ARG1-of u_7385)))))))
+
+# ::snt The astronaut heard that you knew that the lawyer mentioned that the boys said that I hated her, the astronaut
+# ::tree TP_resolve_coref(heard_resolve_coref,astronaut,TP_CP_coref(knew_coref,you,TP_CP_coref(mentioned_coref,make_singular(lawyer),TP_CP_coref(said_coref,boys,TP_tr(hated_her,I)))))
+# ::size0 5
+# ::size1 5
+# ::id deep_recursion_3s_29
+# ::suppl deep_recursion_3s_29
+(u_7394 / hear-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7388 / hate-01
+                                  :ARG0 (u_7390 / i)
+                                  :ARG1-of (u_7389 / say-01
+                                                   :ARG0 (u_7393 / boy)
+                                                   :ARG1-of (u_7391 / mention-01
+                                                                    :ARG0 (m / lawyer)
+                                                                    :ARG1-of (u_7392 / know-01
+                                                                                     :ARG0 (r / you)
+                                                                                     :ARG1-of u_7394))))))
+
+# ::snt The doctor thought that the boys knew that I thought that the soldier said that the astronaut liked him, the doctor
+# ::tree TP_resolve_coref(thought_resolve_coref,doctor,TP_CP_coref(knew_coref,boys,TP_CP_coref(thought_coref,I,TP_CP_coref(said_coref,make_singular(soldier),TP_tr(liked_him,make_singular(astronaut))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_3s_30
+# ::suppl deep_recursion_3s_30
+(u_7402 / think-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7398 / like-01
+                                  :ARG0 (a / astronaut)
+                                  :ARG1-of (u_7395 / say-01
+                                                   :ARG0 (s / soldier)
+                                                   :ARG1-of (u_7396 / think-01
+                                                                    :ARG0 (u_7401 / i)
+                                                                    :ARG1-of (u_7399 / know-01
+                                                                                     :ARG0 (r / boy)
+                                                                                     :ARG1-of u_7402))))))
+
+# ::snt The girls said that the doctor heard that the lawyer said that you believed that I mentioned that the boys knew that we liked her, the doctor
+# ::tree TP_CP(said,girls,TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(said_coref,make_singular(lawyer),TP_CP_coref(believed_coref,you,TP_CP_coref(mentioned_coref,I,TP_CP_coref(knew_coref,boys,TP_tr(liked_her,we)))))))
+# ::size0 6
+# ::size1 7
+# ::id deep_recursion_3s_31
+# ::suppl deep_recursion_3s_31
+(u_7412 / say-01
+        :ARG0 (r / girl)
+        :ARG1 (u_7411 / hear-01
+                      :ARG0 (d / doctor
+                               :ARG1-of (u_7403 / like-01
+                                                :ARG0 (u_7405 / we)
+                                                :ARG1-of (u_7404 / know-01
+                                                                 :ARG0 (u_7407 / boy)
+                                                                 :ARG1-of (u_7406 / mention-01
+                                                                                  :ARG0 (u_7409 / i)
+                                                                                  :ARG1-of (u_7408 / believe-01
+                                                                                                   :ARG0 (u_7413 / you)
+                                                                                                   :ARG1-of (u_7410 / say-01
+                                                                                                                    :ARG0 (m / lawyer)
+                                                                                                                    :ARG1-of u_7411))))))))
+
+# ::snt We thought that the astronaut mentioned that I mentioned that the lawyer thought that the boys heard that the girls mentioned that the kids said that the soldier hated him, the lawyer
+# ::tree TP_CP(thought,we,TP_CP(mentioned,make_singular(astronaut),TP_CP(mentioned,I,TP_resolve_coref(thought_resolve_coref,lawyer,TP_CP_coref(heard_coref,boys,TP_CP_coref(mentioned_coref,girls,TP_CP_coref(said_coref,kids,TP_tr(hated_him,make_singular(soldier)))))))))
+# ::size0 6
+# ::size1 9
+# ::id deep_recursion_3s_32
+# ::suppl deep_recursion_3s_32
+(u_7429 / think-01
+        :ARG0 (r / we)
+        :ARG1 (u_7427 / mention-01
+                      :ARG0 (a / astronaut)
+                      :ARG1 (u_7424 / mention-01
+                                    :ARG0 (u_7431 / i)
+                                    :ARG1 (u_7423 / think-01
+                                                  :ARG0 (m / lawyer
+                                                           :ARG1-of (u_7416 / hate-01
+                                                                            :ARG0 (s / soldier)
+                                                                            :ARG1-of (u_7414 / say-01
+                                                                                             :ARG0 (u_7419 / kid)
+                                                                                             :ARG1-of (u_7417 / mention-01
+                                                                                                              :ARG0 (u_7422 / girl)
+                                                                                                              :ARG1-of (u_7420 / hear-01
+                                                                                                                               :ARG0 (u_7426 / boy)
+                                                                                                                               :ARG1-of u_7423)))))))))
+
+# ::snt The boys believed that the soldier thought that the doctor believed that I thought that you knew that the lawyer saw her, the soldier
+# ::tree TP_CP(believed,boys,TP_resolve_coref(thought_resolve_coref,soldier,TP_CP_coref(believed_coref,make_singular(doctor),TP_CP_coref(thought_coref,I,TP_CP_coref(knew_coref,you,TP_tr(saw_her,make_singular(lawyer)))))))
+# ::size0 6
+# ::size1 7
+# ::id deep_recursion_3s_33
+# ::suppl deep_recursion_3s_33
+(u_7438 / believe-01
+        :ARG0 (r / boy)
+        :ARG1 (u_7437 / think-01
+                      :ARG0 (s / soldier
+                               :ARG1-of (u_7433 / see-01
+                                                :ARG0 (m / lawyer)
+                                                :ARG1-of (u_7432 / know-01
+                                                                 :ARG0 (u_7435 / you)
+                                                                 :ARG1-of (u_7434 / think-01
+                                                                                  :ARG0 (u_7440 / i)
+                                                                                  :ARG1-of (u_7436 / believe-01
+                                                                                                   :ARG0 (d / doctor)
+                                                                                                   :ARG1-of u_7437)))))))
+
+# ::snt The lawyer said that I said that the girls heard that we knew that the kids said that you saw her, the lawyer
+# ::tree TP_resolve_coref(said_resolve_coref,lawyer,TP_CP_coref(said_coref,I,TP_CP_coref(heard_coref,girls,TP_CP_coref(knew_coref,we,TP_CP_coref(said_coref,kids,TP_tr(saw_her,you))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_3s_34
+# ::suppl deep_recursion_3s_34
+(u_7450 / say-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7441 / see-01
+                                  :ARG0 (u_7443 / you)
+                                  :ARG1-of (u_7442 / say-01
+                                                   :ARG0 (u_7445 / kid)
+                                                   :ARG1-of (u_7444 / know-01
+                                                                    :ARG0 (u_7447 / we)
+                                                                    :ARG1-of (u_7446 / hear-01
+                                                                                     :ARG0 (u_7449 / girl)
+                                                                                     :ARG1-of (u_7448 / say-01
+                                                                                                      :ARG0 (r / i)
+                                                                                                      :ARG1-of u_7450)))))))
+
+# ::snt The astronaut knew that I said that the kids knew that the lawyer mentioned that the boys said that the girls hated her, the astronaut
+# ::tree TP_resolve_coref(knew_resolve_coref,astronaut,TP_CP_coref(said_coref,I,TP_CP_coref(knew_coref,kids,TP_CP_coref(mentioned_coref,make_singular(lawyer),TP_CP_coref(said_coref,boys,TP_tr(hated_her,girls))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_3s_35
+# ::suppl deep_recursion_3s_35
+(u_7459 / know-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7451 / hate-01
+                                  :ARG0 (u_7453 / girl)
+                                  :ARG1-of (u_7452 / say-01
+                                                   :ARG0 (u_7456 / boy)
+                                                   :ARG1-of (u_7454 / mention-01
+                                                                    :ARG0 (m / lawyer)
+                                                                    :ARG1-of (u_7455 / know-01
+                                                                                     :ARG0 (u_7458 / kid)
+                                                                                     :ARG1-of (u_7457 / say-01
+                                                                                                      :ARG0 (r / i)
+                                                                                                      :ARG1-of u_7459)))))))
+
+# ::snt The girls knew that the doctor heard that the soldier knew that the boys said that the kids mentioned that you heard that we amused her, the doctor
+# ::tree TP_CP(knew,girls,TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(knew_coref,make_singular(soldier),TP_CP_coref(said_coref,boys,TP_CP_coref(mentioned_coref,kids,TP_CP_coref(heard_coref,you,TP_tr(amused_her,we)))))))
+# ::size0 6
+# ::size1 7
+# ::id deep_recursion_3s_36
+# ::suppl deep_recursion_3s_36
+(u_7469 / know-01
+        :ARG0 (r / girl)
+        :ARG1 (u_7468 / hear-01
+                      :ARG0 (d / doctor
+                               :ARG1-of (u_7460 / amuse-01
+                                                :ARG0 (u_7462 / we)
+                                                :ARG1-of (u_7461 / hear-01
+                                                                 :ARG0 (u_7464 / you)
+                                                                 :ARG1-of (u_7463 / mention-01
+                                                                                  :ARG0 (u_7466 / kid)
+                                                                                  :ARG1-of (u_7465 / say-01
+                                                                                                   :ARG0 (u_7471 / boy)
+                                                                                                   :ARG1-of (u_7467 / know-01
+                                                                                                                    :ARG0 (s / soldier)
+                                                                                                                    :ARG1-of u_7468))))))))
+
+# ::snt The doctor heard that the astronaut mentioned that the boys heard that you thought that the kids believed that I liked her, the doctor
+# ::tree TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(mentioned_coref,make_singular(astronaut),TP_CP_coref(heard_coref,boys,TP_CP_coref(thought_coref,you,TP_CP_coref(believed_coref,kids,TP_tr(liked_her,I))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_3s_37
+# ::suppl deep_recursion_3s_37
+(u_7480 / hear-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7472 / like-01
+                                  :ARG0 (u_7474 / i)
+                                  :ARG1-of (u_7473 / believe-01
+                                                   :ARG0 (u_7476 / kid)
+                                                   :ARG1-of (u_7475 / think-01
+                                                                    :ARG0 (u_7478 / you)
+                                                                    :ARG1-of (u_7477 / hear-01
+                                                                                     :ARG0 (r / boy)
+                                                                                     :ARG1-of (u_7479 / mention-01
+                                                                                                      :ARG0 (a / astronaut)
+                                                                                                      :ARG1-of u_7480)))))))
+
+# ::snt The doctor heard that the kids believed that the girls said that you thought that the lawyer hated her, the doctor
+# ::tree TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(believed_coref,kids,TP_CP_coref(said_coref,girls,TP_CP_coref(thought_coref,you,TP_tr(hated_her,make_singular(lawyer))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_3s_38
+# ::suppl deep_recursion_3s_38
+(u_7487 / hear-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7482 / hate-01
+                                  :ARG0 (m / lawyer)
+                                  :ARG1-of (u_7481 / think-01
+                                                   :ARG0 (u_7484 / you)
+                                                   :ARG1-of (u_7483 / say-01
+                                                                    :ARG0 (u_7486 / girl)
+                                                                    :ARG1-of (u_7485 / believe-01
+                                                                                     :ARG0 (r / kid)
+                                                                                     :ARG1-of u_7487))))))
+
+# ::snt The doctor heard that I knew that the kids said that the astronaut believed that we thought that the girls saw her, the doctor
+# ::tree TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(knew_coref,I,TP_CP_coref(said_coref,kids,TP_CP_coref(believed_coref,make_singular(astronaut),TP_CP_coref(thought_coref,we,TP_tr(saw_her,girls))))))
+# ::size0 6
+# ::size1 6
+# ::id deep_recursion_3s_39
+# ::suppl deep_recursion_3s_39
+(u_7496 / hear-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7488 / see-01
+                                  :ARG0 (u_7490 / girl)
+                                  :ARG1-of (u_7489 / think-01
+                                                   :ARG0 (u_7493 / we)
+                                                   :ARG1-of (u_7491 / believe-01
+                                                                    :ARG0 (a / astronaut)
+                                                                    :ARG1-of (u_7492 / say-01
+                                                                                     :ARG0 (u_7495 / kid)
+                                                                                     :ARG1-of (u_7494 / know-01
+                                                                                                      :ARG0 (r / i)
+                                                                                                      :ARG1-of u_7496)))))))
+
+# ::snt The soldier mentioned that the doctor mentioned that you believed that I heard that we believed that the lawyer believed that the girls amused him, the soldier
+# ::tree TP_resolve_coref(mentioned_resolve_coref,soldier,TP_CP_coref(mentioned_coref,make_singular(doctor),TP_CP_coref(believed_coref,you,TP_CP_coref(heard_coref,I,TP_CP_coref(believed_coref,we,TP_CP_coref(believed_coref,make_singular(lawyer),TP_tr(amused_him,girls)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_3s_40
+# ::suppl deep_recursion_3s_40
+(u_7506 / mention-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7497 / amuse-01
+                                  :ARG0 (u_7500 / girl)
+                                  :ARG1-of (u_7498 / believe-01
+                                                   :ARG0 (m / lawyer)
+                                                   :ARG1-of (u_7499 / believe-01
+                                                                    :ARG0 (u_7502 / we)
+                                                                    :ARG1-of (u_7501 / hear-01
+                                                                                     :ARG0 (u_7504 / i)
+                                                                                     :ARG1-of (u_7503 / believe-01
+                                                                                                      :ARG0 (r / you)
+                                                                                                      :ARG1-of (u_7505 / mention-01
+                                                                                                                       :ARG0 (d / doctor)
+                                                                                                                       :ARG1-of u_7506))))))))
+
+# ::snt The boys knew that the kids heard that the lawyer thought that the girls said that I knew that you thought that we heard that the soldier saw her, the lawyer
+# ::tree TP_CP(knew,boys,TP_CP(heard,kids,TP_resolve_coref(thought_resolve_coref,lawyer,TP_CP_coref(said_coref,girls,TP_CP_coref(knew_coref,I,TP_CP_coref(thought_coref,you,TP_CP_coref(heard_coref,we,TP_tr(saw_her,make_singular(soldier)))))))))
+# ::size0 7
+# ::size1 9
+# ::id deep_recursion_3s_41
+# ::suppl deep_recursion_3s_41
+(u_7523 / know-01
+        :ARG0 (r / boy)
+        :ARG1 (u_7520 / hear-01
+                      :ARG0 (u_7525 / kid)
+                      :ARG1 (u_7519 / think-01
+                                    :ARG0 (m / lawyer
+                                             :ARG1-of (u_7509 / see-01
+                                                              :ARG0 (s / soldier)
+                                                              :ARG1-of (u_7507 / hear-01
+                                                                               :ARG0 (u_7512 / we)
+                                                                               :ARG1-of (u_7510 / think-01
+                                                                                                :ARG0 (u_7515 / you)
+                                                                                                :ARG1-of (u_7513 / know-01
+                                                                                                                 :ARG0 (u_7518 / i)
+                                                                                                                 :ARG1-of (u_7516 / say-01
+                                                                                                                                  :ARG0 (u_7522 / girl)
+                                                                                                                                  :ARG1-of u_7519)))))))))
+
+# ::snt The astronaut knew that I heard that you mentioned that we heard that the kids thought that the boys believed that the girls hated her, the astronaut
+# ::tree TP_resolve_coref(knew_resolve_coref,astronaut,TP_CP_coref(heard_coref,I,TP_CP_coref(mentioned_coref,you,TP_CP_coref(heard_coref,we,TP_CP_coref(thought_coref,kids,TP_CP_coref(believed_coref,boys,TP_tr(hated_her,girls)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_3s_42
+# ::suppl deep_recursion_3s_42
+(u_7537 / know-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7526 / hate-01
+                                  :ARG0 (u_7528 / girl)
+                                  :ARG1-of (u_7527 / believe-01
+                                                   :ARG0 (u_7530 / boy)
+                                                   :ARG1-of (u_7529 / think-01
+                                                                    :ARG0 (u_7532 / kid)
+                                                                    :ARG1-of (u_7531 / hear-01
+                                                                                     :ARG0 (u_7534 / we)
+                                                                                     :ARG1-of (u_7533 / mention-01
+                                                                                                      :ARG0 (u_7536 / you)
+                                                                                                      :ARG1-of (u_7535 / hear-01
+                                                                                                                       :ARG0 (r / i)
+                                                                                                                       :ARG1-of u_7537))))))))
+
+# ::snt The astronaut heard that you mentioned that the kids believed that the girls thought that I knew that the soldier saw him, the astronaut
+# ::tree TP_resolve_coref(heard_resolve_coref,astronaut,TP_CP_coref(mentioned_coref,you,TP_CP_coref(believed_coref,kids,TP_CP_coref(thought_coref,girls,TP_CP_coref(knew_coref,I,TP_tr(saw_him,make_singular(soldier)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_3s_43
+# ::suppl deep_recursion_3s_43
+(u_7550 / hear-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7540 / see-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_7538 / know-01
+                                                   :ARG0 (u_7543 / i)
+                                                   :ARG1-of (u_7541 / think-01
+                                                                    :ARG0 (u_7546 / girl)
+                                                                    :ARG1-of (u_7544 / believe-01
+                                                                                     :ARG0 (u_7549 / kid)
+                                                                                     :ARG1-of (u_7547 / mention-01
+                                                                                                      :ARG0 (r / you)
+                                                                                                      :ARG1-of u_7550)))))))
+
+# ::snt The lawyer knew that the soldier believed that I heard that we thought that the boys heard that you thought that the doctor liked him, the soldier
+# ::tree TP_CP(knew,make_singular(lawyer),TP_resolve_coref(believed_resolve_coref,soldier,TP_CP_coref(heard_coref,I,TP_CP_coref(thought_coref,we,TP_CP_coref(heard_coref,boys,TP_CP_coref(thought_coref,you,TP_tr(liked_him,make_singular(doctor))))))))
+# ::size0 7
+# ::size1 8
+# ::id deep_recursion_3s_44
+# ::suppl deep_recursion_3s_44
+(u_7560 / know-01
+        :ARG0 (m / lawyer)
+        :ARG1 (u_7559 / believe-01
+                      :ARG0 (s / soldier
+                               :ARG1-of (u_7552 / like-01
+                                                :ARG0 (d / doctor)
+                                                :ARG1-of (u_7551 / think-01
+                                                                 :ARG0 (u_7554 / you)
+                                                                 :ARG1-of (u_7553 / hear-01
+                                                                                  :ARG0 (u_7556 / boy)
+                                                                                  :ARG1-of (u_7555 / think-01
+                                                                                                   :ARG0 (u_7558 / we)
+                                                                                                   :ARG1-of (u_7557 / hear-01
+                                                                                                                    :ARG0 (r / i)
+                                                                                                                    :ARG1-of u_7559))))))))
+
+# ::snt The boys believed that the soldier mentioned that the girls said that we thought that you thought that the kids thought that the doctor knew that I liked her, the soldier
+# ::tree TP_CP(believed,boys,TP_resolve_coref(mentioned_resolve_coref,soldier,TP_CP_coref(said_coref,girls,TP_CP_coref(thought_coref,we,TP_CP_coref(thought_coref,you,TP_CP_coref(thought_coref,kids,TP_CP_coref(knew_coref,make_singular(doctor),TP_tr(liked_her,I))))))))
+# ::size0 7
+# ::size1 8
+# ::id deep_recursion_3s_45
+# ::suppl deep_recursion_3s_45
+(u_7573 / believe-01
+        :ARG0 (r / boy)
+        :ARG1 (u_7572 / mention-01
+                      :ARG0 (s / soldier
+                               :ARG1-of (u_7562 / like-01
+                                                :ARG0 (u_7565 / i)
+                                                :ARG1-of (u_7563 / know-01
+                                                                 :ARG0 (d / doctor)
+                                                                 :ARG1-of (u_7564 / think-01
+                                                                                  :ARG0 (u_7567 / kid)
+                                                                                  :ARG1-of (u_7566 / think-01
+                                                                                                   :ARG0 (u_7569 / you)
+                                                                                                   :ARG1-of (u_7568 / think-01
+                                                                                                                    :ARG0 (u_7571 / we)
+                                                                                                                    :ARG1-of (u_7570 / say-01
+                                                                                                                                     :ARG0 (u_7575 / girl)
+                                                                                                                                     :ARG1-of u_7572)))))))))
+
+# ::snt The doctor believed that the soldier heard that the girls said that the kids believed that I mentioned that the lawyer said that the boys said that we liked her, the soldier
+# ::tree TP_CP(believed,make_singular(doctor),TP_resolve_coref(heard_resolve_coref,soldier,TP_CP_coref(said_coref,girls,TP_CP_coref(believed_coref,kids,TP_CP_coref(mentioned_coref,I,TP_CP_coref(said_coref,make_singular(lawyer),TP_CP_coref(said_coref,boys,TP_tr(liked_her,we))))))))
+# ::size0 7
+# ::size1 8
+# ::id deep_recursion_3s_46
+# ::suppl deep_recursion_3s_46
+(u_7587 / believe-01
+        :ARG0 (d / doctor)
+        :ARG1 (u_7586 / hear-01
+                      :ARG0 (s / soldier
+                               :ARG1-of (u_7576 / like-01
+                                                :ARG0 (u_7578 / we)
+                                                :ARG1-of (u_7577 / say-01
+                                                                 :ARG0 (u_7581 / boy)
+                                                                 :ARG1-of (u_7579 / say-01
+                                                                                  :ARG0 (m / lawyer)
+                                                                                  :ARG1-of (u_7580 / mention-01
+                                                                                                   :ARG0 (u_7583 / i)
+                                                                                                   :ARG1-of (u_7582 / believe-01
+                                                                                                                    :ARG0 (u_7585 / kid)
+                                                                                                                    :ARG1-of (u_7584 / say-01
+                                                                                                                                     :ARG0 (r / girl)
+                                                                                                                                     :ARG1-of u_7586)))))))))
+
+# ::snt The soldier said that the boys said that the kids believed that you said that I thought that the doctor amused her, the soldier
+# ::tree TP_resolve_coref(said_resolve_coref,soldier,TP_CP_coref(said_coref,boys,TP_CP_coref(believed_coref,kids,TP_CP_coref(said_coref,you,TP_CP_coref(thought_coref,I,TP_tr(amused_her,make_singular(doctor)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_3s_47
+# ::suppl deep_recursion_3s_47
+(u_7597 / say-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7590 / amuse-01
+                                  :ARG0 (d / doctor)
+                                  :ARG1-of (u_7589 / think-01
+                                                   :ARG0 (u_7592 / i)
+                                                   :ARG1-of (u_7591 / say-01
+                                                                    :ARG0 (u_7594 / you)
+                                                                    :ARG1-of (u_7593 / believe-01
+                                                                                     :ARG0 (u_7596 / kid)
+                                                                                     :ARG1-of (u_7595 / say-01
+                                                                                                      :ARG0 (r / boy)
+                                                                                                      :ARG1-of u_7597)))))))
+
+# ::snt The lawyer heard that the girls said that the doctor said that the kids said that we heard that I knew that the boys saw her, the lawyer
+# ::tree TP_resolve_coref(heard_resolve_coref,lawyer,TP_CP_coref(said_coref,girls,TP_CP_coref(said_coref,make_singular(doctor),TP_CP_coref(said_coref,kids,TP_CP_coref(heard_coref,we,TP_CP_coref(knew_coref,I,TP_tr(saw_her,boys)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_3s_48
+# ::suppl deep_recursion_3s_48
+(u_7608 / hear-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7598 / see-01
+                                  :ARG0 (u_7600 / boy)
+                                  :ARG1-of (u_7599 / know-01
+                                                   :ARG0 (u_7602 / i)
+                                                   :ARG1-of (u_7601 / hear-01
+                                                                    :ARG0 (u_7604 / we)
+                                                                    :ARG1-of (u_7603 / say-01
+                                                                                     :ARG0 (u_7607 / kid)
+                                                                                     :ARG1-of (u_7605 / say-01
+                                                                                                      :ARG0 (d / doctor)
+                                                                                                      :ARG1-of (u_7606 / say-01
+                                                                                                                       :ARG0 (r / girl)
+                                                                                                                       :ARG1-of u_7608))))))))
+
+# ::snt The lawyer heard that the astronaut said that the kids believed that the boys knew that you heard that the doctor hated him, the lawyer
+# ::tree TP_resolve_coref(heard_resolve_coref,lawyer,TP_CP_coref(said_coref,make_singular(astronaut),TP_CP_coref(believed_coref,kids,TP_CP_coref(knew_coref,boys,TP_CP_coref(heard_coref,you,TP_tr(hated_him,make_singular(doctor)))))))
+# ::size0 7
+# ::size1 7
+# ::id deep_recursion_3s_49
+# ::suppl deep_recursion_3s_49
+(u_7616 / hear-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7610 / hate-01
+                                  :ARG0 (d / doctor)
+                                  :ARG1-of (u_7609 / hear-01
+                                                   :ARG0 (u_7612 / you)
+                                                   :ARG1-of (u_7611 / know-01
+                                                                    :ARG0 (u_7614 / boy)
+                                                                    :ARG1-of (u_7613 / believe-01
+                                                                                     :ARG0 (r / kid)
+                                                                                     :ARG1-of (u_7615 / say-01
+                                                                                                      :ARG0 (a / astronaut)
+                                                                                                      :ARG1-of u_7616)))))))
+
+# ::snt The soldier heard that the astronaut heard that we heard that the girls said that the lawyer knew that the kids said that you believed that the doctor liked him, the astronaut
+# ::tree TP_CP(heard,make_singular(soldier),TP_resolve_coref(heard_resolve_coref,astronaut,TP_CP_coref(heard_coref,we,TP_CP_coref(said_coref,girls,TP_CP_coref(knew_coref,make_singular(lawyer),TP_CP_coref(said_coref,kids,TP_CP_coref(believed_coref,you,TP_tr(liked_him,make_singular(doctor)))))))))
+# ::size0 8
+# ::size1 9
+# ::id deep_recursion_3s_50
+# ::suppl deep_recursion_3s_50
+(u_7627 / hear-01
+        :ARG0 (s / soldier)
+        :ARG1 (u_7626 / hear-01
+                      :ARG0 (a / astronaut
+                               :ARG1-of (u_7618 / like-01
+                                                :ARG0 (d / doctor)
+                                                :ARG1-of (u_7617 / believe-01
+                                                                 :ARG0 (u_7620 / you)
+                                                                 :ARG1-of (u_7619 / say-01
+                                                                                  :ARG0 (u_7623 / kid)
+                                                                                  :ARG1-of (u_7621 / know-01
+                                                                                                   :ARG0 (m / lawyer)
+                                                                                                   :ARG1-of (u_7622 / say-01
+                                                                                                                    :ARG0 (u_7625 / girl)
+                                                                                                                    :ARG1-of (u_7624 / hear-01
+                                                                                                                                     :ARG0 (r / we)
+                                                                                                                                     :ARG1-of u_7626)))))))))
+
+# ::snt The lawyer mentioned that the soldier knew that the boys thought that the girls knew that the doctor heard that the kids mentioned that you knew that we hated her, the lawyer
+# ::tree TP_resolve_coref(mentioned_resolve_coref,lawyer,TP_CP_coref(knew_coref,make_singular(soldier),TP_CP_coref(thought_coref,boys,TP_CP_coref(knew_coref,girls,TP_CP_coref(heard_coref,make_singular(doctor),TP_CP_coref(mentioned_coref,kids,TP_CP_coref(knew_coref,you,TP_tr(hated_her,we))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_3s_51
+# ::suppl deep_recursion_3s_51
+(u_7639 / mention-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7628 / hate-01
+                                  :ARG0 (u_7630 / we)
+                                  :ARG1-of (u_7629 / know-01
+                                                   :ARG0 (u_7632 / you)
+                                                   :ARG1-of (u_7631 / mention-01
+                                                                    :ARG0 (u_7635 / kid)
+                                                                    :ARG1-of (u_7633 / hear-01
+                                                                                     :ARG0 (d / doctor)
+                                                                                     :ARG1-of (u_7634 / know-01
+                                                                                                      :ARG0 (u_7637 / girl)
+                                                                                                      :ARG1-of (u_7636 / think-01
+                                                                                                                       :ARG0 (r / boy)
+                                                                                                                       :ARG1-of (u_7638 / know-01
+                                                                                                                                        :ARG0 (s / soldier)
+                                                                                                                                        :ARG1-of u_7639)))))))))
+
+# ::snt The lawyer heard that the soldier said that I believed that the boys knew that the kids knew that we believed that the astronaut knew that the girls saw her, the lawyer
+# ::tree TP_resolve_coref(heard_resolve_coref,lawyer,TP_CP_coref(said_coref,make_singular(soldier),TP_CP_coref(believed_coref,I,TP_CP_coref(knew_coref,boys,TP_CP_coref(knew_coref,kids,TP_CP_coref(believed_coref,we,TP_CP_coref(knew_coref,make_singular(astronaut),TP_tr(saw_her,girls))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_3s_52
+# ::suppl deep_recursion_3s_52
+(u_7651 / hear-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7640 / see-01
+                                  :ARG0 (u_7643 / girl)
+                                  :ARG1-of (u_7641 / know-01
+                                                   :ARG0 (a / astronaut)
+                                                   :ARG1-of (u_7642 / believe-01
+                                                                    :ARG0 (u_7645 / we)
+                                                                    :ARG1-of (u_7644 / know-01
+                                                                                     :ARG0 (u_7647 / kid)
+                                                                                     :ARG1-of (u_7646 / know-01
+                                                                                                      :ARG0 (u_7649 / boy)
+                                                                                                      :ARG1-of (u_7648 / believe-01
+                                                                                                                       :ARG0 (r / i)
+                                                                                                                       :ARG1-of (u_7650 / say-01
+                                                                                                                                        :ARG0 (s / soldier)
+                                                                                                                                        :ARG1-of u_7651)))))))))
+
+# ::snt The doctor thought that we thought that the girls mentioned that the soldier believed that the boys mentioned that I knew that the kids thought that you amused him, the doctor
+# ::tree TP_resolve_coref(thought_resolve_coref,doctor,TP_CP_coref(thought_coref,we,TP_CP_coref(mentioned_coref,girls,TP_CP_coref(believed_coref,make_singular(soldier),TP_CP_coref(mentioned_coref,boys,TP_CP_coref(knew_coref,I,TP_CP_coref(thought_coref,kids,TP_tr(amused_him,you))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_3s_53
+# ::suppl deep_recursion_3s_53
+(u_7666 / think-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7652 / amuse-01
+                                  :ARG0 (u_7654 / you)
+                                  :ARG1-of (u_7653 / think-01
+                                                   :ARG0 (u_7656 / kid)
+                                                   :ARG1-of (u_7655 / know-01
+                                                                    :ARG0 (u_7658 / i)
+                                                                    :ARG1-of (u_7657 / mention-01
+                                                                                     :ARG0 (u_7662 / boy)
+                                                                                     :ARG1-of (u_7659 / believe-01
+                                                                                                      :ARG0 (s / soldier)
+                                                                                                      :ARG1-of (u_7660 / mention-01
+                                                                                                                       :ARG0 (u_7665 / girl)
+                                                                                                                       :ARG1-of (u_7663 / think-01
+                                                                                                                                        :ARG0 (r / we)
+                                                                                                                                        :ARG1-of u_7666)))))))))
+
+# ::snt We thought that the lawyer said that the kids heard that I said that you heard that the girls mentioned that the boys thought that the doctor hated her, the lawyer
+# ::tree TP_CP(thought,we,TP_resolve_coref(said_resolve_coref,lawyer,TP_CP_coref(heard_coref,kids,TP_CP_coref(said_coref,I,TP_CP_coref(heard_coref,you,TP_CP_coref(mentioned_coref,girls,TP_CP_coref(thought_coref,boys,TP_tr(hated_her,make_singular(doctor)))))))))
+# ::size0 8
+# ::size1 9
+# ::id deep_recursion_3s_54
+# ::suppl deep_recursion_3s_54
+(u_7678 / think-01
+        :ARG0 (r / we)
+        :ARG1 (u_7677 / say-01
+                      :ARG0 (m / lawyer
+                               :ARG1-of (u_7668 / hate-01
+                                                :ARG0 (d / doctor)
+                                                :ARG1-of (u_7667 / think-01
+                                                                 :ARG0 (u_7670 / boy)
+                                                                 :ARG1-of (u_7669 / mention-01
+                                                                                  :ARG0 (u_7672 / girl)
+                                                                                  :ARG1-of (u_7671 / hear-01
+                                                                                                   :ARG0 (u_7674 / you)
+                                                                                                   :ARG1-of (u_7673 / say-01
+                                                                                                                    :ARG0 (u_7676 / i)
+                                                                                                                    :ARG1-of (u_7675 / hear-01
+                                                                                                                                     :ARG0 (u_7679 / kid)
+                                                                                                                                     :ARG1-of u_7677)))))))))
+
+# ::snt The lawyer heard that the boys knew that we mentioned that the kids mentioned that the girls said that I said that the soldier hated her, the lawyer
+# ::tree TP_resolve_coref(heard_resolve_coref,lawyer,TP_CP_coref(knew_coref,boys,TP_CP_coref(mentioned_coref,we,TP_CP_coref(mentioned_coref,kids,TP_CP_coref(said_coref,girls,TP_CP_coref(said_coref,I,TP_tr(hated_her,make_singular(soldier))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_3s_55
+# ::suppl deep_recursion_3s_55
+(u_7695 / hear-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7682 / hate-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_7680 / say-01
+                                                   :ARG0 (u_7685 / i)
+                                                   :ARG1-of (u_7683 / say-01
+                                                                    :ARG0 (u_7688 / girl)
+                                                                    :ARG1-of (u_7686 / mention-01
+                                                                                     :ARG0 (u_7691 / kid)
+                                                                                     :ARG1-of (u_7689 / mention-01
+                                                                                                      :ARG0 (u_7694 / we)
+                                                                                                      :ARG1-of (u_7692 / know-01
+                                                                                                                       :ARG0 (r / boy)
+                                                                                                                       :ARG1-of u_7695))))))))
+
+# ::snt The soldier said that I believed that you believed that the boys mentioned that the girls thought that the lawyer knew that the astronaut hated him, the soldier
+# ::tree TP_resolve_coref(said_resolve_coref,soldier,TP_CP_coref(believed_coref,I,TP_CP_coref(believed_coref,you,TP_CP_coref(mentioned_coref,boys,TP_CP_coref(thought_coref,girls,TP_CP_coref(knew_coref,make_singular(lawyer),TP_tr(hated_him,make_singular(astronaut))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_3s_56
+# ::suppl deep_recursion_3s_56
+(u_7705 / say-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7698 / hate-01
+                                  :ARG0 (a / astronaut)
+                                  :ARG1-of (u_7696 / know-01
+                                                   :ARG0 (m / lawyer)
+                                                   :ARG1-of (u_7697 / think-01
+                                                                    :ARG0 (u_7700 / girl)
+                                                                    :ARG1-of (u_7699 / mention-01
+                                                                                     :ARG0 (u_7702 / boy)
+                                                                                     :ARG1-of (u_7701 / believe-01
+                                                                                                      :ARG0 (u_7704 / you)
+                                                                                                      :ARG1-of (u_7703 / believe-01
+                                                                                                                       :ARG0 (r / i)
+                                                                                                                       :ARG1-of u_7705))))))))
+
+# ::snt The astronaut thought that the girls mentioned that the lawyer knew that the kids knew that I said that you thought that the doctor liked him, the astronaut
+# ::tree TP_resolve_coref(thought_resolve_coref,astronaut,TP_CP_coref(mentioned_coref,girls,TP_CP_coref(knew_coref,make_singular(lawyer),TP_CP_coref(knew_coref,kids,TP_CP_coref(said_coref,I,TP_CP_coref(thought_coref,you,TP_tr(liked_him,make_singular(doctor))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_3s_57
+# ::suppl deep_recursion_3s_57
+(u_7715 / think-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7707 / like-01
+                                  :ARG0 (d / doctor)
+                                  :ARG1-of (u_7706 / think-01
+                                                   :ARG0 (u_7709 / you)
+                                                   :ARG1-of (u_7708 / say-01
+                                                                    :ARG0 (u_7711 / i)
+                                                                    :ARG1-of (u_7710 / know-01
+                                                                                     :ARG0 (u_7714 / kid)
+                                                                                     :ARG1-of (u_7712 / know-01
+                                                                                                      :ARG0 (m / lawyer)
+                                                                                                      :ARG1-of (u_7713 / mention-01
+                                                                                                                       :ARG0 (r / girl)
+                                                                                                                       :ARG1-of u_7715))))))))
+
+# ::snt The soldier thought that the doctor said that the lawyer said that we said that you said that the girls mentioned that the boys believed that I hated him, the soldier
+# ::tree TP_resolve_coref(thought_resolve_coref,soldier,TP_CP_coref(said_coref,make_singular(doctor),TP_CP_coref(said_coref,make_singular(lawyer),TP_CP_coref(said_coref,we,TP_CP_coref(said_coref,you,TP_CP_coref(mentioned_coref,girls,TP_CP_coref(believed_coref,boys,TP_tr(hated_him,I))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_3s_58
+# ::suppl deep_recursion_3s_58
+(u_7727 / think-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7716 / hate-01
+                                  :ARG0 (u_7718 / i)
+                                  :ARG1-of (u_7717 / believe-01
+                                                   :ARG0 (u_7720 / boy)
+                                                   :ARG1-of (u_7719 / mention-01
+                                                                    :ARG0 (u_7722 / girl)
+                                                                    :ARG1-of (u_7721 / say-01
+                                                                                     :ARG0 (u_7724 / you)
+                                                                                     :ARG1-of (u_7723 / say-01
+                                                                                                      :ARG0 (r / we)
+                                                                                                      :ARG1-of (u_7725 / say-01
+                                                                                                                       :ARG0 (m / lawyer)
+                                                                                                                       :ARG1-of (u_7726 / say-01
+                                                                                                                                        :ARG0 (d / doctor)
+                                                                                                                                        :ARG1-of u_7727)))))))))
+
+# ::snt The doctor believed that we said that the girls believed that the soldier knew that I mentioned that the boys knew that the astronaut saw her, the doctor
+# ::tree TP_resolve_coref(believed_resolve_coref,doctor,TP_CP_coref(said_coref,we,TP_CP_coref(believed_coref,girls,TP_CP_coref(knew_coref,make_singular(soldier),TP_CP_coref(mentioned_coref,I,TP_CP_coref(knew_coref,boys,TP_tr(saw_her,make_singular(astronaut))))))))
+# ::size0 8
+# ::size1 8
+# ::id deep_recursion_3s_59
+# ::suppl deep_recursion_3s_59
+(u_7739 / believe-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7729 / see-01
+                                  :ARG0 (a / astronaut)
+                                  :ARG1-of (u_7728 / know-01
+                                                   :ARG0 (u_7731 / boy)
+                                                   :ARG1-of (u_7730 / mention-01
+                                                                    :ARG0 (u_7735 / i)
+                                                                    :ARG1-of (u_7732 / know-01
+                                                                                     :ARG0 (s / soldier)
+                                                                                     :ARG1-of (u_7733 / believe-01
+                                                                                                      :ARG0 (u_7738 / girl)
+                                                                                                      :ARG1-of (u_7736 / say-01
+                                                                                                                       :ARG0 (r / we)
+                                                                                                                       :ARG1-of u_7739))))))))
+
+# ::snt The soldier said that we knew that the astronaut said that the lawyer thought that the kids mentioned that the girls heard that the doctor knew that I mentioned that you saw him, the soldier
+# ::tree TP_resolve_coref(said_resolve_coref,soldier,TP_CP_coref(knew_coref,we,TP_CP_coref(said_coref,make_singular(astronaut),TP_CP_coref(thought_coref,make_singular(lawyer),TP_CP_coref(mentioned_coref,kids,TP_CP_coref(heard_coref,girls,TP_CP_coref(knew_coref,make_singular(doctor),TP_CP_coref(mentioned_coref,I,TP_tr(saw_him,you)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_60
+# ::suppl deep_recursion_3s_60
+(u_7752 / say-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7740 / see-01
+                                  :ARG0 (u_7742 / you)
+                                  :ARG1-of (u_7741 / mention-01
+                                                   :ARG0 (u_7745 / i)
+                                                   :ARG1-of (u_7743 / know-01
+                                                                    :ARG0 (d / doctor)
+                                                                    :ARG1-of (u_7744 / hear-01
+                                                                                     :ARG0 (u_7747 / girl)
+                                                                                     :ARG1-of (u_7746 / mention-01
+                                                                                                      :ARG0 (u_7751 / kid)
+                                                                                                      :ARG1-of (u_7748 / think-01
+                                                                                                                       :ARG0 (m / lawyer)
+                                                                                                                       :ARG1-of (u_7749 / say-01
+                                                                                                                                        :ARG0 (a / astronaut)
+                                                                                                                                        :ARG1-of (u_7750 / know-01
+                                                                                                                                                         :ARG0 (r / we)
+                                                                                                                                                         :ARG1-of u_7752))))))))))
+
+# ::snt The astronaut thought that I heard that the soldier knew that you said that the kids knew that the girls said that the doctor knew that the boys knew that we liked her, the astronaut
+# ::tree TP_resolve_coref(thought_resolve_coref,astronaut,TP_CP_coref(heard_coref,I,TP_CP_coref(knew_coref,make_singular(soldier),TP_CP_coref(said_coref,you,TP_CP_coref(knew_coref,kids,TP_CP_coref(said_coref,girls,TP_CP_coref(knew_coref,make_singular(doctor),TP_CP_coref(knew_coref,boys,TP_tr(liked_her,we)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_61
+# ::suppl deep_recursion_3s_61
+(u_7767 / think-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7753 / like-01
+                                  :ARG0 (u_7755 / we)
+                                  :ARG1-of (u_7754 / know-01
+                                                   :ARG0 (u_7758 / boy)
+                                                   :ARG1-of (u_7756 / know-01
+                                                                    :ARG0 (d / doctor)
+                                                                    :ARG1-of (u_7757 / say-01
+                                                                                     :ARG0 (u_7760 / girl)
+                                                                                     :ARG1-of (u_7759 / know-01
+                                                                                                      :ARG0 (u_7762 / kid)
+                                                                                                      :ARG1-of (u_7761 / say-01
+                                                                                                                       :ARG0 (u_7766 / you)
+                                                                                                                       :ARG1-of (u_7763 / know-01
+                                                                                                                                        :ARG0 (s / soldier)
+                                                                                                                                        :ARG1-of (u_7764 / hear-01
+                                                                                                                                                         :ARG0 (r / i)
+                                                                                                                                                         :ARG1-of u_7767))))))))))
+
+# ::snt The lawyer believed that the astronaut said that the boys believed that you said that we believed that the girls believed that the kids knew that the soldier mentioned that I hated him, the lawyer
+# ::tree TP_resolve_coref(believed_resolve_coref,lawyer,TP_CP_coref(said_coref,make_singular(astronaut),TP_CP_coref(believed_coref,boys,TP_CP_coref(said_coref,you,TP_CP_coref(believed_coref,we,TP_CP_coref(believed_coref,girls,TP_CP_coref(knew_coref,kids,TP_CP_coref(mentioned_coref,make_singular(soldier),TP_tr(hated_him,I)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_62
+# ::suppl deep_recursion_3s_62
+(u_7787 / believe-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7768 / hate-01
+                                  :ARG0 (u_7772 / i)
+                                  :ARG1-of (u_7769 / mention-01
+                                                   :ARG0 (s / soldier)
+                                                   :ARG1-of (u_7770 / know-01
+                                                                    :ARG0 (u_7775 / kid)
+                                                                    :ARG1-of (u_7773 / believe-01
+                                                                                     :ARG0 (u_7778 / girl)
+                                                                                     :ARG1-of (u_7776 / believe-01
+                                                                                                      :ARG0 (u_7781 / we)
+                                                                                                      :ARG1-of (u_7779 / say-01
+                                                                                                                       :ARG0 (u_7784 / you)
+                                                                                                                       :ARG1-of (u_7782 / believe-01
+                                                                                                                                        :ARG0 (r / boy)
+                                                                                                                                        :ARG1-of (u_7785 / say-01
+                                                                                                                                                         :ARG0 (a / astronaut)
+                                                                                                                                                         :ARG1-of u_7787))))))))))
+
+# ::snt The doctor thought that the soldier heard that the astronaut thought that the lawyer heard that the kids heard that you believed that the girls mentioned that we said that I saw her, the doctor
+# ::tree TP_resolve_coref(thought_resolve_coref,doctor,TP_CP_coref(heard_coref,make_singular(soldier),TP_CP_coref(thought_coref,make_singular(astronaut),TP_CP_coref(heard_coref,make_singular(lawyer),TP_CP_coref(heard_coref,kids,TP_CP_coref(believed_coref,you,TP_CP_coref(mentioned_coref,girls,TP_CP_coref(said_coref,we,TP_tr(saw_her,I)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_63
+# ::suppl deep_recursion_3s_63
+(u_7800 / think-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7788 / see-01
+                                  :ARG0 (u_7790 / i)
+                                  :ARG1-of (u_7789 / say-01
+                                                   :ARG0 (u_7792 / we)
+                                                   :ARG1-of (u_7791 / mention-01
+                                                                    :ARG0 (u_7794 / girl)
+                                                                    :ARG1-of (u_7793 / believe-01
+                                                                                     :ARG0 (u_7796 / you)
+                                                                                     :ARG1-of (u_7795 / hear-01
+                                                                                                      :ARG0 (r / kid)
+                                                                                                      :ARG1-of (u_7797 / hear-01
+                                                                                                                       :ARG0 (m / lawyer)
+                                                                                                                       :ARG1-of (u_7798 / think-01
+                                                                                                                                        :ARG0 (a / astronaut)
+                                                                                                                                        :ARG1-of (u_7799 / hear-01
+                                                                                                                                                         :ARG0 (s / soldier)
+                                                                                                                                                         :ARG1-of u_7800))))))))))
+
+# ::snt The lawyer said that the kids said that the doctor heard that the girls heard that the boys heard that I believed that we knew that the soldier hated her, the lawyer
+# ::tree TP_resolve_coref(said_resolve_coref,lawyer,TP_CP_coref(said_coref,kids,TP_CP_coref(heard_coref,make_singular(doctor),TP_CP_coref(heard_coref,girls,TP_CP_coref(heard_coref,boys,TP_CP_coref(believed_coref,I,TP_CP_coref(knew_coref,we,TP_tr(hated_her,make_singular(soldier)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_64
+# ::suppl deep_recursion_3s_64
+(u_7818 / say-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7803 / hate-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_7801 / know-01
+                                                   :ARG0 (u_7806 / we)
+                                                   :ARG1-of (u_7804 / believe-01
+                                                                    :ARG0 (u_7809 / i)
+                                                                    :ARG1-of (u_7807 / hear-01
+                                                                                     :ARG0 (u_7812 / boy)
+                                                                                     :ARG1-of (u_7810 / hear-01
+                                                                                                      :ARG0 (u_7817 / girl)
+                                                                                                      :ARG1-of (u_7813 / hear-01
+                                                                                                                       :ARG0 (d / doctor)
+                                                                                                                       :ARG1-of (u_7815 / say-01
+                                                                                                                                        :ARG0 (r / kid)
+                                                                                                                                        :ARG1-of u_7818)))))))))
+
+# ::snt The astronaut believed that you thought that I believed that the kids heard that the boys knew that the girls thought that we mentioned that the lawyer liked her, the astronaut
+# ::tree TP_resolve_coref(believed_resolve_coref,astronaut,TP_CP_coref(thought_coref,you,TP_CP_coref(believed_coref,I,TP_CP_coref(heard_coref,kids,TP_CP_coref(knew_coref,boys,TP_CP_coref(thought_coref,girls,TP_CP_coref(mentioned_coref,we,TP_tr(liked_her,make_singular(lawyer)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_65
+# ::suppl deep_recursion_3s_65
+(u_7831 / believe-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7820 / like-01
+                                  :ARG0 (m / lawyer)
+                                  :ARG1-of (u_7819 / mention-01
+                                                   :ARG0 (u_7822 / we)
+                                                   :ARG1-of (u_7821 / think-01
+                                                                    :ARG0 (u_7824 / girl)
+                                                                    :ARG1-of (u_7823 / know-01
+                                                                                     :ARG0 (u_7826 / boy)
+                                                                                     :ARG1-of (u_7825 / hear-01
+                                                                                                      :ARG0 (u_7828 / kid)
+                                                                                                      :ARG1-of (u_7827 / believe-01
+                                                                                                                       :ARG0 (u_7830 / i)
+                                                                                                                       :ARG1-of (u_7829 / think-01
+                                                                                                                                        :ARG0 (r / you)
+                                                                                                                                        :ARG1-of u_7831)))))))))
+
+# ::snt The lawyer thought that you knew that the kids mentioned that the doctor knew that we heard that the boys believed that I said that the astronaut saw him, the lawyer
+# ::tree TP_resolve_coref(thought_resolve_coref,lawyer,TP_CP_coref(knew_coref,you,TP_CP_coref(mentioned_coref,kids,TP_CP_coref(knew_coref,make_singular(doctor),TP_CP_coref(heard_coref,we,TP_CP_coref(believed_coref,boys,TP_CP_coref(said_coref,I,TP_tr(saw_him,make_singular(astronaut)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_66
+# ::suppl deep_recursion_3s_66
+(u_7843 / think-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7833 / see-01
+                                  :ARG0 (a / astronaut)
+                                  :ARG1-of (u_7832 / say-01
+                                                   :ARG0 (u_7835 / i)
+                                                   :ARG1-of (u_7834 / believe-01
+                                                                    :ARG0 (u_7837 / boy)
+                                                                    :ARG1-of (u_7836 / hear-01
+                                                                                     :ARG0 (u_7840 / we)
+                                                                                     :ARG1-of (u_7838 / know-01
+                                                                                                      :ARG0 (d / doctor)
+                                                                                                      :ARG1-of (u_7839 / mention-01
+                                                                                                                       :ARG0 (u_7842 / kid)
+                                                                                                                       :ARG1-of (u_7841 / know-01
+                                                                                                                                        :ARG0 (r / you)
+                                                                                                                                        :ARG1-of u_7843)))))))))
+
+# ::snt The soldier heard that you believed that the lawyer believed that the kids heard that I thought that the boys said that we believed that the doctor liked him, the soldier
+# ::tree TP_resolve_coref(heard_resolve_coref,soldier,TP_CP_coref(believed_coref,you,TP_CP_coref(believed_coref,make_singular(lawyer),TP_CP_coref(heard_coref,kids,TP_CP_coref(thought_coref,I,TP_CP_coref(said_coref,boys,TP_CP_coref(believed_coref,we,TP_tr(liked_him,make_singular(doctor)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_67
+# ::suppl deep_recursion_3s_67
+(u_7855 / hear-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7845 / like-01
+                                  :ARG0 (d / doctor)
+                                  :ARG1-of (u_7844 / believe-01
+                                                   :ARG0 (u_7847 / we)
+                                                   :ARG1-of (u_7846 / say-01
+                                                                    :ARG0 (u_7849 / boy)
+                                                                    :ARG1-of (u_7848 / think-01
+                                                                                     :ARG0 (u_7851 / i)
+                                                                                     :ARG1-of (u_7850 / hear-01
+                                                                                                      :ARG0 (u_7854 / kid)
+                                                                                                      :ARG1-of (u_7852 / believe-01
+                                                                                                                       :ARG0 (m / lawyer)
+                                                                                                                       :ARG1-of (u_7853 / believe-01
+                                                                                                                                        :ARG0 (r / you)
+                                                                                                                                        :ARG1-of u_7855)))))))))
+
+# ::snt The soldier believed that the doctor thought that the kids thought that the girls knew that you knew that the boys mentioned that we said that the astronaut saw him, the soldier
+# ::tree TP_resolve_coref(believed_resolve_coref,soldier,TP_CP_coref(thought_coref,make_singular(doctor),TP_CP_coref(thought_coref,kids,TP_CP_coref(knew_coref,girls,TP_CP_coref(knew_coref,you,TP_CP_coref(mentioned_coref,boys,TP_CP_coref(said_coref,we,TP_tr(saw_him,make_singular(astronaut)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_68
+# ::suppl deep_recursion_3s_68
+(u_7867 / believe-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7857 / see-01
+                                  :ARG0 (a / astronaut)
+                                  :ARG1-of (u_7856 / say-01
+                                                   :ARG0 (u_7859 / we)
+                                                   :ARG1-of (u_7858 / mention-01
+                                                                    :ARG0 (u_7861 / boy)
+                                                                    :ARG1-of (u_7860 / know-01
+                                                                                     :ARG0 (u_7863 / you)
+                                                                                     :ARG1-of (u_7862 / know-01
+                                                                                                      :ARG0 (u_7865 / girl)
+                                                                                                      :ARG1-of (u_7864 / think-01
+                                                                                                                       :ARG0 (r / kid)
+                                                                                                                       :ARG1-of (u_7866 / think-01
+                                                                                                                                        :ARG0 (d / doctor)
+                                                                                                                                        :ARG1-of u_7867)))))))))
+
+# ::snt The soldier mentioned that the boys mentioned that the girls knew that the astronaut heard that the lawyer said that the doctor heard that I said that you mentioned that we liked him, the soldier
+# ::tree TP_resolve_coref(mentioned_resolve_coref,soldier,TP_CP_coref(mentioned_coref,boys,TP_CP_coref(knew_coref,girls,TP_CP_coref(heard_coref,make_singular(astronaut),TP_CP_coref(said_coref,make_singular(lawyer),TP_CP_coref(heard_coref,make_singular(doctor),TP_CP_coref(said_coref,I,TP_CP_coref(mentioned_coref,you,TP_tr(liked_him,we)))))))))
+# ::size0 9
+# ::size1 9
+# ::id deep_recursion_3s_69
+# ::suppl deep_recursion_3s_69
+(u_7880 / mention-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7868 / like-01
+                                  :ARG0 (u_7870 / we)
+                                  :ARG1-of (u_7869 / mention-01
+                                                   :ARG0 (u_7872 / you)
+                                                   :ARG1-of (u_7871 / say-01
+                                                                    :ARG0 (u_7877 / i)
+                                                                    :ARG1-of (u_7873 / hear-01
+                                                                                     :ARG0 (d / doctor)
+                                                                                     :ARG1-of (u_7874 / say-01
+                                                                                                      :ARG0 (m / lawyer)
+                                                                                                      :ARG1-of (u_7875 / hear-01
+                                                                                                                       :ARG0 (a / astronaut)
+                                                                                                                       :ARG1-of (u_7876 / know-01
+                                                                                                                                        :ARG0 (u_7879 / girl)
+                                                                                                                                        :ARG1-of (u_7878 / mention-01
+                                                                                                                                                         :ARG0 (r / boy)
+                                                                                                                                                         :ARG1-of u_7880))))))))))
+
+# ::snt The astronaut believed that the kids heard that I said that we thought that the lawyer believed that you thought that the girls knew that the boys said that the soldier amused him, the astronaut
+# ::tree TP_resolve_coref(believed_resolve_coref,astronaut,TP_CP_coref(heard_coref,kids,TP_CP_coref(said_coref,I,TP_CP_coref(thought_coref,we,TP_CP_coref(believed_coref,make_singular(lawyer),TP_CP_coref(thought_coref,you,TP_CP_coref(knew_coref,girls,TP_CP_coref(said_coref,boys,TP_tr(amused_him,make_singular(soldier))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_70
+# ::suppl deep_recursion_3s_70
+(u_7901 / believe-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_7883 / amuse-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_7881 / say-01
+                                                   :ARG0 (u_7886 / boy)
+                                                   :ARG1-of (u_7884 / know-01
+                                                                    :ARG0 (u_7889 / girl)
+                                                                    :ARG1-of (u_7887 / think-01
+                                                                                     :ARG0 (u_7894 / you)
+                                                                                     :ARG1-of (u_7890 / believe-01
+                                                                                                      :ARG0 (m / lawyer)
+                                                                                                      :ARG1-of (u_7892 / think-01
+                                                                                                                       :ARG0 (u_7897 / we)
+                                                                                                                       :ARG1-of (u_7895 / say-01
+                                                                                                                                        :ARG0 (u_7900 / i)
+                                                                                                                                        :ARG1-of (u_7898 / hear-01
+                                                                                                                                                         :ARG0 (r / kid)
+                                                                                                                                                         :ARG1-of u_7901))))))))))
+
+# ::snt The doctor knew that the girls said that I mentioned that you mentioned that we believed that the boys heard that the kids thought that the astronaut mentioned that the soldier amused her, the doctor
+# ::tree TP_resolve_coref(knew_resolve_coref,doctor,TP_CP_coref(said_coref,girls,TP_CP_coref(mentioned_coref,I,TP_CP_coref(mentioned_coref,you,TP_CP_coref(believed_coref,we,TP_CP_coref(heard_coref,boys,TP_CP_coref(thought_coref,kids,TP_CP_coref(mentioned_coref,make_singular(astronaut),TP_tr(amused_her,make_singular(soldier))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_71
+# ::suppl deep_recursion_3s_71
+(u_7922 / know-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7906 / amuse-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_7902 / mention-01
+                                                   :ARG0 (a / astronaut)
+                                                   :ARG1-of (u_7904 / think-01
+                                                                    :ARG0 (u_7909 / kid)
+                                                                    :ARG1-of (u_7907 / hear-01
+                                                                                     :ARG0 (u_7912 / boy)
+                                                                                     :ARG1-of (u_7910 / believe-01
+                                                                                                      :ARG0 (u_7915 / we)
+                                                                                                      :ARG1-of (u_7913 / mention-01
+                                                                                                                       :ARG0 (u_7918 / you)
+                                                                                                                       :ARG1-of (u_7916 / mention-01
+                                                                                                                                        :ARG0 (u_7921 / i)
+                                                                                                                                        :ARG1-of (u_7919 / say-01
+                                                                                                                                                         :ARG0 (r / girl)
+                                                                                                                                                         :ARG1-of u_7922))))))))))
+
+# ::snt The lawyer believed that the kids said that the astronaut knew that the boys believed that you said that I thought that the girls believed that we knew that the doctor hated him, the lawyer
+# ::tree TP_resolve_coref(believed_resolve_coref,lawyer,TP_CP_coref(said_coref,kids,TP_CP_coref(knew_coref,make_singular(astronaut),TP_CP_coref(believed_coref,boys,TP_CP_coref(said_coref,you,TP_CP_coref(thought_coref,I,TP_CP_coref(believed_coref,girls,TP_CP_coref(knew_coref,we,TP_tr(hated_him,make_singular(doctor))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_72
+# ::suppl deep_recursion_3s_72
+(u_7936 / believe-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7924 / hate-01
+                                  :ARG0 (d / doctor)
+                                  :ARG1-of (u_7923 / know-01
+                                                   :ARG0 (u_7926 / we)
+                                                   :ARG1-of (u_7925 / believe-01
+                                                                    :ARG0 (u_7928 / girl)
+                                                                    :ARG1-of (u_7927 / think-01
+                                                                                     :ARG0 (u_7930 / i)
+                                                                                     :ARG1-of (u_7929 / say-01
+                                                                                                      :ARG0 (u_7932 / you)
+                                                                                                      :ARG1-of (u_7931 / believe-01
+                                                                                                                       :ARG0 (u_7935 / boy)
+                                                                                                                       :ARG1-of (u_7933 / know-01
+                                                                                                                                        :ARG0 (a / astronaut)
+                                                                                                                                        :ARG1-of (u_7934 / say-01
+                                                                                                                                                         :ARG0 (r / kid)
+                                                                                                                                                         :ARG1-of u_7936))))))))))
+
+# ::snt The doctor heard that the boys mentioned that the girls said that I mentioned that the astronaut knew that the kids mentioned that the lawyer believed that you mentioned that the soldier liked her, the doctor
+# ::tree TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(mentioned_coref,boys,TP_CP_coref(said_coref,girls,TP_CP_coref(mentioned_coref,I,TP_CP_coref(knew_coref,make_singular(astronaut),TP_CP_coref(mentioned_coref,kids,TP_CP_coref(believed_coref,make_singular(lawyer),TP_CP_coref(mentioned_coref,you,TP_tr(liked_her,make_singular(soldier))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_73
+# ::suppl deep_recursion_3s_73
+(u_7956 / hear-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_7939 / like-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_7937 / mention-01
+                                                   :ARG0 (u_7944 / you)
+                                                   :ARG1-of (u_7940 / believe-01
+                                                                    :ARG0 (m / lawyer)
+                                                                    :ARG1-of (u_7942 / mention-01
+                                                                                     :ARG0 (u_7949 / kid)
+                                                                                     :ARG1-of (u_7945 / know-01
+                                                                                                      :ARG0 (a / astronaut)
+                                                                                                      :ARG1-of (u_7947 / mention-01
+                                                                                                                       :ARG0 (u_7952 / i)
+                                                                                                                       :ARG1-of (u_7950 / say-01
+                                                                                                                                        :ARG0 (u_7955 / girl)
+                                                                                                                                        :ARG1-of (u_7953 / mention-01
+                                                                                                                                                         :ARG0 (r / boy)
+                                                                                                                                                         :ARG1-of u_7956))))))))))
+
+# ::snt The soldier mentioned that the doctor believed that I knew that you mentioned that the boys mentioned that the girls knew that the kids knew that the astronaut said that the lawyer saw her, the soldier
+# ::tree TP_resolve_coref(mentioned_resolve_coref,soldier,TP_CP_coref(believed_coref,make_singular(doctor),TP_CP_coref(knew_coref,I,TP_CP_coref(mentioned_coref,you,TP_CP_coref(mentioned_coref,boys,TP_CP_coref(knew_coref,girls,TP_CP_coref(knew_coref,kids,TP_CP_coref(said_coref,make_singular(astronaut),TP_tr(saw_her,make_singular(lawyer))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_74
+# ::suppl deep_recursion_3s_74
+(u_7969 / mention-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7959 / see-01
+                                  :ARG0 (m / lawyer)
+                                  :ARG1-of (u_7957 / say-01
+                                                   :ARG0 (a / astronaut)
+                                                   :ARG1-of (u_7958 / know-01
+                                                                    :ARG0 (u_7961 / kid)
+                                                                    :ARG1-of (u_7960 / know-01
+                                                                                     :ARG0 (u_7963 / girl)
+                                                                                     :ARG1-of (u_7962 / mention-01
+                                                                                                      :ARG0 (u_7965 / boy)
+                                                                                                      :ARG1-of (u_7964 / mention-01
+                                                                                                                       :ARG0 (u_7967 / you)
+                                                                                                                       :ARG1-of (u_7966 / know-01
+                                                                                                                                        :ARG0 (r / i)
+                                                                                                                                        :ARG1-of (u_7968 / believe-01
+                                                                                                                                                         :ARG0 (d / doctor)
+                                                                                                                                                         :ARG1-of u_7969))))))))))
+
+# ::snt The soldier thought that the girls said that the lawyer mentioned that you thought that the astronaut heard that the kids thought that the doctor said that we said that I said that the boys amused her, the soldier
+# ::tree TP_resolve_coref(thought_resolve_coref,soldier,TP_CP_coref(said_coref,girls,TP_CP_coref(mentioned_coref,make_singular(lawyer),TP_CP_coref(thought_coref,you,TP_CP_coref(heard_coref,make_singular(astronaut),TP_CP_coref(thought_coref,kids,TP_CP_coref(said_coref,make_singular(doctor),TP_CP_coref(said_coref,we,TP_CP_coref(said_coref,I,TP_tr(amused_her,boys))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_75
+# ::suppl deep_recursion_3s_75
+(u_7984 / think-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_7970 / amuse-01
+                                  :ARG0 (u_7972 / boy)
+                                  :ARG1-of (u_7971 / say-01
+                                                   :ARG0 (u_7974 / i)
+                                                   :ARG1-of (u_7973 / say-01
+                                                                    :ARG0 (u_7977 / we)
+                                                                    :ARG1-of (u_7975 / say-01
+                                                                                     :ARG0 (d / doctor)
+                                                                                     :ARG1-of (u_7976 / think-01
+                                                                                                      :ARG0 (u_7980 / kid)
+                                                                                                      :ARG1-of (u_7978 / hear-01
+                                                                                                                       :ARG0 (a / astronaut)
+                                                                                                                       :ARG1-of (u_7979 / think-01
+                                                                                                                                        :ARG0 (u_7983 / you)
+                                                                                                                                        :ARG1-of (u_7981 / mention-01
+                                                                                                                                                         :ARG0 (m / lawyer)
+                                                                                                                                                         :ARG1-of (u_7982 / say-01
+                                                                                                                                                                          :ARG0 (r / girl)
+                                                                                                                                                                          :ARG1-of u_7984)))))))))))
+
+# ::snt The lawyer mentioned that we thought that the girls mentioned that the astronaut knew that I heard that the kids said that the boys said that you thought that the soldier saw her, the lawyer
+# ::tree TP_resolve_coref(mentioned_resolve_coref,lawyer,TP_CP_coref(thought_coref,we,TP_CP_coref(mentioned_coref,girls,TP_CP_coref(knew_coref,make_singular(astronaut),TP_CP_coref(heard_coref,I,TP_CP_coref(said_coref,kids,TP_CP_coref(said_coref,boys,TP_CP_coref(thought_coref,you,TP_tr(saw_her,make_singular(soldier))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_76
+# ::suppl deep_recursion_3s_76
+(u_8005 / mention-01
+        :ARG0 (m / lawyer
+                 :ARG1-of (u_7987 / see-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_7985 / think-01
+                                                   :ARG0 (u_7990 / you)
+                                                   :ARG1-of (u_7988 / say-01
+                                                                    :ARG0 (u_7993 / boy)
+                                                                    :ARG1-of (u_7991 / say-01
+                                                                                     :ARG0 (u_7996 / kid)
+                                                                                     :ARG1-of (u_7994 / hear-01
+                                                                                                      :ARG0 (u_8001 / i)
+                                                                                                      :ARG1-of (u_7997 / know-01
+                                                                                                                       :ARG0 (a / astronaut)
+                                                                                                                       :ARG1-of (u_7999 / mention-01
+                                                                                                                                        :ARG0 (u_8004 / girl)
+                                                                                                                                        :ARG1-of (u_8002 / think-01
+                                                                                                                                                         :ARG0 (r / we)
+                                                                                                                                                         :ARG1-of u_8005))))))))))
+
+# ::snt The doctor heard that I knew that the lawyer knew that you believed that the girls said that we heard that the boys believed that the kids mentioned that the soldier saw him, the doctor
+# ::tree TP_resolve_coref(heard_resolve_coref,doctor,TP_CP_coref(knew_coref,I,TP_CP_coref(knew_coref,make_singular(lawyer),TP_CP_coref(believed_coref,you,TP_CP_coref(said_coref,girls,TP_CP_coref(heard_coref,we,TP_CP_coref(believed_coref,boys,TP_CP_coref(mentioned_coref,kids,TP_tr(saw_him,make_singular(soldier))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_77
+# ::suppl deep_recursion_3s_77
+(u_8026 / hear-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_8008 / see-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_8006 / mention-01
+                                                   :ARG0 (u_8011 / kid)
+                                                   :ARG1-of (u_8009 / believe-01
+                                                                    :ARG0 (u_8014 / boy)
+                                                                    :ARG1-of (u_8012 / hear-01
+                                                                                     :ARG0 (u_8017 / we)
+                                                                                     :ARG1-of (u_8015 / say-01
+                                                                                                      :ARG0 (u_8020 / girl)
+                                                                                                      :ARG1-of (u_8018 / believe-01
+                                                                                                                       :ARG0 (u_8025 / you)
+                                                                                                                       :ARG1-of (u_8021 / know-01
+                                                                                                                                        :ARG0 (m / lawyer)
+                                                                                                                                        :ARG1-of (u_8023 / know-01
+                                                                                                                                                         :ARG0 (r / i)
+                                                                                                                                                         :ARG1-of u_8026))))))))))
+
+# ::snt The soldier believed that the doctor heard that I thought that you said that we heard that the girls said that the astronaut believed that the kids believed that the lawyer hated her, the soldier
+# ::tree TP_resolve_coref(believed_resolve_coref,soldier,TP_CP_coref(heard_coref,make_singular(doctor),TP_CP_coref(thought_coref,I,TP_CP_coref(said_coref,you,TP_CP_coref(heard_coref,we,TP_CP_coref(said_coref,girls,TP_CP_coref(believed_coref,make_singular(astronaut),TP_CP_coref(believed_coref,kids,TP_tr(hated_her,make_singular(lawyer))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_78
+# ::suppl deep_recursion_3s_78
+(u_8039 / believe-01
+        :ARG0 (s / soldier
+                 :ARG1-of (u_8028 / hate-01
+                                  :ARG0 (m / lawyer)
+                                  :ARG1-of (u_8027 / believe-01
+                                                   :ARG0 (u_8031 / kid)
+                                                   :ARG1-of (u_8029 / believe-01
+                                                                    :ARG0 (a / astronaut)
+                                                                    :ARG1-of (u_8030 / say-01
+                                                                                     :ARG0 (u_8033 / girl)
+                                                                                     :ARG1-of (u_8032 / hear-01
+                                                                                                      :ARG0 (u_8035 / we)
+                                                                                                      :ARG1-of (u_8034 / say-01
+                                                                                                                       :ARG0 (u_8037 / you)
+                                                                                                                       :ARG1-of (u_8036 / think-01
+                                                                                                                                        :ARG0 (r / i)
+                                                                                                                                        :ARG1-of (u_8038 / hear-01
+                                                                                                                                                         :ARG0 (d / doctor)
+                                                                                                                                                         :ARG1-of u_8039))))))))))
+
+# ::snt The doctor mentioned that the girls thought that the kids believed that you said that we mentioned that I said that the lawyer knew that the astronaut believed that the soldier liked him, the doctor
+# ::tree TP_resolve_coref(mentioned_resolve_coref,doctor,TP_CP_coref(thought_coref,girls,TP_CP_coref(believed_coref,kids,TP_CP_coref(said_coref,you,TP_CP_coref(mentioned_coref,we,TP_CP_coref(said_coref,I,TP_CP_coref(knew_coref,make_singular(lawyer),TP_CP_coref(believed_coref,make_singular(astronaut),TP_tr(liked_him,make_singular(soldier))))))))))
+# ::size0 10
+# ::size1 10
+# ::id deep_recursion_3s_79
+# ::suppl deep_recursion_3s_79
+(u_8059 / mention-01
+        :ARG0 (d / doctor
+                 :ARG1-of (u_8046 / like-01
+                                  :ARG0 (s / soldier)
+                                  :ARG1-of (u_8040 / believe-01
+                                                   :ARG0 (a / astronaut)
+                                                   :ARG1-of (u_8042 / know-01
+                                                                    :ARG0 (m / lawyer)
+                                                                    :ARG1-of (u_8044 / say-01
+                                                                                     :ARG0 (u_8049 / i)
+                                                                                     :ARG1-of (u_8047 / mention-01
+                                                                                                      :ARG0 (u_8052 / we)
+                                                                                                      :ARG1-of (u_8050 / say-01
+                                                                                                                       :ARG0 (u_8055 / you)
+                                                                                                                       :ARG1-of (u_8053 / believe-01
+                                                                                                                                        :ARG0 (u_8058 / kid)
+                                                                                                                                        :ARG1-of (u_8056 / think-01
+                                                                                                                                                         :ARG0 (r / girl)
+                                                                                                                                                         :ARG1-of u_8059))))))))))
+
+# ::snt The astronaut knew that the girls heard that we thought that the soldier believed that I heard that the kids heard that you mentioned that the boys said that the lawyer knew that the doctor hated him, the astronaut
+# ::tree TP_resolve_coref(knew_resolve_coref,astronaut,TP_CP_coref(heard_coref,girls,TP_CP_coref(thought_coref,we,TP_CP_coref(believed_coref,make_singular(soldier),TP_CP_coref(heard_coref,I,TP_CP_coref(heard_coref,kids,TP_CP_coref(mentioned_coref,you,TP_CP_coref(said_coref,boys,TP_CP_coref(knew_coref,make_singular(lawyer),TP_tr(hated_him,make_singular(doctor)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_3s_80
+# ::suppl deep_recursion_3s_80
+(u_8076 / know-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_8062 / hate-01
+                                  :ARG0 (d / doctor)
+                                  :ARG1-of (u_8060 / know-01
+                                                   :ARG0 (m / lawyer)
+                                                   :ARG1-of (u_8061 / say-01
+                                                                    :ARG0 (u_8064 / boy)
+                                                                    :ARG1-of (u_8063 / mention-01
+                                                                                     :ARG0 (u_8066 / you)
+                                                                                     :ARG1-of (u_8065 / hear-01
+                                                                                                      :ARG0 (u_8068 / kid)
+                                                                                                      :ARG1-of (u_8067 / hear-01
+                                                                                                                       :ARG0 (u_8072 / i)
+                                                                                                                       :ARG1-of (u_8069 / believe-01
+                                                                                                                                        :ARG0 (s / soldier)
+                                                                                                                                        :ARG1-of (u_8070 / think-01
+                                                                                                                                                         :ARG0 (u_8075 / we)
+                                                                                                                                                         :ARG1-of (u_8073 / hear-01
+                                                                                                                                                                          :ARG0 (r / girl)
+                                                                                                                                                                          :ARG1-of u_8076)))))))))))
+
+# ::snt The astronaut believed that the boys believed that the lawyer thought that we knew that the girls heard that the kids knew that the soldier knew that I heard that you knew that the doctor hated him, the astronaut
+# ::tree TP_resolve_coref(believed_resolve_coref,astronaut,TP_CP_coref(believed_coref,boys,TP_CP_coref(thought_coref,make_singular(lawyer),TP_CP_coref(knew_coref,we,TP_CP_coref(heard_coref,girls,TP_CP_coref(knew_coref,kids,TP_CP_coref(knew_coref,make_singular(soldier),TP_CP_coref(heard_coref,I,TP_CP_coref(knew_coref,you,TP_tr(hated_him,make_singular(doctor)))))))))))
+# ::size0 11
+# ::size1 11
+# ::id deep_recursion_3s_81
+# ::suppl deep_recursion_3s_81
+(u_8096 / believe-01
+        :ARG0 (a / astronaut
+                 :ARG1-of (u_8078 / hate-01
+                                  :ARG0 (d / doctor)
+                                  :ARG1-of (u_8077 / know-01
+                                                   :ARG0 (u_8080 / you)
+                                                   :ARG1-of (u_8079 / hear-01
+                                                                    :ARG0 (u_8084 / i)
+                                                                    :ARG1-of (u_8081 / know-01
+                                                                                     :ARG0 (s / soldier)
+                                                                                     :ARG1-of (u_8082 / know-01
+                                                                                                      :ARG0 (u_8087 / kid)
+                                                                                                      :ARG1-of (u_8085 / hear-01
+                                                                                                                       :ARG0 (u_8090 / girl)
+                                                                                                                       :ARG1-of (u_8088 / know-01
+                                                                                                                                        :ARG0 (u_8095 / we)
+                                                                                                                                        :ARG1-of (u_8091 / think-01
+                                                                                                                                                         :ARG0 (m / lawyer)
+                                                                                                                                                         :ARG1-of (u_8093 / believe-01
+                                                                                                                                                                          :ARG0 (r / boy)
+                                                                                                                                                                          :ARG1-of u_8096)))))))))))

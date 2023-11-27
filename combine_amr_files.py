@@ -48,6 +48,8 @@ for corpus_file in os.listdir("corpus"):
                 # penman.layout.configure(entry)  # try to read it in
             # add this category to the full corpus
             full_corpus += category
+            # output to new file so we have the new IDs
+            penman.dump(category, f"corpus/subcorpora/{corpus_file}")
             if changed:
                 print("ids changed in", corpus_file)
             if am:

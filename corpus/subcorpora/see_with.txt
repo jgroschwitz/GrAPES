@@ -1,0 +1,797 @@
+# ::snt The professor observed the soldier with the large eyebrows.
+# ::tree templateNPAttachmentWithProperty(professor,observe,soldier,large_eyebrows)
+# ::id see_with_0
+# ::suppl see_with_0
+(r / observe-01
+   :ARG0 (p / professor)
+   :ARG1 (z0 / soldier
+             :poss-of (e / eyebrow
+                         :mod (l / large))))
+
+# ::snt The baker looked at the girl with the hat.
+# ::tree templateNPAttachmentWithProperty(baker,look,girl,hat)
+# ::id see_with_1
+# ::suppl see_with_1
+(r / look-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (g / girl
+            :poss-of (h / hat)))
+
+# ::snt The professor peeked at the girl with the large eyebrows.
+# ::tree templateNPAttachmentWithProperty(professor,peek,girl,large_eyebrows)
+# ::id see_with_2
+# ::suppl see_with_2
+(r / peek-01
+   :ARG0 (p / professor)
+   :ARG1 (g / girl
+            :poss-of (e / eyebrow
+                        :mod (l / large))))
+
+# ::snt John peeked at the soldier with the hat.
+# ::tree templateNPAttachmentWithProperty(John,peek,soldier,hat)
+# ::id see_with_3
+# ::suppl see_with_3
+(r / peek-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (z0 / soldier
+             :poss-of (h / hat)))
+
+# ::snt The baker observed the soldier with the weird hair.
+# ::tree templateNPAttachmentWithProperty(baker,observe,soldier,weird_hair)
+# ::id see_with_4
+# ::suppl see_with_4
+(r / observe-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (z0 / soldier
+             :poss-of (h / hair
+                         :mod (w / weird))))
+
+# ::snt The professor peeked at the journalist with the hat.
+# ::tree templateNPAttachmentWithProperty(professor,peek,journalist,hat)
+# ::id see_with_5
+# ::suppl see_with_5
+(r / peek-01
+   :ARG0 (p / professor)
+   :ARG1 (z0 / journalist
+             :poss-of (h / hat)))
+
+# ::snt The general looked at the journalist with the weird hair.
+# ::tree templateNPAttachmentWithProperty(general,look,journalist,weird_hair)
+# ::id see_with_6
+# ::suppl see_with_6
+(r / look-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (u_60 / journalist
+               :poss-of (h / hair
+                           :mod (w / weird))))
+
+# ::snt John looked at the girl with the red t-shirt.
+# ::tree templateNPAttachmentWithProperty(John,look,girl,red_t_shirt)
+# ::id see_with_7
+# ::suppl see_with_7
+(u_62 / look-01
+      :ARG0 (p / person
+               :name (n / name
+                        :op1 "John"))
+      :ARG1 (g / girl
+               :poss-of (t / t-shirt
+                           :ARG1-of (r / red-02))))
+
+# ::snt John looked at the soldier with the hat.
+# ::tree templateNPAttachmentWithProperty(John,look,soldier,hat)
+# ::id see_with_8
+# ::suppl see_with_8
+(r / look-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (z0 / soldier
+             :poss-of (h / hat)))
+
+# ::snt The professor looked at the stranger with the weird hair.
+# ::tree templateNPAttachmentWithProperty(professor,look,stranger,weird_hair)
+# ::id see_with_9
+# ::suppl see_with_9
+(r / look-01
+   :ARG0 (p / professor)
+   :ARG1 (p2 / stranger
+             :poss-of (h / hair
+                         :mod (w / weird))))
+
+# ::snt The general looked at the soldier with the large eyebrows.
+# ::tree templateNPAttachmentWithProperty(general,look,soldier,large_eyebrows)
+# ::id see_with_10
+# ::suppl see_with_10
+(r / look-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (u_65 / soldier
+               :poss-of (e / eyebrow
+                           :mod (l / large))))
+
+# ::snt The baker observed the soldier with the hat.
+# ::tree templateNPAttachmentWithProperty(baker,observe,soldier,hat)
+# ::id see_with_11
+# ::suppl see_with_11
+(r / observe-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (z0 / soldier
+             :poss-of (h / hat)))
+
+# ::snt John peeked at the soldier with the weird hair.
+# ::tree templateNPAttachmentWithProperty(John,peek,soldier,weird_hair)
+# ::id see_with_12
+# ::suppl see_with_12
+(r / peek-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (z0 / soldier
+             :poss-of (h / hair
+                         :mod (w / weird))))
+
+# ::snt The general observed the soldier with the weird hair.
+# ::tree templateNPAttachmentWithProperty(general,observe,soldier,weird_hair)
+# ::id see_with_13
+# ::suppl see_with_13
+(r / observe-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (u_67 / soldier
+               :poss-of (h / hair
+                           :mod (w / weird))))
+
+# ::snt The professor peeked at the stranger with the weird hair.
+# ::tree templateNPAttachmentWithProperty(professor,peek,stranger,weird_hair)
+# ::id see_with_14
+# ::suppl see_with_14
+(r / peek-01
+   :ARG0 (p / professor)
+   :ARG1 (p2 / stranger
+             :poss-of (h / hair
+                         :mod (w / weird))))
+
+# ::snt John saw the stranger with the hat.
+# ::tree templateNPAttachmentWithProperty(John,see,stranger,hat)
+# ::id see_with_15
+# ::suppl see_with_15
+(r / see-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (p2 / stranger
+             :poss-of (h / hat)))
+
+# ::snt The general observed the soldier with the large eyebrows.
+# ::tree templateNPAttachmentWithProperty(general,observe,soldier,large_eyebrows)
+# ::id see_with_16
+# ::suppl see_with_16
+(r / observe-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (u_69 / soldier
+               :poss-of (e / eyebrow
+                           :mod (l / large))))
+
+# ::snt The professor looked at the girl with the weird hair.
+# ::tree templateNPAttachmentWithProperty(professor,look,girl,weird_hair)
+# ::id see_with_17
+# ::suppl see_with_17
+(r / look-01
+   :ARG0 (p / professor)
+   :ARG1 (g / girl
+            :poss-of (h / hair
+                        :mod (w / weird))))
+
+# ::snt The baker peeked at the stranger with the hat.
+# ::tree templateNPAttachmentWithProperty(baker,peek,stranger,hat)
+# ::id see_with_18
+# ::suppl see_with_18
+(r / peek-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (p2 / stranger
+             :poss-of (h / hat)))
+
+# ::snt John observed the stranger with the red t-shirt.
+# ::tree templateNPAttachmentWithProperty(John,observe,stranger,red_t_shirt)
+# ::id see_with_19
+# ::suppl see_with_19
+(u_71 / observe-01
+      :ARG0 (p / person
+               :name (n / name
+                        :op1 "John"))
+      :ARG1 (p2 / stranger
+                :poss-of (t / t-shirt
+                            :ARG1-of (r / red-02))))
+
+# ::snt The professor looked at the soldier with the red t-shirt.
+# ::tree templateNPAttachmentWithProperty(professor,look,soldier,red_t_shirt)
+# ::id see_with_20
+# ::suppl see_with_20
+(u_74 / look-01
+      :ARG0 (p / professor)
+      :ARG1 (z0 / soldier
+                :poss-of (t / t-shirt
+                            :ARG1-of (r / red-02))))
+
+# ::snt John observed the girl with the hat.
+# ::tree templateNPAttachmentWithProperty(John,observe,girl,hat)
+# ::id see_with_21
+# ::suppl see_with_21
+(r / observe-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (g / girl
+            :poss-of (h / hat)))
+
+# ::snt Sophie peeked at the soldier with the red t-shirt.
+# ::tree templateNPAttachmentWithProperty(Sophie,peek,soldier,red_t_shirt)
+# ::id see_with_22
+# ::suppl see_with_22
+(u_77 / peek-01
+      :ARG0 (p / person
+               :name (n / name
+                        :op1 "Sophie"))
+      :ARG1 (z0 / soldier
+                :poss-of (t / t-shirt
+                            :ARG1-of (r / red-02))))
+
+# ::snt The general peeked at the journalist with the red t-shirt.
+# ::tree templateNPAttachmentWithProperty(general,peek,journalist,red_t_shirt)
+# ::id see_with_23
+# ::suppl see_with_23
+(u_80 / peek-01
+      :ARG0 (p / person
+               :ARG0-of (z0 / have-org-role-91
+                            :ARG2 (z1 / general)))
+      :ARG1 (u_81 / journalist
+                  :poss-of (t / t-shirt
+                              :ARG1-of (r / red-02))))
+
+# ::snt John looked at the soldier with the red t-shirt.
+# ::tree templateNPAttachmentWithProperty(John,look,soldier,red_t_shirt)
+# ::id see_with_24
+# ::suppl see_with_24
+(u_83 / look-01
+      :ARG0 (p / person
+               :name (n / name
+                        :op1 "John"))
+      :ARG1 (z0 / soldier
+                :poss-of (t / t-shirt
+                            :ARG1-of (r / red-02))))
+
+# ::snt The general knew the girl with the telescope.
+# ::tree templateNPAttachmentWithInstrument(general,know,girl,telescope)
+# ::id see_with_25
+# ::suppl see_with_25
+(r / know-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (g / girl
+            :poss-of (t / telescope)))
+
+# ::snt The professor understood the stranger with the spyglass.
+# ::tree templateNPAttachmentWithInstrument(professor,understand,stranger,spyglass)
+# ::id see_with_26
+# ::suppl see_with_26
+(r / understand-01
+   :ARG0 (p / professor)
+   :ARG1 (p2 / stranger
+             :poss-of (b / spyglass)))
+
+# ::snt The baker knew the soldier with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(baker,know,soldier,binoculars)
+# ::id see_with_27
+# ::suppl see_with_27
+(r / know-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (z0 / soldier
+             :poss-of (u_85 / binoculars)))
+
+# ::snt Sophie understood the girl with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(Sophie,understand,girl,binoculars)
+# ::id see_with_28
+# ::suppl see_with_28
+(r / understand-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG1 (g / girl
+            :poss-of (b / binoculars)))
+
+# ::snt The professor hated the girl with the spyglass.
+# ::tree templateNPAttachmentWithInstrument(professor,hate,girl,spyglass)
+# ::id see_with_29
+# ::suppl see_with_29
+(r / hate-01
+   :ARG0 (p / professor)
+   :ARG1 (g / girl
+            :poss-of (b / spyglass)))
+
+# ::snt John hated the soldier with the telescope.
+# ::tree templateNPAttachmentWithInstrument(John,hate,soldier,telescope)
+# ::id see_with_30
+# ::suppl see_with_30
+(r / hate-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (z0 / soldier
+             :poss-of (t / telescope)))
+
+# ::snt The professor hated the journalist with the telescope.
+# ::tree templateNPAttachmentWithInstrument(professor,hate,journalist,telescope)
+# ::id see_with_31
+# ::suppl see_with_31
+(r / hate-01
+   :ARG0 (p / professor)
+   :ARG1 (z0 / journalist
+             :poss-of (t / telescope)))
+
+# ::snt Sophie hated the stranger with the spyglass.
+# ::tree templateNPAttachmentWithInstrument(Sophie,hate,stranger,spyglass)
+# ::id see_with_32
+# ::suppl see_with_32
+(r / hate-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG1 (p2 / stranger
+             :poss-of (b / spyglass)))
+
+# ::snt The professor knew the stranger with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(professor,know,stranger,binoculars)
+# ::id see_with_33
+# ::suppl see_with_33
+(r / know-01
+   :ARG0 (p / professor)
+   :ARG1 (p2 / stranger
+             :poss-of (b / binoculars)))
+
+# ::snt John hated the soldier with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(John,hate,soldier,binoculars)
+# ::id see_with_34
+# ::suppl see_with_34
+(r / hate-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (z0 / soldier
+             :poss-of (b / binoculars)))
+
+# ::snt John sang to the girl with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(John,sing_to,girl,binoculars)
+# ::id see_with_35
+# ::suppl see_with_35
+(r / sing-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG2 (g / girl
+            :poss-of (b / binoculars)))
+
+# ::snt The baker hated the soldier with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(baker,hate,soldier,binoculars)
+# ::id see_with_36
+# ::suppl see_with_36
+(r / hate-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (z0 / soldier
+             :poss-of (u_91 / binoculars)))
+
+# ::snt The professor addressed the soldier with the telescope.
+# ::tree templateNPAttachmentWithInstrument(professor,address,soldier,telescope)
+# ::id see_with_37
+# ::suppl see_with_37
+(r / address-01
+   :ARG0 (p / professor)
+   :ARG2 (z0 / soldier
+             :poss-of (t / telescope)))
+
+# ::snt The general understood the girl with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(general,understand,girl,binoculars)
+# ::id see_with_38
+# ::suppl see_with_38
+(r / understand-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (g / girl
+            :poss-of (b / binoculars)))
+
+# ::snt The general knew the girl with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(general,know,girl,binoculars)
+# ::id see_with_39
+# ::suppl see_with_39
+(r / know-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (g / girl
+            :poss-of (b / binoculars)))
+
+# ::snt The baker knew the soldier with the telescope.
+# ::tree templateNPAttachmentWithInstrument(baker,know,soldier,telescope)
+# ::id see_with_40
+# ::suppl see_with_40
+(r / know-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (z0 / soldier
+             :poss-of (t / telescope)))
+
+# ::snt The professor sang to the stranger with the telescope.
+# ::tree templateNPAttachmentWithInstrument(professor,sing_to,stranger,telescope)
+# ::id see_with_41
+# ::suppl see_with_41
+(r / sing-01
+   :ARG0 (p / professor)
+   :ARG2 (p2 / stranger
+             :poss-of (t / telescope)))
+
+# ::snt The baker understood the journalist with the telescope.
+# ::tree templateNPAttachmentWithInstrument(baker,understand,journalist,telescope)
+# ::id see_with_42
+# ::suppl see_with_42
+(r / understand-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (z0 / journalist
+             :poss-of (t / telescope)))
+
+# ::snt The professor knew the soldier with the spyglass.
+# ::tree templateNPAttachmentWithInstrument(professor,know,soldier,spyglass)
+# ::id see_with_43
+# ::suppl see_with_43
+(r / know-01
+   :ARG0 (p / professor)
+   :ARG1 (z0 / soldier
+             :poss-of (b / spyglass)))
+
+# ::snt The baker knew the girl with the spyglass.
+# ::tree templateNPAttachmentWithInstrument(baker,know,girl,spyglass)
+# ::id see_with_44
+# ::suppl see_with_44
+(r / know-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (g / girl
+            :poss-of (u_92 / spyglass)))
+
+# ::snt Sophie addressed the journalist with the telescope.
+# ::tree templateNPAttachmentWithInstrument(Sophie,address,journalist,telescope)
+# ::id see_with_45
+# ::suppl see_with_45
+(r / address-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG2 (z0 / journalist
+             :poss-of (t / telescope)))
+
+# ::snt Sophie sang to the journalist with the spyglass.
+# ::tree templateNPAttachmentWithInstrument(Sophie,sing_to,journalist,spyglass)
+# ::id see_with_46
+# ::suppl see_with_46
+(r / sing-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG2 (z0 / journalist
+             :poss-of (b / spyglass)))
+
+# ::snt John understood the journalist with the spyglass.
+# ::tree templateNPAttachmentWithInstrument(John,understand,journalist,spyglass)
+# ::id see_with_47
+# ::suppl see_with_47
+(r / understand-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (z0 / journalist
+             :poss-of (b / spyglass)))
+
+# ::snt John knew the soldier with the telescope.
+# ::tree templateNPAttachmentWithInstrument(John,know,soldier,telescope)
+# ::id see_with_48
+# ::suppl see_with_48
+(r / know-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (z0 / soldier
+             :poss-of (t / telescope)))
+
+# ::snt The baker sang to the soldier with the binoculars.
+# ::tree templateNPAttachmentWithInstrument(baker,sing_to,soldier,binoculars)
+# ::id see_with_49
+# ::suppl see_with_49
+(r / sing-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG2 (z0 / soldier
+             :poss-of (u_97 / binoculars)))
+
+# ::snt Sophie looked at the northern lights with the binoculars.
+# ::tree templateSeeWithInstrument(Sophie,look,northern_lights,binoculars)
+# ::id see_with_50
+# ::suppl see_with_50
+(r / look-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG1 (c / light
+            :location (u_99 / north))
+   :instrument (b / binoculars))
+
+# ::snt The professor saw the moon with the spyglass.
+# ::tree templateSeeWithInstrument(professor,see,moon,spyglass)
+# ::id see_with_51
+# ::suppl see_with_51
+(r / see-01
+   :ARG0 (p / professor)
+   :ARG1 (m / moon)
+   :instrument (b / spyglass))
+
+# ::snt The general looked at the army with the binoculars.
+# ::tree templateSeeWithInstrument(general,look,army,binoculars)
+# ::id see_with_52
+# ::suppl see_with_52
+(r / look-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (a / army)
+   :instrument (b / binoculars))
+
+# ::snt John peeked at the northern lights with the spyglass.
+# ::tree templateSeeWithInstrument(John,peek,northern_lights,spyglass)
+# ::id see_with_53
+# ::suppl see_with_53
+(r / peek-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (c / light
+            :location (u_101 / north))
+   :instrument (b / spyglass))
+
+# ::snt The general looked at the rainfall with the telescope.
+# ::tree templateSeeWithInstrument(general,look,rainfall,telescope)
+# ::id see_with_54
+# ::suppl see_with_54
+(r / look-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (b / rainfall)
+   :instrument (t / telescope))
+
+# ::snt The professor observed the army with the binoculars.
+# ::tree templateSeeWithInstrument(professor,observe,army,binoculars)
+# ::id see_with_55
+# ::suppl see_with_55
+(r / observe-01
+   :ARG0 (p / professor)
+   :ARG1 (a / army)
+   :instrument (b / binoculars))
+
+# ::snt The general saw the rainfall with the binoculars.
+# ::tree templateSeeWithInstrument(general,see,rainfall,binoculars)
+# ::id see_with_56
+# ::suppl see_with_56
+(r / see-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (b / rainfall)
+   :instrument (u_102 / binoculars))
+
+# ::snt John saw the rainfall with the telescope.
+# ::tree templateSeeWithInstrument(John,see,rainfall,telescope)
+# ::id see_with_57
+# ::suppl see_with_57
+(r / see-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (b / rainfall)
+   :instrument (t / telescope))
+
+# ::snt The baker looked at the moon with the spyglass.
+# ::tree templateSeeWithInstrument(baker,look,moon,spyglass)
+# ::id see_with_58
+# ::suppl see_with_58
+(r / look-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (m / moon)
+   :instrument (u_104 / spyglass))
+
+# ::snt The baker peeked at the army with the telescope.
+# ::tree templateSeeWithInstrument(baker,peek,army,telescope)
+# ::id see_with_59
+# ::suppl see_with_59
+(r / peek-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (a / army)
+   :instrument (t / telescope))
+
+# ::snt The general observed the army with the telescope.
+# ::tree templateSeeWithInstrument(general,observe,army,telescope)
+# ::id see_with_60
+# ::suppl see_with_60
+(r / observe-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (a / army)
+   :instrument (t / telescope))
+
+# ::snt The professor looked at the northern lights with the spyglass.
+# ::tree templateSeeWithInstrument(professor,look,northern_lights,spyglass)
+# ::id see_with_61
+# ::suppl see_with_61
+(r / look-01
+   :ARG0 (p / professor)
+   :ARG1 (c / light
+            :location (n / north))
+   :instrument (b / spyglass))
+
+# ::snt Sophie looked at the rainfall with the telescope.
+# ::tree templateSeeWithInstrument(Sophie,look,rainfall,telescope)
+# ::id see_with_62
+# ::suppl see_with_62
+(r / look-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG1 (b / rainfall)
+   :instrument (t / telescope))
+
+# ::snt The general looked at the army with the telescope.
+# ::tree templateSeeWithInstrument(general,look,army,telescope)
+# ::id see_with_63
+# ::suppl see_with_63
+(r / look-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (a / army)
+   :instrument (t / telescope))
+
+# ::snt The general observed the northern lights with the telescope.
+# ::tree templateSeeWithInstrument(general,observe,northern_lights,telescope)
+# ::id see_with_64
+# ::suppl see_with_64
+(r / observe-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (c / light
+            :location (n / north))
+   :instrument (t / telescope))
+
+# ::snt The general looked at the northern lights with the spyglass.
+# ::tree templateSeeWithInstrument(general,look,northern_lights,spyglass)
+# ::id see_with_65
+# ::suppl see_with_65
+(r / look-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (c / light
+            :location (n / north))
+   :instrument (b / spyglass))
+
+# ::snt The baker observed the rainfall with the binoculars.
+# ::tree templateSeeWithInstrument(baker,observe,rainfall,binoculars)
+# ::id see_with_66
+# ::suppl see_with_66
+(r / observe-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (u_107 / rainfall)
+   :instrument (u_106 / binoculars))
+
+# ::snt The baker saw the army with the spyglass.
+# ::tree templateSeeWithInstrument(baker,see,army,spyglass)
+# ::id see_with_67
+# ::suppl see_with_67
+(r / see-01
+   :ARG0 (p / person
+            :ARG0-of (b / bake-01))
+   :ARG1 (a / army)
+   :instrument (u_108 / spyglass))
+
+# ::snt Sophie peeked at the rainfall with the spyglass.
+# ::tree templateSeeWithInstrument(Sophie,peek,rainfall,spyglass)
+# ::id see_with_68
+# ::suppl see_with_68
+(r / peek-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG1 (b / rainfall)
+   :instrument (u_109 / spyglass))
+
+# ::snt Sophie observed the army with the binoculars.
+# ::tree templateSeeWithInstrument(Sophie,observe,army,binoculars)
+# ::id see_with_69
+# ::suppl see_with_69
+(r / observe-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG1 (a / army)
+   :instrument (b / binoculars))
+
+# ::snt Sophie observed the army with the spyglass.
+# ::tree templateSeeWithInstrument(Sophie,observe,army,spyglass)
+# ::id see_with_70
+# ::suppl see_with_70
+(r / observe-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG1 (a / army)
+   :instrument (b / spyglass))
+
+# ::snt Sophie looked at the army with the binoculars.
+# ::tree templateSeeWithInstrument(Sophie,look,army,binoculars)
+# ::id see_with_71
+# ::suppl see_with_71
+(r / look-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "Sophie"))
+   :ARG1 (a / army)
+   :instrument (b / binoculars))
+
+# ::snt The professor peeked at the rainfall with the binoculars.
+# ::tree templateSeeWithInstrument(professor,peek,rainfall,binoculars)
+# ::id see_with_72
+# ::suppl see_with_72
+(r / peek-01
+   :ARG0 (p / professor)
+   :ARG1 (b / rainfall)
+   :instrument (u_114 / binoculars))
+
+# ::snt John observed the rainfall with the spyglass.
+# ::tree templateSeeWithInstrument(John,observe,rainfall,spyglass)
+# ::id see_with_73
+# ::suppl see_with_73
+(r / observe-01
+   :ARG0 (p / person
+            :name (n / name
+                     :op1 "John"))
+   :ARG1 (b / rainfall)
+   :instrument (u_115 / spyglass))
+
+# ::snt The general peeked at the northern lights with the binoculars.
+# ::tree templateSeeWithInstrument(general,peek,northern_lights,binoculars)
+# ::id see_with_74
+# ::suppl see_with_74
+(r / peek-01
+   :ARG0 (p / person
+            :ARG0-of (z0 / have-org-role-91
+                         :ARG2 (z1 / general)))
+   :ARG1 (c / light
+            :location (n / north))
+   :instrument (b / binoculars))

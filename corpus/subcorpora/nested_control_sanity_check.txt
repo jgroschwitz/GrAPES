@@ -1,0 +1,124 @@
+# ::snt The girl attempted to sleep.
+# ::tree Sent(SubjCtrlTbar(attempted,sleep),girl)
+# ::id nested_control_sanity_check_0
+# ::suppl nested_control_sanity_check_0
+(u_1 / attempt-01
+     :ARG0 (r / girl
+              :ARG0-of (u_2 / sleep-01
+                            :ARG1-of u_1)))
+
+# ::snt The boy wanted to jump.
+# ::tree Sent(SubjCtrlTbar(wanted,jump),boy)
+# ::id nested_control_sanity_check_1
+# ::suppl nested_control_sanity_check_1
+(u_3 / want-01
+     :ARG0 (r / boy
+              :ARG0-of (u_4 / jump-03
+                            :ARG1-of u_3)))
+
+# ::snt The kid hated to attend.
+# ::tree Sent(SubjCtrlTbar(hated,attend),kid)
+# ::id nested_control_sanity_check_2
+# ::suppl nested_control_sanity_check_2
+(u_5 / hate-01
+     :ARG0 (r / kid
+              :ARG0-of (u_6 / attend-01
+                            :ARG1-of u_5)))
+
+# ::snt The boy loved to eat.
+# ::tree Sent(SubjCtrlTbar(loved,eat),boy)
+# ::id nested_control_sanity_check_3
+# ::suppl nested_control_sanity_check_3
+(u_7 / love-01
+     :ARG0 (r / boy
+              :ARG0-of (u_8 / eat-01
+                            :ARG1-of u_7)))
+
+# ::snt The girl refused to focus.
+# ::tree Sent(SubjCtrlTbar(refused,focus),girl)
+# ::id nested_control_sanity_check_4
+# ::suppl nested_control_sanity_check_4
+(u_9 / refuse-01
+     :ARG0 (r / girl
+              :ARG0-of (u_10 / focus-01
+                             :ARG1-of u_9)))
+
+# ::snt The kid persuaded you to sleep.
+# ::tree Sent(ObjCtrlTbar(persuaded,sleep,you),kid)
+# ::id nested_control_sanity_check_5
+# ::suppl nested_control_sanity_check_5
+(u_11 / persuade-01
+      :ARG0 (r / kid)
+      :ARG1 (u_14 / you
+                  :ARG0-of (u_13 / sleep-01
+                                 :ARG2-of u_11)))
+
+# ::snt The boy asked the astronaut to jump.
+# ::tree Sent(ObjCtrlTbar(asked,jump,astronaut),boy)
+# ::id nested_control_sanity_check_6
+# ::suppl nested_control_sanity_check_6
+(u_15 / ask-02
+      :ARG0 (r / boy)
+      :ARG2 (a / astronaut
+               :ARG0-of (u_17 / jump-03
+                              :ARG1-of u_15)))
+
+# ::snt The girl begged the monster to attend.
+# ::tree Sent(ObjCtrlTbar(begged,attend,monster),girl)
+# ::id nested_control_sanity_check_7
+# ::suppl nested_control_sanity_check_7
+(u_18 / beg-01
+      :ARG0 (r / girl)
+      :ARG1 (u_21 / monster
+                  :ARG0-of (u_20 / attend-01
+                                 :ARG2-of u_18)))
+
+# ::snt The kid forced the doctor to eat.
+# ::tree Sent(ObjCtrlTbar(forced,eat,doctor),kid)
+# ::id nested_control_sanity_check_8
+# ::suppl nested_control_sanity_check_8
+(u_22 / force-01
+      :ARG0 (r / kid)
+      :ARG1 (u_25 / doctor
+                  :ARG0-of (u_24 / eat-01
+                                 :ARG2-of u_22)))
+
+# ::snt The girl persuaded the politician to focus.
+# ::tree Sent(ObjCtrlTbar(persuaded,focus,politician),girl)
+# ::id nested_control_sanity_check_9
+# ::suppl nested_control_sanity_check_9
+(u_26 / persuade-01
+      :ARG0 (r / girl)
+      :ARG1 (u_29 / politician
+                  :ARG0-of (u_28 / focus-01
+                                 :ARG2-of u_26)))
+
+# ::snt The girl asked the lawyer to focus.
+# ::tree Sent(ObjCtrlTbar(asked,focus,lawyer),girl)
+# ::id nested_control_sanity_check_10
+# ::suppl nested_control_sanity_check_10
+(u_30 / ask-02
+      :ARG0 (r / girl)
+      :ARG2 (m / lawyer
+               :ARG0-of (u_32 / focus-01
+                              :ARG1-of u_30)))
+
+# ::snt The kid begged the soldier to attend.
+# ::tree Sent(ObjCtrlTbar(begged,attend,soldier),kid)
+# ::id nested_control_sanity_check_11
+# ::suppl nested_control_sanity_check_11
+(u_33 / beg-01
+      :ARG0 (r / kid)
+      :ARG1 (s / soldier
+               :ARG0-of (u_35 / attend-01
+                              :ARG2-of u_33)))
+
+# ::snt The boy slept and jumped.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,slept,jumped),boy)
+# ::id nested_control_sanity_check_12
+# ::suppl nested_control_sanity_check_12
+(u_36 / and
+      :op1 (u_38 / sleep-01
+                 :ARG0 (r / boy
+                          :ARG0-of (u_37 / jump-03
+                                         :op2-of u_36))))

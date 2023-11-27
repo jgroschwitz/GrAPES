@@ -1,0 +1,69 @@
+# ::snt The girls who we claimed liked the doctor actually hated him after all
+# ::tree TP_intrA(hated_fake_intransitive_him,DP_the_with_RC_A(DP_RC_A(girls,subj_relA(CP_gap_end_recursion(CP_with_gap_base(claimed,we)),liked),doctor)))
+# ::id deep_recursion_rc_contrastive_coref_sanity_check_0
+# ::suppl deep_recursion_rc_contrastive_coref_sanity_check_0
+(u_189 / hate-01
+       :ARG0 (r / girl
+                :ARG0-of (u_188 / like-01
+                                :ARG1 (d / doctor
+                                         :ARG1-of u_189)
+                                :ARG1-of (u_186 / claim-01
+                                                :ARG0 (u_187 / we))))
+       :concession (a2 / after-all)
+       :ARG1-of (a / actual-02))
+
+# ::snt The men who you assumed hated the lawyer actually liked her after all
+# ::tree TP_intrB(liked_fake_intransitive_her,DP_the_with_RC_B(DP_RC_B(men,subj_relB(CP_gap_end_recursion(CP_with_gap_base(assumed,you)),hated),lawyer)))
+# ::id deep_recursion_rc_contrastive_coref_sanity_check_1
+# ::suppl deep_recursion_rc_contrastive_coref_sanity_check_1
+(u_193 / like-01
+       :ARG0 (r / man
+                :ARG0-of (u_192 / hate-01
+                                :ARG1 (m / lawyer
+                                         :ARG1-of u_193)
+                                :ARG1-of (u_190 / assume-02
+                                                :ARG0 (u_191 / you))))
+       :concession (a2 / after-all)
+       :ARG1-of (a / actual-02))
+
+# ::snt The women who I said liked the astronaut actually hated her after all
+# ::tree TP_intrA(hated_fake_intransitive_her,DP_the_with_RC_A(DP_RC_A(women,subj_relA(CP_gap_end_recursion(CP_with_gap_base(said,I)),liked),astronaut)))
+# ::id deep_recursion_rc_contrastive_coref_sanity_check_2
+# ::suppl deep_recursion_rc_contrastive_coref_sanity_check_2
+(u_198 / hate-01
+       :ARG0 (r / woman
+                :ARG0-of (u_196 / like-01
+                                :ARG1 (a / astronaut
+                                         :ARG1-of u_198)
+                                :ARG1-of (u_194 / say-01
+                                                :ARG0 (u_195 / i))))
+       :concession (a2 / after-all)
+       :ARG1-of (u_197 / actual-02))
+
+# ::snt The kids who the boys thought hated the soldier actually liked him after all
+# ::tree TP_intrB(liked_fake_intransitive_him,DP_the_with_RC_B(DP_RC_B(kids,subj_relB(CP_gap_end_recursion(CP_with_gap_base(thought,DP_the(NP_unary(boys)))),hated),soldier)))
+# ::id deep_recursion_rc_contrastive_coref_sanity_check_3
+# ::suppl deep_recursion_rc_contrastive_coref_sanity_check_3
+(u_203 / like-01
+       :ARG0 (r / kid
+                :ARG0-of (u_202 / hate-01
+                                :ARG1 (s / soldier
+                                         :ARG1-of u_203)
+                                :ARG1-of (u_199 / think-01
+                                                :ARG0 (u_200 / boy))))
+       :concession (a2 / after-all)
+       :ARG1-of (a / actual-02))
+
+# ::snt The doctor who we claimed liked the lawyer actually hated him after all
+# ::tree TP_intrA(hated_fake_intransitive_him,DP_the_with_RC_A(DP_RC_A(unary_N_adapter(doctor),subj_relA(CP_gap_end_recursion(CP_with_gap_base(claimed,we)),liked),lawyer)))
+# ::id deep_recursion_rc_contrastive_coref_sanity_check_4
+# ::suppl deep_recursion_rc_contrastive_coref_sanity_check_4
+(u_206 / hate-01
+       :ARG0 (d / doctor
+                :ARG0-of (r / like-01
+                            :ARG1 (m / lawyer
+                                     :ARG1-of u_206)
+                            :ARG1-of (u_204 / claim-01
+                                            :ARG0 (u_205 / we))))
+       :concession (a2 / after-all)
+       :ARG1-of (a / actual-02))

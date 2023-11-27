@@ -1,0 +1,1046 @@
+# ::snt The girl loved to and refused to hate to ask the soldier to sleep.
+# ::tree Sent(SubjCtrlTbar(Coord_Subj_Ctrl_V_fin(and_subj_control_verb,loved,refused),VbarSubjCtrl(hate,VbarObjCtrl(ask,sleep,soldier))),girl)
+# ::size0 4
+# ::id nested_control_0
+# ::suppl nested_control_0
+(u_794 / and
+       :op1 (u_799 / love-01
+                   :ARG0 (r / girl
+                            :ARG0-of (u_796 / ask-02
+                                            :ARG2 (s / soldier
+                                                     :ARG0-of (u_800 / sleep-01
+                                                                     :ARG1-of u_796))
+                                            :ARG1-of (u_798 / hate-01
+                                                            :ARG0 r
+                                                            :ARG1-of u_799
+                                                            :ARG1-of (u_795 / refuse-01
+                                                                            :ARG0 r
+                                                                            :op2-of u_794))))))
+
+# ::snt The boy asked you to force the monster to ask the astronaut to focus.
+# ::tree Sent(ObjCtrlTbar(asked,VbarObjCtrl(force,VbarObjCtrl(ask,focus,astronaut),monster),you),boy)
+# ::size0 4
+# ::id nested_control_1
+# ::suppl nested_control_1
+(u_805 / ask-02
+       :ARG0 (r / boy)
+       :ARG2 (u_808 / you
+                    :ARG0-of (u_803 / force-01
+                                    :ARG1 (u_807 / monster
+                                                 :ARG0-of (u_801 / ask-02
+                                                                 :ARG2 (a / astronaut
+                                                                          :ARG0-of (u_804 / focus-01
+                                                                                          :ARG1-of u_801))
+                                                                 :ARG2-of u_803))
+                                    :ARG1-of u_805)))
+
+# ::snt The kid persuaded the lawyer to persuade you to force the monster to jump.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarObjCtrl(persuade,VbarObjCtrl(force,jump,monster),you),lawyer),kid)
+# ::size0 4
+# ::id nested_control_2
+# ::suppl nested_control_2
+(u_814 / persuade-01
+       :ARG0 (r / kid)
+       :ARG1 (m / lawyer
+                :ARG0-of (u_812 / persuade-01
+                                :ARG1 (u_816 / you
+                                             :ARG0-of (u_809 / force-01
+                                                             :ARG1 (u_813 / monster
+                                                                          :ARG0-of (u_811 / jump-03
+                                                                                          :ARG2-of u_809))
+                                                             :ARG2-of u_812))
+                                :ARG2-of u_814)))
+
+# ::snt The boy ate and refused to want to sleep.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,ate,SubjCtrlTbar(refused,VbarSubjCtrl(want,sleep))),boy)
+# ::size0 4
+# ::id nested_control_3
+# ::suppl nested_control_3
+(u_819 / and
+       :op1 (u_821 / eat-01
+                   :ARG0 (r / boy
+                            :ARG0-of (u_820 / sleep-01
+                                            :ARG1-of (u_817 / want-01
+                                                            :ARG0 r
+                                                            :ARG1-of (u_818 / refuse-01
+                                                                            :ARG0 r
+                                                                            :op2-of u_819))))))
+
+# ::snt The boy attempted to ask the soldier to persuade the doctor to eat.
+# ::tree Sent(SubjCtrlTbar(attempted,VbarObjCtrl(ask,VbarObjCtrl(persuade,eat,doctor),soldier)),boy)
+# ::size0 4
+# ::id nested_control_4
+# ::suppl nested_control_4
+(u_827 / attempt-01
+       :ARG0 (r / boy
+                :ARG0-of (u_825 / ask-02
+                                :ARG2 (s / soldier
+                                         :ARG0-of (u_822 / persuade-01
+                                                         :ARG1 (u_828 / doctor
+                                                                      :ARG0-of (u_824 / eat-01
+                                                                                      :ARG2-of u_822))
+                                                         :ARG1-of u_825))
+                                :ARG1-of u_827)))
+
+# ::snt The girl forced the astronaut to hate to refuse to focus.
+# ::tree Sent(ObjCtrlTbar(forced,VbarSubjCtrl(hate,VbarSubjCtrl(refuse,focus)),astronaut),girl)
+# ::size0 4
+# ::id nested_control_5
+# ::suppl nested_control_5
+(u_831 / force-01
+       :ARG0 (r / girl)
+       :ARG1 (a / astronaut
+                :ARG0-of (u_833 / focus-01
+                                :ARG1-of (u_829 / refuse-01
+                                                :ARG0 a
+                                                :ARG1-of (u_830 / hate-01
+                                                                :ARG0 a
+                                                                :ARG2-of u_831)))))
+
+# ::snt The kid wanted to love to attempt to focus.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarSubjCtrl(love,VbarSubjCtrl(attempt,focus))),kid)
+# ::size0 4
+# ::id nested_control_6
+# ::suppl nested_control_6
+(u_836 / want-01
+       :ARG0 (r / kid
+                :ARG0-of (u_837 / focus-01
+                                :ARG1-of (u_834 / attempt-01
+                                                :ARG0 r
+                                                :ARG1-of (u_835 / love-01
+                                                                :ARG0 r
+                                                                :ARG1-of u_836)))))
+
+# ::snt The kid wanted to attempt to ask the soldier to jump.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarSubjCtrl(attempt,VbarObjCtrl(ask,jump,soldier))),kid)
+# ::size0 4
+# ::id nested_control_7
+# ::suppl nested_control_7
+(u_841 / want-01
+       :ARG0 (r / kid
+                :ARG0-of (u_838 / ask-02
+                                :ARG2 (s / soldier
+                                         :ARG0-of (u_842 / jump-03
+                                                         :ARG1-of u_838))
+                                :ARG1-of (u_840 / attempt-01
+                                                :ARG0 r
+                                                :ARG1-of u_841))))
+
+# ::snt The girl focused and asked the lawyer to attempt to attend.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,focused,ObjCtrlTbar(asked,VbarSubjCtrl(attempt,attend),lawyer)),girl)
+# ::size0 4
+# ::id nested_control_8
+# ::suppl nested_control_8
+(u_846 / and
+       :op1 (u_848 / focus-01
+                   :ARG0 (r / girl
+                            :ARG0-of (u_844 / ask-02
+                                            :ARG2 (m / lawyer
+                                                     :ARG0-of (u_847 / attend-01
+                                                                     :ARG1-of (u_843 / attempt-01
+                                                                                     :ARG0 m
+                                                                                     :ARG1-of u_844)))
+                                            :op2-of u_846))))
+
+# ::snt The girl begged the monster to beg you to refuse to sleep.
+# ::tree Sent(ObjCtrlTbar(begged,VbarObjCtrl(beg,VbarSubjCtrl(refuse,sleep),you),monster),girl)
+# ::size0 4
+# ::id nested_control_9
+# ::suppl nested_control_9
+(u_853 / beg-01
+       :ARG0 (r / girl)
+       :ARG1 (u_855 / monster
+                    :ARG0-of (u_850 / beg-01
+                                    :ARG1 (u_854 / you
+                                                 :ARG0-of (u_852 / sleep-01
+                                                                 :ARG1-of (u_849 / refuse-01
+                                                                                 :ARG0 u_854
+                                                                                 :ARG2-of u_850)))
+                                    :ARG2-of u_853)))
+
+# ::snt The boy attended, forced the monster to jump, and wanted to force the politician to hate to sleep.
+# ::tree Sent(Coord_3_Open_S_fin(and_3_open_s,attended,ObjCtrlTbar(forced,jump,monster),SubjCtrlTbar(wanted,VbarObjCtrl(force,VbarSubjCtrl(hate,sleep),politician))),boy)
+# ::size0 5
+# ::id nested_control_10
+# ::suppl nested_control_10
+(u_861 / and
+       :op1 (u_867 / attend-01
+                   :ARG0 (r / boy
+                            :ARG0-of (u_862 / force-01
+                                            :ARG1 (u_866 / monster
+                                                         :ARG0-of (u_864 / jump-03
+                                                                         :ARG2-of u_862))
+                                            :op2-of u_861)
+                            :ARG0-of (u_857 / force-01
+                                            :ARG1 (u_865 / politician
+                                                         :ARG0-of (u_859 / sleep-01
+                                                                         :ARG1-of (u_856 / hate-01
+                                                                                         :ARG0 u_865
+                                                                                         :ARG2-of u_857)))
+                                            :ARG1-of (u_860 / want-01
+                                                            :ARG0 r
+                                                            :op3-of u_861)))))
+
+# ::snt The boy begged the lawyer to persuade the politician to attempt to hate to sleep.
+# ::tree Sent(ObjCtrlTbar(begged,VbarObjCtrl(persuade,VbarSubjCtrl(attempt,VbarSubjCtrl(hate,sleep)),politician),lawyer),boy)
+# ::size0 5
+# ::id nested_control_11
+# ::suppl nested_control_11
+(u_873 / beg-01
+       :ARG0 (r / boy)
+       :ARG1 (m / lawyer
+                :ARG0-of (u_870 / persuade-01
+                                :ARG1 (u_874 / politician
+                                             :ARG0-of (u_872 / sleep-01
+                                                             :ARG1-of (u_868 / hate-01
+                                                                             :ARG0 u_874
+                                                                             :ARG1-of (u_869 / attempt-01
+                                                                                             :ARG0 u_874
+                                                                                             :ARG2-of u_870))))
+                                :ARG2-of u_873)))
+
+# ::snt The boy attended and wanted to hate to love to sleep.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,attended,SubjCtrlTbar(wanted,VbarSubjCtrl(hate,VbarSubjCtrl(love,sleep)))),boy)
+# ::size0 5
+# ::id nested_control_12
+# ::suppl nested_control_12
+(u_878 / and
+       :op1 (u_880 / attend-01
+                   :ARG0 (r / boy
+                            :ARG0-of (u_879 / sleep-01
+                                            :ARG1-of (u_875 / love-01
+                                                            :ARG0 r
+                                                            :ARG1-of (u_876 / hate-01
+                                                                            :ARG0 r
+                                                                            :ARG1-of (u_877 / want-01
+                                                                                            :ARG0 r
+                                                                                            :op2-of u_878)))))))
+
+# ::snt The boy attempted to refuse to beg the soldier to eat and attended.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,SubjCtrlTbar(attempted,VbarSubjCtrl(refuse,VbarObjCtrl(beg,eat,soldier))),attended),boy)
+# ::size0 5
+# ::id nested_control_13
+# ::suppl nested_control_13
+(u_881 / and
+       :op1 (u_885 / attempt-01
+                   :ARG0 (r / boy
+                            :ARG0-of (u_882 / beg-01
+                                            :ARG1 (s / soldier
+                                                     :ARG0-of (u_887 / eat-01
+                                                                     :ARG2-of u_882))
+                                            :ARG1-of (u_884 / refuse-01
+                                                            :ARG0 r
+                                                            :ARG1-of u_885))
+                            :ARG0-of (u_886 / attend-01
+                                            :op2-of u_881))))
+
+# ::snt The boy loved to love to attempt to refuse to attend.
+# ::tree Sent(SubjCtrlTbar(loved,VbarSubjCtrl(love,VbarSubjCtrl(attempt,VbarSubjCtrl(refuse,attend)))),boy)
+# ::size0 5
+# ::id nested_control_14
+# ::suppl nested_control_14
+(u_891 / love-01
+       :ARG0 (r / boy
+                :ARG0-of (u_892 / attend-01
+                                :ARG1-of (u_888 / refuse-01
+                                                :ARG0 r
+                                                :ARG1-of (u_889 / attempt-01
+                                                                :ARG0 r
+                                                                :ARG1-of (u_890 / love-01
+                                                                                :ARG0 r
+                                                                                :ARG1-of u_891))))))
+
+# ::snt The girl persuaded the politician to hate to attempt to persuade the soldier to sleep.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarSubjCtrl(hate,VbarSubjCtrl(attempt,VbarObjCtrl(persuade,sleep,soldier))),politician),girl)
+# ::size0 5
+# ::id nested_control_15
+# ::suppl nested_control_15
+(u_897 / persuade-01
+       :ARG0 (r / girl)
+       :ARG1 (u_900 / politician
+                    :ARG0-of (u_893 / persuade-01
+                                    :ARG1 (s / soldier
+                                             :ARG0-of (u_899 / sleep-01
+                                                             :ARG2-of u_893))
+                                    :ARG1-of (u_895 / attempt-01
+                                                    :ARG0 u_900
+                                                    :ARG1-of (u_896 / hate-01
+                                                                    :ARG0 u_900
+                                                                    :ARG2-of u_897)))))
+
+# ::snt The kid forced the soldier to force the astronaut to love to want to attend.
+# ::tree Sent(ObjCtrlTbar(forced,VbarObjCtrl(force,VbarSubjCtrl(love,VbarSubjCtrl(want,attend)),astronaut),soldier),kid)
+# ::size0 5
+# ::id nested_control_16
+# ::suppl nested_control_16
+(u_905 / force-01
+       :ARG0 (r / kid)
+       :ARG1 (s / soldier
+                :ARG0-of (u_903 / force-01
+                                :ARG1 (a / astronaut
+                                         :ARG0-of (u_907 / attend-01
+                                                         :ARG1-of (u_901 / want-01
+                                                                         :ARG0 a
+                                                                         :ARG1-of (u_902 / love-01
+                                                                                         :ARG0 a
+                                                                                         :ARG2-of u_903))))
+                                :ARG2-of u_905)))
+
+# ::snt The kid hated to love to beg the soldier to attend and jumped.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,SubjCtrlTbar(hated,VbarSubjCtrl(love,VbarObjCtrl(beg,attend,soldier))),jumped),kid)
+# ::size0 5
+# ::id nested_control_17
+# ::suppl nested_control_17
+(u_908 / and
+       :op1 (u_912 / hate-01
+                   :ARG0 (r / kid
+                            :ARG0-of (u_909 / beg-01
+                                            :ARG1 (s / soldier
+                                                     :ARG0-of (u_914 / attend-01
+                                                                     :ARG2-of u_909))
+                                            :ARG1-of (u_911 / love-01
+                                                            :ARG0 r
+                                                            :ARG1-of u_912))
+                            :ARG0-of (u_913 / jump-03
+                                            :op2-of u_908))))
+
+# ::snt The boy persuaded you to ask the politician to refuse to want to jump.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarObjCtrl(ask,VbarSubjCtrl(refuse,VbarSubjCtrl(want,jump)),politician),you),boy)
+# ::size0 5
+# ::id nested_control_18
+# ::suppl nested_control_18
+(u_920 / persuade-01
+       :ARG0 (r / boy)
+       :ARG1 (u_922 / you
+                    :ARG0-of (u_917 / ask-02
+                                    :ARG2 (u_921 / politician
+                                                 :ARG0-of (u_919 / jump-03
+                                                                 :ARG1-of (u_915 / want-01
+                                                                                 :ARG0 u_921
+                                                                                 :ARG1-of (u_916 / refuse-01
+                                                                                                 :ARG0 u_921
+                                                                                                 :ARG1-of u_917))))
+                                    :ARG2-of u_920)))
+
+# ::snt The girl forced you to attempt to persuade the monster to sleep and ate.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,ObjCtrlTbar(forced,VbarSubjCtrl(attempt,VbarObjCtrl(persuade,sleep,monster)),you),ate),girl)
+# ::size0 5
+# ::id nested_control_19
+# ::suppl nested_control_19
+(u_923 / and
+       :op1 (u_928 / force-01
+                   :ARG0 (r / girl
+                            :ARG0-of (u_930 / eat-01
+                                            :op2-of u_923))
+                   :ARG1 (u_931 / you
+                                :ARG0-of (u_924 / persuade-01
+                                                :ARG1 (u_929 / monster
+                                                             :ARG0-of (u_926 / sleep-01
+                                                                             :ARG2-of u_924))
+                                                :ARG1-of (u_927 / attempt-01
+                                                                :ARG0 u_931
+                                                                :ARG2-of u_928)))))
+
+# ::snt The girl persuaded the soldier to love to hate to force the doctor to attempt to jump.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarSubjCtrl(love,VbarSubjCtrl(hate,VbarObjCtrl(force,VbarSubjCtrl(attempt,jump),doctor))),soldier),girl)
+# ::size0 6
+# ::id nested_control_20
+# ::suppl nested_control_20
+(u_938 / persuade-01
+       :ARG0 (r / girl)
+       :ARG1 (s / soldier
+                :ARG0-of (u_933 / force-01
+                                :ARG1 (u_940 / doctor
+                                             :ARG0-of (u_935 / jump-03
+                                                             :ARG1-of (u_932 / attempt-01
+                                                                             :ARG0 u_940
+                                                                             :ARG2-of u_933)))
+                                :ARG1-of (u_936 / hate-01
+                                                :ARG0 s
+                                                :ARG1-of (u_937 / love-01
+                                                                :ARG0 s
+                                                                :ARG2-of u_938)))))
+
+# ::snt The kid persuaded the soldier to want to refuse to persuade the monster to hate to focus.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarSubjCtrl(want,VbarSubjCtrl(refuse,VbarObjCtrl(persuade,VbarSubjCtrl(hate,focus),monster))),soldier),kid)
+# ::size0 6
+# ::id nested_control_21
+# ::suppl nested_control_21
+(u_947 / persuade-01
+       :ARG0 (r / kid)
+       :ARG1 (s / soldier
+                :ARG0-of (u_942 / persuade-01
+                                :ARG1 (u_949 / monster
+                                             :ARG0-of (u_944 / focus-01
+                                                             :ARG1-of (u_941 / hate-01
+                                                                             :ARG0 u_949
+                                                                             :ARG2-of u_942)))
+                                :ARG1-of (u_945 / refuse-01
+                                                :ARG0 s
+                                                :ARG1-of (u_946 / want-01
+                                                                :ARG0 s
+                                                                :ARG2-of u_947)))))
+
+# ::snt The boy begged the lawyer to beg the soldier to force you to love to sleep and slept.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,ObjCtrlTbar(begged,VbarObjCtrl(beg,VbarObjCtrl(force,VbarSubjCtrl(love,sleep),you),soldier),lawyer),slept),boy)
+# ::size0 6
+# ::id nested_control_22
+# ::suppl nested_control_22
+(u_950 / and
+       :op1 (u_957 / beg-01
+                   :ARG0 (r / boy
+                            :ARG0-of (u_959 / sleep-01
+                                            :op2-of u_950))
+                   :ARG1 (m / lawyer
+                            :ARG0-of (u_955 / beg-01
+                                            :ARG1 (s / soldier
+                                                     :ARG0-of (u_952 / force-01
+                                                                     :ARG1 (u_960 / you
+                                                                                  :ARG0-of (u_954 / sleep-01
+                                                                                                  :ARG1-of (u_951 / love-01
+                                                                                                                  :ARG0 u_960
+                                                                                                                  :ARG2-of u_952)))
+                                                                     :ARG2-of u_955))
+                                            :ARG2-of u_957))))
+
+# ::snt The girl refused to force the astronaut to attempt to refuse to persuade you to sleep.
+# ::tree Sent(SubjCtrlTbar(refused,VbarObjCtrl(force,VbarSubjCtrl(attempt,VbarSubjCtrl(refuse,VbarObjCtrl(persuade,sleep,you))),astronaut)),girl)
+# ::size0 6
+# ::id nested_control_23
+# ::suppl nested_control_23
+(u_967 / refuse-01
+       :ARG0 (r / girl
+                :ARG0-of (u_966 / force-01
+                                :ARG1 (a / astronaut
+                                         :ARG0-of (u_961 / persuade-01
+                                                         :ARG1 (u_968 / you
+                                                                      :ARG0-of (u_963 / sleep-01
+                                                                                      :ARG2-of u_961))
+                                                         :ARG1-of (u_964 / refuse-01
+                                                                         :ARG0 a
+                                                                         :ARG1-of (u_965 / attempt-01
+                                                                                         :ARG0 a
+                                                                                         :ARG2-of u_966))))
+                                :ARG1-of u_967)))
+
+# ::snt The girl asked the politician to force the monster to persuade the lawyer to attempt to hate to focus.
+# ::tree Sent(ObjCtrlTbar(asked,VbarObjCtrl(force,VbarObjCtrl(persuade,VbarSubjCtrl(attempt,VbarSubjCtrl(hate,focus)),lawyer),monster),politician),girl)
+# ::size0 6
+# ::id nested_control_24
+# ::suppl nested_control_24
+(u_975 / ask-02
+       :ARG0 (r / girl)
+       :ARG2 (u_978 / politician
+                    :ARG0-of (u_973 / force-01
+                                    :ARG1 (u_977 / monster
+                                                 :ARG0-of (u_971 / persuade-01
+                                                                 :ARG1 (m / lawyer
+                                                                          :ARG0-of (u_974 / focus-01
+                                                                                          :ARG1-of (u_969 / hate-01
+                                                                                                          :ARG0 m
+                                                                                                          :ARG1-of (u_970 / attempt-01
+                                                                                                                          :ARG0 m
+                                                                                                                          :ARG2-of u_971))))
+                                                                 :ARG2-of u_973))
+                                    :ARG1-of u_975)))
+
+# ::snt The girl loved to beg the lawyer to ask the politician to attempt to force the astronaut to focus.
+# ::tree Sent(SubjCtrlTbar(loved,VbarObjCtrl(beg,VbarObjCtrl(ask,VbarSubjCtrl(attempt,VbarObjCtrl(force,focus,astronaut)),politician),lawyer)),girl)
+# ::size0 6
+# ::id nested_control_25
+# ::suppl nested_control_25
+(u_986 / love-01
+       :ARG0 (r / girl
+                :ARG0-of (u_984 / beg-01
+                                :ARG1 (m / lawyer
+                                         :ARG0-of (u_982 / ask-02
+                                                         :ARG2 (u_987 / politician
+                                                                      :ARG0-of (u_979 / force-01
+                                                                                      :ARG1 (a / astronaut
+                                                                                               :ARG0-of (u_983 / focus-01
+                                                                                                               :ARG2-of u_979))
+                                                                                      :ARG1-of (u_981 / attempt-01
+                                                                                                      :ARG0 u_987
+                                                                                                      :ARG1-of u_982)))
+                                                         :ARG2-of u_984))
+                                :ARG1-of u_986)))
+
+# ::snt The boy ate and attempted to force the soldier to love to persuade the monster to attend.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,ate,SubjCtrlTbar(attempted,VbarObjCtrl(force,VbarSubjCtrl(love,VbarObjCtrl(persuade,attend,monster)),soldier))),boy)
+# ::size0 6
+# ::id nested_control_26
+# ::suppl nested_control_26
+(u_995 / and
+       :op1 (u_998 / eat-01
+                   :ARG0 (r / boy
+                            :ARG0-of (u_992 / force-01
+                                            :ARG1 (u_997 / soldier
+                                                         :ARG0-of (u_988 / persuade-01
+                                                                         :ARG1 (u_996 / monster
+                                                                                      :ARG0-of (u_990 / attend-01
+                                                                                                      :ARG2-of u_988))
+                                                                         :ARG1-of (u_991 / love-01
+                                                                                         :ARG0 u_997
+                                                                                         :ARG2-of u_992)))
+                                            :ARG1-of (u_994 / attempt-01
+                                                            :ARG0 r
+                                                            :op2-of u_995)))))
+
+# ::snt The girl begged the astronaut to force the soldier to want to refuse to beg the lawyer to eat.
+# ::tree Sent(ObjCtrlTbar(begged,VbarObjCtrl(force,VbarSubjCtrl(want,VbarSubjCtrl(refuse,VbarObjCtrl(beg,eat,lawyer))),soldier),astronaut),girl)
+# ::size0 6
+# ::id nested_control_27
+# ::suppl nested_control_27
+(u_1005 / beg-01
+        :ARG0 (r / girl)
+        :ARG1 (a / astronaut
+                 :ARG0-of (u_1003 / force-01
+                                  :ARG1 (s / soldier
+                                           :ARG0-of (u_999 / beg-01
+                                                           :ARG1 (m / lawyer
+                                                                    :ARG0-of (u_1007 / eat-01
+                                                                                     :ARG2-of u_999))
+                                                           :ARG1-of (u_1001 / refuse-01
+                                                                            :ARG0 s
+                                                                            :ARG1-of (u_1002 / want-01
+                                                                                             :ARG0 s
+                                                                                             :ARG2-of u_1003))))
+                                  :ARG2-of u_1005)))
+
+# ::snt The boy wanted to and refused to refuse to persuade the astronaut to want to ask the lawyer to focus.
+# ::tree Sent(SubjCtrlTbar(Coord_Subj_Ctrl_V_fin(and_subj_control_verb,wanted,refused),VbarSubjCtrl(refuse,VbarObjCtrl(persuade,VbarSubjCtrl(want,VbarObjCtrl(ask,focus,lawyer)),astronaut))),boy)
+# ::size0 6
+# ::id nested_control_28
+# ::suppl nested_control_28
+(u_1008 / and
+        :op1 (u_1015 / want-01
+                     :ARG0 (r / boy
+                              :ARG0-of (u_1013 / persuade-01
+                                               :ARG1 (a / astronaut
+                                                        :ARG0-of (u_1010 / ask-02
+                                                                         :ARG2 (m / lawyer
+                                                                                  :ARG0-of (u_1016 / focus-01
+                                                                                                   :ARG1-of u_1010))
+                                                                         :ARG1-of (u_1012 / want-01
+                                                                                          :ARG0 a
+                                                                                          :ARG2-of u_1013)))
+                                               :ARG1-of (u_1014 / refuse-01
+                                                                :ARG0 r
+                                                                :ARG1-of u_1015
+                                                                :ARG1-of (u_1009 / refuse-01
+                                                                                 :ARG0 r
+                                                                                 :op2-of u_1008))))))
+
+# ::snt The kid wanted to force the soldier to persuade you to refuse to love to sleep.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarObjCtrl(force,VbarObjCtrl(persuade,VbarSubjCtrl(refuse,VbarSubjCtrl(love,sleep)),you),soldier)),kid)
+# ::size0 6
+# ::id nested_control_29
+# ::suppl nested_control_29
+(u_1024 / want-01
+        :ARG0 (r / kid
+                 :ARG0-of (u_1022 / force-01
+                                  :ARG1 (s / soldier
+                                           :ARG0-of (u_1019 / persuade-01
+                                                            :ARG1 (u_1025 / you
+                                                                          :ARG0-of (u_1021 / sleep-01
+                                                                                           :ARG1-of (u_1017 / love-01
+                                                                                                            :ARG0 u_1025
+                                                                                                            :ARG1-of (u_1018 / refuse-01
+                                                                                                                             :ARG0 u_1025
+                                                                                                                             :ARG2-of u_1019))))
+                                                            :ARG2-of u_1022))
+                                  :ARG1-of u_1024)))
+
+# ::snt The kid asked the monster to ask the politician to force the astronaut to persuade the doctor to love to refuse to focus.
+# ::tree Sent(ObjCtrlTbar(asked,VbarObjCtrl(ask,VbarObjCtrl(force,VbarObjCtrl(persuade,VbarSubjCtrl(love,VbarSubjCtrl(refuse,focus)),doctor),astronaut),politician),monster),kid)
+# ::size0 7
+# ::id nested_control_30
+# ::suppl nested_control_30
+(u_1035 / ask-02
+        :ARG0 (r / kid)
+        :ARG2 (u_1037 / monster
+                      :ARG0-of (u_1032 / ask-02
+                                       :ARG2 (u_1036 / politician
+                                                     :ARG0-of (u_1031 / force-01
+                                                                      :ARG1 (a / astronaut
+                                                                               :ARG0-of (u_1028 / persuade-01
+                                                                                                :ARG1 (u_1034 / doctor
+                                                                                                              :ARG0-of (u_1030 / focus-01
+                                                                                                                               :ARG1-of (u_1026 / refuse-01
+                                                                                                                                                :ARG0 u_1034
+                                                                                                                                                :ARG1-of (u_1027 / love-01
+                                                                                                                                                                 :ARG0 u_1034
+                                                                                                                                                                 :ARG2-of u_1028))))
+                                                                                                :ARG2-of u_1031))
+                                                                      :ARG1-of u_1032))
+                                       :ARG1-of u_1035)))
+
+# ::snt The kid loved to and attempted to force the lawyer to refuse to attempt to persuade you to ask the soldier to eat.
+# ::tree Sent(SubjCtrlTbar(Coord_Subj_Ctrl_V_fin(and_subj_control_verb,loved,attempted),VbarObjCtrl(force,VbarSubjCtrl(refuse,VbarSubjCtrl(attempt,VbarObjCtrl(persuade,VbarObjCtrl(ask,eat,soldier),you))),lawyer)),kid)
+# ::size0 7
+# ::id nested_control_31
+# ::suppl nested_control_31
+(u_1038 / and
+        :op1 (u_1049 / love-01
+                     :ARG0 (r / kid
+                              :ARG0-of (u_1047 / force-01
+                                               :ARG1 (m / lawyer
+                                                        :ARG0-of (u_1042 / persuade-01
+                                                                         :ARG1 (u_1050 / you
+                                                                                       :ARG0-of (u_1040 / ask-02
+                                                                                                        :ARG2 (s / soldier
+                                                                                                                 :ARG0-of (u_1044 / eat-01
+                                                                                                                                  :ARG1-of u_1040))
+                                                                                                        :ARG2-of u_1042))
+                                                                         :ARG1-of (u_1045 / attempt-01
+                                                                                          :ARG0 m
+                                                                                          :ARG1-of (u_1046 / refuse-01
+                                                                                                           :ARG0 m
+                                                                                                           :ARG2-of u_1047))))
+                                               :ARG1-of u_1049
+                                               :ARG1-of (u_1039 / attempt-01
+                                                                :ARG0 r
+                                                                :op2-of u_1038)))))
+
+# ::snt The kid refused to force the lawyer to persuade the politician to attempt to refuse to want to jump.
+# ::tree Sent(SubjCtrlTbar(refused,VbarObjCtrl(force,VbarObjCtrl(persuade,VbarSubjCtrl(attempt,VbarSubjCtrl(refuse,VbarSubjCtrl(want,jump))),politician),lawyer)),kid)
+# ::size0 7
+# ::id nested_control_32
+# ::suppl nested_control_32
+(u_1058 / refuse-01
+        :ARG0 (r / kid
+                 :ARG0-of (u_1057 / force-01
+                                  :ARG1 (m / lawyer
+                                           :ARG0-of (u_1054 / persuade-01
+                                                            :ARG1 (u_1059 / politician
+                                                                          :ARG0-of (u_1056 / jump-03
+                                                                                           :ARG1-of (u_1051 / want-01
+                                                                                                            :ARG0 u_1059
+                                                                                                            :ARG1-of (u_1052 / refuse-01
+                                                                                                                             :ARG0 u_1059
+                                                                                                                             :ARG1-of (u_1053 / attempt-01
+                                                                                                                                              :ARG0 u_1059
+                                                                                                                                              :ARG2-of u_1054)))))
+                                                            :ARG2-of u_1057))
+                                  :ARG1-of u_1058)))
+
+# ::snt The kid attempted to hate to love to beg the soldier to force the politician to refuse to focus.
+# ::tree Sent(SubjCtrlTbar(attempted,VbarSubjCtrl(hate,VbarSubjCtrl(love,VbarObjCtrl(beg,VbarObjCtrl(force,VbarSubjCtrl(refuse,focus),politician),soldier)))),kid)
+# ::size0 7
+# ::id nested_control_33
+# ::suppl nested_control_33
+(u_1068 / attempt-01
+        :ARG0 (r / kid
+                 :ARG0-of (u_1064 / beg-01
+                                  :ARG1 (s / soldier
+                                           :ARG0-of (u_1061 / force-01
+                                                            :ARG1 (u_1069 / politician
+                                                                          :ARG0-of (u_1063 / focus-01
+                                                                                           :ARG1-of (u_1060 / refuse-01
+                                                                                                            :ARG0 u_1069
+                                                                                                            :ARG2-of u_1061)))
+                                                            :ARG2-of u_1064))
+                                  :ARG1-of (u_1066 / love-01
+                                                   :ARG0 r
+                                                   :ARG1-of (u_1067 / hate-01
+                                                                    :ARG0 r
+                                                                    :ARG1-of u_1068)))))
+
+# ::snt The girl forced the astronaut to refuse to ask the soldier to force the doctor to attempt to persuade the monster to attend.
+# ::tree Sent(ObjCtrlTbar(forced,VbarSubjCtrl(refuse,VbarObjCtrl(ask,VbarObjCtrl(force,VbarSubjCtrl(attempt,VbarObjCtrl(persuade,attend,monster)),doctor),soldier)),astronaut),girl)
+# ::size0 7
+# ::id nested_control_34
+# ::suppl nested_control_34
+(u_1079 / force-01
+        :ARG0 (r / girl)
+        :ARG1 (a / astronaut
+                 :ARG0-of (u_1076 / ask-02
+                                  :ARG2 (s / soldier
+                                           :ARG0-of (u_1074 / force-01
+                                                            :ARG1 (u_1081 / doctor
+                                                                          :ARG0-of (u_1070 / persuade-01
+                                                                                           :ARG1 (u_1075 / monster
+                                                                                                         :ARG0-of (u_1072 / attend-01
+                                                                                                                          :ARG2-of u_1070))
+                                                                                           :ARG1-of (u_1073 / attempt-01
+                                                                                                            :ARG0 u_1081
+                                                                                                            :ARG2-of u_1074)))
+                                                            :ARG1-of u_1076))
+                                  :ARG1-of (u_1078 / refuse-01
+                                                   :ARG0 a
+                                                   :ARG2-of u_1079))))
+
+# ::snt The girl forced the astronaut to force the politician to beg the lawyer to want to love to ask the soldier to focus.
+# ::tree Sent(ObjCtrlTbar(forced,VbarObjCtrl(force,VbarObjCtrl(beg,VbarSubjCtrl(want,VbarSubjCtrl(love,VbarObjCtrl(ask,focus,soldier))),lawyer),politician),astronaut),girl)
+# ::size0 7
+# ::id nested_control_35
+# ::suppl nested_control_35
+(u_1091 / force-01
+        :ARG0 (r / girl)
+        :ARG1 (a / astronaut
+                 :ARG0-of (u_1088 / force-01
+                                  :ARG1 (u_1093 / politician
+                                                :ARG0-of (u_1086 / beg-01
+                                                                 :ARG1 (m / lawyer
+                                                                          :ARG0-of (u_1082 / ask-02
+                                                                                           :ARG2 (s / soldier
+                                                                                                    :ARG0-of (u_1090 / focus-01
+                                                                                                                     :ARG1-of u_1082))
+                                                                                           :ARG1-of (u_1084 / love-01
+                                                                                                            :ARG0 m
+                                                                                                            :ARG1-of (u_1085 / want-01
+                                                                                                                             :ARG0 m
+                                                                                                                             :ARG2-of u_1086))))
+                                                                 :ARG2-of u_1088))
+                                  :ARG2-of u_1091)))
+
+# ::snt The girl persuaded the monster to attempt to persuade the astronaut to beg the doctor to refuse to force the lawyer to sleep.
+# ::tree Sent(ObjCtrlTbar(persuaded,VbarSubjCtrl(attempt,VbarObjCtrl(persuade,VbarObjCtrl(beg,VbarSubjCtrl(refuse,VbarObjCtrl(force,sleep,lawyer)),doctor),astronaut)),monster),girl)
+# ::size0 7
+# ::id nested_control_36
+# ::suppl nested_control_36
+(u_1102 / persuade-01
+        :ARG0 (r / girl)
+        :ARG1 (u_1104 / monster
+                      :ARG0-of (u_1099 / persuade-01
+                                       :ARG1 (a / astronaut
+                                                :ARG0-of (u_1097 / beg-01
+                                                                 :ARG1 (u_1103 / doctor
+                                                                               :ARG0-of (u_1094 / force-01
+                                                                                                :ARG1 (m / lawyer
+                                                                                                         :ARG0-of (u_1098 / sleep-01
+                                                                                                                          :ARG2-of u_1094))
+                                                                                                :ARG1-of (u_1096 / refuse-01
+                                                                                                                 :ARG0 u_1103
+                                                                                                                 :ARG2-of u_1097)))
+                                                                 :ARG2-of u_1099))
+                                       :ARG1-of (u_1101 / attempt-01
+                                                        :ARG0 u_1104
+                                                        :ARG2-of u_1102))))
+
+# ::snt The girl focused and begged the politician to refuse to persuade the soldier to love to force the lawyer to focus.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,focused,ObjCtrlTbar(begged,VbarSubjCtrl(refuse,VbarObjCtrl(persuade,VbarSubjCtrl(love,VbarObjCtrl(force,focus,lawyer)),soldier)),politician)),girl)
+# ::size0 7
+# ::id nested_control_37
+# ::suppl nested_control_37
+(u_1114 / and
+        :op1 (u_1117 / focus-01
+                     :ARG0 (r / girl
+                              :ARG0-of (u_1111 / beg-01
+                                               :ARG1 (u_1115 / politician
+                                                             :ARG0-of (u_1108 / persuade-01
+                                                                              :ARG1 (u_1116 / soldier
+                                                                                            :ARG0-of (u_1105 / force-01
+                                                                                                             :ARG1 (m / lawyer
+                                                                                                                      :ARG0-of (u_1113 / focus-01
+                                                                                                                                       :ARG2-of u_1105))
+                                                                                                             :ARG1-of (u_1107 / love-01
+                                                                                                                              :ARG0 u_1116
+                                                                                                                              :ARG2-of u_1108)))
+                                                                              :ARG1-of (u_1110 / refuse-01
+                                                                                               :ARG0 u_1115
+                                                                                               :ARG2-of u_1111)))
+                                               :op2-of u_1114))))
+
+# ::snt The kid refused to ask the soldier to force the doctor to hate to want to love to eat.
+# ::tree Sent(SubjCtrlTbar(refused,VbarObjCtrl(ask,VbarObjCtrl(force,VbarSubjCtrl(hate,VbarSubjCtrl(want,VbarSubjCtrl(love,eat))),doctor),soldier)),kid)
+# ::size0 7
+# ::id nested_control_38
+# ::suppl nested_control_38
+(u_1126 / refuse-01
+        :ARG0 (r / kid
+                 :ARG0-of (u_1124 / ask-02
+                                  :ARG2 (s / soldier
+                                           :ARG0-of (u_1121 / force-01
+                                                            :ARG1 (u_1127 / doctor
+                                                                          :ARG0-of (u_1123 / eat-01
+                                                                                           :ARG1-of (u_1118 / love-01
+                                                                                                            :ARG0 u_1127
+                                                                                                            :ARG1-of (u_1119 / want-01
+                                                                                                                             :ARG0 u_1127
+                                                                                                                             :ARG1-of (u_1120 / hate-01
+                                                                                                                                              :ARG0 u_1127
+                                                                                                                                              :ARG2-of u_1121)))))
+                                                            :ARG1-of u_1124))
+                                  :ARG1-of u_1126)))
+
+# ::snt The boy attempted to focus and refuse to love to persuade the lawyer to attempt to eat.
+# ::tree Sent(SubjCtrlTbar(attempted,Coord_Open_S_inf(and_open_s,focus,VbarSubjCtrl(refuse,VbarSubjCtrl(love,VbarObjCtrl(persuade,VbarSubjCtrl(attempt,eat),lawyer))))),boy)
+# ::size0 7
+# ::id nested_control_39
+# ::suppl nested_control_39
+(u_1135 / attempt-01
+        :ARG0 (r / boy
+                 :ARG0-of (u_1136 / focus-01
+                                  :op1-of (u_1133 / and
+                                                  :op2 (u_1132 / refuse-01
+                                                               :ARG0 r
+                                                               :ARG1 (u_1131 / love-01
+                                                                             :ARG0 r
+                                                                             :ARG1 (u_1129 / persuade-01
+                                                                                           :ARG0 r
+                                                                                           :ARG1 (m / lawyer
+                                                                                                    :ARG0-of (u_1134 / eat-01
+                                                                                                                     :ARG1-of (u_1128 / attempt-01
+                                                                                                                                      :ARG0 m
+                                                                                                                                      :ARG2-of u_1129))))))
+                                                  :ARG1-of u_1135))))
+
+# ::snt The girl refused to persuade the astronaut to beg the soldier to refuse to attempt to hate to jump, slept, and attended.
+# ::tree Sent(Coord_3_Open_S_fin(and_3_open_s,SubjCtrlTbar(refused,VbarObjCtrl(persuade,VbarObjCtrl(beg,VbarSubjCtrl(refuse,VbarSubjCtrl(attempt,VbarSubjCtrl(hate,jump))),soldier),astronaut)),slept,attended),girl)
+# ::size0 8
+# ::id nested_control_40
+# ::suppl nested_control_40
+(u_1137 / and
+        :op1 (u_1146 / refuse-01
+                     :ARG0 (r / girl
+                              :ARG0-of (u_1144 / persuade-01
+                                               :ARG1 (a / astronaut
+                                                        :ARG0-of (u_1142 / beg-01
+                                                                         :ARG1 (s / soldier
+                                                                                  :ARG0-of (u_1148 / jump-03
+                                                                                                   :ARG1-of (u_1139 / hate-01
+                                                                                                                    :ARG0 s
+                                                                                                                    :ARG1-of (u_1140 / attempt-01
+                                                                                                                                     :ARG0 s
+                                                                                                                                     :ARG1-of (u_1141 / refuse-01
+                                                                                                                                                      :ARG0 s
+                                                                                                                                                      :ARG2-of u_1142)))))
+                                                                         :ARG2-of u_1144))
+                                               :ARG1-of u_1146)
+                              :ARG0-of (u_1147 / sleep-01
+                                               :op2-of u_1137)
+                              :ARG0-of (u_1138 / attend-01
+                                               :op3-of u_1137))))
+
+# ::snt The kid refused to sleep and force the politician to beg the soldier to attempt to persuade the doctor to hate to jump.
+# ::tree Sent(SubjCtrlTbar(refused,Coord_Open_S_inf(and_open_s,sleep,VbarObjCtrl(force,VbarObjCtrl(beg,VbarSubjCtrl(attempt,VbarObjCtrl(persuade,VbarSubjCtrl(hate,jump),doctor)),soldier),politician))),kid)
+# ::size0 8
+# ::id nested_control_41
+# ::suppl nested_control_41
+(u_1162 / refuse-01
+        :ARG0 (r / kid
+                 :ARG0-of (u_1163 / sleep-01
+                                  :op1-of (u_1159 / and
+                                                  :op2 (u_1156 / force-01
+                                                               :ARG0 r
+                                                               :ARG1 (u_1160 / politician
+                                                                             :ARG0-of (u_1154 / beg-01
+                                                                                              :ARG1 (u_1161 / soldier
+                                                                                                            :ARG0-of (u_1150 / persuade-01
+                                                                                                                             :ARG1 (u_1158 / doctor
+                                                                                                                                           :ARG0-of (u_1152 / jump-03
+                                                                                                                                                            :ARG1-of (u_1149 / hate-01
+                                                                                                                                                                             :ARG0 u_1158
+                                                                                                                                                                             :ARG2-of u_1150)))
+                                                                                                                             :ARG1-of (u_1153 / attempt-01
+                                                                                                                                              :ARG0 u_1161
+                                                                                                                                              :ARG2-of u_1154)))
+                                                                                              :ARG2-of u_1156)))
+                                                  :ARG1-of u_1162))))
+
+# ::snt The boy wanted to force you to refuse to attempt to want to persuade the doctor to love to focus.
+# ::tree Sent(SubjCtrlTbar(wanted,VbarObjCtrl(force,VbarSubjCtrl(refuse,VbarSubjCtrl(attempt,VbarSubjCtrl(want,VbarObjCtrl(persuade,VbarSubjCtrl(love,focus),doctor)))),you)),boy)
+# ::size0 8
+# ::id nested_control_42
+# ::suppl nested_control_42
+(u_1173 / want-01
+        :ARG0 (r / boy
+                 :ARG0-of (u_1171 / force-01
+                                  :ARG1 (u_1174 / you
+                                                :ARG0-of (u_1165 / persuade-01
+                                                                 :ARG1 (u_1172 / doctor
+                                                                               :ARG0-of (u_1167 / focus-01
+                                                                                                :ARG1-of (u_1164 / love-01
+                                                                                                                 :ARG0 u_1172
+                                                                                                                 :ARG2-of u_1165)))
+                                                                 :ARG1-of (u_1168 / want-01
+                                                                                  :ARG0 u_1174
+                                                                                  :ARG1-of (u_1169 / attempt-01
+                                                                                                   :ARG0 u_1174
+                                                                                                   :ARG1-of (u_1170 / refuse-01
+                                                                                                                    :ARG0 u_1174
+                                                                                                                    :ARG2-of u_1171)))))
+                                  :ARG1-of u_1173)))
+
+# ::snt The kid loved to force the soldier to hate to ask the lawyer to want to persuade the monster to refuse to eat.
+# ::tree Sent(SubjCtrlTbar(loved,VbarObjCtrl(force,VbarSubjCtrl(hate,VbarObjCtrl(ask,VbarSubjCtrl(want,VbarObjCtrl(persuade,VbarSubjCtrl(refuse,eat),monster)),lawyer)),soldier)),kid)
+# ::size0 8
+# ::id nested_control_43
+# ::suppl nested_control_43
+(u_1184 / love-01
+        :ARG0 (r / kid
+                 :ARG0-of (u_1182 / force-01
+                                  :ARG1 (s / soldier
+                                           :ARG0-of (u_1180 / ask-02
+                                                            :ARG2 (m / lawyer
+                                                                     :ARG0-of (u_1176 / persuade-01
+                                                                                      :ARG1 (u_1185 / monster
+                                                                                                    :ARG0-of (u_1178 / eat-01
+                                                                                                                     :ARG1-of (u_1175 / refuse-01
+                                                                                                                                      :ARG0 u_1185
+                                                                                                                                      :ARG2-of u_1176)))
+                                                                                      :ARG1-of (u_1179 / want-01
+                                                                                                       :ARG0 m
+                                                                                                       :ARG1-of u_1180)))
+                                                            :ARG1-of (u_1181 / hate-01
+                                                                             :ARG0 s
+                                                                             :ARG2-of u_1182)))
+                                  :ARG1-of u_1184)))
+
+# ::snt The kid slept and refused to hate to persuade the doctor to beg the monster to ask the lawyer to refuse to sleep.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,slept,SubjCtrlTbar(refused,VbarSubjCtrl(hate,VbarObjCtrl(persuade,VbarObjCtrl(beg,VbarObjCtrl(ask,VbarSubjCtrl(refuse,sleep),lawyer),monster),doctor)))),kid)
+# ::size0 8
+# ::id nested_control_44
+# ::suppl nested_control_44
+(u_1196 / and
+        :op1 (u_1198 / sleep-01
+                     :ARG0 (r / kid
+                              :ARG0-of (u_1191 / persuade-01
+                                               :ARG1 (u_1197 / doctor
+                                                             :ARG0-of (u_1189 / beg-01
+                                                                              :ARG1 (u_1193 / monster
+                                                                                            :ARG0-of (u_1187 / ask-02
+                                                                                                             :ARG2 (m / lawyer
+                                                                                                                      :ARG0-of (u_1190 / sleep-01
+                                                                                                                                       :ARG1-of (u_1186 / refuse-01
+                                                                                                                                                        :ARG0 m
+                                                                                                                                                        :ARG1-of u_1187)))
+                                                                                                             :ARG2-of u_1189))
+                                                                              :ARG2-of u_1191))
+                                               :ARG1-of (u_1194 / hate-01
+                                                                :ARG0 r
+                                                                :ARG1-of (u_1195 / refuse-01
+                                                                                 :ARG0 r
+                                                                                 :op2-of u_1196))))))
+
+# ::snt The boy loved to love to force the soldier to attempt to hate to refuse to beg the astronaut to eat.
+# ::tree Sent(SubjCtrlTbar(loved,VbarSubjCtrl(love,VbarObjCtrl(force,VbarSubjCtrl(attempt,VbarSubjCtrl(hate,VbarSubjCtrl(refuse,VbarObjCtrl(beg,eat,astronaut)))),soldier))),boy)
+# ::size0 8
+# ::id nested_control_45
+# ::suppl nested_control_45
+(u_1207 / love-01
+        :ARG0 (r / boy
+                 :ARG0-of (u_1204 / force-01
+                                  :ARG1 (s / soldier
+                                           :ARG0-of (u_1199 / beg-01
+                                                            :ARG1 (a / astronaut
+                                                                     :ARG0-of (u_1208 / eat-01
+                                                                                      :ARG2-of u_1199))
+                                                            :ARG1-of (u_1201 / refuse-01
+                                                                             :ARG0 s
+                                                                             :ARG1-of (u_1202 / hate-01
+                                                                                              :ARG0 s
+                                                                                              :ARG1-of (u_1203 / attempt-01
+                                                                                                               :ARG0 s
+                                                                                                               :ARG2-of u_1204)))))
+                                  :ARG1-of (u_1206 / love-01
+                                                   :ARG0 r
+                                                   :ARG1-of u_1207))))
+
+# ::snt The girl refused to refuse to attempt to hate to ask the politician to want to persuade the astronaut to focus.
+# ::tree Sent(SubjCtrlTbar(refused,VbarSubjCtrl(refuse,VbarSubjCtrl(attempt,VbarSubjCtrl(hate,VbarObjCtrl(ask,VbarSubjCtrl(want,VbarObjCtrl(persuade,focus,astronaut)),politician))))),girl)
+# ::size0 8
+# ::id nested_control_46
+# ::suppl nested_control_46
+(u_1217 / refuse-01
+        :ARG0 (r / girl
+                 :ARG0-of (u_1212 / ask-02
+                                  :ARG2 (u_1218 / politician
+                                                :ARG0-of (u_1209 / persuade-01
+                                                                 :ARG1 (a / astronaut
+                                                                          :ARG0-of (u_1213 / focus-01
+                                                                                           :ARG2-of u_1209))
+                                                                 :ARG1-of (u_1211 / want-01
+                                                                                  :ARG0 u_1218
+                                                                                  :ARG1-of u_1212)))
+                                  :ARG1-of (u_1214 / hate-01
+                                                   :ARG0 r
+                                                   :ARG1-of (u_1215 / attempt-01
+                                                                    :ARG0 r
+                                                                    :ARG1-of (u_1216 / refuse-01
+                                                                                     :ARG0 r
+                                                                                     :ARG1-of u_1217))))))
+
+# ::snt The boy focused and attempted to hate to love to want to force the astronaut to persuade the soldier to sleep.
+# ::tree Sent(Coord_Open_S_fin(and_open_s,focused,SubjCtrlTbar(attempted,VbarSubjCtrl(hate,VbarSubjCtrl(love,VbarSubjCtrl(want,VbarObjCtrl(force,VbarObjCtrl(persuade,sleep,soldier),astronaut)))))),boy)
+# ::size0 8
+# ::id nested_control_47
+# ::suppl nested_control_47
+(u_1227 / and
+        :op1 (u_1230 / focus-01
+                     :ARG0 (r / boy
+                              :ARG0-of (u_1221 / force-01
+                                               :ARG1 (a / astronaut
+                                                        :ARG0-of (u_1219 / persuade-01
+                                                                         :ARG1 (u_1229 / soldier
+                                                                                       :ARG0-of (u_1228 / sleep-01
+                                                                                                        :ARG2-of u_1219))
+                                                                         :ARG2-of u_1221))
+                                               :ARG1-of (u_1223 / want-01
+                                                                :ARG0 r
+                                                                :ARG1-of (u_1224 / love-01
+                                                                                 :ARG0 r
+                                                                                 :ARG1-of (u_1225 / hate-01
+                                                                                                  :ARG0 r
+                                                                                                  :ARG1-of (u_1226 / attempt-01
+                                                                                                                   :ARG0 r
+                                                                                                                   :op2-of u_1227))))))))
+
+# ::snt The kid wanted to persuade the astronaut to beg the politician to force you to ask the doctor to want to eat, ate, and asked the lawyer to sleep.
+# ::tree Sent(Coord_3_Open_S_fin(and_3_open_s,SubjCtrlTbar(wanted,VbarObjCtrl(persuade,VbarObjCtrl(beg,VbarObjCtrl(force,VbarObjCtrl(ask,VbarSubjCtrl(want,eat),doctor),you),politician),astronaut)),ate,ObjCtrlTbar(asked,sleep,lawyer)),kid)
+# ::size0 8
+# ::id nested_control_48
+# ::suppl nested_control_48
+(u_1233 / and
+        :op1 (u_1245 / want-01
+                     :ARG0 (r / kid
+                              :ARG0-of (u_1244 / persuade-01
+                                               :ARG1 (a / astronaut
+                                                        :ARG0-of (u_1241 / beg-01
+                                                                         :ARG1 (u_1247 / politician
+                                                                                       :ARG0-of (u_1239 / force-01
+                                                                                                        :ARG1 (u_1243 / you
+                                                                                                                      :ARG0-of (u_1236 / ask-02
+                                                                                                                                       :ARG2 (u_1240 / doctor
+                                                                                                                                                     :ARG0-of (u_1238 / eat-01
+                                                                                                                                                                      :ARG1-of (u_1235 / want-01
+                                                                                                                                                                                       :ARG0 u_1240
+                                                                                                                                                                                       :ARG1-of u_1236)))
+                                                                                                                                       :ARG2-of u_1239))
+                                                                                                        :ARG2-of u_1241))
+                                                                         :ARG2-of u_1244))
+                                               :ARG1-of u_1245)
+                              :ARG0-of (u_1246 / eat-01
+                                               :op2-of u_1233)
+                              :ARG0-of (u_1231 / ask-02
+                                               :ARG2 (m / lawyer
+                                                        :ARG0-of (u_1234 / sleep-01
+                                                                         :ARG1-of u_1231))
+                                               :op3-of u_1233))))
+
+# ::snt The boy loved to attempt to persuade the politician to hate to force the doctor to beg the lawyer to ask the monster to attend.
+# ::tree Sent(SubjCtrlTbar(loved,VbarSubjCtrl(attempt,VbarObjCtrl(persuade,VbarSubjCtrl(hate,VbarObjCtrl(force,VbarObjCtrl(beg,VbarObjCtrl(ask,attend,monster),lawyer),doctor)),politician))),boy)
+# ::size0 8
+# ::id nested_control_49
+# ::suppl nested_control_49
+(u_1259 / love-01
+        :ARG0 (r / boy
+                 :ARG0-of (u_1256 / persuade-01
+                                  :ARG1 (u_1260 / politician
+                                                :ARG0-of (u_1252 / force-01
+                                                                 :ARG1 (u_1257 / doctor
+                                                                               :ARG0-of (u_1251 / beg-01
+                                                                                                :ARG1 (m / lawyer
+                                                                                                         :ARG0-of (u_1248 / ask-02
+                                                                                                                          :ARG2 (u_1254 / monster
+                                                                                                                                        :ARG0-of (u_1250 / attend-01
+                                                                                                                                                         :ARG1-of u_1248))
+                                                                                                                          :ARG2-of u_1251))
+                                                                                                :ARG2-of u_1252))
+                                                                 :ARG1-of (u_1255 / hate-01
+                                                                                  :ARG0 u_1260
+                                                                                  :ARG2-of u_1256)))
+                                  :ARG1-of (u_1258 / attempt-01
+                                                   :ARG0 r
+                                                   :ARG1-of u_1259))))

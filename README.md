@@ -2,6 +2,8 @@
 
 This is the repo for the Granular AMR Parsing Evaluation Suite (GrAPES). Our paper "AMR Parsing is Far from Solved: GrAPES, the Granular AMR Parsing Evaluation Suite" has been accepted at EMNLP 2023! Documentation of this repository will come soon.
 
+#TODO make grapes vs grapes set clearer
+
 ## Set up
 
 The evaluation scripts use two corpus files, the AMR 3.0 testset and the GrAPES test set provided. The AMR 3.0 test set is the files concatenated in alphabetical order; to get this file, run the following script. Provide the path to the testset folder and the path, including the filename, you want to write the concatenated testset file to.

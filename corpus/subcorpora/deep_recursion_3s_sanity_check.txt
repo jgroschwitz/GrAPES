@@ -1,0 +1,79 @@
+# ::snt The astronaut heard that you amused him, the astronaut
+# ::tree TP_resolve_coref(heard_resolve_coref,astronaut,TP_tr(amused_him,you))
+# ::id deep_recursion_3s_sanity_check_0
+# ::suppl deep_recursion_3s_sanity_check_0
+(u_47 / hear-01
+      :ARG0 (a / astronaut
+               :ARG1-of (u_46 / amuse-01
+                              :ARG0 (r / you)
+                              :ARG1-of u_47)))
+
+# ::snt The doctor thought that the girls amused her, the doctor
+# ::tree TP_resolve_coref(thought_resolve_coref,doctor,TP_tr(amused_her,girls))
+# ::id deep_recursion_3s_sanity_check_1
+# ::suppl deep_recursion_3s_sanity_check_1
+(u_49 / think-01
+      :ARG0 (d / doctor
+               :ARG1-of (u_48 / amuse-01
+                              :ARG0 (r / girl)
+                              :ARG1-of u_49)))
+
+# ::snt The soldier mentioned that we liked him, the soldier
+# ::tree TP_resolve_coref(mentioned_resolve_coref,soldier,TP_tr(liked_him,we))
+# ::id deep_recursion_3s_sanity_check_2
+# ::suppl deep_recursion_3s_sanity_check_2
+(u_51 / mention-01
+      :ARG0 (s / soldier
+               :ARG1-of (u_50 / like-01
+                              :ARG0 (r / we)
+                              :ARG1-of u_51)))
+
+# ::snt The lawyer knew that I hated her, the lawyer
+# ::tree TP_resolve_coref(knew_resolve_coref,lawyer,TP_tr(hated_her,I))
+# ::id deep_recursion_3s_sanity_check_3
+# ::suppl deep_recursion_3s_sanity_check_3
+(u_53 / know-01
+      :ARG0 (m / lawyer
+               :ARG1-of (u_52 / hate-01
+                              :ARG0 (r / i)
+                              :ARG1-of u_53)))
+
+# ::snt The astronaut said that the kids saw him, the astronaut
+# ::tree TP_resolve_coref(said_resolve_coref,astronaut,TP_tr(saw_him,kids))
+# ::id deep_recursion_3s_sanity_check_4
+# ::suppl deep_recursion_3s_sanity_check_4
+(u_55 / say-01
+      :ARG0 (a / astronaut
+               :ARG1-of (u_54 / see-01
+                              :ARG0 (r / kid)
+                              :ARG1-of u_55)))
+
+# ::snt The doctor believed that the boys hated him, the doctor
+# ::tree TP_resolve_coref(believed_resolve_coref,doctor,TP_tr(hated_him,boys))
+# ::id deep_recursion_3s_sanity_check_5
+# ::suppl deep_recursion_3s_sanity_check_5
+(u_57 / believe-01
+      :ARG0 (d / doctor
+               :ARG1-of (u_56 / hate-01
+                              :ARG0 (r / boy)
+                              :ARG1-of u_57)))
+
+# ::snt The soldier heard that the lawyer saw her, the soldier
+# ::tree TP_resolve_coref(heard_resolve_coref,soldier,TP_tr(saw_her,make_singular(lawyer)))
+# ::id deep_recursion_3s_sanity_check_6
+# ::suppl deep_recursion_3s_sanity_check_6
+(u_58 / hear-01
+      :ARG0 (s / soldier
+               :ARG1-of (r / see-01
+                           :ARG0 (m / lawyer)
+                           :ARG1-of u_58)))
+
+# ::snt The astronaut thought that you liked her, the astronaut
+# ::tree TP_resolve_coref(thought_resolve_coref,astronaut,TP_tr(liked_her,you))
+# ::id deep_recursion_3s_sanity_check_7
+# ::suppl deep_recursion_3s_sanity_check_7
+(u_60 / think-01
+      :ARG0 (a / astronaut
+               :ARG1-of (u_59 / like-01
+                              :ARG0 (r / you)
+                              :ARG1-of u_60)))
