@@ -12,7 +12,7 @@ import penman
 full_corpus = []
 
 for corpus_file in os.listdir("corpus"):
-    if corpus_file.endswith(".txt") and corpus_file != "corpus.txt":  # corpus_file == "winograd.txt":
+    if corpus_file.endswith(".txt") and corpus_file not in ["corpus.txt", "word_disambiguation_clean.txt"]:  # corpus_file == "winograd.txt":
         # print("file", corpus_file, file=sys.stderr)
         category = penman.load(f"corpus/{corpus_file}")
         changed = False  # tracking whether we changed any IDs
@@ -25,9 +25,12 @@ for corpus_file in os.listdir("corpus"):
                 # copy old ID to supplementary info
                 entry.metadata["suppl"] = entry.metadata["id"]
                 entry.metadata["id"] = f"{category_name}_{i}"
-                if entry.metadata["suppl"].startswith("word_disambiguation"):
-                    word_disambiguation.append(entry)
-            full_corpus += word_disambiguation
+                if not entry.metadata["suppl"].startswith("word_disambiguation"):
+                    # this is from the test set
+                    entry.metadata["snt"] = "(removed -- see documentation)"
+                word_disambiguation.append(entry)
+            # write new corpus to word_disambiguation_clean.txt
+            penman.dump(word_disambiguation, "corpus/word_disambiguation_clean.txt")
         else:
             for i, entry in enumerate(category):
                 # copy old ID to supplementary info
