@@ -8,10 +8,10 @@ GrAPES provides specialised evaluation metrics and additional data. Throughout t
 
 ## Dependencies
 
-GrAPES requires the Python packages `penman`, `prettytable` `statsmodels`, `smatch`.
+GrAPES requires the Python packages `penman`, `prettytable` `statsmodels`, `smatch`, `cryptography`.
 
 ```commandline
-pip install prettytable penman statsmodels smatch
+pip install prettytable penman statsmodels smatch cryptography
 ```
 
 GrAPES has been tested with Python 3.8.10.

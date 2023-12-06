@@ -121,6 +121,7 @@ def update_from_amr_testset(path_to_testset):
 
 
 if __name__ == "__main__":
+    # TODO delete this script part
     # the strings to write to files
     txt = """# CCG unbounded dependencies, annotated by Meaghan and students, built from relatives_meaghan.tsv object-free-relatives_chris.tsv object-relative-null_chris.tsv object_wh_questions_chris.tsv right_node_raising_chris.tsv subj_relative_embedded_chris.tsv subj_relatives_chris.tsv 
 

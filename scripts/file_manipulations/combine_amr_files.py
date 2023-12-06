@@ -9,16 +9,27 @@ import sys
 
 import penman
 
-full_corpus = []
+path_to_existing_amr_files = "corpus"
+full_corpus = []  # we'll eventually penman.dump this
 
-am = True
+# if we're also updating AM parser output IDs (run before we updated some IDs)
+am = False
 am_path = "../amr-challenge/amparser-output"
 am_full_corpus = []
 
-for corpus_file in os.listdir("corpus"):
+# These will end up with different IDs in them
+for f in os.listdir("corpus"):
+    if f in ["unseen_senses_new_sentences.tsv",
+             "unseen_roles_new_sentences.tsv",
+             "winograd.tsv"]:
+        subcorpus = f.split(".")[0]
+        os.rename(f, f"{subcorpus}_old_ids.tsv")
+
+# loop through existing corpus files
+for corpus_file in os.listdir(path_to_existing_amr_files):
     if corpus_file.endswith(".txt") and corpus_file not in ["corpus.txt", "word_disambiguation_clean.txt"]:  # corpus_file == "winograd.txt":
         # print("file", corpus_file, file=sys.stderr)
-        category = penman.load(f"corpus/{corpus_file}")
+        category = penman.load(f"{path_to_existing_amr_files}/{corpus_file}")
         changed = False  # tracking whether we changed any IDs
         category_name = corpus_file[:-4]
         # print(category_name)
@@ -35,7 +46,7 @@ for corpus_file in os.listdir("corpus"):
                     entry.metadata["snt"] = "(removed -- see documentation)"
                 word_disambiguation.append(entry)
             # write new corpus to word_disambiguation_clean.txt
-            penman.dump(word_disambiguation, "corpus/word_disambiguation_clean.txt")
+            penman.dump(word_disambiguation, f"{path_to_existing_amr_files}/word_disambiguation_clean.txt")
         else:
             for i, entry in enumerate(category):
                 # copy old ID to supplementary info
@@ -53,6 +64,7 @@ for corpus_file in os.listdir("corpus"):
             if changed:
                 print("ids changed in", corpus_file)
             if am:
+                # update AM parser output IDs
                 if len(category) == 0:
                     # if this wasn't an AMR file, we just get an empty list when we read it in
                     print("*** not an AMR file:\n", corpus_file, "\n")
@@ -65,12 +77,12 @@ for corpus_file in os.listdir("corpus"):
                     except FileNotFoundError:
                         print("*** not in AM outputs:\n", corpus_file, "\n")
 
-        # hard coded -- these ones actually need to up dated because of new IDs
+        # hard coded -- these ones actually need to updated because of new IDs
         if corpus_file in ["unseen_senses_new_sentences.txt",
                            "unseen_roles_new_sentences.txt",
                            "winograd.txt"]:
             # update the tsv file with new IDs
-            with open(f"corpus/{category_name}_old_ids.tsv", 'r') as tsv:
+            with open(f"{path_to_existing_amr_files}/{category_name}_old_ids.tsv", 'r') as tsv:
                 lines = tsv.readlines()
                 new_lines = []
                 for line in lines:
