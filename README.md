@@ -14,7 +14,7 @@ GrAPES requires the Python packages `penman`, `prettytable` `statsmodels`, `smat
 pip install prettytable penman statsmodels smatch "cryptography>=3.1"
 ```
 
-GrAPES has been tested with Python 3.8.10.
+GrAPES has been tested with Python 3.8.10 and 3.10.13.
 
 ## Corpus files
 
