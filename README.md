@@ -1,38 +1,10 @@
-# GrAPES
-
 This is the repo for the **Gr**anular **A**MR **P**arsing **E**valuation **S**uite (GrAPES). Our paper "AMR Parsing is Far from Solved: GrAPES, the Granular AMR Parsing Evaluation Suite" has been accepted at EMNLP 2023!
 
 GrAPES provides specialised evaluation metrics and additional data. Throughout the documentation, we distinguish between the AMR 3.0 testset (which you probably already have) and the GrAPES testset, which is our additional data, housed in the `corpus/subcorpora` folder.
 
-## Set up
+# Set up
 
-The evaluation scripts use two corpus files, the AMR 3.0 testset and the GrAPES test set provided. The AMR 3.0 test set is the files concatenated in alphabetical order; to get this file, run the following script. Provide the path to the testset folder and the path, including the filename, you want to write the concatenated testset file to.
-
-Throughout the rest of this documentation, `path/to/AMR/testset` means the path to the output file.
-
-```commandline
-python #TODO
-```
-
-If your parser outputs multiple files, as long as their alphanumeric order is the same, this script should work on your files as well.
-
-If you do not have access to the AMR 3.0 test set, you can still use parts of GrAPES. Instructions are provided below.
-
-For licensing reasons, two of the GrAPES categories are only available if you also have the necessary licenses. The Unbounded Dependencies category is built from Penn Tree Bank sentences. If you have access to the Penn Tree Bank, the following script will add them to the existing GrAPES `corpus.txt` file.
-
-```commandline
-python #TODO path/to/your/PTB
-```
-
-Twelve of the sentences in the Word Disambiguation category are AMR 3.0 test set sentences. To add them to the GrAPES `corpus.txt` file, run the following script:
-
-```commandline
-python #TODO path/to/AMR/testset
-```
-
-### Dependencies
-
-#TODO do we know which versions of Python work?
+## Dependencies
 
 GrAPES requires the Python packages `penman`, `prettytable` `statsmodels`, `smatch`.
 
@@ -40,13 +12,52 @@ GrAPES requires the Python packages `penman`, `prettytable` `statsmodels`, `smat
 pip install prettytable penman statsmodels smatch
 ```
 
+GrAPES has been tested with Python 3.8.10.
+
+## Corpus files
+
+GrAPES relies on three sources of data: A) our original data, B) original data based on external licensed corpora (A and B for the GrAPES testset), and C) the AMR testset. GrAPES evaluation can be run on all of them together to obtain scores for all categories, or each separately to obtain scores on only the corresponding categories. (A) requires no additional setup, but (B) and (C) do, see below.
+
+### Obtaining the full GrAPES testset (B).
+
+For licensing reasons, two of the GrAPES categories (Unbounded Dependencies and Word Ambiguities (handcrafted)) are only available if you also have the necessary licenses. You can use GrAPES without that data and skip this setup step, but two categories will be missing. To obtain the full GrAPES corpus, use the following instructions:
+
+The Unbounded Dependencies category is built from Penn Tree Bank sentences. If you have access to the Penn Tree Bank, the following script will add them to the existing GrAPES `corpus.txt` file, where `<ptb_pos_path>` refers to the location of all the POS tagged files in the PTB (in version 2 of the PTB, this is the `tagged` subfolder, in version 3 it is `tagged/pos`).
+
+```commandline
+python complete_the_corpus.py -ptb <ptb_pos_path>
+```
+
+Twelve of the sentences in the Word Ambiguities (handcrafted) category are AMR 3.0 test set sentences. To add them to the GrAPES `corpus.txt` file, run the following script, where `<amr_test_path>` refers to the AMR 3.0 testset folder (i.e. the folder `data/amr/split/test` in the AMRBank 3.0):
+
+```commandline
+python complete_the_corpus.py -amr <amr_test_path>
+```
+
+### AMR testset setup (C)
+
+For the evaluation stage (if you want to include the AMR-testset-based categories of GrAPES), GrAPES needs the testset of the AMRBank 3.0 concatenated all into one file (specifically, with the files concatenated in alphabetical order). You can obtain such a concatenation with this script:
+
+```commandline
+python concatenate_amr_files.py path/to/original/AMR/testset concatenated/testset/file/name
+```
+
+The file `concatenated/testset/file/name` will be created by this script, and in all the documentation below, `concatenated/testset/file/name` refers to that file.
+
+
 ## Usage
 
-### Run your parser on the new sentences in the GrAPES testset
+### Running your parser
 
-If you want the full results, you need to predict AMRs for the new sentences, which are in `corpus/corpus.txt`.
+The evaluation scripts use two corpus files, the AMR 3.0 testset and the GrAPES testset provided (and possible extended in step B above). To use GrAPES, you need to generate parser output on both of those datasets. For each dataset, generate one file with AMRs like you would for computing Smatch, i.e. with the AMRs in the same order as the input corpus, and separated by blank lines (that is, the standard AMR corpus format, readable by the `penman` package; we only need the graphs, no metadata like IDs etc. is required).
 
-### Evaluate on all categories
+For the GrAPES testset, simply run your parser on `corpus/corpus.txt` (this file was possibly extended from the version in this repo in setup step B).
+
+For the AMR 3.0 test set, you may already have such an output file. If not, run your parser on the `concatenated/testset/file/name` file created during setup step (C).
+
+If you want to evaluate only on a single category, running your parser on one of the files in `corpus/subcorpora` may be sufficient.
+
+## Evaluation
 
 To run the full evaluation suite, run the following:
 
@@ -54,28 +65,21 @@ To run the full evaluation suite, run the following:
 python evaluate_call_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -gg corpus/corpus.txt -pg path/to/your/parser/output/gRAPES/corpus.txt 
 ```
 
-The `-gt` argument is the path to your copy of the AMR testset and the `-pt` argument is the path to your parser output for the AMR testset.
+The `-gt` argument is the path to your copy of the AMR testset and the `-pt` argument is the path to your parser output for the AMR testset. The `-gg` argument is the path to the GrAPES file `corpus.txt` and `-pg` is the path to your parser output on that file. This will automatically detect whether you've added the PTB and AMR testset sentences in setup step B.
 
-The `-gg` argument is the path to the GrAPES file `corpus.txt` and `-pg` is the path to your parser output on that file.
+You can also evaluate on only the AMR testset, or only the GrAPES testset, simply by leaving out the other parameters.
 
-This will automatically detect whether you've added the PTB and AMR testset sentences.
-
-If you only have the AMR testset or GrAPES predictions, see below.
-
-### AMR 3.0 testset only
+AMR 3.0 testset only:
 
 ```commandline
 python evaluate_call_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset
 ```
 
-### GrAPES testset only
-
-This will automatically detect whether you've added the PTB and AMR testset sentences.
+ GrAPES testset only:
 
 ```commandline
 python evaluate_call_categories.py -gg corpus/corpus.txt -pg path/to/your/parser/output/gRAPES/corpus.txt 
 ```
-
 
 ### What do to if you are missing PTB or AMR 3.0
 
@@ -90,7 +94,7 @@ If you don't have PTB:
 
 ### Evaluate on a single category
 
-To evaluate on just one of the 36 categories, give the name of the category to evaluate, and provide the path to the relevant gold file (`-g`) and the relevant prediction file (`-p`). 
+To evaluate on just one of the 36 categories, use the `evaluate_single_category.py` script and give the name of the category to evaluate, and provide the path to the relevant gold file (`-g`) and the relevant prediction file (`-p`). 
 
 Category names are listed below. The "relevant" gold file is either the path to the AMR testset, the path to the GrAPES gold `corpus.txt` file, or, if you prefer, the GrAPES subcorpus file, such as `adjectives.txt`. Similarly, your parser output can be the full GrAPES `corpus.txt` output, or just the output from running your parser on the one category.
 
@@ -107,7 +111,7 @@ python evaluate_single_category.py -c adjectives -g corpus/adjectives.txt -p pat
 As long as the files have the same number of graphs, the order matches, and they contain the particular category you want, this will work.
 
 
-To evaluate on the category Rare Senses, an AMR testset category, run the following.
+To evaluate an AMR testset category, e.g. here the Rare Senses category, run the following.
 
 ```commandline
 python evaluate_single_category.py -c rare_senses -g path/to/AMR/testset -p path/to/parser/AMR/testset/output
@@ -169,7 +173,7 @@ imperatives
 
 ## Looking at example outputs
 
-You may find Vulcan #TODO helpful for looking at your parser output and comparing it to the gold graph, when available.
+You may find [Vulcan](https://github.com/jgroschwitz/vulcan) helpful for looking at your parser output and comparing it to the gold graph, when available.
 
 You can Git Clone the repository, and create pickles of the data as follows:
 
