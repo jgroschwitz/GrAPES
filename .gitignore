@@ -120,3 +120,8 @@ corpus/subcorpora/unbounded_dependencies.txt
 corpus/unbounded_dependencies.tsv
 corpus/test_corpus.txt
 corpus/subcorpora/word_disambiguation.txt
+results.csv
+corpus/no_unbounded.txt
+corpus/no_word_disambig.txt
+corpus/unbounded_dependencies.txt
+corpus/unbounded_dependencies_old_ids.tsv
