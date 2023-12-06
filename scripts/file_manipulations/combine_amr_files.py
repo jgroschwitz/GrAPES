@@ -2,6 +2,8 @@
 Reads in all txt files in the corpus folder and adds them to corpus.txt
 with updated IDs
 Updates TSV files as necessary with new IDs
+
+Also updates AM parser outputs if needed
 """
 
 import os
@@ -9,7 +11,8 @@ import sys
 
 import penman
 
-path_to_existing_amr_files = "corpus"
+path_to_existing_amr_files = "../../corpus/subcorpora"
+outpath = "../../corpus"
 full_corpus = []  # we'll eventually penman.dump this
 
 # if we're also updating AM parser output IDs (run before we updated some IDs)
@@ -18,12 +21,12 @@ am_path = "../amr-challenge/amparser-output"
 am_full_corpus = []
 
 # These will end up with different IDs in them
-for f in os.listdir("corpus"):
+for f in os.listdir(outpath):
     if f in ["unseen_senses_new_sentences.tsv",
              "unseen_roles_new_sentences.tsv",
-             "winograd.tsv"]:
+             "winograd.tsv", "unbounded_dependencies.tsv"]:
         subcorpus = f.split(".")[0]
-        os.rename(f, f"{subcorpus}_old_ids.tsv")
+        os.rename(f"{outpath}/{f}", f"{outpath}/{subcorpus}_old_ids.tsv")
 
 # loop through existing corpus files
 for corpus_file in os.listdir(path_to_existing_amr_files):
@@ -60,7 +63,7 @@ for corpus_file in os.listdir(path_to_existing_amr_files):
             # add this category to the full corpus
             full_corpus += category
             # output to new file so we have the new IDs
-            penman.dump(category, f"corpus/subcorpora/{corpus_file}")
+            penman.dump(category, f"{outpath}/subcorpora/{corpus_file}")
             if changed:
                 print("ids changed in", corpus_file)
             if am:
@@ -80,9 +83,9 @@ for corpus_file in os.listdir(path_to_existing_amr_files):
         # hard coded -- these ones actually need to updated because of new IDs
         if corpus_file in ["unseen_senses_new_sentences.txt",
                            "unseen_roles_new_sentences.txt",
-                           "winograd.txt"]:
+                           "winograd.txt", "unbounded_dependencies.txt"]:
             # update the tsv file with new IDs
-            with open(f"{path_to_existing_amr_files}/{category_name}_old_ids.tsv", 'r') as tsv:
+            with open(f"{outpath}/{category_name}_old_ids.tsv", 'r') as tsv:
                 lines = tsv.readlines()
                 new_lines = []
                 for line in lines:
@@ -95,11 +98,11 @@ for corpus_file in os.listdir(path_to_existing_amr_files):
                             # replace the ID
                             line = f"{entry.metadata['id']}\t{rest_of_line}"
                     new_lines.append(line)
-            with open(f"corpus/{category_name}.tsv", 'w') as new_tsv:
+            with open(f"{outpath}/{category_name}.tsv", 'w') as new_tsv:
                 new_tsv.writelines(new_lines)
 
 
-penman.dump(full_corpus, "corpus/corpus.txt")
+penman.dump(full_corpus, f"{outpath}/corpus.txt")
 
 if am:
     penman.dump(am_full_corpus, f"{am_path}/full_corpus.txt")

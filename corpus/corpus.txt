@@ -12064,37 +12064,37 @@
 
 # ::id berts_mouth_0
 # ::snt The clip is about a horse.
-# ::suppl Maria_Bertsmouth1.tsv-0
+# ::suppl berts_mouth_0
 (c / clip
    :topic (h / horse))
 
 # ::id berts_mouth_1
 # ::snt The clip is about a queen.
-# ::suppl Maria_Bertsmouth1.tsv-1
+# ::suppl berts_mouth_1
 (c / clip
    :topic (q / queen))
 
 # ::id berts_mouth_2
 # ::snt The clip is about a cat.
-# ::suppl Maria_Bertsmouth1.tsv-2
+# ::suppl berts_mouth_2
 (c / clip
    :topic (c2 / cat))
 
 # ::id berts_mouth_3
 # ::snt The clip is about a king.
-# ::suppl Maria_Bertsmouth1.tsv-3
+# ::suppl berts_mouth_3
 (c / clip
    :topic (k / king))
 
 # ::id berts_mouth_4
 # ::snt The clip is about a prince.
-# ::suppl Maria_Bertsmouth1.tsv-4
+# ::suppl berts_mouth_4
 (c / clip
    :topic (p / prince))
 
 # ::id berts_mouth_5
 # ::snt The clip is about an hour.
-# ::suppl Maria_Bertsmouth1.tsv-5
+# ::suppl berts_mouth_5
 (c / clip
    :duration (a / about
                 :op1 (t / temporal-quantity
@@ -12103,7 +12103,7 @@
 
 # ::id berts_mouth_6
 # ::snt The clip is about a minute.
-# ::suppl Maria_Bertsmouth1.tsv-6
+# ::suppl berts_mouth_6
 (c / clip
    :duration (a / about
                 :op1 (t / temporal-quantity
@@ -12112,7 +12112,7 @@
 
 # ::id berts_mouth_7
 # ::snt The clip is about a second.
-# ::suppl Maria_Bertsmouth1.tsv-7
+# ::suppl berts_mouth_7
 (c / clip
    :duration (a / about
                 :op1 (t / temporal-quantity
@@ -12121,42 +12121,42 @@
 
 # ::id berts_mouth_8
 # ::snt It lasted for hours.
-# ::suppl Maria_Bertsmouth1.tsv-8
+# ::suppl berts_mouth_8
 (l / last-01
    :ARG2 (t / temporal-quantity
             :unit (h / hour)))
 
 # ::id berts_mouth_9
 # ::snt It lasted for decades.
-# ::suppl Maria_Bertsmouth1.tsv-9
+# ::suppl berts_mouth_9
 (l / last-01
    :ARG2 (t / temporal-quantity
             :unit (d / decade)))
 
 # ::id berts_mouth_10
 # ::snt It lasted for weeks.
-# ::suppl Maria_Bertsmouth1.tsv-10
+# ::suppl berts_mouth_10
 (l / last-01
    :ARG2 (t / temporal-quantity
             :unit (w / week)))
 
 # ::id berts_mouth_11
 # ::snt It lasted for months.
-# ::suppl Maria_Bertsmouth1.tsv-11
+# ::suppl berts_mouth_11
 (l / last-01
    :ARG2 (t / temporal-quantity
             :unit (m / month)))
 
 # ::id berts_mouth_12
 # ::snt It lasted for seconds.
-# ::suppl Maria_Bertsmouth1.tsv-12
+# ::suppl berts_mouth_12
 (l / last-01
    :ARG2 (t / temporal-quantity
             :unit (s / second)))
 
 # ::id berts_mouth_13
 # ::snt The book is for Lisa.
-# ::suppl Maria_Bertsmouth1.tsv-13
+# ::suppl berts_mouth_13
 (b / book
    :beneficiary (p / person
                    :name (n / name
@@ -12164,7 +12164,7 @@
 
 # ::id berts_mouth_14
 # ::snt The book is for John.
-# ::suppl Maria_Bertsmouth1.tsv-14
+# ::suppl berts_mouth_14
 (b / book
    :beneficiary (p / person
                    :name (n / name
@@ -12172,55 +12172,55 @@
 
 # ::id berts_mouth_15
 # ::snt The book is for him.
-# ::suppl Maria_Bertsmouth1.tsv-15
+# ::suppl berts_mouth_15
 (b / book
    :beneficiary (h / he))
 
 # ::id berts_mouth_16
 # ::snt The book is for her.
-# ::suppl Maria_Bertsmouth1.tsv-16
+# ::suppl berts_mouth_16
 (b / book
    :beneficiary (s / she))
 
 # ::id berts_mouth_17
 # ::snt The book is for me.
-# ::suppl Maria_Bertsmouth1.tsv-17
+# ::suppl berts_mouth_17
 (b / book
    :beneficiary (i / i))
 
 # ::id berts_mouth_18
 # ::snt The book is for reading.
-# ::suppl Maria_Bertsmouth1.tsv-18
+# ::suppl berts_mouth_18
 (b / book
    :purpose (r / read-01))
 
 # ::id berts_mouth_19
 # ::snt The book is for learning.
-# ::suppl Maria_Bertsmouth1.tsv-19
+# ::suppl berts_mouth_19
 (b / book
    :purpose (l / learn-01))
 
 # ::id berts_mouth_20
 # ::snt The book is for viewing.
-# ::suppl Maria_Bertsmouth1.tsv-20
+# ::suppl berts_mouth_20
 (b / book
    :purpose (v / view-01))
 
 # ::id berts_mouth_21
 # ::snt The book is for studying.
-# ::suppl Maria_Bertsmouth1.tsv-21
+# ::suppl berts_mouth_21
 (b / book
    :purpose (s / study-01))
 
 # ::id berts_mouth_22
 # ::snt The book is for enjoying.
-# ::suppl Maria_Bertsmouth1.tsv-22
+# ::suppl berts_mouth_22
 (b / book
    :purpose (e / enjoy-01))
 
 # ::id berts_mouth_23
 # ::snt The event is in January.
-# ::suppl 54
+# ::suppl berts_mouth_23
 (b / be-temporally-at-91
    :ARG1 (e / event)
    :ARG2 (d / date-entity
@@ -12228,7 +12228,7 @@
 
 # ::id berts_mouth_24
 # ::snt The dinner is on the table.
-# ::suppl 55
+# ::suppl berts_mouth_24
 (b / be-located-at-91
    :ARG1 (d / dinner)
    :ARG2 (o / on
@@ -12236,7 +12236,7 @@
 
 # ::id berts_mouth_25
 # ::snt The dinner is on the stove.
-# ::suppl 56
+# ::suppl berts_mouth_25
 (b / be-located-at-91
    :ARG1 (d / dinner)
    :ARG2 (o / on
@@ -12244,7 +12244,7 @@
 
 # ::id berts_mouth_26
 # ::snt The dinner is on the counter.
-# ::suppl 57
+# ::suppl berts_mouth_26
 (b / be-located-at-91
    :ARG1 (d / dinner)
    :ARG2 (o / on
@@ -12252,7 +12252,7 @@
 
 # ::id berts_mouth_27
 # ::snt The dinner is on the plate.
-# ::suppl 58
+# ::suppl berts_mouth_27
 (b / be-located-at-91
    :ARG1 (d / dinner)
    :ARG2 (o / on
@@ -12260,7 +12260,7 @@
 
 # ::id berts_mouth_28
 # ::snt The dinner is on Sunday.
-# ::suppl 59
+# ::suppl berts_mouth_28
 (b / be-temporally-at-91
    :ARG1 (d / dinner)
    :ARG2 (d2 / date-entity
@@ -12268,7 +12268,7 @@
 
 # ::id berts_mouth_29
 # ::snt The dinner is on Monday.
-# ::suppl 60
+# ::suppl berts_mouth_29
 (b / be-temporally-at-91
    :ARG1 (d / dinner)
    :ARG2 (d2 / date-entity
@@ -12276,7 +12276,7 @@
 
 # ::id berts_mouth_30
 # ::snt The dinner is on Tuesday.
-# ::suppl 61
+# ::suppl berts_mouth_30
 (b / be-temporally-at-91
    :ARG1 (d / dinner)
    :ARG2 (d2 / date-entity
@@ -12284,7 +12284,7 @@
 
 # ::id berts_mouth_31
 # ::snt The dinner is on Wednesday.
-# ::suppl 62
+# ::suppl berts_mouth_31
 (b / be-temporally-at-91
    :ARG1 (d / dinner)
    :ARG2 (d2 / date-entity
@@ -12292,7 +12292,7 @@
 
 # ::id berts_mouth_32
 # ::snt The dinner is on Saturday.
-# ::suppl 63
+# ::suppl berts_mouth_32
 (b / be-temporally-at-91
    :ARG1 (d / dinner)
    :ARG2 (d2 / date-entity
@@ -12300,77 +12300,77 @@
 
 # ::id berts_mouth_33
 # ::snt I will run the study.
-# ::suppl 64
+# ::suppl berts_mouth_33
 (r / run-01
    :ARG0 (i / i)
    :ARG1 (s / study))
 
 # ::id berts_mouth_34
 # ::snt I will run the restaurant.
-# ::suppl 65
+# ::suppl berts_mouth_34
 (r / run-01
    :ARG0 (i / i)
    :ARG1 (r2 / restaurant))
 
 # ::id berts_mouth_35
 # ::snt I will run the store.
-# ::suppl 66
+# ::suppl berts_mouth_35
 (r / run-01
    :ARG0 (i / i)
    :ARG1 (s / store))
 
 # ::id berts_mouth_36
 # ::snt I will run the lab.
-# ::suppl 67
+# ::suppl berts_mouth_36
 (r / run-01
    :ARG0 (i / i)
    :ARG1 (l / lab))
 
 # ::id berts_mouth_37
 # ::snt I will run the shop.
-# ::suppl 68
+# ::suppl berts_mouth_37
 (r / run-01
    :ARG0 (i / i)
    :ARG1 (s / shop))
 
 # ::id berts_mouth_38
 # ::snt I will run the business.
-# ::suppl 69
+# ::suppl berts_mouth_38
 (r / run-01
    :ARG0 (i / i)
    :ARG1 (b / business))
 
 # ::id berts_mouth_39
 # ::snt I will run the race.
-# ::suppl 70
+# ::suppl berts_mouth_39
 (r / run-02
    :ARG0 (i / i)
    :ARG1 (r2 / race))
 
 # ::id berts_mouth_40
 # ::snt I will run the marathon.
-# ::suppl 71
+# ::suppl berts_mouth_40
 (r / run-02
    :ARG0 (i / i)
    :ARG1 (m / marathon))
 
 # ::id berts_mouth_41
 # ::snt I will run the course.
-# ::suppl 72
+# ::suppl berts_mouth_41
 (r / run-02
    :ARG0 (i / i)
    :ARG1 (c / course))
 
 # ::id berts_mouth_42
 # ::snt I will run the trail.
-# ::suppl 73
+# ::suppl berts_mouth_42
 (r / run-02
    :ARG0 (i / i)
    :ARG1 (t / trail))
 
 # ::id berts_mouth_43
 # ::snt I will run the mile.
-# ::suppl 74
+# ::suppl berts_mouth_43
 (r / run-02
    :ARG0 (i / i)
    :ARG1 (d / distance-quantity
@@ -12379,77 +12379,77 @@
 
 # ::id berts_mouth_44
 # ::snt I started the car.
-# ::suppl 75
+# ::suppl berts_mouth_44
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (c / car))
 
 # ::id berts_mouth_45
 # ::snt I started truck.
-# ::suppl 76
+# ::suppl berts_mouth_45
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (t / truck))
 
 # ::id berts_mouth_46
 # ::snt I started the engine.
-# ::suppl 77
+# ::suppl berts_mouth_46
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (e / engine))
 
 # ::id berts_mouth_47
 # ::snt I started the bus.
-# ::suppl 78
+# ::suppl berts_mouth_47
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (b / bus))
 
 # ::id berts_mouth_48
 # ::snt I started the boat.
-# ::suppl 79
+# ::suppl berts_mouth_48
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (b / boat))
 
 # ::id berts_mouth_49
 # ::snt I started the book.
-# ::suppl 80
+# ::suppl berts_mouth_49
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (b / book))
 
 # ::id berts_mouth_50
 # ::snt I started the journal.
-# ::suppl 81
+# ::suppl berts_mouth_50
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (j / journal))
 
 # ::id berts_mouth_51
 # ::snt I started the magazine.
-# ::suppl 82
+# ::suppl berts_mouth_51
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (m / magazine))
 
 # ::id berts_mouth_52
 # ::snt I started the movie.
-# ::suppl 83
+# ::suppl berts_mouth_52
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (m / movie))
 
 # ::id berts_mouth_53
 # ::snt I started the episode.
-# ::suppl 84
+# ::suppl berts_mouth_53
 (s / start-01
    :ARG0 (i / i)
    :ARG1 (e / episode))
 
 # ::id berts_mouth_54
 # ::snt I ate salad with a fork.
-# ::suppl 85
+# ::suppl berts_mouth_54
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12457,7 +12457,7 @@
 
 # ::id berts_mouth_55
 # ::snt I ate salad with a spoon.
-# ::suppl 86
+# ::suppl berts_mouth_55
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12465,7 +12465,7 @@
 
 # ::id berts_mouth_56
 # ::snt I ate salad with a knife.
-# ::suppl 87
+# ::suppl berts_mouth_56
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12473,7 +12473,7 @@
 
 # ::id berts_mouth_57
 # ::snt I ate salad with enthusiasm.
-# ::suppl 88
+# ::suppl berts_mouth_57
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12481,7 +12481,7 @@
 
 # ::id berts_mouth_58
 # ::snt I ate salad with enjoyment.
-# ::suppl 89
+# ::suppl berts_mouth_58
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12489,7 +12489,7 @@
 
 # ::id berts_mouth_59
 # ::snt I ate salad with gusto.
-# ::suppl 90
+# ::suppl berts_mouth_59
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12497,7 +12497,7 @@
 
 # ::id berts_mouth_60
 # ::snt I ate salad with pleasure.
-# ::suppl 91
+# ::suppl berts_mouth_60
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12505,7 +12505,7 @@
 
 # ::id berts_mouth_61
 # ::snt I ate salad with him.
-# ::suppl 92
+# ::suppl berts_mouth_61
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12513,7 +12513,7 @@
 
 # ::id berts_mouth_62
 # ::snt I ate salad with John.
-# ::suppl 93
+# ::suppl berts_mouth_62
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12522,7 +12522,7 @@
 
 # ::id berts_mouth_63
 # ::snt I ate salad with Lisa.
-# ::suppl 94
+# ::suppl berts_mouth_63
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12531,7 +12531,7 @@
 
 # ::id berts_mouth_64
 # ::snt I ate salad with her.
-# ::suppl 95
+# ::suppl berts_mouth_64
 (e / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad)
@@ -12539,140 +12539,140 @@
 
 # ::id berts_mouth_65
 # ::snt I had slept.
-# ::suppl anna_bert_fixed.tsv-0
+# ::suppl berts_mouth_65
 (s / sleep-01
    :ARG0 (i / i))
 
 # ::id berts_mouth_66
 # ::snt I had seen.
-# ::suppl anna_bert_fixed.tsv-1
+# ::suppl berts_mouth_66
 (s / see-01
    :ARG0 (i / i))
 
 # ::id berts_mouth_67
 # ::snt I had eaten.
-# ::suppl anna_bert_fixed.tsv-2
+# ::suppl berts_mouth_67
 (e / eat-01
    :ARG0 (i / i))
 
 # ::id berts_mouth_68
 # ::snt I had gone.
-# ::suppl anna_bert_fixed.tsv-3
+# ::suppl berts_mouth_68
 (g / go-02
    :ARG0 (i / i))
 
 # ::id berts_mouth_69
 # ::snt I had a party.
-# ::suppl anna_bert_fixed.tsv-4
+# ::suppl berts_mouth_69
 (h / party-01
    :ARG0 (i / i))
 
 # ::id berts_mouth_70
 # ::snt I had a reception.
-# ::suppl anna_bert_fixed.tsv-5
+# ::suppl berts_mouth_70
 (h / have-06
    :ARG0 (i / i)
    :ARG1 (r / reception))
 
 # ::id berts_mouth_71
 # ::snt I had a ceremony.
-# ::suppl anna_bert_fixed.tsv-6
+# ::suppl berts_mouth_71
 (h / have-06
    :ARG0 (i / i)
    :ARG1 (c / ceremony))
 
 # ::id berts_mouth_72
 # ::snt I had a wedding.
-# ::suppl anna_bert_fixed.tsv-7
+# ::suppl berts_mouth_72
 (h / have-06
    :ARG0 (i / i)
    :ARG1 (w / wedding))
 
 # ::id berts_mouth_73
 # ::snt I had a meeting.
-# ::suppl anna_bert_fixed.tsv-8
+# ::suppl berts_mouth_73
 (m / meet-03
    :ARG0 (i / i))
 
 # ::id berts_mouth_74
 # ::snt I had pizza.
-# ::suppl anna_bert_fixed.tsv-9
+# ::suppl berts_mouth_74
 (h / eat-01
    :ARG0 (i / i)
    :ARG1 (p / pizza))
 
 # ::id berts_mouth_75
 # ::snt I had salad.
-# ::suppl anna_bert_fixed.tsv-10
+# ::suppl berts_mouth_75
 (h / eat-01
    :ARG0 (i / i)
    :ARG1 (s / salad))
 
 # ::id berts_mouth_76
 # ::snt I had coffee.
-# ::suppl anna_bert_fixed.tsv-11
+# ::suppl berts_mouth_76
 (h / drink-01
    :ARG0 (i / i)
    :ARG1 (c / coffee))
 
 # ::id berts_mouth_77
 # ::snt I had cake.
-# ::suppl anna_bert_fixed.tsv-12
+# ::suppl berts_mouth_77
 (h / eat-01
    :ARG0 (i / i)
    :ARG1 (c / cake))
 
 # ::id berts_mouth_78
 # ::snt I had sushi.
-# ::suppl anna_bert_fixed.tsv-13
+# ::suppl berts_mouth_78
 (h / eat-01
    :ARG0 (i / i)
    :ARG1 (s / sushi))
 
 # ::id berts_mouth_79
 # ::snt I had a meeting.
-# ::suppl anna_bert_fixed.tsv-14
+# ::suppl berts_mouth_79
 (m / meet-03
    :ARG0 (i / i))
 
 # ::id berts_mouth_80
 # ::snt I had a blister.
-# ::suppl anna_bert_fixed.tsv-15
+# ::suppl berts_mouth_80
 (h / have-03
    :ARG0 (i / i)
    :ARG1 (b / blister))
 
 # ::id berts_mouth_81
 # ::snt I had a fever.
-# ::suppl anna_bert_fixed.tsv-16
+# ::suppl berts_mouth_81
 (h / have-03
    :ARG0 (i / i)
    :ARG1 (f / fever))
 
 # ::id berts_mouth_82
 # ::snt I had a headache.
-# ::suppl anna_bert_fixed.tsv-17
+# ::suppl berts_mouth_82
 (h / have-03
    :ARG0 (i / i)
    :ARG1 (h2 / headache))
 
 # ::id berts_mouth_83
 # ::snt I had a cold.
-# ::suppl anna_bert_fixed.tsv-18
+# ::suppl berts_mouth_83
 (h / have-03
    :ARG0 (i / i)
    :ARG1 (c / cold))
 
 # ::id berts_mouth_84
 # ::snt I had a cough.
-# ::suppl anna_bert_fixed.tsv-19
+# ::suppl berts_mouth_84
 (h / have-03
    :ARG0 (i / i)
    :ARG1 (c / cough-01))
 
 # ::id berts_mouth_85
 # ::snt The event is in London.
-# ::suppl anna_bert_fixed.tsv-20
+# ::suppl berts_mouth_85
 (b / be-located-at-91
    :ARG1 (e / event)
    :ARG2 (c / city
@@ -12682,14 +12682,14 @@
 
 # ::id berts_mouth_86
 # ::snt The event is in here.
-# ::suppl anna_bert_fixed.tsv-21
+# ::suppl berts_mouth_86
 (b / be-located-at-91
    :ARG1 (e / event)
    :ARG2 (h / here))
 
 # ::id berts_mouth_87
 # ::snt The event is in Paris.
-# ::suppl anna_bert_fixed.tsv-22
+# ::suppl berts_mouth_87
 (b / be-located-at-91
    :ARG1 (e / event)
    :ARG2 (c / city
@@ -12699,14 +12699,14 @@
 
 # ::id berts_mouth_88
 # ::snt The event is in there.
-# ::suppl anna_bert_fixed.tsv-23
+# ::suppl berts_mouth_88
 (b / be-located-at-91
    :ARG1 (e / event)
    :ARG2 (t / there))
 
 # ::id berts_mouth_89
 # ::snt The event is in Canada.
-# ::suppl anna_bert_fixed.tsv-24
+# ::suppl berts_mouth_89
 (b / be-located-at-91
    :ARG1 (e / event)
    :ARG2 (c / country
@@ -12716,7 +12716,7 @@
 
 # ::id berts_mouth_90
 # ::snt The event is in August.
-# ::suppl anna_bert_fixed.tsv-25
+# ::suppl berts_mouth_90
 (b / be-temporally-at-91
    :ARG1 (e / event)
    :ARG2 (d / date-entity
@@ -12724,7 +12724,7 @@
 
 # ::id berts_mouth_91
 # ::snt The event is in July.
-# ::suppl anna_bert_fixed.tsv-26
+# ::suppl berts_mouth_91
 (b / be-temporally-at-91
    :ARG1 (e / event)
    :ARG2 (d / date-entity
@@ -12732,7 +12732,7 @@
 
 # ::id berts_mouth_92
 # ::snt The event is in October.
-# ::suppl anna_bert_fixed.tsv-27
+# ::suppl berts_mouth_92
 (b / be-temporally-at-91
    :ARG1 (e / event)
    :ARG2 (d / date-entity
@@ -12740,7 +12740,7 @@
 
 # ::id berts_mouth_93
 # ::snt The event is in June.
-# ::suppl anna_bert_fixed.tsv-28
+# ::suppl berts_mouth_93
 (b / be-temporally-at-91
    :ARG1 (e / event)
    :ARG2 (d / date-entity
@@ -12748,7 +12748,7 @@
 
 # ::id berts_mouth_94
 # ::snt The event is in January.
-# ::suppl anna_bert_fixed.tsv-29
+# ::suppl berts_mouth_94
 (b / be-temporally-at-91
    :ARG1 (e / event)
    :ARG2 (d / date-entity
@@ -16897,241 +16897,241 @@
 # ::id unseen_senses_new_sentences_0
 # ::snt Sick ski jump, bro!
 # ::sense sick-03
-# ::suppl unseen_senses_new_sentences_1
+# ::suppl unseen_senses_new_sentences_0
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_1
 # ::snt Sick ski jump, bro! That flip was amazing.
 # ::sense sick-03
-# ::suppl unseen_senses_new_sentences_2
+# ::suppl unseen_senses_new_sentences_1
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_2
 # ::snt The young reporter filled in for the usual news anchors.
 # ::sense fill-in-07
-# ::suppl unseen_senses_new_sentences_3
+# ::suppl unseen_senses_new_sentences_2
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_3
 # ::snt The young reporter filled in for the usual news anchors while they were on vacation.
 # ::sense fill-in-07
-# ::suppl unseen_senses_new_sentences_4
+# ::suppl unseen_senses_new_sentences_3
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_4
 # ::snt I was so stressed last year that I was beginning to crack up.
 # ::sense crack-up-04
-# ::suppl unseen_senses_new_sentences_5
+# ::suppl unseen_senses_new_sentences_4
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_5
 # ::snt I was so stressed last year that I was beginning to crack up and lose sleep.
 # ::sense crack-up-04
-# ::suppl unseen_senses_new_sentences_6
+# ::suppl unseen_senses_new_sentences_5
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_6
 # ::snt The nerd teased the cool kid on the playground.
 # ::sense tease-02
-# ::suppl unseen_senses_new_sentences_7
+# ::suppl unseen_senses_new_sentences_6
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_7
 # ::snt The nerd teased the cool kid on the playground by singing mean songs.
 # ::sense tease-02
-# ::suppl unseen_senses_new_sentences_8
+# ::suppl unseen_senses_new_sentences_7
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_8
 # ::snt I had my impacted wisdom teeth removed.
 # ::sense impact-03
-# ::suppl unseen_senses_new_sentences_9
+# ::suppl unseen_senses_new_sentences_8
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_9
 # ::snt I had my impacted wisdom teeth removed because they were stuck in my gums.
 # ::sense impact-03
-# ::suppl unseen_senses_new_sentences_10
+# ::suppl unseen_senses_new_sentences_9
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_10
 # ::snt We hired several more employees to fill out the team.
 # ::sense fill-out-04
-# ::suppl unseen_senses_new_sentences_11
+# ::suppl unseen_senses_new_sentences_10
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_11
 # ::snt We hired several more employees to fill out the team and now we’re complete.
 # ::sense fill-out-04
-# ::suppl unseen_senses_new_sentences_12
+# ::suppl unseen_senses_new_sentences_11
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_12
 # ::snt The comedian has a dry sense of humor.
 # ::sense dry-04
-# ::suppl unseen_senses_new_sentences_13
+# ::suppl unseen_senses_new_sentences_12
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_13
 # ::snt The comedian has a dry sense of humor lacking any warmth.
 # ::sense dry-04
-# ::suppl unseen_senses_new_sentences_14
+# ::suppl unseen_senses_new_sentences_13
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_14
 # ::snt Jonas paced around the room.
 # ::sense pace-02
-# ::suppl unseen_senses_new_sentences_15
+# ::suppl unseen_senses_new_sentences_14
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_15
 # ::snt Jonas paced around the room nervously.
 # ::sense pace-02
-# ::suppl unseen_senses_new_sentences_16
+# ::suppl unseen_senses_new_sentences_15
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_16
 # ::snt The students always sneak cookies from the dining hall.
 # ::sense sneak-02
-# ::suppl unseen_senses_new_sentences_17
+# ::suppl unseen_senses_new_sentences_16
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_17
 # ::snt The students always sneak cookies from the dining hall and never get caught.
 # ::sense sneak-02
-# ::suppl unseen_senses_new_sentences_18
+# ::suppl unseen_senses_new_sentences_17
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_18
 # ::snt The couple got spliced in Las Vegas.
 # ::sense splice-02
-# ::suppl unseen_senses_new_sentences_19
+# ::suppl unseen_senses_new_sentences_18
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_19
 # ::snt The couple got spliced in Las Vegas and spent their honeymoon in Hawaii.
 # ::sense splice-02
-# ::suppl unseen_senses_new_sentences_20
+# ::suppl unseen_senses_new_sentences_19
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_20
 # ::snt She wrung the wet cloth.
 # ::sense wring-02
-# ::suppl unseen_senses_new_sentences_21
+# ::suppl unseen_senses_new_sentences_20
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_21
 # ::snt She wrung the wet cloth, so it was no longer dripping.
 # ::sense wring-02
-# ::suppl unseen_senses_new_sentences_22
+# ::suppl unseen_senses_new_sentences_21
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_22
 # ::snt The Republicans tangled with the Democrats.
 # ::sense tangle-03
-# ::suppl unseen_senses_new_sentences_23
+# ::suppl unseen_senses_new_sentences_22
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_23
 # ::snt The Republicans tangled with the Democrats over tax cuts.
 # ::sense tangle-03
-# ::suppl unseen_senses_new_sentences_24
+# ::suppl unseen_senses_new_sentences_23
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_24
 # ::snt What’s the square of 5?
 # ::sense square-02
-# ::suppl unseen_senses_new_sentences_25
+# ::suppl unseen_senses_new_sentences_24
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_25
 # ::snt What’s the square of 5? Is it 25?
 # ::sense square-02
-# ::suppl unseen_senses_new_sentences_26
+# ::suppl unseen_senses_new_sentences_25
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_26
 # ::snt This tune really swings!
 # ::sense swing-04
-# ::suppl unseen_senses_new_sentences_27
+# ::suppl unseen_senses_new_sentences_26
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_27
 # ::snt This tune really swings and has great rhythm!
 # ::sense swing-04
-# ::suppl unseen_senses_new_sentences_28
+# ::suppl unseen_senses_new_sentences_27
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_28
 # ::snt The lawyers excepted to everything.
 # ::sense except-02
-# ::suppl unseen_senses_new_sentences_29
+# ::suppl unseen_senses_new_sentences_28
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_29
 # ::snt The lawyers excepted to everything and the judge got mad.
 # ::sense except-02
-# ::suppl unseen_senses_new_sentences_30
+# ::suppl unseen_senses_new_sentences_29
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_30
 # ::snt The jazz trio jammed all night.
 # ::sense jam-02
-# ::suppl unseen_senses_new_sentences_31
+# ::suppl unseen_senses_new_sentences_30
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_31
 # ::snt The jazz trio jammed all night to the delight of the audience.
 # ::sense jam-02
-# ::suppl unseen_senses_new_sentences_32
+# ::suppl unseen_senses_new_sentences_31
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_32
 # ::snt The event wound up around midnight.
 # ::sense wind-up-05
-# ::suppl unseen_senses_new_sentences_33
+# ::suppl unseen_senses_new_sentences_32
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_33
 # ::snt The event wound up around midnight and everyone went home.
 # ::sense wind-up-05
-# ::suppl unseen_senses_new_sentences_34
+# ::suppl unseen_senses_new_sentences_33
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_34
 # ::snt The election really wound me up.
 # ::sense wind-up-03
-# ::suppl unseen_senses_new_sentences_35
+# ::suppl unseen_senses_new_sentences_34
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_35
 # ::snt The election really wound me up and I couldn’t sleep.
 # ::sense wind-up-03
-# ::suppl unseen_senses_new_sentences_36
+# ::suppl unseen_senses_new_sentences_35
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_36
 # ::snt Ouch that really smarts!
 # ::sense smart-03
-# ::suppl unseen_senses_new_sentences_37
+# ::suppl unseen_senses_new_sentences_36
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_37
 # ::snt Ouch that really smarts! I got a paper cut.
 # ::sense smart-03
-# ::suppl unseen_senses_new_sentences_38
+# ::suppl unseen_senses_new_sentences_37
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_38
 # ::snt The vocal folds abduct when you breathe out.
 # ::sense abduct-02
-# ::suppl unseen_senses_new_sentences_39
+# ::suppl unseen_senses_new_sentences_38
 (d / dummy)
 
 # ::id unseen_senses_new_sentences_39
 # ::snt The vocal folds abduct when you breathe out so the air can escape.
 # ::sense abduct-02
-# ::suppl unseen_senses_new_sentences_40
+# ::suppl unseen_senses_new_sentences_39
 (d / dummy)
 
 # ::snt Dana bought tomatoes for a few dollars.
@@ -17827,82 +17827,82 @@
 
 # ::id unseen_roles_new_sentences_0
 # ::snt The car accelerated further, from 30 mph to 40 mph.
-# ::suppl unseen_roles_new_sentences_1
+# ::suppl unseen_roles_new_sentences_0
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_1
 # ::snt I acquired a collector’s item from an antiques shop for my mother.
-# ::suppl unseen_roles_new_sentences_2
+# ::suppl unseen_roles_new_sentences_1
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_2
 # ::snt We blasted a gaping hole into the side of a dumpster.
-# ::suppl unseen_roles_new_sentences_3
+# ::suppl unseen_roles_new_sentences_2
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_3
 # ::snt We beefed up our parser by several Smatch points with pre-trained vectors.
-# ::suppl unseen_roles_new_sentences_4
+# ::suppl unseen_roles_new_sentences_3
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_4
 # ::snt The kids bounced the ball five meters onto the roof.
-# ::suppl unseen_roles_new_sentences_5
+# ::suppl unseen_roles_new_sentences_4
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_5
 # ::snt The archaeologists decoded the text from Sumarian into English.
-# ::suppl unseen_roles_new_sentences_6
+# ::suppl unseen_roles_new_sentences_5
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_6
 # ::snt The accuracy of our model degenerated by 20 points from 80 points to 60 points.
-# ::suppl unseen_roles_new_sentences_7
+# ::suppl unseen_roles_new_sentences_6
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_7
 # ::snt A 100% explosion of the Earth’s population, from 4 billion to 8 billion, occurred recently.
-# ::suppl unseen_roles_new_sentences_8
+# ::suppl unseen_roles_new_sentences_7
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_8
 # ::snt We fabricated evidence from materials in my garage for the prosecutor.
-# ::suppl unseen_roles_new_sentences_9
+# ::suppl unseen_roles_new_sentences_8
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_9
 # ::snt The Nazis goosestepped from the train station to the parliament, along the main road.
-# ::suppl unseen_roles_new_sentences_10
+# ::suppl unseen_roles_new_sentences_9
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_10
 # ::snt The government plans to knock down housing prices 30% from the current record high with their new bill.
-# ::suppl unseen_roles_new_sentences_11
+# ::suppl unseen_roles_new_sentences_10
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_11
 # ::snt I leased my spare room to a professor for a month for $500.
-# ::suppl unseen_roles_new_sentences_12
+# ::suppl unseen_roles_new_sentences_11
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_12
 # ::snt I organized the books from messy stacks into neat rows.
-# ::suppl unseen_roles_new_sentences_13
+# ::suppl unseen_roles_new_sentences_12
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_13
 # ::snt With a soft cloth, we polished up the silver to a bright shine.
-# ::suppl unseen_roles_new_sentences_14
+# ::suppl unseen_roles_new_sentences_13
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_14
 # ::snt Mary won John over to her side.
-# ::suppl unseen_roles_new_sentences_15
+# ::suppl unseen_roles_new_sentences_14
 (d / dummy)
 
 # ::id unseen_roles_new_sentences_15
 # ::snt They vandalized the new building with graffiti.
-# ::suppl unseen_roles_new_sentences_16
+# ::suppl unseen_roles_new_sentences_15
 (d / dummy)
 
 # ::snt The girls who we claimed liked the doctor actually hated him after all
@@ -17977,7 +17977,7 @@
 
 # ::id winograd_0
 # ::snt The city councilmen refused the demonstrators a permit because they feared violence.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-0
+# ::suppl winograd_0
 (r / refuse-01
    :ARG0 (p / person
             :ARG0-of (h / have-org-role-91
@@ -17993,7 +17993,7 @@
 
 # ::id winograd_1
 # ::snt The city councilmen refused the demonstrators a permit because they advocated violence.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-1
+# ::suppl winograd_1
 (r / refuse-01
    :ARG0 (p / person
             :ARG0-of (h / have-org-role-91
@@ -18009,7 +18009,7 @@
 
 # ::id winograd_2
 # ::snt The trophy doesn't fit into the brown suitcase because it is too large.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-2
+# ::suppl winograd_2
 (f / fit-06
    :polarity -
    :ARG1 (t / trophy)
@@ -18023,7 +18023,7 @@
 
 # ::id winograd_3
 # ::snt The trophy doesn't fit into the brown suitcase because it is too small.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-3
+# ::suppl winograd_3
 (f / fit-06
    :polarity -
    :ARG1 (t / trophy)
@@ -18037,7 +18037,7 @@
 
 # ::id winograd_4
 # ::snt Joan made sure to thank Susan for all the help she had recieved.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-4
+# ::suppl winograd_4
 (e / ensure-01
    :ARG0 (p / person
             :name (n / name
@@ -18054,7 +18054,7 @@
 
 # ::id winograd_5
 # ::snt Joan made sure to thank Susan for all the help she had given.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-5
+# ::suppl winograd_5
 (e / ensure-01
    :ARG0 (p / person
             :name (n / name
@@ -18071,7 +18071,7 @@
 
 # ::id winograd_6
 # ::snt Paul tried to call George on the phone, but he wasn't successful.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-6
+# ::suppl winograd_6
 (c / contrast-01
    :ARG1 (t / try-01
             :ARG0 (p / person
@@ -18089,7 +18089,7 @@
 
 # ::id winograd_7
 # ::snt Paul tried to call George on the phone, but he wasn't available.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-7
+# ::suppl winograd_7
 (c / contrast-01
    :ARG1 (t / try-01
             :ARG0 (p / person
@@ -18107,7 +18107,7 @@
 
 # ::id winograd_8
 # ::snt The lawyer asked the witness a question, but he was reluctant to repeat it.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-8
+# ::suppl winograd_8
 (c / contrast-01
    :ARG1 (a / ask-01
             :ARG0 (l / lawyer)
@@ -18122,7 +18122,7 @@
 
 # ::id winograd_9
 # ::snt The lawyer asked the witness a question, but he was reluctant to answer it.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-9
+# ::suppl winograd_9
 (c / contrast-01
    :ARG1 (a / ask-01
             :ARG0 (l / lawyer)
@@ -18137,7 +18137,7 @@
 
 # ::id winograd_10
 # ::snt The delivery truck zoomed by the school bus because it was going so fast.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-10
+# ::suppl winograd_10
 (z / zoom-01
    :ARG1 (t / truck
             :purpose (d / deliver-01))
@@ -18151,7 +18151,7 @@
 
 # ::id winograd_11
 # ::snt The delivery truck zoomed by the school bus because it was going so slow.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-11
+# ::suppl winograd_11
 (z / zoom-01
    :ARG1 (t / truck
             :purpose (d / deliver-01))
@@ -18165,7 +18165,7 @@
 
 # ::id winograd_12
 # ::snt Frank felt vindicated when his longtime rival Bill revealed that he was the winner of the competition.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-12
+# ::suppl winograd_12
 (f / feel-01
    :ARG0 (p / person
             :name (n / name
@@ -18186,7 +18186,7 @@
 
 # ::id winograd_13
 # ::snt Frank felt crushed when his longtime rival Bill revealed that he was the winner of the competition.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-13
+# ::suppl winograd_13
 (f / feel-01
    :ARG0 (p / person
             :name (n / name
@@ -18207,7 +18207,7 @@
 
 # ::id winograd_14
 # ::snt The man couldn't lift his son because he was so weak.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-14
+# ::suppl winograd_14
 (p / possible-01
    :polarity -
    :ARG1 (l / lift-01
@@ -18223,7 +18223,7 @@
 
 # ::id winograd_15
 # ::snt The man couldn't lift his son because he was so heavy.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-15
+# ::suppl winograd_15
 (p / possible-01
    :polarity -
    :ARG1 (l / lift-01
@@ -18239,7 +18239,7 @@
 
 # ::id winograd_16
 # ::snt The large ball crashed right through the table because it was made of steel.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-16
+# ::suppl winograd_16
 (c / crash-01
    :ARG0 (b / ball
             :mod (l / large))
@@ -18252,7 +18252,7 @@
 
 # ::id winograd_17
 # ::snt The large ball crashed right through the table because it was made of styrofoam.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-17
+# ::suppl winograd_17
 (c / crash-01
    :ARG0 (b / ball
             :mod (l / large))
@@ -18265,7 +18265,7 @@
 
 # ::id winograd_18
 # ::snt John couldn't see the stage with Billy in front of him because he is so short.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-18
+# ::suppl winograd_18
 (p / possible-01
    :polarity -
    :ARG1 (s / see-01
@@ -18287,7 +18287,7 @@
 
 # ::id winograd_19
 # ::snt John couldn't see the stage with Billy in front of him because he is so tall.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-19
+# ::suppl winograd_19
 (p / possible-01
    :polarity -
    :ARG1 (s / see-01
@@ -18309,7 +18309,7 @@
 
 # ::id winograd_20
 # ::snt Tom threw his schoolbag down to Ray after he reached the top of the stairs.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-20
+# ::suppl winograd_20
 (t / throw-01
    :ARG0 (p / person
             :name (n / name
@@ -18328,7 +18328,7 @@
 
 # ::id winograd_21
 # ::snt Tom threw his schoolbag down to Ray after he reached the bottom of the stairs.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-21
+# ::suppl winograd_21
 (t / throw-01
    :ARG0 (p / person
             :name (n / name
@@ -18347,7 +18347,7 @@
 
 # ::id winograd_22
 # ::snt Although they ran at about the same speed, Sue beat Sally because she had such a good start.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-22
+# ::suppl winograd_22
 (b / beat-03
    :ARG0 (p / person
             :name (n / name
@@ -18370,7 +18370,7 @@
 
 # ::id winograd_23
 # ::snt Although they ran at about the same speed, Sue beat Sally because she had such a bad start.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-23
+# ::suppl winograd_23
 (b / beat-03
    :ARG0 (p / person
             :name (n / name
@@ -18393,7 +18393,7 @@
 
 # ::id winograd_24
 # ::snt The sculpture rolled off the shelf because it wasn't anchored.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-24
+# ::suppl winograd_24
 (r / roll-01
    :ARG1 (s / sculpture)
    :direction (o / off
@@ -18405,7 +18405,7 @@
 
 # ::id winograd_25
 # ::snt The sculpture rolled off the shelf because it wasn't level.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-25
+# ::suppl winograd_25
 (r / roll-01
    :ARG1 (s / sculpture)
    :direction (o / off
@@ -18417,7 +18417,7 @@
 
 # ::id winograd_26
 # ::snt Sam's drawing was hung just above Tina's and it did look much better with another one below it.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-26
+# ::suppl winograd_26
 (a / and
    :op1 (h / hang-01
            :ARG1 (d / drawing
@@ -18443,7 +18443,7 @@
 
 # ::id winograd_27
 # ::snt Sam's drawing was hung just above Tina's and it did look much better with another one above it.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-27
+# ::suppl winograd_27
 (a / and
    :op1 (h / hang-01
            :ARG1 (d / drawing
@@ -18469,7 +18469,7 @@
 
 # ::id winograd_28
 # ::snt Anna did a lot better than her good friend Lucy on the test because she had studied so hard.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-28
+# ::suppl winograd_28
 (h / have-degree-91
    :ARG1 (d / do-02
             :ARG0 (p / person
@@ -18496,7 +18496,7 @@
 
 # ::id winograd_29
 # ::snt Anna did a lot worse than her good friend Lucy on the test because she had studied so hard.
-# ::suppl annotations_anna_winograd1-30_reviewed.tsv-29
+# ::suppl winograd_29
 (h / have-degree-91
    :ARG1 (d / do-02
             :ARG0 (p / person
@@ -18523,7 +18523,7 @@
 
 # ::id winograd_30
 # ::snt Anne gave birth to a daughter last month. She is a very charming woman.
-# ::suppl annotations_anna_winograd91-110.tsv-0
+# ::suppl winograd_30
 (m / multi-sentence
    :snt1 (b / bear-02
             :ARG0 (p / person
@@ -18542,7 +18542,7 @@
 
 # ::id winograd_31
 # ::snt Anne gave birth to a daughter last month. She is a very charming baby.
-# ::suppl annotations_anna_winograd91-110.tsv-1
+# ::suppl winograd_31
 (m / multi-sentence
    :snt1 (b / bear-02
             :ARG0 (p / person
@@ -18561,7 +18561,7 @@
 
 # ::id winograd_32
 # ::snt Alice tried frantically to stop her daughter from chatting at the party, leaving us to wonder why she was behaving so strangely.
-# ::suppl annotations_anna_winograd91-110.tsv-2
+# ::suppl winograd_32
 (t / try-01
    :ARG0 (p / person
             :name (n / name
@@ -18586,7 +18586,7 @@
 
 # ::id winograd_33
 # ::snt Alice tried frantically to stop her daughter from barking at the party, leaving us to wonder why she was behaving so strangely.
-# ::suppl annotations_anna_winograd91-110.tsv-3
+# ::suppl winograd_33
 (t / try-01
    :ARG0 (p / person
             :name (n / name
@@ -18611,7 +18611,7 @@
 
 # ::id winograd_34
 # ::snt I saw Jim yelling at some guy in a military uniform with a huge red beard. I don't know why he was, but he looked very unhappy.
-# ::suppl annotations_anna_winograd91-110.tsv-4
+# ::suppl winograd_34
 (m / multi-sentence
    :snt1 (s / see-01
             :ARG0 (i / i)
@@ -18642,7 +18642,7 @@
 
 # ::id winograd_35
 # ::snt I saw Jim yelling at some guy in a military uniform with a huge red beard. I don't know who he was, but he looked very unhappy.
-# ::suppl annotations_anna_winograd91-110.tsv-5
+# ::suppl winograd_35
 (m / multi-sentence
    :snt1 (s / see-01
             :ARG0 (i / i)
@@ -18672,7 +18672,7 @@
 
 # ::id winograd_36
 # ::snt The fish ate the worm. It was hungry.
-# ::suppl annotations_anna_winograd91-110.tsv-6
+# ::suppl winograd_36
 (m / multi-sentence
    :snt1 (e / eat-01
             :ARG0 (f / fish)
@@ -18682,7 +18682,7 @@
 
 # ::id winograd_37
 # ::snt The fish ate the worm. It was tasty.
-# ::suppl annotations_anna_winograd91-110.tsv-7
+# ::suppl winograd_37
 (m / multi-sentence
    :snt1 (e / eat-01
             :ARG0 (f / fish)
@@ -18692,7 +18692,7 @@
 
 # ::id winograd_38
 # ::snt I was trying to open the lock with the key, but someone had filled the keyhole with chewing gum, and I couldn't get it in.
-# ::suppl annotations_anna_winograd91-110.tsv-8
+# ::suppl winograd_38
 (c / contrast-01
    :ARG1 (t / try-01
             :ARG0 (i / i)
@@ -18714,7 +18714,7 @@
 
 # ::id winograd_39
 # ::snt I was trying to open the lock with the key, but someone had filled the keyhole with chewing gum, and I couldn't get it out.
-# ::suppl annotations_anna_winograd91-110.tsv-9
+# ::suppl winograd_39
 (c / contrast-01
    :ARG1 (t / try-01
             :ARG0 (i / i)
@@ -18736,7 +18736,7 @@
 
 # ::id winograd_40
 # ::snt The dog chased the cat, which ran up a tree. It waited at the bottom.
-# ::suppl annotations_anna_winograd91-110.tsv-10
+# ::suppl winograd_40
 (m / multi-sentence
    :snt1 (c / chase-01
             :ARG0 (d / dog)
@@ -18750,7 +18750,7 @@
 
 # ::id winograd_41
 # ::snt The dog chased the cat, which ran up a tree. It waited at the top.
-# ::suppl annotations_anna_winograd91-110.tsv-11
+# ::suppl winograd_41
 (m / multi-sentence
    :snt1 (c / chase-01
             :ARG0 (d / dog)
@@ -18764,7 +18764,7 @@
 
 # ::id winograd_42
 # ::snt In the storm, the tree fell down and crashed through the roof of my house. Now, I have to get it removed.
-# ::suppl annotations_anna_winograd91-110.tsv-12
+# ::suppl winograd_42
 (m / multi-sentence
    :snt1 (a / and
             :op1 (f / fall-01
@@ -18785,7 +18785,7 @@
 
 # ::id winograd_43
 # ::snt In the storm, the tree fell down and crashed through the roof of my house. Now, I have to get it repaired.
-# ::suppl annotations_anna_winograd91-110.tsv-13
+# ::suppl winograd_43
 (m / multi-sentence
    :snt1 (a / and
             :op1 (f / fall-01
@@ -18806,7 +18806,7 @@
 
 # ::id winograd_44
 # ::snt The customer walked into the bank and stabbed one of the tellers. He was immediately taken to the police station.
-# ::suppl annotations_anna_winograd91-110.tsv-14
+# ::suppl winograd_44
 (m / multi-sentence
    :snt1 (a / and
             :op1 (w / walk-01
@@ -18826,7 +18826,7 @@
 
 # ::id winograd_45
 # ::snt The customer walked into the bank and stabbed one of the tellers. He was immediately taken to the hospital.
-# ::suppl annotations_anna_winograd91-110.tsv-15
+# ::suppl winograd_45
 (m / multi-sentence
    :snt1 (a / and
             :op1 (w / walk-01
@@ -18845,7 +18845,7 @@
 
 # ::id winograd_46
 # ::snt John was doing research in the library when he heard a man humming and whistling. He was very annoyed.
-# ::suppl annotations_anna_winograd91-110.tsv-16
+# ::suppl winograd_46
 (m / multi-sentence
    :snt1 (h / hear-01
             :ARG0 (p / person
@@ -18865,7 +18865,7 @@
 
 # ::id winograd_47
 # ::snt John was doing research in the library when he heard a man humming and whistling. He was very annoying.
-# ::suppl annotations_anna_winograd91-110.tsv-17
+# ::suppl winograd_47
 (m / multi-sentence
    :snt1 (h / hear-01
             :ARG0 (p / person
@@ -18885,7 +18885,7 @@
 
 # ::id winograd_48
 # ::snt John was jogging through the park when he saw a man juggling watermelons. He was very impressed.
-# ::suppl annotations_anna_winograd91-110.tsv-18
+# ::suppl winograd_48
 (m / multi-sentence
    :snt1 (s / see-01
             :ARG0 (p / person
@@ -18903,7 +18903,7 @@
 
 # ::id winograd_49
 # ::snt John was jogging through the park when he saw a man juggling watermelons. He was very impressive.
-# ::suppl annotations_anna_winograd91-110.tsv-19
+# ::suppl winograd_49
 (m / multi-sentence
    :snt1 (s / see-01
             :ARG0 (p / person
@@ -18921,7 +18921,7 @@
 
 # ::id winograd_50
 # ::snt There is a pillar between me and the stage, and I can't see around it.
-# ::suppl chris_annotation_61_90.tsv-61
+# ::suppl winograd_50
 (a / and
    :op1 (b / be-located-at-91
            :ARG1 (p / pillar)
@@ -18936,7 +18936,7 @@
 
 # ::id winograd_51
 # ::snt There is a pillar between me and the stage, and I can't see it.
-# ::suppl chris_annotation_61_90.tsv-62
+# ::suppl winograd_51
 (a / and
    :op1 (b / be-located-at-91
            :ARG1 (p / pillar)
@@ -18950,7 +18950,7 @@
 
 # ::id winograd_52
 # ::snt They broadcast an announcement, but a subway came into the station and I couldn't hear it.
-# ::suppl chris_annotation_61_90.tsv-63
+# ::suppl winograd_52
 (c / contrast-01
    :ARG1 (b / broadcast-01
             :ARG0 (t / they)
@@ -18966,7 +18966,7 @@
 
 # ::id winograd_53
 # ::snt They broadcast an announcement, but a subway came into the station and I couldn't hear over it.
-# ::suppl chris_annotation_61_90.tsv-64
+# ::suppl winograd_53
 (c / contrast-01
    :ARG1 (b / broadcast-01
             :ARG0 (t / they)
@@ -18983,7 +18983,7 @@
 
 # ::id winograd_54
 # ::snt In the middle of the outdoor concert, the rain started falling, but it continued until 10.
-# ::suppl chris_annotation_61_90.tsv-65
+# ::suppl winograd_54
 (c / contrast-01
    :ARG1 (b / be-temporally-at-91
             :ARG1 (r / rain-01
@@ -18999,7 +18999,7 @@
 
 # ::id winograd_55
 # ::snt In the middle of the outdoor concert, the rain started falling, and it continued until 10.
-# ::suppl chris_annotation_61_90.tsv-66
+# ::suppl winograd_55
 (a / and
    :op1 (b / be-temporally-at-91
            :ARG1 (r / rain-01
@@ -19015,7 +19015,7 @@
 
 # ::id winograd_56
 # ::snt I used an old rag to clean the knife, and then I put it in the trash.
-# ::suppl chris_annotation_61_90.tsv-67
+# ::suppl winograd_56
 (a / and
    :op1 (c / clean-01
            :ARG1 (i / i)
@@ -19029,7 +19029,7 @@
 
 # ::id winograd_57
 # ::snt I used an old rag to clean the knife, and then I put it in the drawer.
-# ::suppl chris_annotation_61_90.tsv-68
+# ::suppl winograd_57
 (a / and
    :op1 (c / clean-01
            :ARG1 (i / i)
@@ -19043,7 +19043,7 @@
 
 # ::id winograd_58
 # ::snt Ann asked Mary what time the library closes, because she had forgotten.
-# ::suppl chris_annotation_61_90.tsv-69
+# ::suppl winograd_58
 (a / ask-01
    :ARG0 (p / person
             :name "Ann")
@@ -19058,7 +19058,7 @@
 
 # ::id winograd_59
 # ::snt Ann asked Mary what time the library closes, but she had forgotten.
-# ::suppl chris_annotation_61_90.tsv-70
+# ::suppl winograd_59
 (c / contrast-01
    :ARG1 (a / ask-01
             :ARG0 (p / person
@@ -19073,7 +19073,7 @@
 
 # ::id winograd_60
 # ::snt I took the water bottle out of the backpack so that it would be handy.
-# ::suppl chris_annotation_61_90.tsv-71
+# ::suppl winograd_60
 (t / take-01
    :ARG0 (i / i)
    :ARG1 (b / bottle-01
@@ -19084,7 +19084,7 @@
 
 # ::id winograd_61
 # ::snt I took the water bottle out of the backpack so that it would be lighter.
-# ::suppl chris_annotation_61_90.tsv-72
+# ::suppl winograd_61
 (t / take-01
    :ARG0 (i / i)
    :ARG1 (b / bottle-01
@@ -19095,7 +19095,7 @@
 
 # ::id winograd_62
 # ::snt I couldn't put the pot on the shelf because it was too tall.
-# ::suppl chris_annotation_61_90.tsv-73
+# ::suppl winograd_62
 (p / possible-01
    :polarity -
    :ARG1 (p2 / put-01
@@ -19111,7 +19111,7 @@
 
 # ::id winograd_63
 # ::snt I couldn't put the pot on the shelf because it was too high.
-# ::suppl chris_annotation_61_90.tsv-74
+# ::suppl winograd_63
 (p / possible-01
    :polarity -
    :ARG1 (p2 / put-01
@@ -19127,7 +19127,7 @@
 
 # ::id winograd_64
 # ::snt I'm sure that my map will show this building; it is very good.
-# ::suppl chris_annotation_61_90.tsv-75
+# ::suppl winograd_64
 (m2 / multi-sentence
     :snt1 (s / sure-02
              :ARG0 (i / i)
@@ -19142,7 +19142,7 @@
 
 # ::id winograd_65
 # ::snt I'm sure that my map will show this building; it is very famous.
-# ::suppl chris_annotation_61_90.tsv-76
+# ::suppl winograd_65
 (m2 / multi-sentence
     :snt1 (s / sure-02
              :ARG0 (i / i)
@@ -19157,7 +19157,7 @@
 
 # ::id winograd_66
 # ::snt Bob paid for Charlie's college education. He is very generous.
-# ::suppl chris_annotation_61_90.tsv-77
+# ::suppl winograd_66
 (m / multi-sentence
    :snt1 (p / pay-01
             :ARG0 (p3 / person)
@@ -19171,7 +19171,7 @@
 
 # ::id winograd_67
 # ::snt Bob paid for Charlie's college education. He is very grateful.
-# ::suppl chris_annotation_61_90.tsv-78
+# ::suppl winograd_67
 (m / multi-sentence
    :snt1 (p / pay-01
             :ARG0 (p3 / person)
@@ -19185,7 +19185,7 @@
 
 # ::id winograd_68
 # ::snt Bob paid for Charlie's college education, but now acts as though it never happened. He is very hurt.
-# ::suppl chris_annotation_61_90.tsv-79
+# ::suppl winograd_68
 (m / multi-sentence
    :snt1 (c / contrast-01
             :ARG1 (p / pay-01
@@ -19206,7 +19206,7 @@
 
 # ::id winograd_69
 # ::snt Bob paid for Charlie's college education, but now acts as though it never happened. He is very ungrateful.
-# ::suppl chris_annotation_61_90.tsv-80
+# ::suppl winograd_69
 (m / multi-sentence
    :snt1 (c / contrast-01
             :ARG1 (p / pay-01
@@ -19228,7 +19228,7 @@
 
 # ::id winograd_70
 # ::snt Bob was playing cards with Adam and was way ahead. If Adam hadn't had a sudden run of good luck, he would have won.
-# ::suppl chris_annotation_61_90.tsv-81
+# ::suppl winograd_70
 (m / multi-sentence
    :snt1 (p / play-01
             :ARG0 (p3 / person
@@ -19252,7 +19252,7 @@
 
 # ::id winograd_71
 # ::snt Bob was playing cards with Adam and was way ahead. If Adam hadn't had a sudden run of good luck, he would have lost.
-# ::suppl chris_annotation_61_90.tsv-82
+# ::suppl winograd_71
 (m / multi-sentence
    :snt1 (p / play-01
             :ARG0 (p3 / person
@@ -19276,7 +19276,7 @@
 
 # ::id winograd_72
 # ::snt Adam can't leave work here until bob arrives to replace him. If Bob had left home for work on time, he would be gone by this time.
-# ::suppl chris_annotation_61_90.tsv-83
+# ::suppl winograd_72
 (m / multi-sentence
    :snt1 (l / leave-11
             :polarity -
@@ -19304,7 +19304,7 @@
 
 # ::id winograd_73
 # ::snt Adam can't leave work here until Bob arrives to replace him. If Bob had left home for work on time, he would be here by this time.
-# ::suppl chris_annotation_61_90.tsv-84
+# ::suppl winograd_73
 (m / multi-sentence
    :snt1 (l / leave-11
             :polarity -
@@ -19331,7 +19331,7 @@
 
 # ::id winograd_74
 # ::snt If the con artist has succeeded in fooling Sam, he would have gotten a lot of money.
-# ::suppl chris_annotation_61_90.tsv-85
+# ::suppl winograd_74
 (h / have-condition-91
    :ARG1 (s / succeed-01
             :ARG0 (a / artist
@@ -19346,7 +19346,7 @@
 
 # ::id winograd_75
 # ::snt If the con artist has succeeded in fooling Sam, he would have lost a lot of money.
-# ::suppl chris_annotation_61_90.tsv-86
+# ::suppl winograd_75
 (h / have-condition-91
    :ARG1 (s / succeed-01
             :ARG0 (a / artist
@@ -19361,7 +19361,7 @@
 
 # ::id winograd_76
 # ::snt It was a summer afternoon, and the dog was sitting in the middle of the lawn. After a while, it got up and moved to a spot under the tree, because it was hot.
-# ::suppl chris_annotation_61_90.tsv-87
+# ::suppl winograd_76
 (m / multi-sentence
    :snt1 (a2 / and
              :op1 (d / date-entity
@@ -19387,7 +19387,7 @@
 
 # ::id winograd_77
 # ::snt It was a summer afternoon, and the dog was sitting in the middle of the lawn. After a while, it got up and moved to a spot under the tree, because it was cooler.
-# ::suppl chris_annotation_61_90.tsv-88
+# ::suppl winograd_77
 (m / multi-sentence
    :snt1 (a2 / and
              :op1 (d / date-entity
@@ -19413,7 +19413,7 @@
 
 # ::id winograd_78
 # ::snt The cat was lying by the mouse hole waiting for the mouse, but it was too impatient.
-# ::suppl chris_annotation_61_90.tsv-89
+# ::suppl winograd_78
 (c / contrast-01
    :ARG1 (l / lay-01
             :ARG0 (c2 / cat)
@@ -19427,7 +19427,7 @@
 
 # ::id winograd_79
 # ::snt The cat was lying by the mouse hole waiting for the mouse, but it was too cautious.
-# ::suppl chris_annotation_61_90.tsv-90
+# ::suppl winograd_79
 (c / contrast-01
    :ARG1 (l / lay-01
             :ARG0 (c2 / cat)
@@ -19441,7 +19441,7 @@
 
 # ::id winograd_80
 # ::snt Jane knocked on Susan's door, but there was no answer. She was disappointed.
-# ::suppl chris_annotation_WG_131-150.tsv-13
+# ::suppl winograd_80
 (m / multi-sentence
    :snt1 (c / contrast-01
             :ARG1 (k / knock-01
@@ -19457,7 +19457,7 @@
 
 # ::id winograd_81
 # ::snt Jane knocked on Susan's door, but there was no answer. She was out.
-# ::suppl chris_annotation_WG_131-150.tsv-132
+# ::suppl winograd_81
 (m / multi-sentence
    :snt1 (c / contrast-01
             :ARG1 (k / knock-01
@@ -19473,7 +19473,7 @@
 
 # ::id winograd_82
 # ::snt Jane knocked on the door, and Susan answered it. She invited her to come out.
-# ::suppl chris_annotation_WG_131-150.tsv-133
+# ::suppl winograd_82
 (m / multi-sentence
    :snt1 (a2 / and
              :op1 (k / knock-01
@@ -19491,7 +19491,7 @@
 
 # ::id winograd_83
 # ::snt Jane knocked on the door, and Susan answered it. She invited her to come in.
-# ::suppl chris_annotation_WG_131-150.tsv-134
+# ::suppl winograd_83
 (m / multi-sentence
    :snt1 (a2 / and
              :op1 (k / knock-01
@@ -19509,7 +19509,7 @@
 
 # ::id winograd_84
 # ::snt Sam took French classes from Adam, because he was eager to speak it fluently.
-# ::suppl chris_annotation_WG_131-150.tsv-135
+# ::suppl winograd_84
 (c / cause-01
    :ARG0 (t / take-01
             :ARG0 (p / person
@@ -19527,7 +19527,7 @@
 
 # ::id winograd_85
 # ::snt Sam took French classes from Adam, because he was known to speak if fluently.
-# ::suppl chris_annotation_WG_131-150.tsv-136
+# ::suppl winograd_85
 (c / cause-01
    :ARG0 (t / take-01
             :ARG0 (p / person
@@ -19545,7 +19545,7 @@
 
 # ::id winograd_86
 # ::snt The path to the lake was blocked, so we couldn't use it.
-# ::suppl chris_annotation_WG_131-150.tsv-137
+# ::suppl winograd_86
 (c / cause-01
    :ARG0 (b / block-01
             :ARG1 (p2 / path
@@ -19558,7 +19558,7 @@
 
 # ::id winograd_87
 # ::snt The path to the lake was blocked, so we couldn't reach it.
-# ::suppl chris_annotation_WG_131-150.tsv-138
+# ::suppl winograd_87
 (c / cause-01
    :ARG0 (b / block-01
             :ARG1 (p2 / path
@@ -19571,7 +19571,7 @@
 
 # ::id winograd_88
 # ::snt The sun was covered by a thick cloud all morning, but luckily, by the time the picnic started, it was out.
-# ::suppl chris_annotation_WG_131-150.tsv-139
+# ::suppl winograd_88
 (c / contrast-01
    :ARG1 (c2 / cover-02
              :ARG1 (s / sun)
@@ -19587,7 +19587,7 @@
 
 # ::id winograd_89
 # ::snt The sun was covered by a thick cloud all morning, but luckily, by the time the picnic started, it was gone.
-# ::suppl chris_annotation_WG_131-150.tsv-140
+# ::suppl winograd_89
 (c / contrast-01
    :ARG1 (c2 / cover-02
              :ARG1 (s / sun)
@@ -19603,7 +19603,7 @@
 
 # ::id winograd_90
 # ::snt We went to the lake, because a shark had been seen at the ocean beach, so it was a safer place to swim.
-# ::suppl chris_annotation_WG_131-150.tsv-141
+# ::suppl winograd_90
 (c / cause-01
    :ARG0 (c2 / cause-01
              :ARG0 (s / shark
@@ -19619,7 +19619,7 @@
 
 # ::id winograd_91
 # ::snt We went to the lake, because a shark had been seen at the ocean beach, so it was a dangerous place to swim.
-# ::suppl chris_annotation_WG_131-150.tsv-142
+# ::suppl winograd_91
 (c / cause-01
    :ARG0 (c2 / cause-01
              :ARG0 (s / shark
@@ -19635,7 +19635,7 @@
 
 # ::id winograd_92
 # ::snt Sam tried to paint a picture of shepherds with sheep, but they ended up looking more like golfers.
-# ::suppl chris_annotation_WG_131-150.tsv-143
+# ::suppl winograd_92
 (c / contrast-01
    :ARG1 (t / try-01
             :ARG0 (p2 / person
@@ -19652,7 +19652,7 @@
 
 # ::id winograd_93
 # ::snt Sam tried to paint a picture of shepherds with sheep, but they ended up looking more like dogs.
-# ::suppl chris_annotation_WG_131-150.tsv-144
+# ::suppl winograd_93
 (c / contrast-01
    :ARG1 (t / try-01
             :ARG0 (p2 / person
@@ -19669,7 +19669,7 @@
 
 # ::id winograd_94
 # ::snt Mary tucked her daughter Anne into bed, so that she could work.
-# ::suppl chris_annotation_WG_131-150.tsv-145
+# ::suppl winograd_94
 (c / cause-01
    :ARG0 (t / tuck-01
             :ARG0 (p2 / person
@@ -19683,7 +19683,7 @@
 
 # ::id winograd_95
 # ::snt Mary tucked her daughter Anne into bed, so that she could sleep.
-# ::suppl chris_annotation_WG_131-150.tsv-146
+# ::suppl winograd_95
 (c / cause-01
    :ARG0 (t / tuck-01
             :ARG0 (p2 / person
@@ -19697,7 +19697,7 @@
 
 # ::id winograd_96
 # ::snt Fred and Alice had very warm down coats, but they were not prepared for the cold in Alaska.
-# ::suppl chris_annotation_WG_131-150.tsv-147
+# ::suppl winograd_96
 (c / contrast-01
    :ARG1 (h / have-03
             :ARG0 (a / and
@@ -19717,7 +19717,7 @@
 
 # ::id winograd_97
 # ::snt Fred and Alice had very warm down coats, but they were not enough for the cold in Alaska.
-# ::suppl chris_annotation_WG_131-150.tsv-148
+# ::suppl winograd_97
 (c / contrast-01
    :ARG1 (h / have-03
             :ARG0 (a / and
@@ -19737,7 +19737,7 @@
 
 # ::id winograd_98
 # ::snt Thomson visited Cooper's grave in 1765. At that date he had been traveling for five years.
-# ::suppl chris_annotation_WG_131-150.tsv-149
+# ::suppl winograd_98
 (m / multi-sentence
    :snt1 (v / visit-01
             :ARG0 (p / person
@@ -19756,7 +19756,7 @@
 
 # ::id winograd_99
 # ::snt Thomson visited Cooper's grave in 1765. At that date he had been dead for five years.
-# ::suppl chris_annotation_WG_131-150.tsv-150
+# ::suppl winograd_99
 (m / multi-sentence
    :snt1 (v / visit-01
             :ARG0 (p / person
@@ -19775,7 +19775,7 @@
 
 # ::id winograd_100
 # ::snt The firemen arrived after the police because they were coming from so far away.
-# ::suppl Maria_Winograd1.tsv-0
+# ::suppl winograd_100
 (a / arrive-01
    :ARG1 (f / firemen)
    :time (a2 / after
@@ -19789,7 +19789,7 @@
 
 # ::id winograd_101
 # ::snt The firemen arrived before the police because they were coming from so far away.
-# ::suppl Maria_Winograd1.tsv-1
+# ::suppl winograd_101
 (a / arrive-01
    :ARG1 (f / firemen)
    :time (b / before
@@ -19803,7 +19803,7 @@
 
 # ::id winograd_102
 # ::snt Frank was upset with Tom because the toaster he had bought from him didn't work.
-# ::suppl Maria_Winograd1.tsv-2
+# ::suppl winograd_102
 (u / upset-01
    :ARG0 (p / person
             :name (n / name
@@ -19821,7 +19821,7 @@
 
 # ::id winograd_103
 # ::snt Frank was upset with Tom because the toaster he had sold him didn't work.
-# ::suppl Maria_Winograd1.tsv-3
+# ::suppl winograd_103
 (u / upset-01
    :ARG0 (p / person
             :name (n / name
@@ -19839,7 +19839,7 @@
 
 # ::id winograd_104
 # ::snt Jim yelled at Kevin because he was so upset.
-# ::suppl Maria_Winograd1.tsv-4
+# ::suppl winograd_104
 (y / yell-01
    :ARG0 (p / person
             :name (n / name
@@ -19854,7 +19854,7 @@
 
 # ::id winograd_105
 # ::snt Jim comforted Kevin because he was so upset.
-# ::suppl Maria_Winograd1.tsv-5
+# ::suppl winograd_105
 (c / comfort-01
    :ARG0 (p / person
             :name (n / name
@@ -19869,7 +19869,7 @@
 
 # ::id winograd_106
 # ::snt The sack of potatoes had been placed above the bag of flour, so it had to be moved first.
-# ::suppl Maria_Winograd1.tsv-6
+# ::suppl winograd_106
 (p / place-01
    :ARG1 (p2 / potato
              :quant (s / sack))
@@ -19884,7 +19884,7 @@
 
 # ::id winograd_107
 # ::snt The sack of potatoes had been placed below the bag of flour, so it had to be moved first.
-# ::suppl Maria_Winograd1.tsv-7
+# ::suppl winograd_107
 (p / place-01
    :ARG1 (p2 / potato
              :quant (s / sack))
@@ -19899,7 +19899,7 @@
 
 # ::id winograd_108
 # ::snt Pete envies Martin although he is very successful.
-# ::suppl Maria_Winograd1.tsv-8
+# ::suppl winograd_108
 (e / envy-01
    :ARG0 (p / person
             :name (n / name
@@ -19913,7 +19913,7 @@
 
 # ::id winograd_109
 # ::snt Pete envies Martin because he is very successful.
-# ::suppl Maria_Winograd1.tsv-9
+# ::suppl winograd_109
 (e / envy-01
    :ARG0 (p / person
             :name (n / name
@@ -19928,7 +19928,7 @@
 
 # ::id winograd_110
 # ::snt The older students were bullying the younger ones, so we punished them.
-# ::suppl Maria_Winograd1.tsv-10
+# ::suppl winograd_110
 (b / bully-01
    :ARG0 (s / student
             :mod (o / older))
@@ -19940,7 +19940,7 @@
 
 # ::id winograd_111
 # ::snt The older students were bullying the younger ones, so we rescued them.
-# ::suppl Maria_Winograd1.tsv-11
+# ::suppl winograd_111
 (b / bully-01n
    :ARG0 (s / student
             :mod (o / older))
@@ -19953,7 +19953,7 @@
 
 # ::id winograd_112
 # ::snt I poured water from the bottle into the cup until it was empty.
-# ::suppl Maria_Winograd1.tsv-12
+# ::suppl winograd_112
 (p / pour-01
    :ARG0 (i / i)
    :ARG1 (w / water)
@@ -19965,7 +19965,7 @@
 
 # ::id winograd_113
 # ::snt I poured water from the bottle into the cup until it was full.
-# ::suppl Maria_Winograd1.tsv-13
+# ::suppl winograd_113
 (p / pour-01
    :ARG0 (i / i)
    :ARG1 (w / water)
@@ -19977,7 +19977,7 @@
 
 # ::id winograd_114
 # ::snt Susan knows all about Ann's personal problems because she is nosy.
-# ::suppl Maria_Winograd1.tsv-14
+# ::suppl winograd_114
 (k / know-02
    :ARG0 (p / person
             :name (n / name
@@ -19993,7 +19993,7 @@
 
 # ::id winograd_115
 # ::snt Susan knows all about Ann's personal problems because she is indiscreet.
-# ::suppl Maria_Winograd1.tsv-15
+# ::suppl winograd_115
 (k / know-02
    :ARG0 (p / person
             :name (n / name
@@ -20009,7 +20009,7 @@
 
 # ::id winograd_116
 # ::snt Sid explained his theory to Mark but he couldn't convince him.
-# ::suppl Maria_Winograd1.tsv-16
+# ::suppl winograd_116
 (c / contrast-01
    :ARG1 (e / explain-01
             :ARG0 (p / person
@@ -20028,7 +20028,7 @@
 
 # ::id winograd_117
 # ::snt Sid explained his theory to Mark but he couldn't understand him.
-# ::suppl Maria_Winograd1.tsv-17
+# ::suppl winograd_117
 (c / contrast-01
    :ARG1 (e / explain-01
             :ARG0 (p / person
@@ -20047,7 +20047,7 @@
 
 # ::id winograd_118
 # ::snt Susan knew that Ann's son had been in a car accident, so she told her about it.
-# ::suppl Maria_Winograd1.tsv-18
+# ::suppl winograd_118
 (k / know-01
    :ARG0 (p / person
             :name (n / name
@@ -20066,7 +20066,7 @@
 
 # ::id winograd_119
 # ::snt Susan knew that Ann's son had been in a car accident, because she told her about it.
-# ::suppl Maria_Winograd1.tsv-19
+# ::suppl winograd_119
 (k / know-01
    :ARG0 (p / person
             :name (n / name
@@ -20085,7 +20085,7 @@
 
 # ::id winograd_120
 # ::snt Joe's uncle can still beat him at tennis, even though he is 30 years younger.
-# ::suppl Maria_Winograd1.tsv-20
+# ::suppl winograd_120
 (p / possible-01
    :ARG1 (b / beat-03
             :ARG0 (p2 / person
@@ -20107,7 +20107,7 @@
 
 # ::id winograd_121
 # ::snt Joe's uncle can still beat him at tennis, even though he is 30 years older.
-# ::suppl Maria_Winograd1.tsv-21
+# ::suppl winograd_121
 (p / possible-01
    :ARG1 (b / beat-03
             :ARG0 (p2 / person
@@ -20129,7 +20129,7 @@
 
 # ::id winograd_122
 # ::snt The painting in Mark's living room shows an oak tree. It is to the right of the bookcase.
-# ::suppl Maria_Winograd1.tsv-22
+# ::suppl winograd_122
 (m / multi-sentence
    :snt1 (s / show-01
             :ARG0 (p / painting
@@ -20148,7 +20148,7 @@
 
 # ::id winograd_123
 # ::snt The painting in Mark's living room shows an oak tree. It is to the right of a house.
-# ::suppl Maria_Winograd1.tsv-23
+# ::suppl winograd_123
 (m / multi-sentence
    :snt1 (s / show-01
             :ARG0 (p / painting
@@ -20167,7 +20167,7 @@
 
 # ::id winograd_124
 # ::snt There is a gap in the wall. You can see the garden through it.
-# ::suppl Maria_Winograd1.tsv-24
+# ::suppl winograd_124
 (m / multi-sentence
    :snt1 (g / gap
             :location (w / wall))
@@ -20179,7 +20179,7 @@
 
 # ::id winograd_125
 # ::snt There is a gap in the wall. You can see the garden behind it.
-# ::suppl Maria_Winograd1.tsv-25
+# ::suppl winograd_125
 (m / multi-sentence
    :snt1 (g / gap
             :location (w / wall))
@@ -20193,7 +20193,7 @@
 
 # ::id winograd_126
 # ::snt The drain is clogged with hair. It has to be cleaned.
-# ::suppl Maria_Winograd1.tsv-26
+# ::suppl winograd_126
 (m / multi-sentence
    :snt1 (c / clog-02
             :ARG1 (d / drain)
@@ -20204,7 +20204,7 @@
 
 # ::id winograd_127
 # ::snt The drain is clogged with hair. It has to be removed.
-# ::suppl Maria_Winograd1.tsv-27
+# ::suppl winograd_127
 (m / multi-sentence
    :snt1 (c / clog-02
             :ARG1 (d / drain)
@@ -20216,7 +20216,7 @@
 
 # ::id winograd_128
 # ::snt My meeting started at 4:00 and I needed to catch the train at 4:30, so there wasn't much time. Luckily, it was short, so it worked out.
-# ::suppl Maria_Winograd1.tsv-28
+# ::suppl winograd_128
 (m / multi-sentence
    :snt1 (a / and
             :op1 (s / start-01
@@ -20241,7 +20241,7 @@
 
 # ::id winograd_129
 # ::snt My meeting started at 4:00 and I needed to catch the train at 4:30, so there wasn't much time. Luckily, it was delayed, so it worked out.
-# ::suppl Maria_Winograd1.tsv-29
+# ::suppl winograd_129
 (m / multi-sentence
    :snt1 (a / and
             :op1 (s / start-01
@@ -20266,7 +20266,7 @@
 
 # ::id winograd_130
 # ::snt Bob collapsed on the sidewalk. Soon he saw Carl coming to help. He was very ill.
-# ::suppl Maria_Winograd2.tsv-0
+# ::suppl winograd_130
 (m / multi-sentence
    :snt1 (c / collapse-01
             :ARG1 (p / person
@@ -20287,7 +20287,7 @@
 
 # ::id winograd_131
 # ::snt Bob collapsed on the sidewalk. Soon he saw Carl coming to help. He was very concerned.
-# ::suppl Maria_Winograd2.tsv-1
+# ::suppl winograd_131
 (m / multi-sentence
    :snt1 (c / collapse-01
             :ARG1 (p / person
@@ -20308,7 +20308,7 @@
 
 # ::id winograd_132
 # ::snt Sam and Amy are passionately in love, but Amy's parents are unhappy about it, because they are fifteen.
-# ::suppl Maria_Winograd2.tsv-2
+# ::suppl winograd_132
 (l / love-01
    :ARG0 (a / and
             :op1 (p / person
@@ -20331,7 +20331,7 @@
 
 # ::id winograd_133
 # ::snt Sam and Amy are passionately in love, but Amy's parents are unhappy about it, because they are snobs.
-# ::suppl Maria_Winograd2.tsv-3
+# ::suppl winograd_133
 (l / love-01
    :ARG0 (a / and
             :op1 (p / person
@@ -20354,7 +20354,7 @@
 
 # ::id winograd_134
 # ::snt Mark told Pete many lies about himself, which Pete included in his book. He should have been more truthful.
-# ::suppl Maria_Winograd2.tsv-4
+# ::suppl winograd_134
 (m / multi-sentence
    :snt1 (l / lie-08
             :ARG0 (p / person
@@ -20376,7 +20376,7 @@
 
 # ::id winograd_135
 # ::snt Mark told Pete many lies about himself, which Pete included in his book. He should have been more skeptical.
-# ::suppl Maria_Winograd2.tsv-5
+# ::suppl winograd_135
 (m / multi-sentence
    :snt1 (l / lie-08
             :ARG0 (p / person
@@ -20398,7 +20398,7 @@
 
 # ::id winograd_136
 # ::snt Joe has sold his house and bought a new one a few miles away. He will be moving out of it on Thursday.
-# ::suppl Maria_Winograd2.tsv-6
+# ::suppl winograd_136
 (m / multi-sentence
    :op1 (a / and
            :op1 (s / sell-01
@@ -20424,7 +20424,7 @@
 
 # ::id winograd_137
 # ::snt Joe has sold his house and bought a new one a few miles away. He will be moving into it on Thursday.
-# ::suppl Maria_Winograd2.tsv-7
+# ::suppl winograd_137
 (m / multi-sentence
    :op1 (a / and
            :op1 (s / sell-01
@@ -20449,7 +20449,7 @@
 
 # ::id winograd_138
 # ::snt Many people start to read Paul's books and can't put them down. They are gripped because Paul writes so well.
-# ::suppl Maria_Winograd2.tsv-8
+# ::suppl winograd_138
 (m / multi-sentence
    :snt1 (a / and
             :op1 (s / start-01
@@ -20474,7 +20474,7 @@
 
 # ::id winograd_139
 # ::snt Many people start to read Paul's books and can't put them down. They are popular because Paul writes so well.
-# ::suppl Maria_Winograd2.tsv-9
+# ::suppl winograd_139
 (m / multi-sentence
    :snt1 (a / and
             :op1 (s / start-01
@@ -20499,7 +20499,7 @@
 
 # ::id winograd_140
 # ::snt Mary took out her flute and played one of her favorite pieces. She has had it since she was a child.
-# ::suppl Maria_Winograd2.tsv-10
+# ::suppl winograd_140
 (m / multi-sentence
    :snt1 (a / and
             :op1 (t / take-01
@@ -20524,7 +20524,7 @@
 
 # ::id winograd_141
 # ::snt Mary took out her flute and played one of her favorite pieces. She has loved it since she was a child.
-# ::suppl Maria_Winograd2.tsv-11
+# ::suppl winograd_141
 (m / multi-sentence
    :snt1 (a / and
             :op1 (t / take-01
@@ -20549,7 +20549,7 @@
 
 # ::id winograd_142
 # ::snt Sam pulled up a chair to the piano, but it was broken, so he had to stand instead.
-# ::suppl Maria_Winograd2.tsv-12
+# ::suppl winograd_142
 (p / pull-01
    :ARG0 (p2 / person
              :name (n / name
@@ -20565,7 +20565,7 @@
 
 # ::id winograd_143
 # ::snt Sam pulled up a chair to the piano, but it was broken, so he had to sing instead.
-# ::suppl Maria_Winograd2.tsv-13
+# ::suppl winograd_143
 (p / pull-01
    :ARG0 (p2 / person
              :name (n / name
@@ -20581,7 +20581,7 @@
 
 # ::id winograd_144
 # ::snt Since it was raining, I carried the newspaper in my backpack to keep it dry.
-# ::suppl Maria_Winograd2.tsv-14
+# ::suppl winograd_144
 (c2 / carry-01
     :ARG0 (i / i)
     :ARG1 (n / newspaper)
@@ -20595,7 +20595,7 @@
 
 # ::id winograd_145
 # ::snt Since it was raining, I carried the newspaper over my backpack to keep it dry.
-# ::suppl Maria_Winograd2.tsv-15
+# ::suppl winograd_145
 (c2 / carry-01
     :ARG0 (i / i)
     :ARG1 (n / newspaper)
@@ -20610,7 +20610,7 @@
 
 # ::id winograd_146
 # ::snt Sara borrowed the book from the library because she needs it for an article she is working on. She reads it when she gets home from work.
-# ::suppl Maria_Winograd2.tsv-16
+# ::suppl winograd_146
 (m / multi-sentence
    :snt1 (b / borrow-01
             :ARG0 (p / person
@@ -20634,7 +20634,7 @@
 
 # ::id winograd_147
 # ::snt Sara borrowed the book from the library because she needs it for an article she is working on. She writes it when she gets home from work.
-# ::suppl Maria_Winograd2.tsv-17
+# ::suppl winograd_147
 (m / multi-sentence
    :snt1 (b / borrow-01
             :ARG0 (p / person
@@ -20658,7 +20658,7 @@
 
 # ::id winograd_148
 # ::snt This morning, Joey built a sand castle on the beach, and put a toy flag in the highest tower, but this afternoon the tide knocked it down.
-# ::suppl Maria_Winograd2.tsv-18
+# ::suppl winograd_148
 (a / and
    :op1 (b / build-01
            :ARG0 (p / person
@@ -20682,7 +20682,7 @@
 
 # ::id winograd_149
 # ::snt This morning, Joey built a sand castle on the beach, and put a toy flag in the highest tower, but this afternoon the wind knocked it down.
-# ::suppl Maria_Winograd2.tsv-19
+# ::suppl winograd_149
 (a / and
    :op1 (b / build-01
            :ARG0 (p / person
@@ -25469,3 +25469,465 @@
       :ARG0 (r / girl)
       :ARG1 (u_85 / sleep-01
                   :ARG0 (u_87 / kid)))
+
+# ::id unbounded_dependencies_0
+# ::snt We have also developed techniques for recognizing and locating underground nuclear tests through the waves in the ground which they generate .
+# ::cat object relative
+# ::distance 6
+# ::suppl unbounded_dependencies_0
+(r / dummy)
+
+# ::id unbounded_dependencies_1
+# ::snt But these are dreamed in original action , in some particular continuity which we don't remember having seen in real life .
+# ::cat object relative
+# ::distance 7
+# ::suppl unbounded_dependencies_1
+(r / dummy)
+
+# ::id unbounded_dependencies_2
+# ::snt That finished the job that Captain Chandler and Lieutenant Carroll had begun .
+# ::cat object relative
+# ::distance 8
+# ::suppl unbounded_dependencies_2
+(r / dummy)
+
+# ::id unbounded_dependencies_3
+# ::snt There was the Hungarian Revolution which we praised and mourned , but did nothing about .
+# ::cat object relative
+# ::distance 4
+# ::suppl unbounded_dependencies_3
+(r / dummy)
+
+# ::id unbounded_dependencies_4
+# ::snt There was the Hungarian Revolution which we praised and mourned , but did nothing about .
+# ::cat object relative
+# ::distance 10
+# ::suppl unbounded_dependencies_4
+(r / dummy)
+
+# ::id unbounded_dependencies_5
+# ::snt Great stress is placed on the role that the monitoring of information sending plays in maintaining the effectiveness of the network .
+# ::cat object relative
+# ::distance 7
+# ::suppl unbounded_dependencies_5
+(r / dummy)
+
+# ::id unbounded_dependencies_6
+# ::snt This is important to understanding the position that doctrinaire liberals found themselves in after World War 2 , and our great democratic victory that brought no peace .
+# ::cat object relative
+# ::distance 4
+# ::suppl unbounded_dependencies_6
+(r / dummy)
+
+# ::id unbounded_dependencies_7
+# ::snt He could also hear the stream which he had seen from his position .
+# ::cat object relative
+# ::distance 4
+# ::suppl unbounded_dependencies_7
+(r / dummy)
+
+# ::id unbounded_dependencies_8
+# ::snt " There are things about me that I can't tell you now , Mary Jane " , I said , " but if you'll go out to dinner with me when I get out of Hanover , I'd like to tell you the whole story . "
+# ::cat object relative
+# ::distance 6
+# ::suppl unbounded_dependencies_8
+(r / dummy)
+
+# ::id unbounded_dependencies_9
+# ::snt It was a bad play , real grade-A turkey , which only a prevalence of angels with grandiose dreams of capital gain and tax money to burn could have put into rehearsal .
+# ::cat object relative
+# ::distance 20
+# ::suppl unbounded_dependencies_9
+(r / dummy)
+
+# ::id unbounded_dependencies_10
+# ::snt I took another sidelong glance at the other registration card , then took the key to Unit 13 that she had given me and went down long enough to park the car .
+# ::cat object relative
+# ::distance 7
+# ::suppl unbounded_dependencies_10
+(r / dummy)
+
+# ::id unbounded_dependencies_11
+# ::snt The simple treaty principle that Gabriel was asking him to ratify , in short , was nothing less than total trust .
+# ::cat object relative
+# ::distance 7
+# ::suppl unbounded_dependencies_11
+(r / dummy)
+
+# ::id unbounded_dependencies_12
+# ::snt Two days before he was taken sick , Cousin Elec was out worrying about what too much rain might do to his sweetpeas , and Cousin Elec had always preserved in the top drawer of his secretary a mother-of-pearl paper knife which Theresa had coveted as a child and which he had promised she could have when he died .
+# ::cat object relative
+# ::distance 4
+# ::suppl unbounded_dependencies_12
+(r / dummy)
+
+# ::id unbounded_dependencies_13
+# ::snt Two days before he was taken sick , Cousin Elec was out worrying about what too much rain might do to his sweetpeas , and Cousin Elec had always preserved in the top drawer of his secretary a mother-of-pearl paper knife which Theresa had coveted as a child and which he had promised she could have when he died .
+# ::cat object relative
+# ::distance 15
+# ::suppl unbounded_dependencies_13
+(r / dummy)
+
+# ::id unbounded_dependencies_14
+# ::snt But when waves with a period of between 10 and 40 minutes begin to roll over the ocean , they set in motion a corresponding oscillation in a column of mercury which closes an electric circuit .
+# ::cat subject relative
+# ::distance 7
+# ::suppl unbounded_dependencies_14
+(r / dummy)
+
+# ::id unbounded_dependencies_15
+# ::snt This center also receives prompt reports on earthquakes from four Coast Survey stations in the Pacific which are equipped with seismographs .
+# ::cat subject relative
+# ::distance 6
+# ::suppl unbounded_dependencies_15
+(r / dummy)
+
+# ::id unbounded_dependencies_16
+# ::snt Indeed , there was a woman who , unasked , had already given him love .
+# ::cat subject relative
+# ::distance 5
+# ::suppl unbounded_dependencies_16
+(r / dummy)
+
+# ::id unbounded_dependencies_17
+# ::snt There was the freshness of color , the freedom of perception , the lack of self-consciousness , but with a twist that made the forms leap from the page and smack you in the eye .
+# ::cat subject relative
+# ::distance 5
+# ::suppl unbounded_dependencies_17
+(r / dummy)
+
+# ::id unbounded_dependencies_18
+# ::snt There was the freshness of color , the freedom of perception , the lack of self-consciousness , but with a twist that made the forms leap from the page and smack you in the eye .
+# ::cat subject relative
+# ::distance 10
+# ::suppl unbounded_dependencies_18
+(r / dummy)
+
+# ::id unbounded_dependencies_19
+# ::snt I know something that is much more fun that we can do on our little lawn .
+# ::cat subject relative
+# ::distance 5
+# ::suppl unbounded_dependencies_19
+(r / dummy)
+
+# ::id unbounded_dependencies_20
+# ::snt I know something that is much more fun that we can do on our little lawn .
+# ::cat subject relative
+# ::distance 9
+# ::suppl unbounded_dependencies_20
+(r / dummy)
+
+# ::id unbounded_dependencies_21
+# ::snt We have learned from earthquakes much of what we now know about the earth's interior , for they send waves through the earth which emerge with information about the materials through which they have traveled .
+# ::cat object free relative
+# ::distance 3
+# ::suppl unbounded_dependencies_21
+(r / dummy)
+
+# ::id unbounded_dependencies_22
+# ::snt The thing to lose sleep over is what people , having concluded that we are weaker than we are , are likely to do about it .
+# ::cat object free relative
+# ::distance 16
+# ::suppl unbounded_dependencies_22
+(r / dummy)
+
+# ::id unbounded_dependencies_23
+# ::snt Well , whatever you have , that 's it ! !
+# ::cat object free relative
+# ::distance 2
+# ::suppl unbounded_dependencies_23
+(r / dummy)
+
+# ::id unbounded_dependencies_24
+# ::snt Of course , her benevolence was limited to those who could afford it , but then there is a limit to what one person can do .
+# ::cat object free relative
+# ::distance 4
+# ::suppl unbounded_dependencies_24
+(r / dummy)
+
+# ::id unbounded_dependencies_25
+# ::snt What I am here to do is to report on the gyrations of the struggle -- a struggle that amounts to self-redefinition -- to see if we can predict its future course .
+# ::cat object free relative
+# ::distance 5
+# ::suppl unbounded_dependencies_25
+(r / dummy)
+
+# ::id unbounded_dependencies_26
+# ::snt Only Walter Lippman envisioned the possibility of our having " outlived most of what we used to regard as the program of our national purposes '' .
+# ::cat object free relative
+# ::distance 4
+# ::suppl unbounded_dependencies_26
+(r / dummy)
+
+# ::id unbounded_dependencies_27
+# ::snt The audience did not think much of the new pastor , and what the new pastor thought of the audience he did not dare at the time to say .
+# ::cat object free relative
+# ::distance 4
+# ::suppl unbounded_dependencies_27
+(r / dummy)
+
+# ::id unbounded_dependencies_28
+# ::snt Skeptics may deny the more startling phenomena of dreams as things they have never personally observed , but failure to wonder at their basic mystery is outright avoidance of routine evidence .
+# ::cat object relative with null complementizer
+# ::distance 5
+# ::suppl unbounded_dependencies_28
+(r / dummy)
+
+# ::id unbounded_dependencies_29
+# ::snt Undoubtedly none of the residents realize the influence their town has had on American military history , or the deeds of valor that have been done in its name .
+# ::cat object relative with null complementizer
+# ::distance 4
+# ::suppl unbounded_dependencies_29
+(r / dummy)
+
+# ::id unbounded_dependencies_30
+# ::snt The truth is , however , that when Mel Chandler first reported to the regiment the only steed he had ever ridden was a swivel chair and the only weapon he had ever wielded was a pencil .
+# ::cat object relative with null complementizer
+# ::distance 4
+# ::suppl unbounded_dependencies_30
+(r / dummy)
+
+# ::id unbounded_dependencies_31
+# ::snt The truth is , however , that when Mel Chandler first reported to the regiment the only steed he had ever ridden was a swivel chair and the only weapon he had ever wielded was a pencil .
+# ::cat object relative with null complementizer
+# ::distance 4
+# ::suppl unbounded_dependencies_31
+(r / dummy)
+
+# ::id unbounded_dependencies_32
+# ::snt There was no weapon Early could not take apart and reassemble blind-folded .
+# ::cat object relative with null complementizer
+# ::distance 4
+# ::suppl unbounded_dependencies_32
+(r / dummy)
+
+# ::id unbounded_dependencies_33
+# ::snt There was no weapon Early could not take apart and reassemble blind-folded .
+# ::cat object relative with null complementizer
+# ::distance 7
+# ::suppl unbounded_dependencies_33
+(r / dummy)
+
+# ::id unbounded_dependencies_34
+# ::snt One of the obvious conclusions we can make on the basis of the last election , I suppose , is that we , the majority , were dissatisfied with Eisenhower conservatism .
+# ::cat object relative with null complementizer
+# ::distance 3
+# ::suppl unbounded_dependencies_34
+(r / dummy)
+
+# ::id unbounded_dependencies_35
+# ::snt Have not our physical abilities already deteriorated because of the more sedentary lives we are now living ? ?
+# ::cat object relative with null complementizer
+# ::distance 4
+# ::suppl unbounded_dependencies_35
+(r / dummy)
+
+# ::id unbounded_dependencies_36
+# ::snt He is throttling the liberty my father gave his life to win ! !
+# ::cat object relative with null complementizer
+# ::distance 7
+# ::suppl unbounded_dependencies_36
+(r / dummy)
+
+# ::id unbounded_dependencies_37
+# ::snt It required an energy he no longer possessed to be satirical about his father .
+# ::cat object relative with null complementizer
+# ::distance 4
+# ::suppl unbounded_dependencies_37
+(r / dummy)
+
+# ::id unbounded_dependencies_38
+# ::snt What do the initials CPR stand for ?
+# ::cat object wh-question
+# ::distance 5
+# ::suppl unbounded_dependencies_38
+(r / dummy)
+
+# ::id unbounded_dependencies_39
+# ::snt What does target heart rate mean ?
+# ::cat object wh-question
+# ::distance 5
+# ::suppl unbounded_dependencies_39
+(r / dummy)
+
+# ::id unbounded_dependencies_40
+# ::snt What is the text of an opera called ?
+# ::cat object wh-question
+# ::distance 7
+# ::suppl unbounded_dependencies_40
+(r / dummy)
+
+# ::id unbounded_dependencies_41
+# ::snt What did Peter Minuit buy for the equivalent of $ 24.00 ?
+# ::cat object wh-question
+# ::distance 4
+# ::suppl unbounded_dependencies_41
+(r / dummy)
+
+# ::id unbounded_dependencies_42
+# ::snt How much vitamin C should you take in a day ?
+# ::cat object wh-question
+# ::distance 3
+# ::suppl unbounded_dependencies_42
+(r / dummy)
+
+# ::id unbounded_dependencies_43
+# ::snt What did Edward Binney and Howard Smith invent in 1903 ?
+# ::cat object wh-question
+# ::distance 7
+# ::suppl unbounded_dependencies_43
+(r / dummy)
+
+# ::id unbounded_dependencies_44
+# ::snt What state does Martha Stewart live in ?
+# ::cat object wh-question
+# ::distance 4
+# ::suppl unbounded_dependencies_44
+(r / dummy)
+
+# ::id unbounded_dependencies_45
+# ::snt What countries has the IFC financed projects in ?
+# ::cat object wh-question
+# ::distance 4
+# ::suppl unbounded_dependencies_45
+(r / dummy)
+
+# ::id unbounded_dependencies_46
+# ::snt The waves of a 1923 tsunami in Sagami Bay brought to the surface and battered to death huge numbers of fishes that normally live at a depth of 3,000 feet .
+# ::cat right node raising
+# ::distance 9
+# ::suppl unbounded_dependencies_46
+(r / dummy)
+
+# ::id unbounded_dependencies_47
+# ::snt The waves of a 1923 tsunami in Sagami Bay brought to the surface and battered to death huge numbers of fishes that normally live at a depth of 3,000 feet .
+# ::cat right node raising
+# ::distance 4
+# ::suppl unbounded_dependencies_47
+(r / dummy)
+
+# ::id unbounded_dependencies_48
+# ::snt By means of charts showing wave-travel times and depths in the ocean at various locations , it is possible to estimate the rate of approach and probable time of arrival at Hawaii of a tsunami getting under way at any spot in the Pacific .
+# ::cat right node raising
+# ::distance 12
+# ::suppl unbounded_dependencies_48
+(r / dummy)
+
+# ::id unbounded_dependencies_49
+# ::snt By means of charts showing wave-travel times and depths in the ocean at various locations , it is possible to estimate the rate of approach and probable time of arrival at Hawaii of a tsunami getting under way at any spot in the Pacific .
+# ::cat right node raising
+# ::distance 7
+# ::suppl unbounded_dependencies_49
+(r / dummy)
+
+# ::id unbounded_dependencies_50
+# ::snt The first was that America had become -- or was in danger of becoming -- a second-rate military power .
+# ::cat right node raising
+# ::distance 12
+# ::suppl unbounded_dependencies_50
+(r / dummy)
+
+# ::id unbounded_dependencies_51
+# ::snt The first was that America had become -- or was in danger of becoming -- a second-rate military power .
+# ::cat right node raising
+# ::distance 5
+# ::suppl unbounded_dependencies_51
+(r / dummy)
+
+# ::id unbounded_dependencies_52
+# ::snt Various factors in the setting can still be of great advantage in making the first intercourse a good rather than a bad memory for one or both .
+# ::cat right node raising
+# ::distance 5
+# ::suppl unbounded_dependencies_52
+(r / dummy)
+
+# ::id unbounded_dependencies_53
+# ::snt Various factors in the setting can still be of great advantage in making the first intercourse a good rather than a bad memory for one or both .
+# ::cat right node raising
+# ::distance 1
+# ::suppl unbounded_dependencies_53
+(r / dummy)
+
+# ::id unbounded_dependencies_54
+# ::snt There was the revolution in Tibet which we pretended did not exist .
+# ::cat subject relative, embedded
+# ::distance 8
+# ::suppl unbounded_dependencies_54
+(r / dummy)
+
+# ::id unbounded_dependencies_55
+# ::snt He then sold her some capsules that he asserted would take care of the tumors and cysts until she could collect the money for buying his machine .
+# ::cat subject relative, embedded
+# ::distance 5
+# ::suppl unbounded_dependencies_55
+(r / dummy)
+
+# ::id unbounded_dependencies_56
+# ::snt Today it espouses certain ideas in its curriculum that other institutions might consider somewhat breathtaking .
+# ::cat subject relative, embedded
+# ::distance 10
+# ::suppl unbounded_dependencies_56
+(r / dummy)
+
+# ::id unbounded_dependencies_57
+# ::snt They differed in the balance they believed essential to the sovereignty of the citizen -- but the supreme sacrifice each made served to maintain a still more fundamental truth : That individual life , liberty and happiness depend on a right balance between the two -- and on the limitation of sovereignty , in all its aspects , which this involves .
+# ::cat subject relative, embedded
+# ::distance 3
+# ::suppl unbounded_dependencies_57
+(r / dummy)
+
+# ::id unbounded_dependencies_58
+# ::snt Human nature was not a piece of meat you could tell was bad by its smell .
+# ::cat subject relative, embedded
+# ::distance 7
+# ::suppl unbounded_dependencies_58
+(r / dummy)
+
+# ::id unbounded_dependencies_59
+# ::snt `` That was the fille de chambre , the one you thought could n't get the eggs out .
+# ::cat subject relative, embedded
+# ::distance 2
+# ::suppl unbounded_dependencies_59
+(r / dummy)
+
+# ::id unbounded_dependencies_60
+# ::snt Next to him was a young boy I was sure had sat near me at one of the trading sessions .
+# ::cat subject relative, embedded
+# ::distance 5
+# ::suppl unbounded_dependencies_60
+(r / dummy)
+
+# ::id unbounded_dependencies_61
+# ::snt Viacom's move comes as the syndication market is being flooded with situation comedies that are still running on the networks .
+# ::cat subject relative
+# ::distance 4
+# ::suppl unbounded_dependencies_61
+(r / dummy)
+
+# ::id unbounded_dependencies_62
+# ::snt The first two issues featured ads from only a handful of big advertisers , including General Electric and Adolph Coors , but the majority were from companies like Waste Management Inc. and Bumkins International , firms that don't spend much money advertising and can't be relied on to support a magazine over the long haul .
+# ::cat subject relative
+# ::distance 3
+# ::suppl unbounded_dependencies_62
+(r / dummy)
+
+# ::id unbounded_dependencies_63
+# ::snt The first two issues featured ads from only a handful of big advertisers , including General Electric and Adolph Coors , but the majority were from companies like Waste Management Inc. and Bumkins International , firms that don't spend much money advertising and can't be relied on to support a magazine over the long haul .
+# ::cat subject relative
+# ::distance 10
+# ::suppl unbounded_dependencies_63
+(r / dummy)
+
+# ::id unbounded_dependencies_64
+# ::snt Billings weren't disclosed for the small account , which had been serviced at Young & Rubicam , New York .
+# ::cat subject relative
+# ::distance 5
+# ::suppl unbounded_dependencies_64
+(r / dummy)
+
+# ::id unbounded_dependencies_65
+# ::snt In September , the department had said it will require trucks and minivans to be equipped with the same front-seat headrests that have long been required on passenger cars .
+# ::cat subject relative
+# ::distance 5
+# ::suppl unbounded_dependencies_65
+(r / dummy)

@@ -48,11 +48,10 @@
 6,Hard unseen wiki links,Recall,0,0,1,277
 7,Frequent predicate senses (incl. -01),Label recall,81,79,83,1654
 7,Frequent predicate senses (incl. -01),Prerequisites,92,90,93,1654
-7,Word ambiguities (handcrafted),N/A,N/A,N/A,N/A,N/A
+7,Word ambiguities (handcrafted),Recall,77,63,86,47
 7,"Word ambiguities (Karidi et al., 2021)",Recall,75,65,82,95
 8,PP attachment,Edge recall,53,48,59,325
 8,PP attachment,Prerequisites,94,91,96,325
-8,Unbounded dependencies,N/A,N/A,N/A,N/A,N/A
 8,Passives,Edge recall,55,45,66,83
 8,Passives,Prerequisites,75,64,83,83
 8,Unaccusatives,Edge recall,50,36,64,48

@@ -1,3 +1,5 @@
+import re
+
 from penman import Graph, load
 from typing import List
 from evaluation.util import get_node_by_name
@@ -19,28 +21,36 @@ def evaluate_word_disambiguation(gold_amrs: List[Graph], predicted_amrs: List[Gr
     sample_size = 0
     success_count = 0
     for gold, pred in zip(gold_amrs, predicted_amrs):
+
+        if re.match(pattern="word_disambiguation_[0-9]+", string=gold.metadata["id"]) is None:
+            continue
         # print(gold.metadata["label"])
         sample_size += 1
-        label = gold.metadata["label"]
-        if " " in label:
-            # print("first case")
-            edge_label, target_label = gold.metadata["label"].split(" ")
-            target_instances = get_target_instances(edge_label, pred)
-            for target_instance in target_instances:
-                if target_instance.target == target_label:
-                    success_count += 1
-                    break
+        try:
+            label = gold.metadata["label"]
+            if " " in label:
+                # print("first case")
+                edge_label, target_label = gold.metadata["label"].split(" ")
+                target_instances = get_target_instances(edge_label, pred)
+                for target_instance in target_instances:
+                    if target_instance.target == target_label:
+                        success_count += 1
+                        break
 
-        elif label.startswith(":"):
-            # print("second case")
-            edge_label = label
-            if is_relation_present_in_graph(edge_label, pred, EDGE_LABELS_AND_REIFICATIONS[edge_label][0]):
-                success_count += 1
-        else:
-            # print("third case")
-            node_label = label
-            if len([inst for inst in pred.instances() if inst.target == node_label]) >= 1:
-                success_count += 1
+            elif label.startswith(":"):
+                # print("second case")
+                edge_label = label
+                if is_relation_present_in_graph(edge_label, pred, EDGE_LABELS_AND_REIFICATIONS[edge_label][0]):
+                    success_count += 1
+            else:
+                # print("third case")
+                node_label = label
+                if len([inst for inst in pred.instances() if inst.target == node_label]) >= 1:
+                    success_count += 1
+        except KeyError as e:
+            print("error:", e)
+            print(gold.metadata)
+            raise e
 
     return success_count, sample_size
 

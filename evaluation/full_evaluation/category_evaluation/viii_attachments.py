@@ -39,12 +39,21 @@ class Attachments(CategoryEvaluation):
                 self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
 
     def compute_unbounded_results(self, gold_amrs, predicted_amrs):
-        return self.make_results_columns_for_edge_recall_from_graphs("unbounded_dependencies.tsv",
-                                                                     gold_amrs,
-                                                                     predicted_amrs,
-                                                                     use_sense=False,
-                                                                     source_column=2, edge_column=3, target_column=4,
-                                                                     first_row_is_header=True)
+        try:
+            return self.make_results_columns_for_edge_recall_from_graphs("unbounded_dependencies.tsv",
+                                                                         gold_amrs,
+                                                                         predicted_amrs,
+                                                                         use_sense=False,
+                                                                         source_column=2, edge_column=3, target_column=4,
+                                                                         first_row_is_header=True)
+        except IndexError as e:
+            print("Check that corpus/unbounded_dependencies.tsv has 66 rows")
+            print("Something may have gone wrong in extending the GrAPES testset with PTB data")
+            raise e
+        except FileNotFoundError as e:
+            print("Check that corpus/unbounded_dependencies.tsv exists")
+            print("Something may have gone wrong in extending the GrAPES testset with PTB data")
+            raise e
 
     def compute_passive_results(self, gold_amrs, predicted_amrs):
         return self.make_results_columns_for_edge_recall_from_graphs("passives_filtered.tsv",

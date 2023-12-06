@@ -168,10 +168,14 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     [set number, category name, metric name, score, lower_bound, upper_bound, sample_size]
     (the latter three are omitted for f-score results, since they don't apply there)
     """
+    full_corpus_length = 1584
+    minimal_corpus_length = 1471
+    unbounded_dependencies_length = 66  # PTB
+    word_disambiguation_length = 47  # AMR 3.0
     use_testset = gold_graphs_testset is not None and predicted_graphs_testset is not None
     use_grapes = gold_graphs_grapes is not None and predicted_graphs_grapes is not None
-    use_grapes_from_testset = len(gold_graphs_grapes) == 134 or len(gold_graphs_grapes) == 135 # TODO get the numbers right
-    use_grapes_from_ptb = len(gold_graphs_grapes) == 134 or len(gold_graphs_grapes) == 135 # TODO get the numbers right
+    use_grapes_from_testset = len(gold_graphs_grapes) in [minimal_corpus_length + word_disambiguation_length, full_corpus_length]
+    use_grapes_from_ptb = len(gold_graphs_grapes) in [minimal_corpus_length + unbounded_dependencies_length, full_corpus_length]
     if not use_testset:
         print("No testset AMRs given. Skipping testset categories.")
     if not use_grapes:
