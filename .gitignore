@@ -119,3 +119,4 @@ corpus/unbounded_dependencies_amrbart_input.jsonl
 corpus/subcorpora/unbounded_dependencies.txt
 corpus/unbounded_dependencies.tsv
 corpus/test_corpus.txt
+corpus/subcorpora/word_disambiguation.txt
