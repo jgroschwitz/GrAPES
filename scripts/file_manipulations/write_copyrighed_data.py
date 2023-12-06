@@ -4,8 +4,8 @@ writes decrypted licensed data for unbounded dependencies and word disambiguatio
 import penman
 
 # use test_corpus for testing
-main_corpus = "test_corpus"
-# main_corpus = "corpus"
+# main_corpus = "test_corpus"
+main_corpus = "corpus"
 
 
 def write_ptb_data(decrypted_txt, decrypted_tsv):
@@ -60,18 +60,18 @@ def write_ptb_data(decrypted_txt, decrypted_tsv):
     # write to corpus files if needed
     if create_txt:
         penman.dump(amrs, f"corpus/subcorpora/{subcorpus}.txt")
-        print(f"added {subcorpus}.txt")
+        print(f"added corpus/subcorpora/{subcorpus}.txt")
     if append:
         with open(f"corpus/{main_corpus}.txt", 'a') as corpus_file:
             corpus_file.write("\n")  # need blank line in between
             penman.dump(amrs, corpus_file)
-            print(f"extended {main_corpus}.txt")
+            print(f"extended corpus/{main_corpus}.txt")
 
     # write to TSV if needed
     if create_tsv:
         with open(f"corpus/{subcorpus}.tsv", 'w') as tsv_file:
             tsv_file.write(decrypted_tsv)
-            print(f"added {subcorpus}.tsv")
+            print(f"added corpus/{subcorpus}.tsv")
 
 
 def update_from_amr_testset(path_to_testset):
@@ -117,7 +117,7 @@ def update_from_amr_testset(path_to_testset):
         with open(f"corpus/{main_corpus}.txt", "a") as c:
             c.write("\n")  # need blank line in between
             penman.dump(amrs, c)
-            print(f"added to the end of corpus/{main_corpus}.txt")
+            print(f"extended corpus/{main_corpus}.txt")
 
 
 if __name__ == "__main__":
