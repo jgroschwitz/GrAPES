@@ -13,13 +13,13 @@ ptb_tsv_content = "gAAAAABlcHooh1L7V441aENi7EEK-Rcqk1SrLBHtBisklcW3qdE3Mp_g-tIlU
 
 def main():
     parser = argparse.ArgumentParser(description="Complete the corpus with external data.")
-    parser.add_argument('-ptb', '--penn-tree-bank', type=str, help='Path to the folder containing all'
-                                                                   'POS tagged files in the Penn Tree Bank.'
+    parser.add_argument('-ptb', '--penn-tree-bank', type=str, help='Path to the folder containing all '
+                                                                   'POS tagged files in the Penn Tree Bank. '
                                                                    'In version 2.0 of the PTB, this is the folder '
                                                                    '"tagged", in version 3.0 it is "tagged/pos".',
                         required=False)
-    parser.add_argument('-amr', '--amr-corpus', type=str, help='Path to the concatenated AMR 3.0 testset file. To'
-                                                               'concatenate the AMR testset files, you can use'
+    parser.add_argument('-amr', '--amr-corpus', type=str, help='Path to the concatenated AMR 3.0 testset file. To '
+                                                               'concatenate the AMR testset files, you can use '
                                                                'concatenate_amr_files.py.',
                         required=False)
     args = parser.parse_args()
