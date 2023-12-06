@@ -174,8 +174,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     word_disambiguation_length = 47  # AMR 3.0
     use_testset = gold_graphs_testset is not None and predicted_graphs_testset is not None
     use_grapes = gold_graphs_grapes is not None and predicted_graphs_grapes is not None
-    use_grapes_from_testset = len(gold_graphs_grapes) in [minimal_corpus_length + word_disambiguation_length, full_corpus_length]
-    use_grapes_from_ptb = len(gold_graphs_grapes) in [minimal_corpus_length + unbounded_dependencies_length, full_corpus_length]
+    use_grapes_from_testset = use_grapes and len(gold_graphs_grapes) in [minimal_corpus_length + word_disambiguation_length, full_corpus_length]
+    use_grapes_from_ptb = use_grapes and len(gold_graphs_grapes) in [minimal_corpus_length + unbounded_dependencies_length, full_corpus_length]
     if not use_testset:
         print("No testset AMRs given. Skipping testset categories.")
     if not use_grapes:
@@ -253,20 +253,29 @@ def do_skip_category(category_name, use_testset, use_grapes, use_grapes_from_tes
 
 def main():
     args = parse_args()
-    gold_graphs_testset = load(args.gold_amr_testset_file)
-    gold_graphs_grapes = load(args.gold_amr_grapes_file)
-    predicted_graphs_testset = load(args.predicted_amr_testset_file)
-    predicted_graphs_grapes = load(args.predicted_amr_grapes_file)
-    if len(gold_graphs_testset) != len(predicted_graphs_testset):
-        raise ValueError(
-            "Gold and predicted AMR files must contain the same number of AMRs. This is not the case for the testset here."
-            "Got " + str(len(gold_graphs_testset)) + " gold AMRs and " + str(len(predicted_graphs_testset))
-            + " predicted AMRs.")
-    if len(gold_graphs_grapes) != len(predicted_graphs_grapes):
-        raise ValueError(
-            "Gold and predicted AMR files must contain the same number of AMRs. This is not the case for the grapes corpus here."
-            "Got " + str(len(gold_graphs_grapes)) + " gold AMRs and " + str(len(predicted_graphs_grapes))
-            + " predicted AMRs.")
+    if args.gold_amr_testset_file is not None and args.predicted_amr_testset_file is not None:
+        gold_graphs_testset = load(args.gold_amr_testset_file)
+        predicted_graphs_testset = load(args.predicted_amr_testset_file)
+        if len(gold_graphs_testset) != len(predicted_graphs_testset):
+            raise ValueError(
+                "Gold and predicted AMR files must contain the same number of AMRs. This is not the case for the testset here."
+                "Got " + str(len(gold_graphs_testset)) + " gold AMRs and " + str(len(predicted_graphs_testset))
+                + " predicted AMRs.")
+    else:
+        gold_graphs_testset = predicted_graphs_testset = None
+
+    if args.gold_amr_grapes_file is not None and args.predicted_amr_grapes_file is not None:
+        gold_graphs_grapes = load(args.gold_amr_grapes_file)
+        predicted_graphs_grapes = load(args.predicted_amr_grapes_file)
+
+        if len(gold_graphs_grapes) != len(predicted_graphs_grapes):
+            raise ValueError(
+                "Gold and predicted AMR files must contain the same number of AMRs. This is not the case for the grapes corpus here."
+                "Got " + str(len(gold_graphs_grapes)) + " gold AMRs and " + str(len(predicted_graphs_grapes))
+                + " predicted AMRs.")
+
+    else:
+        gold_graphs_grapes = predicted_graphs_grapes = None
 
     results = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
                           filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics)
