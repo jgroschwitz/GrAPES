@@ -1,8 +1,8 @@
 # GrAPES
 
-This is the repo for the Granular AMR Parsing Evaluation Suite (GrAPES). Our paper "AMR Parsing is Far from Solved: GrAPES, the Granular AMR Parsing Evaluation Suite" has been accepted at EMNLP 2023! Documentation of this repository will come soon.
+This is the repo for the **Gr**anular **A**MR **P**arsing **E**valuation **S**uite (GrAPES). Our paper "AMR Parsing is Far from Solved: GrAPES, the Granular AMR Parsing Evaluation Suite" has been accepted at EMNLP 2023! Documentation of this repository will come soon.
 
-#TODO make grapes vs grapes set clearer
+GrAPES provides specialised evaluation metrics and additional data. Throughout the documentation, we distinguish between the AMR 3.0 testset (which you probably already have) and the GrAPES testset, which is our additional data, housed in the `corpus/subcorpora` folder.
 
 ## Set up
 
@@ -32,6 +32,8 @@ python #TODO path/to/AMR/testset
 
 ### Dependencies
 
+#TODO do we know which versions of Python work?
+
 GrAPES requires the Python packages `penman`, `prettytable` `statsmodels`, `smatch`.
 
 ```commandline
@@ -40,19 +42,40 @@ pip install prettytable penman statsmodels smatch
 
 ## Usage
 
+### Run your parser on the new sentences in the GrAPES testset
+
+If you want the full results, you need to predict AMRs for the new sentences, which are in `corpus/corpus.txt`.
+
 ### Evaluate on all categories
 
 To run the full evaluation suite, run the following:
 
 ```commandline
-python evaluate_call_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -gg path/to/gold/gRAPES/corpus.txt -pg path/to/your/parser/output/gRAPES/corpus.txt 
+python evaluate_call_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -gg corpus/corpus.txt -pg path/to/your/parser/output/gRAPES/corpus.txt 
 ```
 
-You can run it on only the AMR testset, on the GrAPES-provided corpus, or both.
+The `-gt` argument is the path to your copy of the AMR testset and the `-pt` argument is the path to your parser output for the AMR testset.
 
-To evaluate with GrAPES on categories drawn from the AMR testset, provide the path to your copy of the AMR testset (`-gt`) and the path to your parser output for the AMR testset (`-pt`).
+The `-gg` argument is the path to the GrAPES file `corpus.txt` and `-pg` is the path to your parser output on that file.
 
-To evaluate on the additional test items provided by GrAPES, provide the path to the GrAPES file `corpus.txt` (`-gg`) and your parser output on that file (`-pg`).
+This will automatically detect whether you've added the PTB and AMR testset sentences.
+
+If you only have the AMR testset or GrAPES predictions, see below.
+
+### AMR 3.0 testset only
+
+```commandline
+python evaluate_call_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset
+```
+
+### GrAPES testset only
+
+This will automatically detect whether you've added the PTB and AMR testset sentences.
+
+```commandline
+python evaluate_call_categories.py -gg corpus/corpus.txt -pg path/to/your/parser/output/gRAPES/corpus.txt 
+```
+
 
 ### What do to if you are missing PTB or AMR 3.0
 

@@ -1,0 +1,7 @@
+Move combine_amr_files to scripts/file_manipulations
+
+Tidy up corpus folder
+
+delete tree.txt
+
+delete this file
