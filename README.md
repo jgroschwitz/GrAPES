@@ -109,7 +109,7 @@ python evaluate_single_category.py -c adjectives -g corpus/corpus.txt -p path/to
 ```
 
 ```commandline
-python evaluate_single_category.py -c adjectives -g corpus/adjectives.txt -p path/to/parser/output/adjectives/only 
+python evaluate_single_category.py -c adjectives -g corpus/subcorpora/adjectives.txt -p path/to/parser/output/adjectives/only 
 ```
 
 As long as the files have the same number of graphs, the order matches, and they contain the particular category you want, this will work.
