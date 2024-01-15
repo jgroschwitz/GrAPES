@@ -1,6 +1,6 @@
 # GrAPES
 
-This is the repo for the **Gr**anular **A**MR **P**arsing **E**valuation **S**uite (GrAPES). Our paper "AMR Parsing is Far from Solved: GrAPES, the Granular AMR Parsing Evaluation Suite" has been accepted at EMNLP 2023!
+This is the repo for the **Gr**anular **A**MR **P**arsing **E**valuation **S**uite (GrAPES). [Our paper "AMR Parsing is Far from Solved: GrAPES, the Granular AMR Parsing Evaluation Suite" was published in the EMNLP 2023 proceedings](https://aclanthology.org/2023.emnlp-main.662/).
 
 GrAPES provides specialised evaluation metrics and additional data. Throughout the documentation, we distinguish between the AMR 3.0 testset (which you probably already have) and the GrAPES testset, which is our additional data, housed in the `corpus/subcorpora` folder.
 
