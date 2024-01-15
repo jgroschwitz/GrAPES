@@ -174,6 +174,9 @@ multinode_word_meanings
 imperatives
 ```
 
+## Details about the contruction of each category
+
+The appendix of the [paper](https://aclanthology.org/2023.emnlp-main.662/) provides extensive details for each of the 36 categories.
 
 ## Looking at example outputs
 
