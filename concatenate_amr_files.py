@@ -10,7 +10,8 @@ def concatenate_text_files(input_dir, output_file):
     :param output_file: name of output file
     """
     with open(output_file, 'w', encoding="UTF-8") as outfile:
-        for fname in os.listdir(input_dir):
+        test_files = sorted(os.listdir(input_dir))
+        for fname in test_files:
             if fname.endswith('.txt'):
                 with open(os.path.join(input_dir, fname), encoding="UTF-8") as infile:
                     for line in infile:

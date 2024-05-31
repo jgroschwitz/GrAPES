@@ -66,7 +66,7 @@ If you want to evaluate only on a single category, running your parser on one of
 To run the full evaluation suite, run the following:
 
 ```commandline
-python evaluate_call_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -gg corpus/corpus.txt -pg path/to/your/parser/output/GrAPES/corpus.txt 
+python evaluate_all_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -gg corpus/corpus.txt -pg path/to/your/parser/output/GrAPES/corpus.txt 
 ```
 
 The `-gt` argument is the path to your copy of the AMR testset and the `-pt` argument is the path to your parser output for the AMR testset. The `-gg` argument is the path to the GrAPES file `corpus.txt` and `-pg` is the path to your parser output on that file. This will automatically detect whether you've added the PTB and AMR testset sentences in setup step B.
