@@ -125,3 +125,6 @@ corpus/no_unbounded.txt
 corpus/no_word_disambig.txt
 corpus/unbounded_dependencies.txt
 corpus/unbounded_dependencies_old_ids.tsv
+cot_grapes.csv
+cot_grapes2.csv
+latex_table.txt
