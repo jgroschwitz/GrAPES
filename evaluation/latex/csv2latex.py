@@ -16,6 +16,9 @@ def main():
 
     also, you probably want to print the whole table with \small in front.
 
+
+    TODO: on Jonas' Laptop, the current setup adds a weird "2" to the Unaccusatives dataset name.
+
     """
     # arguments: output_file, csv_files
     output_file = sys.argv[1]
