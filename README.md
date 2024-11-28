@@ -213,17 +213,19 @@ python launch_vulcan.py path/to/pickle
 GrAPES
 ├── evaluate_all_categories.py              # main script
 ├── evaluate_single_category.py             # main script for 1 category
-├── corpus                                  # all corpus files, including TSV files used to evaluation
+├── concatenate_amr_files.py                # for setup
+├── complete_the_corpus.py                  # for setup
+├── create_vulcan_pickle.py                 # for visualising predicted/gold pairs
+├── corpus                                  # all GrAPES corpus files, including TSV files used for evaluation
+│ ├── subcorpora                            # all GrAPES AMR files (AMR test set not included)
 │ └── corpus.txt                            # the full concatenated GrAPES corpus (AMR test set not included)
 ├── LICENSE
 ├── README.md
 ├── docker-compose                          # Docker compose files for AM parser and AMRBART
-├── error_analysis                          # TODO
+├── error_analysis                          # a good place for Vulcan pickles
 │ └── README.md
 ├── evaluation                              # all evaluation modules
-│ ├── concatenate_amr_files.py
 │ ├── corpus_metrics.py
-│ ├── create_own_graphs_vulcan_pickle.py
 │ ├── full_evaluation                       # full evaluation modules
 │ │ ├── category_evaluation                 # evaluation modules by set
 │ │ │ ├── category_evaluation.py
