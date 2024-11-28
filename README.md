@@ -180,16 +180,23 @@ The appendix of the [paper](https://aclanthology.org/2023.emnlp-main.662/) provi
 
 ## Looking at example outputs
 
-You may find [Vulcan](https://github.com/jgroschwitz/vulcan) helpful for looking at your parser output and comparing it to the gold graph, when available.
+You may find [Vulcan](https://github.com/jgroschwitz/vulcan) helpful for looking at your parser output and comparing it to the gold graph, when available. Git Clone the repository, and install the dependencies. 
 
-You can Git Clone the repository, and create pickles of the data as follows:
-
-#TODO
-
-You can then view the graphs and sentences side-by-side with Vulcan:
+From your GrAPES main folder, create pickles of the data. This works for any pair of files with predicted and gold graphs in the same order.
 
 ```commandline
-python vulcan.py path/to/pickle
+python create_vulcan_pickle.py path/to/prediction/file path/to/gold/file path/to/output.pickle
+```
+For example, for the adjectives subcorpus, you could have something like:
+
+```commandline
+python create_vulcan_pickle.py ../parser_outputs/subcorpora/adjectives_predictions.txt corpus/subcorpora/adjectives.txt error_analysis/adjectives.pickle
+```
+
+You can then view the graphs and sentences side-by-side with Vulcan from your Vulcan folder (not from your GrAPES folder!):
+
+```commandline
+python launch_vulcan.py path/to/pickle
 ```
 
 

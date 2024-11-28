@@ -128,3 +128,4 @@ corpus/unbounded_dependencies_old_ids.tsv
 cot_grapes.csv
 cot_grapes2.csv
 latex_table.txt
+*.pickle
