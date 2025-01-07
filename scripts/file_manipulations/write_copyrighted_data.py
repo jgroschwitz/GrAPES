@@ -6,7 +6,8 @@ import penman
 # use test_corpus for testing
 # main_corpus = "test_corpus"
 main_corpus = "corpus"
-path_to_corpus_folder = "../../corpus/"
+# path_to_corpus_folder = "../../corpus/"  # if using this script directly
+path_to_corpus_folder = "corpus/"  # path from import location
 
 
 def write_ptb_data(decrypted_txt, decrypted_tsv):
