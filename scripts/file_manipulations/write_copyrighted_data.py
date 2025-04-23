@@ -53,6 +53,7 @@ def write_ptb_data(decrypted_txt, decrypted_tsv):
         return
 
     amrs = penman.loads(decrypted_txt)
+    print(f"made {len(amrs)} AMRs")
 
     for i, entry in enumerate(amrs):
         # copy old ID to supplementary info

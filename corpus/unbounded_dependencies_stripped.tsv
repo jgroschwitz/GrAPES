@@ -1,0 +1,67 @@
+ID	sentence	source	edge	target	distance	category	comments
+cf21.mrg-or-1-0		(g / generate-01)	:ARG1	(w / wave)	6	object relative	
+cf03.mrg-or-3-1		(s / see-01)	:ARG1	(c / continuity)	7	object relative	
+cf22.mrg-or-1-2		(b / begin-01)	:ARG1	(j / job)	8	object relative	
+cf23.mrg-or-2-3		(a / and :op1 (p / praise-01) :op2 (m / mourn-01))	:ARG1	(e / event)	4	object relative	"or (e / event  :name (n / name :op1 ""Hungarian"" :op2 ""Revolution"")) "
+cf23.mrg-or-2-4		(d / do-02)	:ARG2	(e / event) 	10	object relative	"or (e / event  :name (n / name :op1 ""Hungarian"" :op2 ""Revolution"")) "
+cg20.mrg-or-1-5		(p / play-02)	:ARG1	(r / role)	7	object relative	
+cg21.mrg-or-2-6		(f / find-01)	:ARG1	(p / position-01)	4	object relative	or 6 (to ’n’)
+ck02.mrg-or-2-7		(s / see-01)	:ARG1	(s / stream)	4	object relative	or is it stream-thing?
+cl01.mrg-or-1-8		(t / tell-01)	:ARG1	(t2 / thing)	6	object relative	
+cl01.mrg-or-3-9		(p / put-01) (r / rehearse-01)	:ARG1	(p / play-11) (t / turkey)	20	object relative	up to 25
+cl02.mrg-or-1-10		(g / give-01)	:ARG1	(k / key)	7	object relative	
+cm03.mrg-or-2-11		(r / ratify-01)	:ARG1	(p / principle)	7	object relative	
+cp21.mrg-or-1-12		(c / covet-01)	:ARG1	(k / knife)	4	object relative	
+cp21.mrg-or-1-13		(h / have-03)	:ARG1	(k / knife)	15	object relative	
+cf21.mrg-sr-2-14		(c / close-01)	:ARG0	(o / oscillate-01)	7	subject relative	
+cf21.mrg-sr-4-15		(e / equip-01)	:ARG1	(s / station)	6	subject relative	
+cl10.mrg-sr-3-16		(g / give-01) (l / love-01)	:ARG0	(w / woman)	5	subject relative	
+cp10.mrg-sr-1-17		(t / twist-01) (t / twist-01 :ARG1 (t2 / thing))	:ARG0	(l / leap-03)	5	subject relative	
+cp10.mrg-sr-1-18		(t / twist-01) (t / twist-01 :ARG1 (t2 / thing))	:ARG0	(s / smack-02)	10	subject relative	
+cr07.mrg-sr-1-19		(f / fun-01)	:ARG1	(s / something)	5	subject relative	
+cr07.mrg-sr-1-20		(d / do-02)	:ARG0	(s / something)	9	subject relative	
+cf21.mrg-ofr-1-0		(k / know-01)	:ARG1	(t / thing)	3	object free relative	
+cf23.mrg-ofr-1-1		(d / do-02)	:ARG1	(t / thing)	16	object free relative	
+cf06.mrg-ofr-1-2		(h / have-03)	:ARG1	(w / whatever)	2	object free relative	
+cf09.mrg-ofr-1-3		(d / do-02)	:ARG1	(t / thing)	4	object free relative	
+cg21.mrg-ofr-3-4		(d / do-02)	:ARG1	(t / thing)	5	object free relative	
+cg21.mrg-ofr-4-5		(r / regard-01)	:ARG1	(t / thing)	4	object free relative	
+ck04.mrg-ofr-1-6		(t / think-01)	:ARG1	(t / thing)	4	object free relative	
+cf03.mrg-or0-2-0		(o / observe-01)	:ARG1	(t / thing)	5	object relative with null complementizer	
+cf22.mrg-or0-1-1		(h / have-03)	:ARG1	(i / influence-01)	4	object relative with null complementizer	
+cf22.mrg-or0-2-2		(r / ride-01)	:ARG1	(s2 / steed)	4	object relative with null complementizer	
+cf22.mrg-or0-2-3		(w / wield-01)	:ARG1	(w2 / weapon)	4	object relative with null complementizer	
+cf22.mrg-or0-4 -4		(d / disassemble-01)	:ARG1	(w / weapon)	4	object relative with null complementizer	"No 1:1 frame for ""take apart"" - chose ""disassemble-01"""
+cf22.mrg-or0-4 -5		(d / reassemble-01)	:ARG1	(w / weapon)	7	object relative with null complementizer	
+cg21.mrg-or0-1-6		(m / make-01)	:ARG1	(c / conclusion)	3	object relative with null complementizer	
+cg22.mrg-or0-1-7		(l / live-01)	:ARG1	(l2 / life)	4	object relative with null complementizer	
+ck10.mrg-or0-2 -8		(w / win-01)	:ARG5	(l / liberty)	7	object relative with null complementizer	
+ck01.mrg-or0-1-9		(p / possess-01)	:ARG1	(e / energy)	4	object relative with null complementizer	
+xx00.mrg-oq-2-0		(s / stand-08)	:ARG1	(a / amr-unkown)	5	object wh-question	
+xx00.mrg-oq-5-1		(m / mean-01)	:ARG1	(a / amr-unkown)	5	object wh-question	
+xx00.mrg-oq-6-2		(c / call-01)	:ARG1	(a / amr-unkown)	7	object wh-question	
+xx00.mrg-oq-7-3		(b / buy-01)	:ARG1	(a / amr-unkown)	4	object wh-question	
+xx00.mrg-oq-11-4		(t / take-01)	:ARG1	"(s / small-molecule :name (n / name :op1 ""vitamin"" :op2 ""C"")) "	3	object wh-question	
+xx00.mrg-oq-12-5		(i / invent-01)	:ARG1	(a / amr-unkown)	7	object wh-question	
+xx00.mrg-oq-17-6		(l / live-01) 	:ARG1	(s / state)	4	object wh-question	
+xx00.mrg-oq-19-7		(f / finance-01)	:ARG1	(c / country)	4	object wh-question	
+cf21.mrg-rnr-1-0		(b / bring-01)	:ARG1	(n / number)	9	right node raising	
+cf21.mrg-rnr-1-1		(b / batter-01)	:ARG1	(n / number)	4	right node raising	
+cf21.mrg-rnr-2-2		(r / rate-01)	:ARG1	(t / tsunami)	12	right node raising	
+cf21.mrg-rnr-2-3		(t / tsunami)	:time	(a / arrive-01)	7	right node raising	
+cf23.mrg-rnr-2-4		(b / become-01)	:ARG2	(p / power)	12	right node raising	
+cf23.mrg-rnr-2-5		(b / become-01)	:ARG2	(p / power)	5	right node raising	
+cf07.mrg-rnr-1-6		(g / good-02)	:ARG1	(m / memory)	5	right node raising	
+cf07.mrg-rnr-1-7		(b / bad-07)	:ARG1	(m / memory)	1	right node raising	
+cf23.mrg-se-1-0		(e / exist-01)	:ARG1	(r / revolution)	8	subject relative, embedded	
+cf10.mrg-se-1-1		(c / care-03)	:ARG1	(c2 / capsule)	5	subject relative, embedded	
+cf30.mrg-se-1-2		(s / stun-01)	:ARG0	(i / idea)	10	subject relative, embedded	"No 1:1 frame for breathtaking - chose ""stun-01"""
+cg10.mrg-se-1-3		(e / essential-01)	:ARG1	(b / balance)	3	subject relative, embedded	
+ck03.mrg-se-1-4		(b / bad-07)	:ARG1	(p / piece)	7	subject relative, embedded	
+ck27.mrg-se-1-5		(g / get-05)	:ARG1 	(o / one)	2	subject relative, embedded	
+cn04.mrg-se-2-6		(s / sit-01)	:ARG1	(b / boy)	5	subject relative, embedded	
+wsj_0060.mrg-sr-3-0		(r / run-09)	:ARG1	(c / comedy)	4	subject relative	
+wsj_0062.mrg-sr-3-1		(s / spend-01)	:ARG0	(f / firm)	3	subject relative	
+wsj_0062.mrg-sr-3-2		(r / rely-01)	:ARG0	(f / firm)	10	subject relative	
+wsj_0062.mrg-sr-4-3		(s / service-05)	:ARG1	(a / account)	5	subject relative	
+wsj_0064.mrg-sr-1-4		(r / require-01)	:ARG1	(h / headrest)	5	subject relative	

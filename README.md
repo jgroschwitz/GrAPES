@@ -36,18 +36,23 @@ The file `concatenated/testset/file/name` will be created by this script, and in
 
 For licensing reasons, two of the GrAPES categories (Unbounded Dependencies and Word Ambiguities (handcrafted)) are only available if you also have the necessary licenses. You can use GrAPES without that data and skip this setup step, but two categories will be missing. To obtain the full GrAPES corpus, use the following instructions:
 
+#### Unbounded Dependencies
+
 The Unbounded Dependencies category is built from Penn Tree Bank sentences. If you have access to the Penn Tree Bank, the following script will add them to the existing GrAPES `corpus.txt` file, where `<ptb_pos_path>` refers to the location of all the POS tagged files in the PTB (in version 2 of the PTB, this is the `tagged` subfolder, in version 3 it is `tagged/pos`).
 
 ```commandline
 python complete_the_corpus.py -ptb <ptb_pos_path>
 ```
+**Troubleshooting:** These are encrypted in `corpus/copyrighted_data`. A version of the TSV file without the sentences is also provided in `corpus/unbounded_dependencies_stripped.tsv` from which the annotations can probably be reconstructed if you have the PTB but the decryption fails. IDs include PTB filenames.
+
+#### Word Ambiguities
 
 Twelve of the sentences in the Word Ambiguities (handcrafted) category are AMR 3.0 test set sentences. To add them to the GrAPES `corpus.txt` file, run the following script, where `<amr_test_path>` refers to the AMR 3.0 concatenated test set file folder (see step B)):
 
 ```commandline
 python complete_the_corpus.py -amr <amr_test_path>
 ```
-
+**Troubleshooting:** The file without the copyrighted sentences is `corpus/word_ambiguities_clean.txt`. To create the right files, replace `(removed -- see documentation)` with the sentences (IDs are in the file), save it as `corpus/subcorpora/word_disambiguation.txt`, and add the entries to `corpus/corpus.txt`.
 
 # Usage
 

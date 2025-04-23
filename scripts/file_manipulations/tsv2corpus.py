@@ -1,14 +1,18 @@
+import os
+
 import pandas
 
 
 def annotated_tsv2amr_corpus_file(tsv_filepath,
-                                  output_filepath,
+                                  amr_corpus_output_filepath,
+                                  tsv_output_filepath,
                                   sentence_column_label,
                                   id_column_label=None,
                                   graph_column_label=None,
                                   comment_column_label=None,
                                   unbounded=False,
                                   new_tsv=False,
+                                    sentenceless_version = False
                                   ):
     """
     given a tsv file of annotations, generates an AMR corpus file and tsv files for evaluation
@@ -23,13 +27,14 @@ def annotated_tsv2amr_corpus_file(tsv_filepath,
                             we'll use this to make output_filepath.txt and .tsv (if needed)
     """
     filename = tsv_filepath.split("/")[-1]
+    output_path_parent = os.path.dirname(tsv_output_filepath)
 
     # read in TSV
     data = pandas.read_csv(tsv_filepath, sep='\t')
 
     new_tsv_data_as_list = []
 
-    with open(output_filepath + ".txt", 'a') as corpus_file:
+    with open(amr_corpus_output_filepath, 'a') as corpus_file:
         # get all the components of the input file
         for index, (_, row) in enumerate(data.iterrows()):
             # use ID if given, otherwise make one
@@ -109,7 +114,15 @@ def annotated_tsv2amr_corpus_file(tsv_filepath,
     if new_tsv:
         new_tsv_dataframe = pandas.DataFrame(new_tsv_data_as_list)
         # append to existing TSV
-        new_tsv_dataframe.to_csv(output_filepath + ".tsv", sep='\t', mode='a', header=False, index=False)
+        new_tsv_dataframe.to_csv(tsv_output_filepath, sep='\t', mode='a', header=False, index=False)
+    if sentenceless_version:
+        stripped_tsv_data_as_list = []
+        for entry in new_tsv_data_as_list:
+            entry[1] = ""
+            stripped_tsv_data_as_list.append(entry)
+        new_tsv_dataframe = pandas.DataFrame(stripped_tsv_data_as_list)
+        # append to existing TSV
+        new_tsv_dataframe.to_csv(f"{output_path_parent}/{subcorpus}_stripped.tsv", sep='\t', mode='a', header=False, index=False)
 
 
 def generate_id(filename, i, id=None, unbounded=False):
@@ -122,13 +135,14 @@ def generate_id(filename, i, id=None, unbounded=False):
     :return:
     """
     if unbounded and id is not None:
+        # return f"unbounded_dependencies_{i}"
         return f"{id}-{i}"
     elif id is not None:
         return id
     return f"{filename}-{i}"
 
 
-def run_script(output_path_prefix, input_file_dict, header_description_start, new_tsv=True, unbounded=False):
+def run_script(output_path_parent, subcorpus, input_file_dict, header_description_start, new_tsv=True, unbounded=False, sentenceless_version=False):
     """
     Run the main script, reading in TSV files and writing to TSV and corpus files
     :param unbounded: if True, we have more columns to deal with
@@ -149,8 +163,9 @@ def run_script(output_path_prefix, input_file_dict, header_description_start, ne
     input_path = "../../corpus/Annotations/"
     if unbounded:
         input_path += "unbounded/"
-    output_tsv = output_path_prefix + ".tsv"
-    output_corpus = output_path_prefix + ".txt"
+    output_tsv = f"{output_path_parent}/{subcorpus}.tsv"
+    stripped_tsv = f"{output_path_parent}/{subcorpus}_stripped.tsv"
+    output_corpus = f"{output_path_parent}/subcorpora/{subcorpus}.txt"
 
     if new_tsv:
         # initialise output TSV
@@ -158,9 +173,16 @@ def run_script(output_path_prefix, input_file_dict, header_description_start, ne
             pandas.DataFrame([], columns=[
                 "ID", "sentence", "source", "edge", "target", "distance", "category", "comments"
             ]).to_csv(output_tsv, sep="\t", index=False)
+            if sentenceless_version:
+                pandas.DataFrame([], columns=[
+                    "ID", "sentence", "source", "edge", "target", "distance", "category", "comments"
+                ]).to_csv(stripped_tsv, sep="\t", index=False)
         else:
             # pandas.DataFrame([], columns=["ID", "comments"]).to_csv(output_tsv, sep="\t", index=False)
             pandas.DataFrame([], columns=["ID", "sentence", "graph", "comments"]).to_csv(output_tsv, sep="\t", index=False)
+            if sentenceless_version:
+                pandas.DataFrame([], columns=["ID", "sentence", "graph", "comments"]).to_csv(stripped_tsv, sep="\t",
+                                                                                             index=False)
 
     # initialise output corpus
     with open(output_corpus, 'w') as corpus:
@@ -170,31 +192,36 @@ def run_script(output_path_prefix, input_file_dict, header_description_start, ne
     for filename in input_file_dict:
         print("processing", filename)
         annotated_tsv2amr_corpus_file(input_path + filename,
-                                      output_path_prefix,
+                                      output_corpus,
+                                              output_tsv,
                                       sentence_column_label=input_file_dict[filename][0],
                                       id_column_label=input_file_dict[filename][1],
                                       graph_column_label=input_file_dict[filename][2],
                                       comment_column_label=input_file_dict[filename][3],
                                       unbounded=unbounded,
-                                      new_tsv=new_tsv)
+                                      new_tsv=new_tsv,
+                                      sentenceless_version=sentenceless_version)
 
 
 if __name__ == "__main__":
 
-    # BERT's Mouth
-    output_path = "../../corpus/berts_mouth"
+    output_path_parent = "../../corpus/"
 
-    input_files = {
-        "Maria_Bertsmouth1.tsv": ["sentence", None, "graph", "comment", None, None],
-        "chris_annotation_BM_54-95.tsv": ["Sentence", "I", "AMR", "Comment", None, None],
-        "anna_bert_fixed.tsv": ["Sentence", None, "Annotation", "Comment", None, None],
-    }
-    header_description = "Putting Words into BERT's Mouth, annotated by students"
+    # # BERT's Mouth
+    # subcorpus = "berts_mouth"
+    #
+    # input_files = {
+    #     "Maria_Bertsmouth1.tsv": ["sentence", None, "graph", "comment", None, None],
+    #     "chris_annotation_BM_54-95.tsv": ["Sentence", "I", "AMR", "Comment", None, None],
+    #     "anna_bert_fixed.tsv": ["Sentence", None, "Annotation", "Comment", None, None],
+    # }
+    # header_description = "Putting Words into BERT's Mouth, annotated by students"
+    #
+    # run_script(output_path, input_files, header_description)
 
-    run_script(output_path, input_files, header_description)
 
     # Winograd
-    # output_path = "../../corpus/winograd"
+    # subcorpus = "winograd"
     #
     # input_files = {"annotations_anna_winograd1-30_reviewed.tsv": ["Sentence", None, "Annotation", None, None, None],
     #                "annotations_anna_winograd91-110.tsv": ["Sentence", None, "Annotation", None, None, None],
@@ -204,29 +231,31 @@ if __name__ == "__main__":
     #                "Maria_Winograd2.tsv": ["sentence", None, "graph", "comment", None, None],
     #                }
     # header_description = "Winograd, annotated by students"
+#    run_script(output_path_parent, subcorpus, input_files, header_description, new_tsv=True, unbounded=False)
+
 
     # CCG long distance dependencies
-    # output_path = "../../corpus/unbounded_dependencies"
-    #
-    # # files all use the same headers
-    # headers = ["sentence", "ID", None, "comment"]
-    # input_file_list = [
-    #     "relatives_meaghan.tsv",
-    #     "object-free-relatives_chris.tsv",
-    #     "object-relative-null_chris.tsv",
-    #     "object_wh_questions_chris.tsv",
-    #     "right_node_raising_chris.tsv",
-    #     "subj_relative_embedded_chris.tsv",
-    #     "subj_relatives_chris.tsv",
-    # ]
-    # input_files = {}
-    # for f in input_file_list:
-    #     input_files[f] = headers
-    #
-    # header_description = "CCG unbounded dependencies, annotated by Meaghan and students"
-    #
+    subcorpus = "unbounded_dependencies"
+
+    # files all use the same headers
+    headers = ["sentence", "ID", None, "comment"]
+    input_file_list = [
+        "relatives_meaghan.tsv",
+        "object-free-relatives_chris.tsv",
+        "object-relative-null_chris.tsv",
+        "object_wh_questions_chris.tsv",
+        "right_node_raising_chris.tsv",
+        "subj_relative_embedded_chris.tsv",
+        "subj_relatives_chris.tsv",
+    ]
+    input_files = {}
+    for f in input_file_list:
+        input_files[f] = headers
+
+    header_description = "CCG unbounded dependencies, annotated by Meaghan and students"
+
     # run script
-    # run_script(output_path, input_files, header_description, new_tsv=True, unbounded=True)
+    run_script(output_path_parent, subcorpus, input_files, header_description, new_tsv=True, unbounded=True, sentenceless_version=True)
 
 
     # import argparse
