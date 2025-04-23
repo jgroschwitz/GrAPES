@@ -254,7 +254,7 @@ def do_skip_category(category_name, use_testset, use_grapes, use_grapes_from_tes
 def main():
     args = parse_args()
     if args.gold_amr_testset_file is not None and args.predicted_amr_testset_file is not None:
-        gold_graphs_testset = load(args.gold_amr_testset_file)
+        gold_graphs_testset = load(args.gold_amr_testset_file, encoding="utf8")
         predicted_graphs_testset = load(args.predicted_amr_testset_file)
         if len(gold_graphs_testset) != len(predicted_graphs_testset):
             raise ValueError(
@@ -265,8 +265,8 @@ def main():
         gold_graphs_testset = predicted_graphs_testset = None
 
     if args.gold_amr_grapes_file is not None and args.predicted_amr_grapes_file is not None:
-        gold_graphs_grapes = load(args.gold_amr_grapes_file)
-        predicted_graphs_grapes = load(args.predicted_amr_grapes_file)
+        gold_graphs_grapes = load(args.gold_amr_grapes_file, encoding="utf8")
+        predicted_graphs_grapes = load(args.predicted_amr_grapes_file, encoding="utf8")
 
         if len(gold_graphs_grapes) != len(predicted_graphs_grapes):
             raise ValueError(
@@ -279,7 +279,7 @@ def main():
 
     results = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
                           filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics)
-    csv.writer(open("results.csv", "w")).writerows(results)
+    csv.writer(open("results.csv", "w", encoding="utf8")).writerows(results)
 
     print_table = PrettyTable(field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
     print_table.align = "l"

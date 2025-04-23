@@ -13,7 +13,7 @@ def load_corpus_from_folder(folder_path: str):
     for file in sorted(os.listdir(folder_path)):
         filename = os.fsdecode(file)
         if filename.endswith(".txt"):
-            corpus.extend(load(folder_path + filename))
+            corpus.extend(load(folder_path + filename, encoding="utf8"))
     return corpus
 
 
@@ -36,7 +36,7 @@ def read_node_label_tsv(root_dir, tsv_file_name):
     :return: dict id (str) : labels (str list) of all labels associated with that ID
     """
     id2labels = dict()
-    with open(f"{root_dir}/corpus/{tsv_file_name}", "r") as f:
+    with open(f"{root_dir}/corpus/{tsv_file_name}", "r", encoding="utf8") as f:
         csvreader = read_tsv_with_comments(f)
         for row in csvreader:
             graph_id = row[0]
@@ -60,7 +60,7 @@ def read_edge_tsv(root_dir, tsv_file_name, graph_id_column=0, source_column=1, e
     :return: dict id (str) : label list [source_label, edge_label, target_label, (parent_label), (parent_edge_label)]
     """
     id2labels = dict()
-    with open(f"{root_dir}/corpus/{tsv_file_name}", "r") as f:
+    with open(f"{root_dir}/corpus/{tsv_file_name}", "r", encoding="utf8") as f:
         csvreader = read_tsv_with_comments(f)
         is_first_row = True
         for row in csvreader:
