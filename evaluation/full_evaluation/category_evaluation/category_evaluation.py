@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List
 
 from penman import load, Graph
@@ -79,30 +80,15 @@ class CategoryEvaluation:
             predicted_amrs = self.predicted_amrs
         return gold_amrs, predicted_amrs
 
-    def make_results_columns_for_edge_recall_from_graphs(self, tsv_filename: str,
+    def make_results_columns_for_edge_recall_from_graphs(self, subcategory_info: SubcategoryMetadata,
                                                          gold_amrs: List[Graph],
                                                          predicted_amrs: List[Graph],
-                                                         graph_id_column=0,
-                                                         source_column=1,
-                                                         edge_column=2,
-                                                         target_column=3,
-                                                         parent_column=None,
-                                                         parent_edge_column=None,
-                                                         use_sense=False,
-                                                         first_row_is_header=False):
+                                                         ):
         prereqs, unlabeled_recalled, labeled_recalled, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
-            tsv_file_name=tsv_filename,
+            subcategory_info,
             gold_amrs=gold_amrs,
             predicted_amrs=predicted_amrs,
             root_dir=self.root_dir,
-            graph_id_column=graph_id_column,
-            source_column=source_column,
-            edge_column=edge_column,
-            target_column=target_column,
-            parent_column=parent_column,
-            parent_edge_column=parent_edge_column,
-            use_sense=use_sense,
-            first_row_is_header=first_row_is_header
         )
         return [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [labeled_recalled, sample_size]),
                 self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
@@ -142,6 +128,15 @@ class CategoryEvaluation:
     def _run_all_evaluations(self):
         raise NotImplementedError("This method must be implemented by subclasses.")
 
+    def run_single_evaluation(self, subcategory_info):
+        if subcategory_info.type_of_evaluation == "edge":
+            self.make_results_columns_for_edge_recall_from_graphs(
+                subcategory_info,
+                self.gold_amrs, self.predicted_amrs,
+            )
+        else:
+            raise NotImplementedError("Only defined for edges so far")  # TODO
+
     @staticmethod
     def get_f_from_prf(triple):
         return triple[2]
@@ -156,3 +151,26 @@ class CategoryEvaluation:
         gold = load(self.get_gold_filepath(corpus_name))
         pred = load(self.get_prediction_filepath(corpus_name))
         return gold, pred
+
+
+@dataclass
+class SubcategoryMetadata:
+    """
+    Stores info about each subcategory
+    """
+    display_name: str
+    tsv: str
+    eval_class: CategoryEvaluation
+    type_of_evaluation: str
+    graph_id_column: int = 0
+    use_sense: bool = False
+    first_row_is_header: bool = False
+    # for nodes
+    use_attributes: bool = False
+    attribute_label: str or None = None
+    source_column: int or None = 1
+    # for edges
+    edge_column: int or None = 2
+    target_column: int or None = 3
+    parent_column: int or None = None
+    parent_edge_column: int or None = None

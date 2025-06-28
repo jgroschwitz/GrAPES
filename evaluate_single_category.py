@@ -8,6 +8,7 @@ from evaluation.full_evaluation.category_evaluation.iii_structural_generalizatio
 from evaluation.full_evaluation.category_evaluation.iv_rare_unseen_nodes_edges import RareUnseenNodesEdges
 from evaluation.full_evaluation.category_evaluation.ix_nontrivial_word2node_relations import \
     NontrivialWord2NodeRelations
+from evaluation.full_evaluation.category_evaluation.subcategory_info import category_name_to_subcategory_info
 from evaluation.full_evaluation.category_evaluation.v_names_dates_etc import NamesDatesEtc
 from evaluation.full_evaluation.category_evaluation.vi_entity_classification_and_linking import \
     EntityClassificationAndLinking
@@ -87,9 +88,10 @@ def parse_args():
 
 
 def get_results(gold_graphs, predicted_graphs, category_name):
-    set_class, eval_function = category_name_to_set_class_and_eval_function[category_name]
-    set = set_class(gold_graphs, predicted_graphs, None, "./")
-    return eval_function(set, gold_graphs, predicted_graphs)
+    info = category_name_to_subcategory_info[category_name]
+    # set_class, eval_function = category_name_to_set_class_and_eval_function[category_name]
+    set = info.eval_class(gold_graphs, predicted_graphs, None, "./")
+    return set.run_single_evaluation(info)
 
 
 def main():

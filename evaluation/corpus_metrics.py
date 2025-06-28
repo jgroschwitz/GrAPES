@@ -7,6 +7,7 @@ import smatch
 from penman import Graph
 from penman import load
 
+from evaluation.full_evaluation.category_evaluation.category_evaluation import SubcategoryMetadata
 from evaluation.util import get_node_name_for_gold_label, strip_sense
 from evaluation.graph_matcher import equals_modulo_isomorphy, check_fragment_existence
 from evaluation.file_utils import read_node_label_tsv, load_corpus_from_folder, read_edge_tsv, get_graph_for_node_string
@@ -197,31 +198,28 @@ def run_checks_and_get_backup_data_if_applicable(attribute_label, gold_amrs, par
     return gold_amrs, predicted_amrs
 
 
-def calculate_edge_recall_for_tsv_file(tsv_file_name, gold_amrs=None, predicted_amrs=None, parser_name=None,
-                                       root_dir="../../", use_sense=True,
+def calculate_edge_recall_for_tsv_file(subcategory_info: SubcategoryMetadata, gold_amrs=None, predicted_amrs=None, parser_name=None,
+                                       root_dir="../../",
                                        error_analysis_output_filename=None, error_analysis_message=None,
-                                       graph_id_column=0, source_column=1, edge_column=2, target_column=3,
-                                       parent_column=None, parent_edge_column=None):
+                                       ):
     prereq_successes, unlabeled_successes, recall_successes, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
-        tsv_file_name, gold_amrs, predicted_amrs,
-        root_dir, use_sense,
-        error_analysis_output_filename, error_analysis_message,
-        graph_id_column, source_column, edge_column, target_column,
-        parent_column, parent_edge_column)
+        subcategory_info,
+        gold_amrs, predicted_amrs,
+        root_dir,
+        error_analysis_output_filename, error_analysis_message
+        )
     prereq = prereq_successes / sample_size if sample_size > 0 else 1.0
     recall = recall_successes / sample_size if sample_size > 0 else 1.0
     return prereq, recall
 
 
-def calculate_edge_prereq_recall_and_sample_size_counts(tsv_file_name, gold_amrs=None, predicted_amrs=None,
+def calculate_edge_prereq_recall_and_sample_size_counts(subcategory_info,
+                                                        gold_amrs=None,
+                                                        predicted_amrs=None,
                                                         root_dir="../../",
-                                                        use_sense=True,
                                                         error_analysis_output_filename=None,
                                                         error_analysis_message=None,
-                                                        graph_id_column=0, source_column=1, edge_column=2,
-                                                        target_column=3,
-                                                        parent_column=None, parent_edge_column=None,
-                                                        first_row_is_header=False):
+                                                        ):
     """
     Returns prereq_successes, unlabeled_successes, recall_successes, sample_size
     :param first_row_is_header: If true, the first row in the CSV will be skipped
@@ -243,8 +241,7 @@ def calculate_edge_prereq_recall_and_sample_size_counts(tsv_file_name, gold_amrs
     """
     # predicted_amrs = gold_amrs  # this is for debugging: check if the gold matches what is written in the tsv file
     #  (both recall and prerequisites should be 1.0, except if the gold graph has an error and the tsv is correct)
-    id2labels = read_edge_tsv(root_dir, tsv_file_name, graph_id_column, source_column, edge_column, target_column,
-                              parent_column, parent_edge_column, first_row_is_header=first_row_is_header)
+    id2labels = read_edge_tsv(root_dir, subcategory_info=subcategory_info)
     prereq_successes, unlabeled_successes, recall_successes, sample_size = _calculate_edge_recall(
         error_analysis_message,
         error_analysis_output_filename,

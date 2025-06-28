@@ -144,7 +144,7 @@ def get_am_dependency_trees(amconll, ids=None):
     filtered_am_sentences = []
     # read in the amconll file of parser predictions
     with open(amconll, "r", encoding="utf-8") as f:
-        amconll_sents = [s for s in parse_amconll(f)]  # read it all in so we can close the file
+        amconll_sents = [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
         # list of lists of pairs (datatype, content)
         # each word is a list of the entries for the table, paired with their data type:
         # e.g. [("token", "dog"),("graph", <graph for dog>)]

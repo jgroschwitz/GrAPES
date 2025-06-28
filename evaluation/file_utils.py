@@ -4,6 +4,8 @@ import os
 import penman
 from penman import load
 
+from evaluation.full_evaluation.category_evaluation.category_evaluation import SubcategoryMetadata
+
 
 def load_corpus_from_folder(folder_path: str):
     """
@@ -46,8 +48,7 @@ def read_node_label_tsv(root_dir, tsv_file_name):
     return id2labels
 
 
-def read_edge_tsv(root_dir, tsv_file_name, graph_id_column=0, source_column=1, edge_column=2, target_column=3,
-                  parent_column=None, parent_edge_column=None, first_row_is_header=False):
+def read_edge_tsv(root_dir, subcategory_info: SubcategoryMetadata):
     """
     Most TSVs are already formatted as in the defaults, but eg for reentrancies we also need the other parent and edge.
     :param first_row_is_header: if true, the first row in the file will be skipped
@@ -60,23 +61,23 @@ def read_edge_tsv(root_dir, tsv_file_name, graph_id_column=0, source_column=1, e
     :return: dict id (str) : label list [source_label, edge_label, target_label, (parent_label), (parent_edge_label)]
     """
     id2labels = dict()
-    with open(f"{root_dir}/corpus/{tsv_file_name}", "r", encoding="utf8") as f:
+    with open(f"{root_dir}/corpus/{subcategory_info.tsv}", "r", encoding="utf8") as f:
         csvreader = read_tsv_with_comments(f)
         is_first_row = True
         for row in csvreader:
-            if is_first_row and first_row_is_header:
+            if is_first_row and subcategory_info.first_row_is_header:
                 is_first_row = False
                 continue
             else:
                 is_first_row = False
-            graph_id = row[graph_id_column]
+            graph_id = row[subcategory_info.graph_id_column]
             labels_here = id2labels.setdefault(graph_id, [])
-            source_label = row[source_column]
-            edge_label = row[edge_column]
-            target_label = row[target_column]
-            if parent_column is not None:
-                parent_label = row[parent_column]
-                parent_edge_label = row[parent_edge_column]
+            source_label = row[subcategory_info.source_column]
+            edge_label = row[subcategory_info.edge_column]
+            target_label = row[subcategory_info.target_column]
+            if subcategory_info.parent_column is not None:
+                parent_label = row[subcategory_info.parent_column]
+                parent_edge_label = row[subcategory_info.parent_edge_column]
                 labels_here.append((source_label, edge_label, target_label, parent_label, parent_edge_label))
             else:
                 labels_here.append((source_label, edge_label, target_label))
