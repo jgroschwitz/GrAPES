@@ -4,47 +4,50 @@ import pickle
 import re
 from penman import load, dump
 from amconll import parse_amconll, Entry, write_conll, AMSentence
+from vulcan.data_handling.format_names import FORMAT_NAME_STRING, FORMAT_NAME_GRAPH, FORMAT_NAME_TOKENIZED_STRING, \
+    FORMAT_NAME_OBJECT_TABLE
+from vulcan.pickle_builder.pickle_builder import PickleBuilder
 
 from evaluation.file_utils import read_edge_tsv, read_tsv_with_comments
 
 
-class VulcanPickleBuilderOwnGraphComparison:
-
-    def __init__(self):
-        self.vulcan_gold_graph_dict = {"type": "data", "name": "gold graph", "format": "graph", "instances": []}
-        self.vulcan_predicted_graph_dict = {"type": "data", "name": "predicted graph", "format": "graph", "instances": []}
-        self.vulcan_sent_dict = {"type": "data", "name": "sentence", "format": "tokenized_string", "instances": []}
-        self.vulcan_amconll_dict = {"type": "data", "name": "amconll", "format": "object_table", "instances": []}
-
-    def add_gold_graph(self, penman_graph, add_sent=True):
-        self.vulcan_gold_graph_dict["instances"].append(penman_graph)
-        if add_sent:
-            self.add_sent_from_penman_graph(penman_graph)
-
-    def add_predicted_graph(self, penman_graph):
-        self.vulcan_predicted_graph_dict["instances"].append(penman_graph)
-
-    def add_sent_from_penman_graph(self, penman_graph):
-        self.add_sent(penman_graph.metadata["snt"].split(" "))
-
-    def add_sent(self, sent):
-        print("adding sent")
-        self.vulcan_sent_dict["instances"].append(sent)
-
-    def add_am_tree(self, am_tree):
-        self.vulcan_amconll_dict["instances"].append(am_tree)
-
-    def save_pickle(self, path):
-        """
-        Write a pickle with everything that's non-empty
-        Args:
-            path: path to save pickle to
-        """
-        all_elements = [self.vulcan_gold_graph_dict, self.vulcan_predicted_graph_dict,
-                         self.vulcan_sent_dict, self.vulcan_amconll_dict]
-        included = [element for element in all_elements if len(element["instances"]) > 0]
-        with open(path, "wb") as f:
-            pickle.dump(included, f)
+# class VulcanPickleBuilderOwnGraphComparison:
+#
+#     def __init__(self):
+#         self.vulcan_gold_graph_dict = {"type": "data", "name": "gold graph", "format": "graph", "instances": []}
+#         self.vulcan_predicted_graph_dict = {"type": "data", "name": "predicted graph", "format": "graph", "instances": []}
+#         self.vulcan_sent_dict = {"type": "data", "name": "sentence", "format": "tokenized_string", "instances": []}
+#         self.vulcan_amconll_dict = {"type": "data", "name": "amconll", "format": "object_table", "instances": []}
+#
+#     def add_gold_graph(self, penman_graph, add_sent=True):
+#         self.vulcan_gold_graph_dict["instances"].append(penman_graph)
+#         if add_sent:
+#             self.add_sent_from_penman_graph(penman_graph)
+#
+#     def add_predicted_graph(self, penman_graph):
+#         self.vulcan_predicted_graph_dict["instances"].append(penman_graph)
+#
+#     def add_sent_from_penman_graph(self, penman_graph):
+#         self.add_sent(penman_graph.metadata["snt"].split(" "))
+#
+#     def add_sent(self, sent):
+#         print("adding sent")
+#         self.vulcan_sent_dict["instances"].append(sent)
+#
+#     def add_am_tree(self, am_tree):
+#         self.vulcan_amconll_dict["instances"].append(am_tree)
+#
+#     def save_pickle(self, path):
+#         """
+#         Write a pickle with everything that's non-empty
+#         Args:
+#             path: path to save pickle to
+#         """
+#         all_elements = [self.vulcan_gold_graph_dict, self.vulcan_predicted_graph_dict,
+#                          self.vulcan_sent_dict, self.vulcan_amconll_dict]
+#         included = [element for element in all_elements if len(element["instances"]) > 0]
+#         with open(path, "wb") as f:
+#             pickle.dump(included, f)
 
 
 def write_amr_corpora_for_testset_subcategory(prediction_path, gold_path, subcategory_tsv,
@@ -105,25 +108,40 @@ def build_pickle_for_testset_subcategory(prediction_path, gold_path, subcategory
     predicted_graphs = load(out_predicted_path)
     gold_graphs = load(out_gold_path)
 
+    vulcan_types = {
+        "Gold AMR": FORMAT_NAME_GRAPH,
+        "Predicted AMR": FORMAT_NAME_GRAPH,
+    }
+
     if amconll is not None:
         # get just the relevant AM trees
-        trees, am_sents = get_am_dependency_trees(amconll, ids)
+        tagged_sentences, tree_edges, am_sents = get_am_dependency_trees(amconll, ids)
         write_conll(f"{pickle_directory}/{subcategory_name}.amconll", am_sents)
+        vulcan_types["AM Tree"] = FORMAT_NAME_OBJECT_TABLE
+    else:
+        vulcan_types["Sentence"] = FORMAT_NAME_TOKENIZED_STRING
 
-    vulcan_pickle_builder = VulcanPickleBuilderOwnGraphComparison()
+    vulcan_pickle_builder = PickleBuilder(vulcan_types)
     for i in range(len(gold_graphs)):
         gold_graph = gold_graphs[i]
-        include_sentence = True
-        if amconll is not None:
-            vulcan_pickle_builder.add_am_tree(trees[i])
-            include_sentence = False
         predicted_graph = predicted_graphs[i]
-        vulcan_pickle_builder.add_gold_graph(gold_graph, include_sentence)
-        vulcan_pickle_builder.add_predicted_graph(predicted_graph)
+        to_add = {
+            "Gold AMR": gold_graph,
+            "Predicted AMR": predicted_graph,
+        }
+        if amconll is None:
+            sent = gold_graph.metadata["snt"]
+            to_add["Sentence"] = sent
+        else:
+            to_add["AM Tree"] = tagged_sentences[i]
 
+        vulcan_pickle_builder.add_instances_by_name(to_add)
+        if amconll is not None:
+            # add the dependency tree edges to the Sentence entry
+            vulcan_pickle_builder.add_dependency_tree_by_name("AM Tree", tree_edges[i])
 
     pickle_path = f"{pickle_directory}/{subcategory_name}.pickle"
-    vulcan_pickle_builder.save_pickle(pickle_path)
+    vulcan_pickle_builder.write(pickle_path)
     print(f"Wrote pickle to {pickle_path}")
     print(f"Wrote AMR corpora to {out_gold_path} and {out_predicted_path}")
 
@@ -140,11 +158,12 @@ def get_graph_ids_from_tsv(graph_id_column, subcategory_tsv):
 
 
 def get_am_dependency_trees(amconll, ids=None):
-    trees = []
+    tagged_sentences = []
     filtered_am_sentences = []
+    tree_edges = []
     # read in the amconll file of parser predictions
     with open(amconll, "r", encoding="utf-8") as f:
-        amconll_sents = [s for s in parse_amconll(f)]  # read it all in so we can close the file
+        amconll_sents = [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
         # list of lists of pairs (datatype, content)
         # each word is a list of the entries for the table, paired with their data type:
         # e.g. [("token", "dog"),("graph", <graph for dog>)]
@@ -163,8 +182,12 @@ def get_am_dependency_trees(amconll, ids=None):
                     else:
                         # relexicalise the delexicalised graph constant
                         tagged_token.append(("graph_string", relabel_supertag(entry.fragment, entry)))
-                trees.append(tagged_sentence)
-    return trees, filtered_am_sentences
+                tagged_sentences.append(tagged_sentence)
+                # add the dependency tree edges to the Sentence entry
+                deptree = make_dependency_tree(amconll_sent)
+                tree_edges.append(deptree)
+
+    return tagged_sentences, tree_edges, filtered_am_sentences
 
 
 def relabel_supertag(supertag, amconll_entry: Entry):
