@@ -4,7 +4,7 @@ import os
 import penman
 from penman import load
 
-from evaluation.full_evaluation.category_evaluation.category_evaluation import SubcategoryMetadata
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 
 
 def load_corpus_from_folder(folder_path: str):
@@ -48,7 +48,7 @@ def read_node_label_tsv(root_dir, tsv_file_name):
     return id2labels
 
 
-def read_edge_tsv(root_dir, subcategory_info: SubcategoryMetadata):
+def read_edge_tsv(root_dir, subcategory_info):
     """
     Most TSVs are already formatted as in the defaults, but eg for reentrancies we also need the other parent and edge.
     :param first_row_is_header: if true, the first row in the file will be skipped

@@ -1,10 +1,10 @@
-from dataclasses import dataclass
 from typing import List
 
 from penman import load, Graph
 
 from evaluation.corpus_metrics import calculate_edge_prereq_recall_and_sample_size_counts, \
     calculate_node_label_successes_and_sample_size
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"
@@ -13,15 +13,16 @@ EVAL_TYPE_F1 = "f1"
 class CategoryEvaluation:
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], parser_name: str, root_dir: str):
-        self.dataset_name = None
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
         self.parser_name = parser_name
         self.root_dir = root_dir
         self.rows = []
+        self.category_metadata = None
+        self.print_dataset_name = True  # we want to print the dataset name only on the first metric calculation
 
-    def set_dataset_name(self, dataset_name):
-        self.dataset_name = dataset_name
+    def set_category_metadata(self, data):
+        self.category_metadata = data
 
     def make_and_append_results_row(self, metric_name: str, eval_type: str, metric_results: List):
         """
@@ -35,39 +36,23 @@ class CategoryEvaluation:
         self.rows.append(new_row)
 
     def make_results_row(self, metric_name, eval_type, metric_results):
-        if self.dataset_name:
-            ds_name = self.dataset_name
-            self.dataset_name = None
+        if self.print_dataset_name:
+            ds_name = self.category_metadata.display_name
+            self.print_dataset_name = False  # don't print it next time
         else:
             ds_name = ""
         new_row = [ds_name, metric_name, eval_type] + metric_results
+        print(new_row)
         return new_row
 
-    def make_results_columns_for_edge_recall(self, tsv_filename, graph_id_column=0, source_column=1, edge_column=2,
-                                             target_column=3, parent_column=None, parent_edge_column=None,
-                                             use_sense=False,
-                                             override_gold_amrs=None, override_predicted_amrs=None,
-                                             first_row_is_header=False):
+    def make_results_columns_for_edge_recall(self):
         """
         Assumes you have called set_dataset_name() before calling this method.
-        :param use_sense: default False
-        :param tsv_filename:
-        :param graph_id_column: default 0
-        :param source_column: default 1
-        :param edge_column: default 2
-        :param target_column: default 3
-        :param parent_column: for a second parent
-        :param parent_edge_column: for  a second parent
-        :return:
         """
-        gold_amrs, predicted_amrs = self.manage_override_amrs(override_gold_amrs, override_predicted_amrs)
-        self.rows.extend(self.make_results_columns_for_edge_recall_from_graphs(tsv_filename, gold_amrs, predicted_amrs,
-                                                                               graph_id_column,
-                                                                               source_column, edge_column,
-                                                                               target_column,
-                                                                               parent_column, parent_edge_column,
-                                                                               use_sense,
-                                                                               first_row_is_header))
+        gold_amrs, predicted_amrs = self.manage_override_amrs(self.category_metadata.override_gold_amrs,
+                                                              self.category_metadata.override_predicted_amrs)
+        self.rows.extend(self.make_results_columns_for_edge_recall_from_graphs(gold_amrs, predicted_amrs))
+        print("Rows are now", self.rows)
 
     def manage_override_amrs(self, override_gold_amrs, override_predicted_amrs):
         if override_gold_amrs:
@@ -80,12 +65,10 @@ class CategoryEvaluation:
             predicted_amrs = self.predicted_amrs
         return gold_amrs, predicted_amrs
 
-    def make_results_columns_for_edge_recall_from_graphs(self, subcategory_info: SubcategoryMetadata,
-                                                         gold_amrs: List[Graph],
-                                                         predicted_amrs: List[Graph],
-                                                         ):
+    def make_results_columns_for_edge_recall_from_graphs(self, gold_amrs, predicted_amrs):
+        print(f"Running edge recall on up to {len(gold_amrs)} graphs")
         prereqs, unlabeled_recalled, labeled_recalled, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
-            subcategory_info,
+            self.category_metadata,
             gold_amrs=gold_amrs,
             predicted_amrs=predicted_amrs,
             root_dir=self.root_dir,
@@ -95,30 +78,24 @@ class CategoryEvaluation:
                                       [unlabeled_recalled, sample_size]),
                 self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
 
-    def make_results_column_for_node_recall(self, tsv_filename, use_sense=False, use_attributes=False,
-                                            attribute_label=None, metric_label="Label recall",
-                                            override_gold_amrs=None, override_predicted_amrs=None):
-        gold_amrs, predicted_amrs = self.manage_override_amrs(override_gold_amrs, override_predicted_amrs)
-        self.rows.append(self.make_results_column_for_node_recall_from_graphs(tsv_filename, gold_amrs, predicted_amrs,
-                                                                                use_sense, use_attributes,
-                                                                                attribute_label, metric_label))
+    def make_results_column_for_node_recall(self, prereq=False):
+        gold_amrs, predicted_amrs = self.manage_override_amrs(self.category_metadata.override_gold_amrs,
+                                                              self.category_metadata.override_predicted_amrs)
 
-    def make_results_column_for_node_recall_from_graphs(self, tsv_filename: str,
+        self.rows.append(self.make_results_column_for_node_recall_from_graphs(gold_amrs, predicted_amrs, prereq))
+
+    def make_results_column_for_node_recall_from_graphs(self,
                                                         gold_amrs: List[Graph],
                                                         predicted_amrs: List[Graph],
-                                                        use_sense=False,
-                                                        use_attributes=False,
-                                                        attribute_label=None,
-                                                        metric_label="Label recall"):
+                                                        prereq: bool = False):
         success_count, sample_size = calculate_node_label_successes_and_sample_size(
-            tsv_file_name=tsv_filename,
-            use_sense=use_sense,
+            self.category_metadata,
             gold_amrs=gold_amrs,
             predicted_amrs=predicted_amrs,
             root_dir=self.root_dir,
-            use_attributes=use_attributes,
-            attribute_label=attribute_label
+            prereq=prereq
         )
+        metric_label = "Prerequisite" if prereq else self.category_metadata.metric_label
         return self.make_results_row(metric_label, EVAL_TYPE_SUCCESS_RATE, [success_count, sample_size])
 
     def get_result_rows(self):
@@ -128,14 +105,8 @@ class CategoryEvaluation:
     def _run_all_evaluations(self):
         raise NotImplementedError("This method must be implemented by subclasses.")
 
-    def run_single_evaluation(self, subcategory_info):
-        if subcategory_info.type_of_evaluation == "edge":
-            self.make_results_columns_for_edge_recall_from_graphs(
-                subcategory_info,
-                self.gold_amrs, self.predicted_amrs,
-            )
-        else:
-            raise NotImplementedError("Only defined for edges so far")  # TODO
+    def run_single_evaluation(self, subcategory_info: SubcategoryMetadata):
+        raise NotImplementedError("This method must be implemented by subclasses.")
 
     @staticmethod
     def get_f_from_prf(triple):
@@ -153,24 +124,3 @@ class CategoryEvaluation:
         return gold, pred
 
 
-@dataclass
-class SubcategoryMetadata:
-    """
-    Stores info about each subcategory
-    """
-    display_name: str
-    tsv: str
-    eval_class: CategoryEvaluation
-    type_of_evaluation: str
-    graph_id_column: int = 0
-    use_sense: bool = False
-    first_row_is_header: bool = False
-    # for nodes
-    use_attributes: bool = False
-    attribute_label: str or None = None
-    source_column: int or None = 1
-    # for edges
-    edge_column: int or None = 2
-    target_column: int or None = 3
-    parent_column: int or None = None
-    parent_edge_column: int or None = None

@@ -17,19 +17,27 @@ from evaluation.full_evaluation.category_evaluation.vi_entity_classification_and
 from evaluation.full_evaluation.category_evaluation.vii_lexical_disambiguation import LexicalDisambiguation
 from evaluation.full_evaluation.category_evaluation.viii_attachments import Attachments
 from evaluation.full_evaluation.category_evaluation.ix_nontrivial_word2node_relations import NontrivialWord2NodeRelations
+from evaluate_single_category import category_name_to_set_class_and_metadata
+
+root_dir = "../../"
+path_to_parser_outputs = f"{root_dir}/data/raw/parser_outputs/"
+
+
+
+def load_parser_output(parser_name, subcorpus_name):
+    return load(f"{path_to_parser_outputs}/{parser_name}-output/{subcorpus_name}.txt")
 
 
 def create_results_pickle():
-    parser_names = ["amparser", "cailam", "amrbart"]
-    # parser_names = ["cailam"]
+    # parser_names = ["amparser", "cailam", "amrbart"]
+    parser_names = ["amparser"]
 
-    root_dir = "../../"
-    all_testset_parser_outputs = [load(f"{root_dir}/{parser_name}-output/testset.txt") for parser_name in parser_names]
-    gold_amrs = load_corpus_from_folder(f"{root_dir}/external_resources/amrs/split/test/")
+    gold_amrs = load(f"{root_dir}/data/raw/gold/test.txt")
 
     parser_name2rows = dict()
 
-    for testset_parser_outs, parser_name in zip(all_testset_parser_outputs, parser_names):
+    for parser_name in parser_names:
+        testset_parser_outs = load_parser_output(parser_name, subcorpus_name="testset")
 
         print("RESULTS FOR", parser_name)
 
@@ -39,62 +47,94 @@ def create_results_pickle():
         all_result_rows.append(["1. Pragmatic Reentrancies"])
         print("1")
 
-        category_1_evaluation = PragmaticReentrancies(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_1_evaluation.get_result_rows()
+        subcategories = ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"]
+        for subcategory in subcategories:
+            eval_class, info = category_name_to_set_class_and_metadata[subcategory]
+            if info.subcorpus_filename is None:
+                predictions = testset_parser_outs
+                golds = gold_amrs
+            else:
+                predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
+                golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+            set = eval_class(golds, predictions, parser_name, root_dir)
+            print("Using", set.__class__.__name__)
+            rows = set.run_single_evaluation(info)
+            all_result_rows += rows
 
-        all_result_rows.append(["2. Unambiguous Reentrancies"])
-        print("2")
 
-
-        category_2_evaluation = UnambiguousReentrancies(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_2_evaluation.get_result_rows()
-
-        all_result_rows.append(["3. Structural Generalization"])
-        print("3")
-
-        category_3_evaluation = StructuralGeneralization(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_3_evaluation.get_result_rows()
-
+        # category_1_evaluation = PragmaticReentrancies(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_1_evaluation.get_result_rows()
+        #
+        # all_result_rows.append(["2. Unambiguous Reentrancies"])
+        # print("2")
+        #
+        #
+        # category_2_evaluation = UnambiguousReentrancies(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_2_evaluation.get_result_rows()
+        #
+        # all_result_rows.append(["3. Structural Generalization"])
+        # print("3")
+        #
+        # category_3_evaluation = StructuralGeneralization(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_3_evaluation.get_result_rows()
+        #
         all_result_rows.append(["4. Rare Unseen Nodes Edges"])
         print("4")
 
-        category_4_evaluation = RareUnseenNodesEdges(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_4_evaluation.get_result_rows()
+        subcategories = ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
+                         "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"]
+        for subcategory in subcategories:
+            eval_class, info = category_name_to_set_class_and_metadata[subcategory]
+            if info.subcorpus_filename is None:
+                predictions = testset_parser_outs
+                golds = gold_amrs
+            else:
+                predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
+                golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+            set = eval_class(golds, predictions, parser_name, root_dir)
+            print("Using", set.__class__.__name__)
+            rows = set.run_single_evaluation(info)
+            all_result_rows += rows
 
-        all_result_rows.append(["5. Names Dates Etc"])
-        print("5")
+        #
+        # category_4_evaluation = RareUnseenNodesEdges(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_4_evaluation.get_result_rows()
+        #
+        # all_result_rows.append(["5. Names Dates Etc"])
+        # print("5")
+        #
+        # category_5_evaluation = NamesDatesEtc(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_5_evaluation.get_result_rows()
+        #
+        # all_result_rows.append(["6. Entity Classification And Linking"])
+        # print("6")
+        #
+        # category_6_evaluation = EntityClassificationAndLinking(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_6_evaluation.get_result_rows()
+        #
+        # all_result_rows.append(["7. Lexical Disambiguation"])
+        # print("7")
+        #
+        # category_7_evaluation = LexicalDisambiguation(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_7_evaluation.get_result_rows()
+        #
+        # all_result_rows.append(["8. Attachments"])
+        # print("8")
+        #
+        # category_8_evaluation = Attachments(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_8_evaluation.get_result_rows()
+        #
+        # all_result_rows.append(["9. Nontrivial Word2Node Relations"])
+        # print("9")
+        #
+        # category_9_evaluation = NontrivialWord2NodeRelations(gold_amrs, testset_parser_outs, parser_name, root_dir)
+        # all_result_rows += category_9_evaluation.get_result_rows()
 
-        category_5_evaluation = NamesDatesEtc(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_5_evaluation.get_result_rows()
+        print("All result rows")
+        print(all_result_rows)
+        print_pretty_table(all_result_rows)
 
-        all_result_rows.append(["6. Entity Classification And Linking"])
-        print("6")
-
-        category_6_evaluation = EntityClassificationAndLinking(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_6_evaluation.get_result_rows()
-
-        all_result_rows.append(["7. Lexical Disambiguation"])
-        print("7")
-
-        category_7_evaluation = LexicalDisambiguation(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_7_evaluation.get_result_rows()
-
-        all_result_rows.append(["8. Attachments"])
-        print("8")
-
-        category_8_evaluation = Attachments(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_8_evaluation.get_result_rows()
-
-        all_result_rows.append(["9. Nontrivial Word2Node Relations"])
-        print("9")
-
-        category_9_evaluation = NontrivialWord2NodeRelations(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        all_result_rows += category_9_evaluation.get_result_rows()
-
-
-        # print_pretty_table(all_result_rows)
-
-    pickle.dump(parser_name2rows, open(f"{root_dir}/results_table.pickle", "wb"))
+    pickle.dump(parser_name2rows, open(f"{root_dir}/data/processed/results/results_table.pickle", "wb"))
 
 def print_pretty_table(result_rows):
     from prettytable import PrettyTable
@@ -102,7 +142,8 @@ def print_pretty_table(result_rows):
     table.field_names = ["Dataset", "Metric", "Score", "Wilson CI", "Sample size"]
     table.align = "l"
     for row in result_rows:
-        if _get_row_evaluation_type(row) == EVAL_TYPE_SUCCESS_RATE:
+        eval_type = _get_row_evaluation_type(row)
+        if eval_type == EVAL_TYPE_SUCCESS_RATE:
             wilson_ci = wilson_score_interval(row[3], row[4])
             if row[4] > 0:
                 table.add_row([row[0], row[1], num_to_score(row[3]/row[4]),
@@ -110,14 +151,14 @@ def print_pretty_table(result_rows):
             else:
                 print("Division by zero!")
                 print(row)
-        elif _get_row_evaluation_type(row) == EVAL_TYPE_F1:
+        elif eval_type == EVAL_TYPE_F1:
             table.add_row([row[0], row[1],  num_to_score(row[3]), "", ""])
-        elif _get_row_evaluation_type(row) == 1:
+        elif eval_type == 1:
             table.add_row(["", "", "", "", ""])
             table.add_row([row[0], "", "", "", ""])
         else:
             print(row)
-            raise Exception("Unknown evaluation type")
+            raise Exception(f"Unknown evaluation type: {eval_type}")
     print(table)
 
 
@@ -233,7 +274,7 @@ def _get_row_evaluation_type(row):
 
 def main():
     create_results_pickle()
-    make_latex_table("../../")
+    # make_latex_table("../../")
 
 
 if __name__ == '__main__':
