@@ -123,7 +123,11 @@ category_name_to_set_class_and_metadata = {
         subtype="structural_generalization",
     )),
     # "cp_recursion_plus_rc_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_and_coref_sanity_check_results),
-    # "long_lists": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_results),
+    "long_lists": (StructuralGeneralisation, SubcategoryMetadata(
+        display_name=category_name_to_print_name["long_lists"],
+        subcorpus_filename="long_lists",
+        subtype="structural_generalization",
+    )),
     # "long_lists_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_sanity_check_results),
     "rare_node_labels": (NodeRecall, SubcategoryMetadata(display_name="Rare node labels",
                                                          tsv="rare_node_labels_test.tsv",

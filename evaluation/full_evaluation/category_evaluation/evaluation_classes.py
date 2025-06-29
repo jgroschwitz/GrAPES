@@ -6,6 +6,7 @@ from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.long_lists import compute_conjunct_counts, compute_generalization_op_counts
 from evaluation.pp_attachment import get_pp_attachment_success_counters
 from evaluation.structural_generalization import add_sanity_check_suffix
 from evaluation.testset.ellipsis import get_ellipsis_success_counts
@@ -155,6 +156,8 @@ class StructuralGeneralisation(CategoryEvaluation):
 
         if self.category_metadata.subcorpus_filename == "deep_recursion_pronouns":
             self.pronouns()
+        elif self.category_metadata.subcorpus_filename == "long_lists":
+            self.long_lists()
         else:
             self.make_success_results_for_structural_generalisation()
 
@@ -168,6 +171,8 @@ class StructuralGeneralisation(CategoryEvaluation):
 
         if self.category_metadata.subcorpus_filename == add_sanity_check_suffix("deep_recursion_pronouns"):
             self.pronouns()
+        elif self.category_metadata.subcorpus_filename == add_sanity_check_suffix("long_lists"):
+            self.long_list_sanity_check()
         else:
             self.make_success_results_for_structural_generalisation()
 
@@ -220,3 +225,28 @@ class StructuralGeneralisation(CategoryEvaluation):
                                          # the larger corpus, but the sizes should be close enough.
                                          [(self.get_f_from_prf(smatch_results)+ self.get_f_from_prf(smatch_results_3s)) / 2])
 
+    def long_lists(self):
+        conj_total_gold, conj_total_predictions, conj_true_predictions = compute_conjunct_counts(self.gold_amrs,
+                                                                                                 self.predicted_amrs)
+
+        self.make_and_append_results_row("Conjunct recall", EVAL_TYPE_SUCCESS_RATE,
+                                         [conj_true_predictions, conj_total_gold])
+        self.make_and_append_results_row("Conjunct precision", EVAL_TYPE_SUCCESS_RATE,
+                                         [conj_true_predictions, conj_total_predictions])
+
+        opi_gen_total_gold, opi_gen_total_predictions, opi_gen_true_predictions = compute_generalization_op_counts(
+            self.gold_amrs, self.predicted_amrs)
+        self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
+                                         [opi_gen_true_predictions, opi_gen_total_gold])
+
+        # self.make_results_column(":opi f1", EVAL_TYPE_F1, [self.get_f_from_prf(op_f1)])
+        # self.make_results_column("Conjunct f1", EVAL_TYPE_F1, [self.get_f_from_prf(conjunct_f1)])
+        # self.make_results_column("Unseen :opi f1", EVAL_TYPE_F1, [self.get_f_from_prf(generalization_op_f1)])
+        # self.make_results_column("Conjunct f1 for unseen :opi", EVAL_TYPE_F1,
+        #                          [self.get_f_from_prf(generalization_conjunct_f1)])
+
+    def long_list_sanity_check(self):
+        success, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
+                                                                             match_edge_labels=False,
+                                                                             match_senses=False)
+        self.make_and_append_results_row("Exact match", EVAL_TYPE_SUCCESS_RATE, [success, sample_size])

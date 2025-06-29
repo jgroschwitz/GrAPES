@@ -78,25 +78,6 @@ def get_all_success_counts(parser_name: str, root_dir="../"):
     return ret
 
 
-def get_structural_generalization_success_counts(gold_graphs: List[Graph], predicted_graphs: List[Graph],):
-
-    successes, sample_size = compute_exact_match_successes_and_sample_size(gold_graphs, predicted_graphs,
-                                                                           match_edge_labels=False,
-                                                                           match_senses=False)
-
-    smatch_f1 = compute_smatch_f(gold_graphs_path, predicted_graphs_path)
-
-    ret[corpus_name] = [successes, sample_size, smatch_f1]
-
-    successes_sc, sample_size_sc = compute_exact_match_successes_and_sample_size(gold_graphs_sanity_check,
-                                                                                 predicted_graphs_sanity_check,
-                                                                                 match_edge_labels=False,
-                                                                                 match_senses=False)
-
-    smatch_f1_sc = compute_smatch_f(gold_graphs_sanity_check_path, predicted_graphs_sanity_check_path)
-
-    ret[corpus_name + "_sanity_check"] = [successes_sc, sample_size_sc, smatch_f1_sc]
-
 
 
 def main():

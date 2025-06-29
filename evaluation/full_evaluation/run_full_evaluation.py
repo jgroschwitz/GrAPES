@@ -35,7 +35,7 @@ bunch2subcategory = {
     "7. Lexical Disambiguation": ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"],
     "3. Structural Generalization": ["nested_control_and_coordination", "multiple_adjectives",
                                      "cp_recursion", "cp_recursion_plus_coreference", "cp_recursion_plus_rc",
-                                     "cp_recursion_plus_rc_plus_coreference"],
+                                     "cp_recursion_plus_rc_plus_coreference", "long_lists"],
 }
 
 
