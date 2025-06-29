@@ -15,7 +15,7 @@ class SubcategoryMetadata:
     display_name: str
     tsv: str or None = None
     subcorpus_filename: str or None = None
-    other_display_name: str or None = None
+    latex_display_name: str or None = None
     other_subcorpus_filename: str or None = None
     graph_id_column: int = 0
     use_sense: bool = False
@@ -32,9 +32,13 @@ class SubcategoryMetadata:
     target_column: int or None = 3
     parent_column: int or None = None
     parent_edge_column: int or None = None
-    # for named entities
-    entity_type: str or None = None
+    # for named entities, word disambiguation
+    subtype: str or None = None
 
+    def get_latex_display_name(self):
+        if self.latex_display_name is None:
+            return self.display_name
+        return self.latex_display_name
 
 # category_name_to_subcategory_info = {
 #     "pragmatic_coreference_testset": SubcategoryMetadata(

@@ -127,7 +127,7 @@ class CategoryEvaluation:
         id2labels_entities = get_graphid2labels_from_tsv_file(f"{self.corpus_path}/{self.category_metadata.tsv}",
                                                               graph_id_column=self.category_metadata.graph_id_column)
         successes, sample_size = calculate_date_or_name_successes_and_sample_size(
-            id2labels_entities, self.gold_amrs, self.predicted_amrs, self.category_metadata.entity_type)
+            id2labels_entities, self.gold_amrs, self.predicted_amrs, self.category_metadata.subtype)
         self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
                                          [successes, sample_size])
 

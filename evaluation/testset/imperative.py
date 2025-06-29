@@ -28,8 +28,6 @@ def get_imperative_success_counts(id2labels, gold_amrs, predicted_amrs):
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
         if gold_amr.metadata['id'] in id2labels:
             total += len(id2labels[gold_amr.metadata['id']])
-            print(id2labels[gold_amr.metadata['id']])
-            print(len(id2labels[gold_amr.metadata['id']]))
             for verb_label, imperative_target_edge_label, imperative_target in id2labels[gold_amr.metadata['id']]:
                 matching_instances = [instance for instance in predicted_amr.instances() if
                                       instance.target == verb_label]

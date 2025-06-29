@@ -2,13 +2,14 @@ from typing import Dict
 import pickle
 
 from evaluation.file_utils import load_corpus_from_folder
+from evaluation.structural_generalization import add_sanity_check_suffix, structural_generalization_corpus_names
 from evaluation.util import num_to_score
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
-from evaluate_single_category import category_name_to_set_class_and_metadata
+from evaluation.category_metadata import category_name_to_set_class_and_metadata
 
 root_dir = "../../"
 path_to_parser_outputs = f"{root_dir}/data/raw/parser_outputs/"
@@ -31,6 +32,10 @@ bunch2subcategory = {
     "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
                            "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"],
     "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings", "imperatives"],
+    "7. Lexical Disambiguation": ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"],
+    "3. Structural Generalization": ["nested_control_and_coordination", "multiple_adjectives",
+                                     "cp_recursion", "cp_recursion_plus_coreference", "cp_recursion_plus_rc",
+                                     "cp_recursion_plus_rc_plus_coreference"],
 }
 
 
@@ -72,6 +77,12 @@ def create_results_pickle():
                     # the files in pp_attachment.txt, which don't actually get evaluated.
                     if info.subcorpus_filename == "pp_attachment":
                         set = eval_class(parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
+                    elif info.subtype == "structural_generalization":
+                        print(eval_class.__name__)
+                        sanity_check_name = add_sanity_check_suffix(info.subcorpus_filename)
+                        gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
+                        predictions_sanity = load_parser_output(parser_name, subcorpus_name=sanity_check_name)
+                        set = eval_class(golds, predictions, gold_sanity, predictions_sanity, parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
                     else:
                         set = eval_class(golds, predictions, parser_name, root_dir, info)
 

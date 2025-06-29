@@ -4,12 +4,10 @@ import csv
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.category_evaluation.i_pragmatic_reentrancies import PragmaticReentrancies
-from evaluation.full_evaluation.category_evaluation.ii_unambiguous_reentrancies import UnambiguousReentrancies
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
-from evaluate_single_category import category_name_to_set_class_and_metadata
+from evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name
 from prettytable import PrettyTable
 
 set_names_with_category_names = [
@@ -86,55 +84,6 @@ category_names_to_source_corpus_name = {
     "ellipsis": "testset",
     "multinode_word_meanings": "testset",
     "imperatives": "testset"
-}
-
-category_name_to_print_name = {
-    "pragmatic_coreference_testset": "Pragmatic coreference (testset)",
-    "pragmatic_coreference_winograd": "Pragmatic coreference (Winograd)",
-    "syntactic_gap_reentrancies": "Syntactic (gap) reentrancies",
-    "unambiguous_coreference": "Unambiguous coreference",
-    "nested_control_and_coordination": "Nested control and coordination",
-    "nested_control_and_coordination_sanity_check": "Sanity check",
-    "multiple_adjectives": "Multiple adjectives",
-    "multiple_adjectives_sanity_check": "Sanity check",
-    "centre_embedding": "Centre embedding",
-    "centre_embedding_sanity_check": "Sanity check",
-    "cp_recursion": "CP recursion",
-    "cp_recursion_sanity_check": "Sanity check",
-    "cp_recursion_plus_coreference": "CP recursion + coreference",
-    "cp_recursion_plus_coreference_sanity_check": "Sanity check",
-    "cp_recursion_plus_rc": "CP recursion + relative clause (RC)",
-    "cp_recursion_plus_rc_sanity_check": "Sanity check",
-    "cp_recursion_plus_rc_plus_coreference": "CP recursion + RC + coreference",
-    "cp_recursion_plus_rc_plus_coreference_sanity_check": "Sanity check",
-    "long_lists": "Long lists",
-    "long_lists_sanity_check": "Sanity check",
-    "rare_node_labels": "Rare node labels",
-    "unseen_node_labels": "Unseen node labels",
-    "rare_predicate_senses_excl_01": "Rare predicate senses (excl. -01)",
-    "unseen_predicate_senses_excl_01": "Unseen predicate senses (excl. -01)",
-    "rare_edge_labels_ARG2plus": "Rare edge labels (ARG2+)",
-    "unseen_edge_labels_ARG2plus": "Unseen edge labels (ARG2+)",
-    "seen_names": "Seen names",
-    "unseen_names": "Unseen names",
-    "seen_dates": "Seen dates",
-    "unseen_dates": "Unseen dates",
-    "other_seen_entities": "Other seen entities",
-    "other_unseen_entities": "Other unseen entities",
-    "types_of_seen_named_entities": "Types of seen named entities",
-    "types_of_unseen_named_entities": "Types of unseen named entities",
-    "seen_andor_easy_wiki_links": "Seen and/or easy wiki links",
-    "hard_unseen_wiki_links": "Hard unseen wiki links",
-    "frequent_predicate_senses_incl_01": "Frequent predicate senses (incl. -01)",
-    "word_ambiguities_handcrafted": "Word ambiguities (handcrafted)",
-    "word_ambiguities_karidi_et_al_2021": "Word ambiguities (Karidi et al., 2021)",
-    "pp_attachment": "PP attachment",
-    "unbounded_dependencies": "Unbounded dependencies",
-    "passives": "Passives",
-    "unaccusatives": "Unaccusatives",
-    "ellipsis": "Ellipsis",
-    "multinode_word_meanings": "Multinode word meanings",
-    "imperatives": "Imperatives"
 }
 
 

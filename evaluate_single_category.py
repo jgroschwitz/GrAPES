@@ -1,23 +1,11 @@
 import argparse
 from penman import load
 
+from evaluation.category_metadata import category_name_to_set_class_and_metadata
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import EdgeRecall, NodeRecall, PPAttachment, \
-    NETypeRecall, NERecall, SubgraphRecall, EllipsisRecall, ImperativeRecall
-from evaluation.full_evaluation.category_evaluation.i_pragmatic_reentrancies import PragmaticReentrancies
-from evaluation.full_evaluation.category_evaluation.ii_unambiguous_reentrancies import UnambiguousReentrancies
-from evaluation.full_evaluation.category_evaluation.iii_structural_generalization import StructuralGeneralization
-from evaluation.full_evaluation.category_evaluation.iv_rare_unseen_nodes_edges import RareUnseenNodesEdges
-from evaluation.full_evaluation.category_evaluation.ix_nontrivial_word2node_relations import \
-    NontrivialWord2NodeRelations
-from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-from evaluation.full_evaluation.category_evaluation.v_names_dates_etc import NamesDatesEtc
-from evaluation.full_evaluation.category_evaluation.vi_entity_classification_and_linking import \
-    EntityClassificationAndLinking
-from evaluation.full_evaluation.category_evaluation.vii_lexical_disambiguation import LexicalDisambiguation
-from evaluation.full_evaluation.category_evaluation.viii_attachments import Attachments
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
+
 
 #  Category names are the same as in the paper (tables 3-5), but all lowercase, and with all punctuation, brackets etc.
 #  removed. Except for '+', which is replaced by 'plus', and whitespace ' ' which is replaced by '_'.
@@ -71,161 +59,6 @@ from evaluation.single_eval import num_to_score
 #     "multinode_word_meanings": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_multinode_constants_results),
 #     "imperatives": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_imperative_results)
 # }
-
-category_name_to_set_class_and_metadata = {
-    "pragmatic_coreference_testset": (EdgeRecall, SubcategoryMetadata(
-        "Pragmatic coreference (testset)",
-        "reentrancies_pragmatic_filtered.tsv",
-        parent_column=4,
-        parent_edge_column=5,
-    )),
-    "pragmatic_coreference_winograd": (EdgeRecall, SubcategoryMetadata(
-        "Pragmatic coreference (Winograd)",
-        "winograd.tsv",
-        subcorpus_filename="winograd",
-        parent_column=4,
-        parent_edge_column=5,
-        first_row_is_header=True
-    )),
-    "syntactic_gap_reentrancies": (EdgeRecall, SubcategoryMetadata(display_name="Syntactic (gap) reentrancies",
-                                                                   tsv="reentrancies_syntactic_gap_filtered.tsv",
-                                                                   parent_column=4,
-                                                                   parent_edge_column=5)),
-
-    "unambiguous_coreference": (EdgeRecall, SubcategoryMetadata(display_name="Unambiguous coreference",
-                                                                tsv="reentrancies_unambiguous_coreference_filtered.tsv",
-                                                                parent_column=4,
-                                                                parent_edge_column=5)),
-    # "nested_control_and_coordination": (StructuralGeneralization, StructuralGeneralization.computed_nested_control_and_coordination_results),
-    # "nested_control_and_coordination_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_nested_control_and_coordination_sanity_check_results),
-    # "multiple_adjectives": (StructuralGeneralization, StructuralGeneralization.compute_multiple_adjectives_results),
-    # "multiple_adjectives_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_multiple_adjectives_sanity_check_results),
-    # "centre_embedding": (StructuralGeneralization, StructuralGeneralization.compute_centre_embedding_results),
-    # "centre_embedding_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_centre_embedding_sanity_check_results),
-    # "cp_recursion": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_results),
-    # "cp_recursion_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_sanity_check_results),
-    # "cp_recursion_plus_coreference": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_coref_results),
-    # "cp_recursion_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_coref_sanity_check_results),
-    # "cp_recursion_plus_rc": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_results),
-    # "cp_recursion_plus_rc_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_sanity_check_results),
-    # "cp_recursion_plus_rc_plus_coreference": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_and_coref_results),
-    # "cp_recursion_plus_rc_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_and_coref_sanity_check_results),
-    # "long_lists": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_results),
-    # "long_lists_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_sanity_check_results),
-    "rare_node_labels": (NodeRecall, SubcategoryMetadata(display_name="Rare node labels",
-                                                         tsv="rare_node_labels_test.tsv",
-                                                         use_sense=True,
-                                                         run_prerequisites=False)),
-    "unseen_node_labels": (NodeRecall, SubcategoryMetadata(display_name="Unseen node labels",
-                                                           tsv="unseen_node_labels_test_filtered.tsv",
-                                                           use_sense=True,
-                                                           run_prerequisites=False)),
-    "rare_predicate_senses_excl_01": (NodeRecall, SubcategoryMetadata(
-        display_name="Rare predicate senses (excl. -01)",
-        other_display_name="Rare predicate senses (excl.~\\nl{-01})",
-        tsv="rare_senses_filtered.tsv",
-        use_sense=True)),
-    # "unseen_predicate_senses_excl_01": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_sense_results),
-    "rare_edge_labels_ARG2plus": (EdgeRecall, SubcategoryMetadata(
-        display_name="Rare edge labels (ARG2+)",
-        other_display_name="Rare edge labels (\\nl{ARG2}+)",
-        tsv="rare_roles_arg2plus_filtered.tsv",
-        use_sense=True
-                                  )),
-    "unseen_edge_labels_ARG2plus": (EdgeRecall, SubcategoryMetadata(
-        display_name="Unseen edge labels (ARG2+)",
-        other_display_name="Unseen edge labels (\\nl{ARG2}+)",
-        tsv="unseen_roles_new_sentences.tsv", use_sense=True,
-        subcorpus_filename="unseen_roles_new_sentences"
-    )),
-    "seen_names": (NERecall, SubcategoryMetadata(
-        "Seen names",
-        tsv="seen_names.tsv",
-        entity_type="name",
-        metric_label="Recall"
-    )),
-    "unseen_names": (NERecall, SubcategoryMetadata(
-        "Unseen names",
-        tsv="unseen_names.tsv",
-        entity_type="name",
-        metric_label="Recall"
-    )),
-    "seen_dates": (NERecall, SubcategoryMetadata(
-        "Seen dates",
-        tsv="seen_dates.tsv",
-        entity_type="date-entity",
-        metric_label="Recall"
-    )),
-    "unseen_dates": (NERecall, SubcategoryMetadata(
-        "Unseen dates",
-        tsv="unseen_dates.tsv",
-        entity_type="date-entity",
-        metric_label="Recall"
-    )),
-    "other_seen_entities": (NERecall, SubcategoryMetadata(
-        "Other seen entities",
-        tsv="seen_special_entities.tsv",
-        entity_type="other",
-        metric_label="Recall"
-    )),
-    "other_unseen_entities": (NERecall, SubcategoryMetadata(
-        "Other unseen entities",
-        tsv="unseen_special_entities.tsv",
-        entity_type="other",
-        metric_label="Recall"
-    )),
-    "types_of_seen_named_entities": (NETypeRecall, SubcategoryMetadata(
-        "Types of seen named entities",
-        tsv="seen_ne_types_test.tsv",
-    )),
-    "types_of_unseen_named_entities": (NETypeRecall, SubcategoryMetadata(
-        "Types of unseen named entities",
-        tsv="unseen_ne_types_test.tsv",
-    )),
-    "seen_andor_easy_wiki_links": (NodeRecall, SubcategoryMetadata(
-        "Seen and/or easy wiki links",
-        tsv="seen_andor_easy_wiki_test_data.tsv",
-        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall"
-    )),
-    "hard_unseen_wiki_links": (NodeRecall, SubcategoryMetadata(
-        "Hard unseen wiki links",
-        tsv="hard_wiki_test_data.tsv",
-        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall"
-    )),
-    # "frequent_predicate_senses_incl_01": (LexicalDisambiguation, LexicalDisambiguation.compute_common_senses_results),
-    # "word_ambiguities_handcrafted": (LexicalDisambiguation, LexicalDisambiguation.compute_grapes_word_disambiguation_results),
-    # "word_ambiguities_karidi_et_al_2021": (LexicalDisambiguation, LexicalDisambiguation.compute_berts_mouth_results),
-    "pp_attachment": (PPAttachment, SubcategoryMetadata(
-        display_name="PP attachment",
-        subcorpus_filename="pp_attachment",
-    )),
-    "unbounded_dependencies": (EdgeRecall, SubcategoryMetadata(
-        display_name="Unbounded dependencies",
-        tsv="unbounded_dependencies.tsv",
-        subcorpus_filename="unbounded_dependencies",
-        use_sense=False, source_column=2, edge_column=3, target_column=4, first_row_is_header=True)),
-    "passives": (EdgeRecall, SubcategoryMetadata(
-        display_name="Passives",
-        tsv="passives_filtered.tsv", use_sense=True
-    )),
-    "unaccusatives": (EdgeRecall, SubcategoryMetadata(
-        display_name="Unaccusatives",
-        tsv="unaccusatives2_filtered.tsv", use_sense=True
-    )),
-    "ellipsis": (EllipsisRecall, SubcategoryMetadata(
-        display_name="Ellipsis",
-        tsv="ellipsis_filtered.tsv"
-    )),
-    "multinode_word_meanings": (SubgraphRecall, SubcategoryMetadata(
-        "Multinode word meanings",
-        tsv="multinode_constants_filtered.tsv",
-        metric_label="Recall"
-    )),
-    "imperatives": (ImperativeRecall, SubcategoryMetadata(
-        display_name="Imperatives",
-        tsv="imperatives_filtered.tsv",
-    ))
-}
 
 
 

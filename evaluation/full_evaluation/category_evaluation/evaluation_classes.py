@@ -1,14 +1,18 @@
 from typing import List
 
+from evaluation.berts_mouth import evaluate_berts_mouth
+from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, compute_smatch_f
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
-    EVAL_TYPE_SUCCESS_RATE
+    EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.pp_attachment import get_pp_attachment_success_counters
+from evaluation.structural_generalization import add_sanity_check_suffix
 from evaluation.testset.ellipsis import get_ellipsis_success_counts
 from penman import load, Graph
 
 from evaluation.testset.imperative import get_imperative_success_counts
+from evaluation.word_disambiguation import evaluate_word_disambiguation
 
 
 class EdgeRecall(CategoryEvaluation):
@@ -106,3 +110,113 @@ class ImperativeRecall(CategoryEvaluation):
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [with_correct_target, sample_size])
         # self.make_results_column("Marked as imperative", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
         self.make_and_append_results_row("Prerequisite", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])
+
+class WordDisambiguationRecall(CategoryEvaluation):
+    def run_evaluation(self):
+        self.make_results_for_disambiguation()
+        return self.rows
+
+    def make_results_for_disambiguation(self):
+        if self.category_metadata.subtype == "hand-crafted":
+            fun = evaluate_word_disambiguation
+        elif self.category_metadata.subtype == "bert":
+            fun = evaluate_berts_mouth
+        else:
+            raise NotImplementedError(f"subtype {self.category_metadata.subtype} not implemented: must be bert or hand-crafted")
+        successes, sample_size = fun(self.gold_amrs, self.predicted_amrs)
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+
+
+class StructuralGeneralisation(CategoryEvaluation):
+    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph],
+                 gold_sanity_check: List[Graph], predicted_sanity_check: List[Graph], parser_name: str, root_dir: str,
+                 category_metadata: SubcategoryMetadata, path_to_predictions_folder: str):
+        super().__init__(gold_amrs, predicted_amrs, parser_name, root_dir,
+                 category_metadata)
+        self.gold_sanity_check = gold_sanity_check
+        self.predicted_sanity_check = predicted_sanity_check
+        self.path_to_predictions_folder = path_to_predictions_folder
+        self.third_person_corpus = "deep_recursion_3s"
+
+    def get_predictions_path(self):
+        return f"{self.path_to_predictions_folder}/{self.category_metadata.subcorpus_filename}.txt"
+
+    def get_3s_predictions_path(self):
+        return f"{self.path_to_predictions_folder}/{self.third_person_corpus}.txt"
+
+    def get_gold_path(self):
+        return f"{self.root_dir}/corpus/subcorpora/{self.category_metadata.subcorpus_filename}.txt"
+
+    def get_3s_gold_path(self):
+        return f"{self.root_dir}/corpus/subcorpora/{self.third_person_corpus}.txt"
+
+
+    def run_evaluation(self):
+
+        if self.category_metadata.subcorpus_filename == "deep_recursion_pronouns":
+            self.pronouns()
+        else:
+            self.make_success_results_for_structural_generalisation()
+
+        # reset for sanity check
+        self.print_dataset_name = True
+        self.category_metadata.display_name = "Sanity check"
+        self.gold_amrs = self.gold_sanity_check
+        self.predicted_amrs = self.predicted_sanity_check
+        self.category_metadata.subcorpus_filename = add_sanity_check_suffix(self.category_metadata.subcorpus_filename)
+        self.third_person_corpus = add_sanity_check_suffix(self.third_person_corpus)
+
+        if self.category_metadata.subcorpus_filename == add_sanity_check_suffix("deep_recursion_pronouns"):
+            self.pronouns()
+        else:
+            self.make_success_results_for_structural_generalisation()
+
+        return self.rows
+
+    def make_success_results_for_structural_generalisation(self):
+        successes, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
+                                                                               match_edge_labels=False,
+                                                                               match_senses=False)
+
+        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
+                                         [successes, sample_size])
+        try:
+            smatch_results = self.get_smatch()
+            self.make_and_append_results_row("Smatch", EVAL_TYPE_F1,
+                                         [self.get_f_from_prf(smatch_results)])
+        except AssertionError:
+            print("Smatch will not be evaluated since there is no path to the AMRs")
+
+    def get_smatch(self, gold_path: str=None, predicted_path: str=None):
+
+        if gold_path is None:
+            gold_path = self.get_gold_path()
+        if predicted_path is None:
+            predicted_path = self.get_predictions_path()
+        smatch_results = compute_smatch_f(gold_path, predicted_path)
+        return smatch_results
+
+    def pronouns(self):
+        assert len(self.gold_amrs) == len(self.predicted_amrs)
+        successes, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
+                                                                               match_edge_labels=False,
+                                                                               match_senses=False)
+
+        smatch_results = self.get_smatch()
+        extra_predictions =  load(self.get_3s_predictions_path())
+        extra_gold =  load(self.get_3s_gold_path())
+        assert len(extra_predictions) == len(extra_gold)
+        successes_3s, sample_size_3s = compute_exact_match_successes_and_sample_size(extra_gold, extra_predictions,
+                                                                               match_edge_labels=False,
+                                                                               match_senses=False)
+        print("\n## sample sizes", sample_size, sample_size_3s)
+        smatch_results_3s = self.get_smatch(gold_path=self.get_3s_gold_path(),
+                                            predicted_path=self.get_3s_predictions_path())
+
+        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
+                                         [successes + successes_3s, sample_size + sample_size_3s])
+        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1,
+                                         # taking the average for smatch (not exactly correct, since this overvalues
+                                         # the larger corpus, but the sizes should be close enough.
+                                         [(self.get_f_from_prf(smatch_results)+ self.get_f_from_prf(smatch_results_3s)) / 2])
+

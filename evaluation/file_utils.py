@@ -52,7 +52,6 @@ def read_label_tsv(root_dir, tsv_file_name, columns=None, graph_id_column=0):
                 # nested lists of things from each column
                 by_column = []
                 for column in columns:
-                    print("getting column", column)
                     label = row[column]
                     by_column.append(label)
                 labels_here.append(by_column)
