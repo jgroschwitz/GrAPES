@@ -36,7 +36,8 @@ bunch2subcategory = {
     "8. Attachments": ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"],
     "6. Entity Classification And Linking": ["seen_andor_easy_wiki_links", "hard_unseen_wiki_links"],
     "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
-                           "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"]
+                           "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"],
+    "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings"],
 }
 
 

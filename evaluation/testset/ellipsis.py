@@ -4,8 +4,8 @@ from evaluation.util import get_node_by_name
 from evaluation.file_utils import load_corpus_from_folder
 
 
-def evaluate_ellipsis(gold_amrs=None, predicted_amrs=None, parser_name=None, root_dir="../../"):
-    prereq_recalled, recalled, total = get_ellipsis_success_counts(gold_amrs, predicted_amrs, root_dir)
+def evaluate_ellipsis(id2labels: dict, gold_amrs=None, predicted_amrs=None):
+    prereq_recalled, recalled, total = get_ellipsis_success_counts(id2labels, gold_amrs, predicted_amrs)
 
     prereq_recall = prereq_recalled / total
     recall = recalled / total if total > 0 else 1.0
@@ -13,17 +13,15 @@ def evaluate_ellipsis(gold_amrs=None, predicted_amrs=None, parser_name=None, roo
     return prereq_recall, recall
 
 
-def get_ellipsis_success_counts(gold_amrs, predicted_amrs, root_dir):
-    if gold_amrs is None:
-        gold_amrs = load_corpus_from_folder(f"{root_dir}/external_resources/amrs/split/test/")
-    id2labels = dict()
-    with open(f"{root_dir}/corpus/ellipsis_filtered.tsv", "r") as f:
-        csvreader = csv.reader(f, delimiter='\t', quotechar=None)
-        for row in csvreader:
-            graph_id = row[0]
-            ellipsis_label = row[1]
-            ellipsis_labels_here = id2labels.setdefault(graph_id, [])
-            ellipsis_labels_here.append(ellipsis_label)
+def get_ellipsis_success_counts(id2labels, gold_amrs, predicted_amrs):
+    # id2labels = dict()
+    # with open(f"{root_dir}/corpus/ellipsis_filtered.tsv", "r") as f:
+    #     csvreader = csv.reader(f, delimiter='\t', quotechar=None)
+    #     for row in csvreader:
+    #         graph_id = row[0]
+    #         ellipsis_label = row[1]
+    #         ellipsis_labels_here = id2labels.setdefault(graph_id, [])
+    #         ellipsis_labels_here.append(ellipsis_label)
     total = 0
     prereq_recalled = 0
     recalled = 0

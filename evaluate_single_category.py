@@ -3,7 +3,7 @@ from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.category_evaluation.edge_recall_evaluation import EdgeRecall, NodeRecall, PPAttachment, \
-    NETypeRecall, NERecall
+    NETypeRecall, NERecall, SubgraphRecall, EllipsisRecall
 from evaluation.full_evaluation.category_evaluation.i_pragmatic_reentrancies import PragmaticReentrancies
 from evaluation.full_evaluation.category_evaluation.ii_unambiguous_reentrancies import UnambiguousReentrancies
 from evaluation.full_evaluation.category_evaluation.iii_structural_generalization import StructuralGeneralization
@@ -208,9 +208,17 @@ category_name_to_set_class_and_metadata = {
         display_name="Unaccusatives",
         tsv="unaccusatives2_filtered.tsv", use_sense=True
     )),
-    # "ellipsis": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_ellipsis_results),
-    # "multinode_word_meanings": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_multinode_constants_results),
-    # "imperatives": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_imperative_results)
+    "ellipsis": (EllipsisRecall, SubcategoryMetadata(
+        display_name="Ellipsis",
+        tsv="ellipsis_filtered.tsv"
+    )),
+    "multinode_word_meanings": (SubgraphRecall, SubcategoryMetadata(
+        "Multinode constants",
+        tsv="multinode_constants_filtered.tsv",
+        metric_label="Recall"
+    )),
+    # "imperatives": (
+    # ))
 }
 
 

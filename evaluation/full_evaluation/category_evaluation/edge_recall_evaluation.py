@@ -53,3 +53,15 @@ class NERecall(CategoryEvaluation):
         self.set_category_metadata(subcategory_info)
         self.make_results_for_ne()
         return self.rows
+
+class SubgraphRecall(CategoryEvaluation):
+    def run_single_evaluation(self, subcategory_info: SubcategoryMetadata):
+        self.set_category_metadata(subcategory_info)
+        self.make_results_for_subgraph()
+        return self.rows
+
+class EllipsisRecall(CategoryEvaluation):
+    def run_single_evaluation(self, subcategory_info: SubcategoryMetadata):
+        self.set_category_metadata(subcategory_info)
+        self.make_results_for_ellipsis()
+        return self.rows

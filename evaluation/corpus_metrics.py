@@ -154,9 +154,8 @@ def calculate_node_label_successes_and_sample_size(category_metadata: Subcategor
     return success_count, sample_size
 
 
-def calculate_subgraph_existence_successes_and_sample_size(tsv_file_path: str, gold_amrs: List[Graph],
-                                                           predicted_amrs: List[Graph], root_dir: str):
-    id2subgraphs = read_node_label_tsv(root_dir=root_dir, tsv_file_name=tsv_file_path)
+def calculate_subgraph_existence_successes_and_sample_size(id2subgraphs, gold_amrs: List[Graph],
+                                                           predicted_amrs: List[Graph]):
     success_count = 0
     sample_size = 0
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):

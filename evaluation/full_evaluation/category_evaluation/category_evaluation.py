@@ -3,8 +3,10 @@ from typing import List
 from penman import load, Graph
 
 from evaluation.corpus_metrics import calculate_edge_prereq_recall_and_sample_size_counts, \
-    calculate_node_label_successes_and_sample_size
+    calculate_node_label_successes_and_sample_size, calculate_subgraph_existence_successes_and_sample_size
+from evaluation.file_utils import read_node_label_tsv
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.testset.ellipsis import get_ellipsis_success_counts
 from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
 from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, \
     calculate_date_or_name_successes_and_sample_size
@@ -123,6 +125,19 @@ class CategoryEvaluation:
             id2labels_entities, self.gold_amrs, self.predicted_amrs, self.category_metadata.entity_type)
         self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
                                          [successes, sample_size])
+
+    def make_results_for_subgraph(self):
+        id2subgraphs = read_node_label_tsv(root_dir=self.root_dir, tsv_file_name=self.category_metadata.tsv)
+        recalled, sample_size = calculate_subgraph_existence_successes_and_sample_size(
+            id2subgraphs, self.gold_amrs, self.predicted_amrs)
+        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
+
+    def make_results_for_ellipsis(self):
+        id2labels = read_node_label_tsv(root_dir=self.root_dir, tsv_file_name=self.category_metadata.tsv)
+        prereqs, recalled, sample_size = get_ellipsis_success_counts(
+            id2labels, self.gold_amrs, self.predicted_amrs)
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
+        self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])
 
     def get_result_rows(self):
         self._run_all_evaluations()
