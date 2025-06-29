@@ -95,7 +95,10 @@ def create_results_pickle():
 
                         if info.subcorpus_filename in size_mappers:
                             by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
-                            generalisation_by_size[info.display_name] = by_size
+                            if parser_name in generalisation_by_size:
+                                generalisation_by_size[parser_name][info.display_name] = by_size
+                            else:
+                                generalisation_by_size[parser_name] = {info.display_name: by_size}
                     else:
                         set = eval_class(golds, predictions, parser_name, root_dir, info)
 
@@ -173,8 +176,7 @@ def create_results_pickle():
         # all_result_rows += category_9_evaluation.get_result_rows()
 
         print("Structural Generalisation by length")
-        for key in generalisation_by_size:
-            print(key, generalisation_by_size[key])
+        pretty_print_structural_generalisation_by_size(generalisation_by_size)
 
 
         print("All result rows")
@@ -184,6 +186,33 @@ def create_results_pickle():
 
 
     pickle.dump(parser_name2rows, open(pickle_path, "wb"))
+
+
+def pretty_print_structural_generalisation_by_size(results):
+    print(results)
+    from prettytable import PrettyTable
+    table = PrettyTable()
+    field_names = ["Parser", "Dataset"]
+    for n in range(1, 11):
+        field_names.append(str(n))
+    table.field_names = field_names
+    table.align = "l"
+    parsers = list(results.keys())
+    for dataset in results[parsers[0]]:
+        sizes = results[parsers[0]][dataset].keys()
+        for parser in parsers:
+            row = [parser, dataset]
+            for n in range(1, 11):
+                if n in sizes:
+                    row.append(results[parser][dataset][n])
+                else:
+                    row.append("")
+            table.add_row(row)
+
+    print(table)
+
+
+
 
 def print_pretty_table(result_rows):
     from prettytable import PrettyTable
@@ -344,7 +373,7 @@ def _get_row_evaluation_type(row):
 
 def main():
     create_results_pickle()
-    make_latex_table(results_path)
+    # make_latex_table(results_path)
 
 
 if __name__ == '__main__':
