@@ -257,7 +257,19 @@ category_name_to_set_class_and_metadata = {
     ))
 }
 
-
-
-
-
+# TODO check orders and completeness
+bunch2subcategory = {
+    "1. Pragmatic Reentrancies": ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"],
+    "4. Rare Unseen Nodes Edges": ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
+                         "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"],
+    "2. Unambiguous Reentrancies": ["syntactic_gap_reentrancies", "unambiguous_coreference"],
+    "8. Attachments": ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"],
+    "6. Entity Classification And Linking": ["seen_andor_easy_wiki_links", "hard_unseen_wiki_links"],
+    "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
+                           "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"],
+    "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings", "imperatives"],
+    "7. Lexical Disambiguation": ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"],
+    "3. Structural Generalization": ["nested_control_and_coordination", "multiple_adjectives",
+                                     "cp_recursion", "cp_recursion_plus_coreference", "cp_recursion_plus_rc",
+                                     "cp_recursion_plus_rc_plus_coreference", "long_lists"],
+}

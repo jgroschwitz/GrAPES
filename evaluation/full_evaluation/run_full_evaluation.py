@@ -1,4 +1,3 @@
-from typing import Dict
 import pickle
 
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
@@ -9,7 +8,7 @@ from evaluation.full_evaluation.wilson_score_interval import wilson_score_interv
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
-from evaluation.category_metadata import category_name_to_set_class_and_metadata
+from evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory
 
 # globals
 root_dir = "../../"
@@ -28,22 +27,6 @@ def get_predictions_path_for_parser(parser):
 def load_parser_output(parser_name, subcorpus_name):
     return load(f"{get_predictions_path_for_parser(parser_name)}/{subcorpus_name}.txt")
 
-# TODO check orders and completeness
-bunch2subcategory = {
-    "1. Pragmatic Reentrancies": ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"],
-    "4. Rare Unseen Nodes Edges": ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
-                         "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"],
-    "2. Unambiguous Reentrancies": ["syntactic_gap_reentrancies", "unambiguous_coreference"],
-    "8. Attachments": ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"],
-    "6. Entity Classification And Linking": ["seen_andor_easy_wiki_links", "hard_unseen_wiki_links"],
-    "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
-                           "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"],
-    "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings", "imperatives"],
-    "7. Lexical Disambiguation": ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"],
-    "3. Structural Generalization": ["nested_control_and_coordination", "multiple_adjectives",
-                                     "cp_recursion", "cp_recursion_plus_coreference", "cp_recursion_plus_rc",
-                                     "cp_recursion_plus_rc_plus_coreference", "long_lists"],
-}
 
 def get_arguments_for_evaluation_class(info: SubcategoryMetadata,
                                        predictions_directory,
@@ -78,7 +61,7 @@ def get_arguments_for_evaluation_class(info: SubcategoryMetadata,
         elif info.subtype == "structural_generalization":
             sanity_check_name = add_sanity_check_suffix(info.subcorpus_filename)
             gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
-            predictions_sanity = load_parser_output(parser_name, subcorpus_name=sanity_check_name)
+            predictions_sanity = load(f"{predictions_directory}/{sanity_check_name}.txt")
             return golds, predicted_graphs, gold_sanity, predictions_sanity, parser_name, root_dir, info, predictions_directory
 
         else:

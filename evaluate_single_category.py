@@ -1,8 +1,12 @@
 import argparse
+import os
+import sys
+
 from penman import load
 
 from evaluation.category_metadata import category_name_to_set_class_and_metadata
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
+from evaluation.full_evaluation.run_full_evaluation import get_arguments_for_evaluation_class
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
@@ -73,9 +77,11 @@ def parse_args():
     parser.add_argument('-c', '--category_name', type=str, help='Category to evaluate. Possible values are: '
                                                                 + get_formatted_category_names())
     parser.add_argument('-g', '--gold_amr_file', type=str, help='Path to gold AMR file. Optional if a GrAPES-specific AMR file', default=None)
-    parser.add_argument('-p', '--predicted_amr_file', type=str, help='Path to predicted AMR file. Must contain AMRs '
+    parser.add_argument('-p', '--predicted_amr_file_or_directory', type=str, help='Path to predicted AMR file. Must contain AMRs '
                                                                      'for all sentences in the gold file, in the same '
                                                                      'order.')
+    parser.add_argument('-n', '--parser_name', type=str,
+                        help="name of parser (optional)", default="parser")
     args = parser.parse_args()
     return args
 
@@ -91,29 +97,51 @@ def get_results(gold_graphs, predicted_graphs, category_name):
 def main():
     args = parse_args()
     eval_class, info = category_name_to_set_class_and_metadata[args.category_name]
-    if info.subcorpus_filename is not None:
-        gold_graph_path = f"corpus/subcorpora/{info.subcorpus_filename}.txt"
-    elif args.gold_amr_file is None:
-        print("Please give the path the gold AMR testset file")
-        exit(1)
-    else:
-        gold_graph_path = args.gold_amr_file
-    gold_graphs = load(gold_graph_path)
-    # TODO make this the directory or testset file
-    predicted_graphs = load(args.predicted_amr_file)
-    if info.subcorpus_filename == "pp_attachment":
-        print("Concatenating PP files")
-        for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
-            more_graphs = load(f"corpus/subcorpora/{filename}.txt")
-            gold_graphs += more_graphs
-            more_graphs = load(f"{args.predicted_amr_file}/{filename}.txt")
-            predicted_graphs += more_graphs
-    if len(gold_graphs) != len(predicted_graphs):
-        raise ValueError("Gold and predicted AMR files must contain the same number of AMRs."
-                         "Got " + str(len(gold_graphs)) + " gold AMRs and " + str(len(predicted_graphs))
-                         + " predicted AMRs.")
-    results = get_results(gold_graphs, predicted_graphs, args.category_name)
-    print("Results on " + category_name_to_set_class_and_metadata[args.category_name][1].display_name)
+
+    if args.predicted_amr_file_or_directory is not None:
+        if os.path.isdir(args.predicted_amr_file_or_directory):
+            predicted_path = args.predicted_amr_file_or_directory
+            predicted_testset_path = None
+        elif os.path.isfile(args.predicted_amr_file_or_directory):
+            predicted_testset_path = args.predicted_amr_file_or_directory
+            predicted_path = None
+        else:
+            print("Predicted AMR file or directory not found.")
+            exit(1)
+
+
+    eval_args = get_arguments_for_evaluation_class(info, predicted_path, args.parser_name, ".",
+                                                   args.gold_amr_file, predicted_testset_path)
+    set = eval_class(*eval_args)
+    print("Results on " + info.display_name)
+    results = set.run_evaluation()
+
+
+    # # Set gold graphs
+    # if info.subcorpus_filename is not None:
+    #     gold_graph_path = f"corpus/subcorpora/{info.subcorpus_filename}.txt"
+    # elif args.gold_amr_file is None:
+    #     print("Please give the path the gold AMR testset file")
+    #     exit(1)
+    # else:
+    #     gold_graph_path = args.gold_amr_file
+    # gold_graphs = load(gold_graph_path)
+
+    # set predicted graphs
+    # predicted_graphs = load(args.predicted_amr_file)
+    # if info.subcorpus_filename == "pp_attachment":
+    #     print("Concatenating PP files")
+    #     for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
+    #         more_graphs = load(f"corpus/subcorpora/{filename}.txt")
+    #         gold_graphs += more_graphs
+    #         more_graphs = load(f"{args.predicted_amr_file}/{filename}.txt")
+    #         predicted_graphs += more_graphs
+    # if len(gold_graphs) != len(predicted_graphs):
+    #     raise ValueError("Gold and predicted AMR files must contain the same number of AMRs."
+    #                      "Got " + str(len(gold_graphs)) + " gold AMRs and " + str(len(predicted_graphs))
+    #                      + " predicted AMRs.")
+    # results = get_results(gold_graphs, predicted_graphs, args.category_name)
+
     for row in results:
         metric_name = row[1]
         metric_type = row[2]
