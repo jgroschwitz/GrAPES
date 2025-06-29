@@ -221,6 +221,7 @@ def make_latex_table(root_dir: str):
     result_rows_by_parser_name = pickle.load(open(root_dir + "/results_table.pickle", "rb"))
 
     master_parser = parser_names[0]
+    master_rows = result_rows_by_parser_name[master_parser]
 
     # results_rows_by_column = zip()
     # print("\n###", list(results_rows_by_column))
@@ -235,22 +236,22 @@ def make_latex_table(root_dir: str):
     with open(root_dir + "/latex_results_table.txt", "w") as f:
         set_id = ""
         shade_row = True
-        for parser_rows in results_rows_by_column:
-            is_title_row = len(parser_rows[0]) == 1
+        for j, parser_row in enumerate(master_rows):
+            is_title_row = len(parser_row) == 1
             if is_title_row:
-                set_id = parser_rows[0][0][0]
-                current_scores = [[], [], []]
-                set_to_scores[parser_rows[0][0]] = current_scores
+                set_id = parser_row[0][0]
+                current_scores = [[] for _ in range(len(parser_names))]
+                set_to_scores[parser_row[0]] = current_scores
                 continue
 
-            if parser_rows[0][0] is None:
+            if parser_row[0] is None:
                 dataset_name = ""
-            elif isinstance(parser_rows[0][0], str):
-                dataset_name = parser_rows[0][0]
+            elif isinstance(parser_row[0], str):
+                dataset_name = parser_row[0]
             else:
-                dataset_name = parser_rows[0][0].get_latex_display_name()
+                dataset_name = parser_row[0].get_latex_display_name()
             # dataset_name = parser_rows[0][0]
-            metric_name = parser_rows[0][1]
+            metric_name = parser_row[1]
 
             is_unlabeled_edge_row = metric_name == "Unlabeled edge recall"
             is_smatch_row = "smatch" in metric_name.lower()
@@ -270,10 +271,11 @@ def make_latex_table(root_dir: str):
             shading_prefix = "\\rowcolor{lightlightlightgray}" if shade_row else ""
             latex_line = f"\t\t{shading_prefix}{set_id} & {dataset_name} & {metric_name}"
 
-            is_success_rate_row = parser_rows[0][2] == EVAL_TYPE_SUCCESS_RATE
+            is_success_rate_row = parser_row[2] == EVAL_TYPE_SUCCESS_RATE
             if is_success_rate_row and not "precision" in metric_name.lower():
-                assert parser_rows[0][4] == parser_rows[1][4] == parser_rows[2][4]
-            for i, row in enumerate(parser_rows):
+                for name in parser_names:
+                    assert parser_row[4] == result_rows_by_parser_name[name][4]
+            for i in range(len(parser_names)):
                 if is_success_rate_row:
                     wilson_ci = wilson_score_interval(row[3], row[4])
                     score = num_to_score(row[3] / row[4])
