@@ -10,7 +10,7 @@ from penman import load
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.util import get_node_name_for_gold_label, strip_sense
 from evaluation.graph_matcher import equals_modulo_isomorphy, check_fragment_existence
-from evaluation.file_utils import read_node_label_tsv, load_corpus_from_folder, read_edge_tsv, get_graph_for_node_string
+from evaluation.file_utils import read_label_tsv, load_corpus_from_folder, read_edge_tsv, get_graph_for_node_string
 
 
 def compute_precision_recall_f1_from_counters(pred_counter: Counter, gold_counter: Counter):
@@ -118,7 +118,7 @@ def calculate_node_label_successes_and_sample_size(category_metadata: Subcategor
         use_sense = category_metadata.use_sense_prereq
     else:
         use_sense = category_metadata.use_sense
-    id2labels = read_node_label_tsv(root_dir, category_metadata.tsv)
+    id2labels = read_label_tsv(root_dir, category_metadata.tsv)
     success_count = 0
     sample_size = 0
     do_error_analysis = error_analysis_output_filename is not None

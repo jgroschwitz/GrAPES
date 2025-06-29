@@ -8,24 +8,17 @@ from evaluation.full_evaluation.wilson_score_interval import wilson_score_interv
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
-from evaluation.full_evaluation.category_evaluation.i_pragmatic_reentrancies import PragmaticReentrancies
-from evaluation.full_evaluation.category_evaluation.ii_unambiguous_reentrancies import UnambiguousReentrancies
-from evaluation.full_evaluation.category_evaluation.iii_structural_generalization import StructuralGeneralization
-from evaluation.full_evaluation.category_evaluation.iv_rare_unseen_nodes_edges import RareUnseenNodesEdges
-from evaluation.full_evaluation.category_evaluation.v_names_dates_etc import NamesDatesEtc
-from evaluation.full_evaluation.category_evaluation.vi_entity_classification_and_linking import EntityClassificationAndLinking
-from evaluation.full_evaluation.category_evaluation.vii_lexical_disambiguation import LexicalDisambiguation
-from evaluation.full_evaluation.category_evaluation.viii_attachments import Attachments
-from evaluation.full_evaluation.category_evaluation.ix_nontrivial_word2node_relations import NontrivialWord2NodeRelations
 from evaluate_single_category import category_name_to_set_class_and_metadata
 
 root_dir = "../../"
 path_to_parser_outputs = f"{root_dir}/data/raw/parser_outputs/"
 
+def get_predictions_path_for_parser(parser):
+    return f"{path_to_parser_outputs}/{parser}-output"
 
 
 def load_parser_output(parser_name, subcorpus_name):
-    return load(f"{path_to_parser_outputs}/{parser_name}-output/{subcorpus_name}.txt")
+    return load(f"{get_predictions_path_for_parser(parser_name)}/{subcorpus_name}.txt")
 
 # TODO check orders and completeness
 bunch2subcategory = {
@@ -37,7 +30,7 @@ bunch2subcategory = {
     "6. Entity Classification And Linking": ["seen_andor_easy_wiki_links", "hard_unseen_wiki_links"],
     "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
                            "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"],
-    "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings"],
+    "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings", "imperatives"],
 }
 
 
@@ -68,6 +61,7 @@ def create_results_pickle():
                     print("Using test set")
                     predictions = testset_parser_outs
                     golds = gold_amrs
+                    set = eval_class(golds, predictions, parser_name, root_dir, info)
                 else:
                     print("Using", info.subcorpus_filename)
                     predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
@@ -77,15 +71,11 @@ def create_results_pickle():
                     # I don't know why the evaluation was even working because we were only looking at
                     # the files in pp_attachment.txt, which don't actually get evaluated.
                     if info.subcorpus_filename == "pp_attachment":
-                        print("Concatenating PP files")
-                        for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
-                            more_graphs = load(f"{root_dir}/corpus/subcorpora/{filename}.txt")
-                            golds += more_graphs
-                            more_graphs = load_parser_output(parser_name, subcorpus_name=filename)
-                            predictions += more_graphs
-                    assert len(golds) == len(predictions) and len(golds) > 0
-                set = eval_class(golds, predictions, parser_name, root_dir)
-                rows = set.run_single_evaluation(info)
+                        set = eval_class(parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
+                    else:
+                        set = eval_class(golds, predictions, parser_name, root_dir, info)
+
+                rows = set.run_evaluation()
                 all_result_rows += rows
 
 

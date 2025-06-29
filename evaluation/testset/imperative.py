@@ -6,10 +6,12 @@ from evaluation.util import get_node_by_name
 from evaluation.file_utils import load_corpus_from_folder
 
 
-def evaluate_imperatives(gold_amrs=None, predicted_amrs:List[Graph]=None, parser_name=None, root_dir="../../"):
-    prereq_recalled, recalled, with_correct_imperative_target_count, total = get_imperative_success_counts(gold_amrs,
+
+def evaluate_imperatives(gold_amrs, predicted_amrs:List[Graph], id2labels: dict):
+    prereq_recalled, recalled, with_correct_imperative_target_count, total = get_imperative_success_counts(id2labels,
+                                                                                                           gold_amrs,
                                                                                                            predicted_amrs,
-                                                                                                           root_dir)
+                                                                                                           )
 
     prereq_recall = prereq_recalled / total
     recall = recalled / total if total > 0 else 1.0
@@ -18,19 +20,7 @@ def evaluate_imperatives(gold_amrs=None, predicted_amrs:List[Graph]=None, parser
     return prereq_recall, recall, with_correct_imperative_target_fraction
 
 
-def get_imperative_success_counts(gold_amrs, predicted_amrs, root_dir):
-    if gold_amrs is None:
-        gold_amrs = load_corpus_from_folder(f"{root_dir}/external_resources/amrs/split/test/")
-    id2labels = dict()
-    with open(f"{root_dir}/corpus/imperatives_filtered.tsv", "r") as f:
-        csvreader = csv.reader(f, delimiter='\t', quotechar=None)
-        for row in csvreader:
-            graph_id = row[0]
-            verb_label = row[1]
-            imperative_target_edge_label = row[2]
-            imperative_target = row[3]
-            imperatives_here = id2labels.setdefault(graph_id, [])
-            imperatives_here.append((verb_label, imperative_target_edge_label, imperative_target))
+def get_imperative_success_counts(id2labels, gold_amrs, predicted_amrs):
     total = 0
     prereq_recalled = 0
     recalled = 0
@@ -38,6 +28,8 @@ def get_imperative_success_counts(gold_amrs, predicted_amrs, root_dir):
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
         if gold_amr.metadata['id'] in id2labels:
             total += len(id2labels[gold_amr.metadata['id']])
+            print(id2labels[gold_amr.metadata['id']])
+            print(len(id2labels[gold_amr.metadata['id']]))
             for verb_label, imperative_target_edge_label, imperative_target in id2labels[gold_amr.metadata['id']]:
                 matching_instances = [instance for instance in predicted_amr.instances() if
                                       instance.target == verb_label]

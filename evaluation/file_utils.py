@@ -31,33 +31,46 @@ def read_tsv_with_comments(file):
     return reader
 
 
-def read_node_label_tsv(root_dir, tsv_file_name):
+def read_label_tsv(root_dir, tsv_file_name, columns=None, graph_id_column=0):
     """
-    Expects to find graph IDs in column 0 and target node labels in column 1.
-    Ignores any other columns
+    Reads in labels from columns (default just column 1)
     :return: dict id (str) : labels (str list) of all labels associated with that ID
     """
+    if columns is None:
+        columns = [1]
     id2labels = dict()
     with open(f"{root_dir}/corpus/{tsv_file_name}", "r", encoding="utf8") as f:
         csvreader = read_tsv_with_comments(f)
         for row in csvreader:
-            graph_id = row[0]
-            label = row[1]
+            graph_id = row[graph_id_column]
             labels_here = id2labels.setdefault(graph_id, [])
-            labels_here.append(label)
+            if len(columns) == 1:
+                # no nested lists if we only want one thing
+                label = row[columns[0]]
+                labels_here.append(label)
+            else:
+                # nested lists of things from each column
+                by_column = []
+                for column in columns:
+                    print("getting column", column)
+                    label = row[column]
+                    by_column.append(label)
+                labels_here.append(by_column)
     return id2labels
 
 
-def read_edge_tsv(root_dir, subcategory_info):
+def read_edge_tsv(root_dir, subcategory_info: SubcategoryMetadata):
     """
     Most TSVs are already formatted as in the defaults, but eg for reentrancies we also need the other parent and edge.
-    :param first_row_is_header: if true, the first row in the file will be skipped
-    :param graph_id_column: default 0
-    :param source_column: default 1
-    :param edge_column: default 2
-    :param target_column: default 3
-    :param parent_column: default None (for additional parent)
-    :param parent_edge_column: default None (for edge label from additional parent)
+    :param root_dir: root directory path
+    :param subcategory_info: SubcategoryMetadata that includes the following:
+        first_row_is_header: if true, the first row in the file will be skipped
+        graph_id_column: default 0
+        source_column: default 1
+        edge_column: default 2
+        target_column: default 3
+        parent_column: default None (for additional parent)
+        parent_edge_column: default None (for edge label from additional parent)
     :return: dict id (str) : label list [source_label, edge_label, target_label, (parent_label), (parent_edge_label)]
     """
     id2labels = dict()

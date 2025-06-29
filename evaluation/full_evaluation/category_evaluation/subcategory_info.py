@@ -21,8 +21,6 @@ class SubcategoryMetadata:
     use_sense: bool = False
     use_sense_prereq = False
     first_row_is_header: bool = False
-    override_gold_amrs: List[Graph] or None = None
-    override_predicted_amrs: List[Graph] or None = None
     # for nodes
     use_attributes: bool = False
     attribute_label: str or None = None

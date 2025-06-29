@@ -2,8 +2,8 @@ import argparse
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.category_evaluation.edge_recall_evaluation import EdgeRecall, NodeRecall, PPAttachment, \
-    NETypeRecall, NERecall, SubgraphRecall, EllipsisRecall
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import EdgeRecall, NodeRecall, PPAttachment, \
+    NETypeRecall, NERecall, SubgraphRecall, EllipsisRecall, ImperativeRecall
 from evaluation.full_evaluation.category_evaluation.i_pragmatic_reentrancies import PragmaticReentrancies
 from evaluation.full_evaluation.category_evaluation.ii_unambiguous_reentrancies import UnambiguousReentrancies
 from evaluation.full_evaluation.category_evaluation.iii_structural_generalization import StructuralGeneralization
@@ -221,8 +221,10 @@ category_name_to_set_class_and_metadata = {
         tsv="multinode_constants_filtered.tsv",
         metric_label="Recall"
     )),
-    # "imperatives": (
-    # ))
+    "imperatives": (ImperativeRecall, SubcategoryMetadata(
+        display_name="Imperatives",
+        tsv="imperatives_filtered.tsv",
+    ))
 }
 
 
@@ -250,7 +252,7 @@ def get_results(gold_graphs, predicted_graphs, category_name):
     # set_class, eval_function = category_name_to_set_class_and_eval_function[category_name]
     set = eval_class(gold_graphs, predicted_graphs, None, "./")
     print("Using", set.__class__.__name__)
-    return set.run_single_evaluation(info)
+    return set.run_evaluation(info)
 
 
 def main():
