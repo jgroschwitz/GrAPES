@@ -1,9 +1,8 @@
 from typing import Dict
 import pickle
 
-from evaluation.file_utils import load_corpus_from_folder
-from evaluation.structural_generalization import add_sanity_check_suffix, structural_generalization_corpus_names, \
-    get_exact_match_by_size, size_mappers
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.structural_generalization import add_sanity_check_suffix, get_exact_match_by_size, size_mappers
 from evaluation.util import num_to_score
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 
@@ -12,6 +11,7 @@ from penman import load
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
 from evaluation.category_metadata import category_name_to_set_class_and_metadata
 
+# globals
 root_dir = "../../"
 path_to_parser_outputs = f"{root_dir}/data/raw/parser_outputs/"
 results_path = f"{root_dir}/data/processed/results"
@@ -45,12 +45,61 @@ bunch2subcategory = {
                                      "cp_recursion_plus_rc_plus_coreference", "long_lists"],
 }
 
+def get_arguments_for_evaluation_class(info: SubcategoryMetadata,
+                                       predictions_directory,
+                                       parser_name,
+                                       root_dir,
+                                       gold_testset_path=None,
+                                       predicted_testset_path=None,
+                                       gold_testset_graphs=None,
+                                       predicted_testset_graphs=None):
+    if info.subcorpus_filename is None:
+        if gold_testset_graphs is None:
+            if gold_testset_path is None:
+                raise ValueError(f"Need gold testset path for {info.display_name}")
+            gold_testset_graphs = load(gold_testset_path)
+        if predicted_testset_graphs is None:
+            if predicted_testset_path is None:
+                predicted_testset_path = f"{predictions_directory}/testset.txt"
+            predicted_testset_graphs = load(predicted_testset_path)
+
+        return gold_testset_graphs, predicted_testset_graphs, parser_name, root_dir, info
+    else:
+        print("Using", info.subcorpus_filename)
+
+        predicted_graphs = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
+        golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+
+        # Special case for PP attachment: they're in separate files
+        # I don't know why the evaluation was even working because we were only looking at
+        # the files in pp_attachment.txt, which don't actually get evaluated.
+        if info.subcorpus_filename == "pp_attachment":
+            return parser_name, root_dir, info, get_predictions_path_for_parser(parser_name)
+        elif info.subtype == "structural_generalization":
+            sanity_check_name = add_sanity_check_suffix(info.subcorpus_filename)
+            gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
+            predictions_sanity = load_parser_output(parser_name, subcorpus_name=sanity_check_name)
+            return golds, predicted_graphs, gold_sanity, predictions_sanity, parser_name, root_dir, info, predictions_directory
+
+        else:
+            return golds, predicted_graphs, parser_name, root_dir, info
+
+def update_generalisations_by_size_dict(generalisation_by_size_dict, parser_name, info, root_dir, predictions_directory):
+    predictions = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
+    golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+    by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
+    if parser_name in generalisation_by_size_dict:
+        generalisation_by_size_dict[parser_name][info.display_name] = by_size
+    else:
+        generalisation_by_size_dict[parser_name] = {info.display_name: by_size}
+    return generalisation_by_size_dict
+
 
 
 def create_results_pickle():
 
-
-    gold_amrs = load(f"{root_dir}/data/raw/gold/test.txt")
+    gold_testset_path = f"{root_dir}/data/raw/gold/test.txt"
+    gold_amrs = load(gold_testset_path)
 
     parser_name2rows = dict()
 
@@ -71,39 +120,72 @@ def create_results_pickle():
 
             for subcategory in bunch2subcategory[bunch]:
                 eval_class, info = category_name_to_set_class_and_metadata[subcategory]
-                if info.subcorpus_filename is None:
-                    print("Using test set")
-                    predictions = testset_parser_outs
-                    golds = gold_amrs
-                    set = eval_class(golds, predictions, parser_name, root_dir, info)
-                else:
-                    print("Using", info.subcorpus_filename)
-                    predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
-                    golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+                args = get_arguments_for_evaluation_class(info,
+                                                   get_predictions_path_for_parser(parser_name),
+                                                   parser_name,
+                                                   root_dir,
+                                                   gold_testset_path=gold_testset_path,
+                                                   predicted_testset_path=f"{get_predictions_path_for_parser(parser_name)}/testset.txt",
+                                                   gold_testset_graphs=gold_amrs,
+                                                   predicted_testset_graphs=testset_parser_outs,
+                                                   )
 
-                    # Special case for PP attachment: they're in separate files
-                    # I don't know why the evaluation was even working because we were only looking at
-                    # the files in pp_attachment.txt, which don't actually get evaluated.
-                    if info.subcorpus_filename == "pp_attachment":
-                        set = eval_class(parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
-                    elif info.subtype == "structural_generalization":
-                        print(eval_class.__name__)
-                        sanity_check_name = add_sanity_check_suffix(info.subcorpus_filename)
-                        gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
-                        predictions_sanity = load_parser_output(parser_name, subcorpus_name=sanity_check_name)
-                        set = eval_class(golds, predictions, gold_sanity, predictions_sanity, parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
+                # Structural generalisation results by size
+                if info.subtype == "structural_generalization" and info.subcorpus_filename in size_mappers:
+                    generalisation_by_size = update_generalisations_by_size_dict(
+                        generalisation_by_size,
+                        parser_name, info, root_dir, get_predictions_path_for_parser(parser_name)
+                    )
+                    # predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
+                    # golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+                    # by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
+                    # if parser_name in generalisation_by_size:
+                    #     generalisation_by_size[parser_name][info.display_name] = by_size
+                    # else:
+                    #     generalisation_by_size[parser_name] = {info.display_name: by_size}
 
-                        if info.subcorpus_filename in size_mappers:
-                            by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
-                            if parser_name in generalisation_by_size:
-                                generalisation_by_size[parser_name][info.display_name] = by_size
-                            else:
-                                generalisation_by_size[parser_name] = {info.display_name: by_size}
-                    else:
-                        set = eval_class(golds, predictions, parser_name, root_dir, info)
-
+                set = eval_class(*args)
                 rows = set.run_evaluation()
                 all_result_rows += rows
+
+
+
+
+
+
+                # if info.subcorpus_filename is None:
+                #     print("Using test set")
+                #     predictions = testset_parser_outs
+                #     golds = gold_amrs
+                #     set = eval_class(golds, predictions, parser_name, root_dir, info)
+                # else:
+                #     print("Using", info.subcorpus_filename)
+                #     predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
+                #     golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+                #
+                #     # Special case for PP attachment: they're in separate files
+                #     # I don't know why the evaluation was even working because we were only looking at
+                #     # the files in pp_attachment.txt, which don't actually get evaluated.
+                #     if info.subcorpus_filename == "pp_attachment":
+                #         set = eval_class(parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
+                #     elif info.subtype == "structural_generalization":
+                #         print(eval_class.__name__)
+                #         sanity_check_name = add_sanity_check_suffix(info.subcorpus_filename)
+                #         gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
+                #         predictions_sanity = load_parser_output(parser_name, subcorpus_name=sanity_check_name)
+                #         set = eval_class(golds, predictions, gold_sanity, predictions_sanity, parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
+                #
+                #         if info.subcorpus_filename in size_mappers:
+                #             by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
+                #             if parser_name in generalisation_by_size:
+                #                 generalisation_by_size[parser_name][info.display_name] = by_size
+                #             else:
+                #                 generalisation_by_size[parser_name] = {info.display_name: by_size}
+                #     else:
+                #         set = eval_class(golds, predictions, parser_name, root_dir, info)
+                #
+                # rows = set.run_evaluation()
+                # all_result_rows += rows
 
 
 
@@ -183,17 +265,21 @@ def create_results_pickle():
         # print(all_result_rows)
         print_pretty_table(all_result_rows)
 
-
-
     pickle.dump(parser_name2rows, open(pickle_path, "wb"))
 
 
 def pretty_print_structural_generalisation_by_size(results):
+    """
+    Prints the structural generalisation results split up by size
+    Args:
+        results: dict from parser name to dataset name to dict from size to score
+    """
     print(results)
     from prettytable import PrettyTable
     table = PrettyTable()
+    max_size = 10
     field_names = ["Parser", "Dataset"]
-    for n in range(1, 11):
+    for n in range(1, max_size + 1):
         field_names.append(str(n))
     table.field_names = field_names
     table.align = "l"
@@ -202,7 +288,7 @@ def pretty_print_structural_generalisation_by_size(results):
         sizes = results[parsers[0]][dataset].keys()
         for parser in parsers:
             row = [parser, dataset]
-            for n in range(1, 11):
+            for n in range(1, max_size + 1):
                 if n in sizes:
                     row.append(results[parser][dataset][n])
                 else:
@@ -210,8 +296,6 @@ def pretty_print_structural_generalisation_by_size(results):
             table.add_row(row)
 
     print(table)
-
-
 
 
 def print_pretty_table(result_rows):
@@ -247,6 +331,14 @@ def print_pretty_table(result_rows):
 
 
 def make_latex_table(root_dir: str):
+    """
+    TODO This is not currently working with the refactoring
+    Args:
+        root_dir:
+
+    Returns:
+
+    """
     result_rows_by_parser_name = pickle.load(open(root_dir + "/results_table.pickle", "rb"))
 
     master_parser = parser_names[0]
