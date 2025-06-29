@@ -51,10 +51,10 @@ class CategoryEvaluation:
 
         """
         if self.print_dataset_name:
-            ds_name = self.category_metadata.display_name
+            ds_name = self.category_metadata #.display_name TODO
             self.print_dataset_name = False  # don't print it next time
         else:
-            ds_name = ""
+            ds_name = None  # ""
         new_row = [ds_name, metric_name, eval_type] + metric_results
         print(new_row)
         return new_row

@@ -2,7 +2,8 @@ from typing import Dict
 import pickle
 
 from evaluation.file_utils import load_corpus_from_folder
-from evaluation.structural_generalization import add_sanity_check_suffix, structural_generalization_corpus_names
+from evaluation.structural_generalization import add_sanity_check_suffix, structural_generalization_corpus_names, \
+    get_exact_match_by_size, size_mappers
 from evaluation.util import num_to_score
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 
@@ -13,6 +14,12 @@ from evaluation.category_metadata import category_name_to_set_class_and_metadata
 
 root_dir = "../../"
 path_to_parser_outputs = f"{root_dir}/data/raw/parser_outputs/"
+results_path = f"{root_dir}/data/processed/results"
+pickle_path = f"{results_path}/results_table.pickle"
+# parser_names = ["amparser", "cailam", "amrbart"]
+parser_names = ["amparser"]
+
+
 
 def get_predictions_path_for_parser(parser):
     return f"{path_to_parser_outputs}/{parser}-output"
@@ -39,9 +46,9 @@ bunch2subcategory = {
 }
 
 
+
 def create_results_pickle():
-    # parser_names = ["amparser", "cailam", "amrbart"]
-    parser_names = ["amparser"]
+
 
     gold_amrs = load(f"{root_dir}/data/raw/gold/test.txt")
 
@@ -54,6 +61,8 @@ def create_results_pickle():
 
         all_result_rows = []
         parser_name2rows[parser_name] = all_result_rows
+
+        generalisation_by_size = {}
 
         for bunch in sorted(bunch2subcategory.keys()):
 
@@ -83,11 +92,16 @@ def create_results_pickle():
                         gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
                         predictions_sanity = load_parser_output(parser_name, subcorpus_name=sanity_check_name)
                         set = eval_class(golds, predictions, gold_sanity, predictions_sanity, parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
+
+                        if info.subcorpus_filename in size_mappers:
+                            by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
+                            generalisation_by_size[info.display_name] = by_size
                     else:
                         set = eval_class(golds, predictions, parser_name, root_dir, info)
 
                 rows = set.run_evaluation()
                 all_result_rows += rows
+
 
 
         # category_1_evaluation = PragmaticReentrancies(gold_amrs, testset_parser_outs, parser_name, root_dir)
@@ -158,11 +172,18 @@ def create_results_pickle():
         # category_9_evaluation = NontrivialWord2NodeRelations(gold_amrs, testset_parser_outs, parser_name, root_dir)
         # all_result_rows += category_9_evaluation.get_result_rows()
 
+        print("Structural Generalisation by length")
+        for key in generalisation_by_size:
+            print(key, generalisation_by_size[key])
+
+
         print("All result rows")
-        print(all_result_rows)
+        # print(all_result_rows)
         print_pretty_table(all_result_rows)
 
-    pickle.dump(parser_name2rows, open(f"{root_dir}/data/processed/results/results_table.pickle", "wb"))
+
+
+    pickle.dump(parser_name2rows, open(pickle_path, "wb"))
 
 def print_pretty_table(result_rows):
     from prettytable import PrettyTable
@@ -170,20 +191,26 @@ def print_pretty_table(result_rows):
     table.field_names = ["Dataset", "Metric", "Score", "Wilson CI", "Sample size"]
     table.align = "l"
     for row in result_rows:
+        if row[0] is None:
+            category = ""
+        elif isinstance(row[0], str):
+            category = row[0]
+        else:
+            category = row[0].display_name
         eval_type = _get_row_evaluation_type(row)
         if eval_type == EVAL_TYPE_SUCCESS_RATE:
             wilson_ci = wilson_score_interval(row[3], row[4])
             if row[4] > 0:
-                table.add_row([row[0], row[1], num_to_score(row[3]/row[4]),
+                table.add_row([category, row[1], num_to_score(row[3]/row[4]),
                                f"[{num_to_score(wilson_ci[0])}, {num_to_score(wilson_ci[1])}]", row[4]])
             else:
                 print("Division by zero!")
                 print(row)
         elif eval_type == EVAL_TYPE_F1:
-            table.add_row([row[0], row[1],  num_to_score(row[3]), "", ""])
+            table.add_row([category, row[1],  num_to_score(row[3]), "", ""])
         elif eval_type == 1:
             table.add_row(["", "", "", "", ""])
-            table.add_row([row[0], "", "", "", ""])
+            table.add_row([category, "", "", "", ""])
         else:
             print(row)
             raise Exception(f"Unknown evaluation type: {eval_type}")
@@ -192,9 +219,15 @@ def print_pretty_table(result_rows):
 
 def make_latex_table(root_dir: str):
     result_rows_by_parser_name = pickle.load(open(root_dir + "/results_table.pickle", "rb"))
-    results_rows_by_column = zip(result_rows_by_parser_name["amparser"],
-                                 result_rows_by_parser_name["cailam"],
-                                 result_rows_by_parser_name["amrbart"])
+
+    master_parser = parser_names[0]
+
+    # results_rows_by_column = zip()
+    # print("\n###", list(results_rows_by_column))
+    # results_rows_by_column = zip(result_rows_by_parser_name["amparser"],
+    #                              # result_rows_by_parser_name["cailam"],
+    #                              # result_rows_by_parser_name["amrbart"]
+    #                              )
 
     set_to_scores = dict()
     current_scores = None
@@ -209,7 +242,14 @@ def make_latex_table(root_dir: str):
                 current_scores = [[], [], []]
                 set_to_scores[parser_rows[0][0]] = current_scores
                 continue
-            dataset_name = parser_rows[0][0]
+
+            if parser_rows[0][0] is None:
+                dataset_name = ""
+            elif isinstance(parser_rows[0][0], str):
+                dataset_name = parser_rows[0][0]
+            else:
+                dataset_name = parser_rows[0][0].get_latex_display_name()
+            # dataset_name = parser_rows[0][0]
             metric_name = parser_rows[0][1]
 
             is_unlabeled_edge_row = metric_name == "Unlabeled edge recall"
@@ -302,7 +342,7 @@ def _get_row_evaluation_type(row):
 
 def main():
     create_results_pickle()
-    # make_latex_table("../../")
+    make_latex_table(results_path)
 
 
 if __name__ == '__main__':
