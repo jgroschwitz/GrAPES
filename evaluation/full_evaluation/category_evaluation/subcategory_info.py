@@ -13,7 +13,7 @@ class SubcategoryMetadata:
     Stores info about each subcategory
     """
     display_name: str
-    tsv: str
+    tsv: str or None = None
     subcorpus_filename: str or None = None
     graph_id_column: int = 0
     use_sense: bool = False
@@ -32,6 +32,8 @@ class SubcategoryMetadata:
     target_column: int or None = 3
     parent_column: int or None = None
     parent_edge_column: int or None = None
+    # for named entities
+    entity_type: str or None = None
 
 
 # category_name_to_subcategory_info = {

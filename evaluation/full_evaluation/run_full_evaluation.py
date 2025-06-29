@@ -27,6 +27,18 @@ path_to_parser_outputs = f"{root_dir}/data/raw/parser_outputs/"
 def load_parser_output(parser_name, subcorpus_name):
     return load(f"{path_to_parser_outputs}/{parser_name}-output/{subcorpus_name}.txt")
 
+# TODO check orders and completeness
+bunch2subcategory = {
+    "1. Pragmatic Reentrancies": ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"],
+    "4. Rare Unseen Nodes Edges": ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
+                         "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"],
+    "2. Unambiguous Reentrancies": ["syntactic_gap_reentrancies", "unambiguous_coreference"],
+    "8. Attachments": ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"],
+    "6. Entity Classification And Linking": ["seen_andor_easy_wiki_links", "hard_unseen_wiki_links"],
+    "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
+                           "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"]
+}
+
 
 def create_results_pickle():
     # parser_names = ["amparser", "cailam", "amrbart"]
@@ -44,22 +56,36 @@ def create_results_pickle():
         all_result_rows = []
         parser_name2rows[parser_name] = all_result_rows
 
-        all_result_rows.append(["1. Pragmatic Reentrancies"])
-        print("1")
+        for bunch in sorted(bunch2subcategory.keys()):
 
-        subcategories = ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"]
-        for subcategory in subcategories:
-            eval_class, info = category_name_to_set_class_and_metadata[subcategory]
-            if info.subcorpus_filename is None:
-                predictions = testset_parser_outs
-                golds = gold_amrs
-            else:
-                predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
-                golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-            set = eval_class(golds, predictions, parser_name, root_dir)
-            print("Using", set.__class__.__name__)
-            rows = set.run_single_evaluation(info)
-            all_result_rows += rows
+            all_result_rows.append([bunch])
+            print(bunch)
+
+            for subcategory in bunch2subcategory[bunch]:
+                eval_class, info = category_name_to_set_class_and_metadata[subcategory]
+                if info.subcorpus_filename is None:
+                    print("Using test set")
+                    predictions = testset_parser_outs
+                    golds = gold_amrs
+                else:
+                    print("Using", info.subcorpus_filename)
+                    predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
+                    golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+
+                    # Special case for PP attachment: they're in separate files
+                    # I don't know why the evaluation was even working because we were only looking at
+                    # the files in pp_attachment.txt, which don't actually get evaluated.
+                    if info.subcorpus_filename == "pp_attachment":
+                        print("Concatenating PP files")
+                        for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
+                            more_graphs = load(f"{root_dir}/corpus/subcorpora/{filename}.txt")
+                            golds += more_graphs
+                            more_graphs = load_parser_output(parser_name, subcorpus_name=filename)
+                            predictions += more_graphs
+                    assert len(golds) == len(predictions) and len(golds) > 0
+                set = eval_class(golds, predictions, parser_name, root_dir)
+                rows = set.run_single_evaluation(info)
+                all_result_rows += rows
 
 
         # category_1_evaluation = PragmaticReentrancies(gold_amrs, testset_parser_outs, parser_name, root_dir)
@@ -78,23 +104,23 @@ def create_results_pickle():
         # category_3_evaluation = StructuralGeneralization(gold_amrs, testset_parser_outs, parser_name, root_dir)
         # all_result_rows += category_3_evaluation.get_result_rows()
         #
-        all_result_rows.append(["4. Rare Unseen Nodes Edges"])
-        print("4")
-
-        subcategories = ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
-                         "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"]
-        for subcategory in subcategories:
-            eval_class, info = category_name_to_set_class_and_metadata[subcategory]
-            if info.subcorpus_filename is None:
-                predictions = testset_parser_outs
-                golds = gold_amrs
-            else:
-                predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
-                golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-            set = eval_class(golds, predictions, parser_name, root_dir)
-            print("Using", set.__class__.__name__)
-            rows = set.run_single_evaluation(info)
-            all_result_rows += rows
+        # all_result_rows.append(["4. Rare Unseen Nodes Edges"])
+        # print("4")
+        #
+        # subcategories = ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
+        #                  "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"]
+        # for subcategory in subcategories:
+        #     eval_class, info = category_name_to_set_class_and_metadata[subcategory]
+        #     if info.subcorpus_filename is None:
+        #         predictions = testset_parser_outs
+        #         golds = gold_amrs
+        #     else:
+        #         predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
+        #         golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+        #     set = eval_class(golds, predictions, parser_name, root_dir)
+        #     print("Using", set.__class__.__name__)
+        #     rows = set.run_single_evaluation(info)
+        #     all_result_rows += rows
 
         #
         # category_4_evaluation = RareUnseenNodesEdges(gold_amrs, testset_parser_outs, parser_name, root_dir)

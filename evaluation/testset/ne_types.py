@@ -28,7 +28,7 @@ def get_ne_type_recall_and_prereq(filename, gold_amrs, predicted_amrs):
     return entity_recall, name_recall
 
 
-def get_ne_type_successes_and_sample_size(filename, gold_amrs, predicted_amrs):
+def get_ne_type_successes_and_sample_size(id2labels, gold_amrs, predicted_amrs):
     """
     Expects to find graph ID in column 0, type in column 1, and name in column 2
     :param filename:
@@ -36,15 +36,6 @@ def get_ne_type_successes_and_sample_size(filename, gold_amrs, predicted_amrs):
     :param predicted_amrs:
     :return: Total prereq counts (named entity exists), total success counts (NE has correct type) and total sample size.
     """
-    id2labels = dict()
-    with open(filename, "r") as f:
-        csvreader = csv.reader(f, delimiter='\t', quotechar=None)
-        for row in csvreader:
-            graph_id = row[0]
-            ne_type = row[1]
-            name_string = row[2]
-            labels_here = id2labels.setdefault(graph_id, [])
-            labels_here.append((ne_type, name_string))
     name_recalled = 0
     type_recalled = 0
     total = 0
@@ -62,6 +53,19 @@ def get_ne_type_successes_and_sample_size(filename, gold_amrs, predicted_amrs):
                             type_recalled += 1
                         break
     return name_recalled, type_recalled, total
+
+
+def get_2_columns_from_tsv_by_id(filename):
+    id2labels = dict()
+    with open(filename, "r") as f:
+        csvreader = csv.reader(f, delimiter='\t', quotechar=None)
+        for row in csvreader:
+            graph_id = row[0]
+            ne_type = row[1]
+            name_string = row[2]
+            labels_here = id2labels.setdefault(graph_id, [])
+            labels_here.append((ne_type, name_string))
+    return id2labels
 
 
 def main():

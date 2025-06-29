@@ -98,6 +98,40 @@ def calculate_date_successes_and_sample_size(tsv_file_path, gold_amrs, predicted
                             break
     return date_recalled, date_total
 
+def calculate_date_or_name_successes_and_sample_size(id2labels_entities, gold_amrs, predicted_amrs, entity_type):
+    print("Entity type:", entity_type)
+    if entity_type == "date-entity":
+        fun = get_date_string_for_date_instance
+    elif entity_type == "name":
+        fun = get_name_string_for_name_instance
+
+    recalled = 0
+    total = 0
+    for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
+        if gold_amr.metadata['id'] in id2labels_entities:
+            total += len(id2labels_entities[gold_amr.metadata['id']])
+            for gold_value_string in id2labels_entities[gold_amr.metadata['id']]:
+                if entity_type == "other":
+                    gold_value_string = normalize_special_entity_value(gold_value_string)
+                    found = False
+                    for instance in predicted_amr.instances():
+                        if normalize_special_entity_value(instance.target) == gold_value_string:
+                            found = True
+                    for attribute in predicted_amr.attributes():
+                        if normalize_special_entity_value(attribute.target) == gold_value_string:
+                            found = True
+                    if found:
+                        recalled += 1
+                else:
+                    for instance in predicted_amr.instances():
+                        if instance.target == entity_type:
+                            name_string = fun(predicted_amr, instance)
+                            if name_string == gold_value_string:
+                                recalled += 1
+                                break
+    return recalled, total
+
+
 
 def calculate_name_recall(tsv_file_path, gold_amrs, predicted_amrs):
     name_recalled, name_total = calculate_name_successes_and_sample_size(tsv_file_path, gold_amrs, predicted_amrs)

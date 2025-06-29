@@ -6,7 +6,7 @@ from evaluation.util import strip_sense, get_source, get_target, filter_amrs_for
 
 import re
 
-from penman import Graph, encode, load
+from penman import Graph
 
 # Relation	Reification	Domain	Range	Example
 # :accompanier	accompany-01	:ARG0	:ARG1	“she's with him”
@@ -93,6 +93,7 @@ class PPAttachmentEvaluator:
 
     def evaluate_all(self):
         self._run_all_evaluations_and_update_internal_counters()
+        assert self.total_counter > 0, "No graphs found"
         return self.prerequisites_counter / self.total_counter, self.unlabeled_counter / self.total_counter, \
                self.labeled_counter / self.total_counter
 
@@ -105,23 +106,28 @@ class PPAttachmentEvaluator:
 
     def evaluate_see_with_graphs(self):
         golds, predictions = filter_amrs_for_name("see_with", self.gold_amrs, self.predicted_amrs)
+        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":poss", ":instrument"})
 
     def evaluate_read_by_graphs(self):
         golds, predictions = filter_amrs_for_name("read_by", self.gold_amrs, self.predicted_amrs)
+        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":time", ":manner"},
                              node_labels_to_evaluate={"author-01"})
 
     def evaluate_bought_for_graphs(self):
         golds, predictions = filter_amrs_for_name("bought_for", self.gold_amrs, self.predicted_amrs)
+        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":purpose", ":ARG3"})
 
     def evaluate_keep_from_graphs(self):
         golds, predictions = filter_amrs_for_name("keep_from", self.gold_amrs, self.predicted_amrs)
+        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":source", ":ARG2"})
 
     def evaluate_give_up_in_graphs(self):
         golds, predictions = filter_amrs_for_name("give_up_in", self.gold_amrs, self.predicted_amrs)
+        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":time", ":topic"},
                              node_labels_to_evaluate={"cause-01"})
 

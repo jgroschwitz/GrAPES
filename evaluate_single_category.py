@@ -2,7 +2,8 @@ import argparse
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.category_evaluation.edge_recall_evaluation import EdgeRecall, NodeRecall
+from evaluation.full_evaluation.category_evaluation.edge_recall_evaluation import EdgeRecall, NodeRecall, PPAttachment, \
+    NETypeRecall, NERecall
 from evaluation.full_evaluation.category_evaluation.i_pragmatic_reentrancies import PragmaticReentrancies
 from evaluation.full_evaluation.category_evaluation.ii_unambiguous_reentrancies import UnambiguousReentrancies
 from evaluation.full_evaluation.category_evaluation.iii_structural_generalization import StructuralGeneralization
@@ -92,7 +93,7 @@ category_name_to_set_class_and_metadata = {
                                                                    parent_edge_column=5)),
 
     "unambiguous_coreference": (EdgeRecall, SubcategoryMetadata(display_name="Unambiguous coreference",
-                                                                tsv="entrancies_unambiguous_coreference_filtered.tsv",
+                                                                tsv="reentrancies_unambiguous_coreference_filtered.tsv",
                                                                 parent_column=4,
                                                                 parent_edge_column=5)),
     # "nested_control_and_coordination": (StructuralGeneralization, StructuralGeneralization.computed_nested_control_and_coordination_results),
@@ -133,23 +134,80 @@ category_name_to_set_class_and_metadata = {
         tsv="unseen_roles_new_sentences.tsv", use_sense=True,
         subcorpus_filename="unseen_roles_new_sentences"
     )),
-    # "seen_names": (NamesDatesEtc, NamesDatesEtc.compute_seen_names_results),
-    # "unseen_names": (NamesDatesEtc, NamesDatesEtc.compute_unseen_names_results),
-    # "seen_dates": (NamesDatesEtc, NamesDatesEtc.compute_seen_dates_results),
-    # "unseen_dates": (NamesDatesEtc, NamesDatesEtc.compute_unseen_dates_results),
-    # "other_seen_entities": (NamesDatesEtc, NamesDatesEtc.compute_seen_special_entities_results),
-    # "other_unseen_entities": (NamesDatesEtc, NamesDatesEtc.compute_unseen_special_entities_results),
-    # "types_of_seen_named_entities": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_seen_ne_types_results),
-    # "types_of_unseen_named_entities": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_unseen_ne_types_results),
-    # "seen_andor_easy_wiki_links": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_seen_andor_easy_wiki_results),
-    # "hard_unseen_wiki_links": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_hard_wiki_results),
+    "seen_names": (NERecall, SubcategoryMetadata(
+        "Seen names",
+        tsv="seen_names.tsv",
+        entity_type="name",
+        metric_label="Recall"
+    )),
+    "unseen_names": (NERecall, SubcategoryMetadata(
+        "Unseen names",
+        tsv="unseen_names.tsv",
+        entity_type="name",
+        metric_label="Recall"
+    )),
+    "seen_dates": (NERecall, SubcategoryMetadata(
+        "Seen dates",
+        tsv="seen_dates.tsv",
+        entity_type="date-entity",
+        metric_label="Recall"
+    )),
+    "unseen_dates": (NERecall, SubcategoryMetadata(
+        "Unseen dates",
+        tsv="unseen_dates.tsv",
+        entity_type="date-entity",
+        metric_label="Recall"
+    )),
+    "other_seen_entities": (NERecall, SubcategoryMetadata(
+        "Other seen entities",
+        tsv="seen_special_entities.tsv",
+        entity_type="other",
+        metric_label="Recall"
+    )),
+    "other_unseen_entities": (NERecall, SubcategoryMetadata(
+        "Other unseen entities",
+        tsv="unseen_special_entities.tsv",
+        entity_type="other",
+        metric_label="Recall"
+    )),
+    "types_of_seen_named_entities": (NETypeRecall, SubcategoryMetadata(
+        "Types of seen named entities",
+        tsv="seen_ne_types_test.tsv",
+    )),
+    "types_of_unseen_named_entities": (NETypeRecall, SubcategoryMetadata(
+        "Types of unseen named entities",
+        tsv="unseen_ne_types_test.tsv",
+    )),
+    "seen_andor_easy_wiki_links": (NodeRecall, SubcategoryMetadata(
+        "Seen and/or easy wiki links",
+        tsv="seen_andor_easy_wiki_test_data.tsv",
+        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall"
+    )),
+    "hard_unseen_wiki_links": (NodeRecall, SubcategoryMetadata(
+        "Hard unseen wiki links",
+        tsv="hard_wiki_test_data.tsv",
+        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall"
+    )),
     # "frequent_predicate_senses_incl_01": (LexicalDisambiguation, LexicalDisambiguation.compute_common_senses_results),
     # "word_ambiguities_handcrafted": (LexicalDisambiguation, LexicalDisambiguation.compute_grapes_word_disambiguation_results),
     # "word_ambiguities_karidi_et_al_2021": (LexicalDisambiguation, LexicalDisambiguation.compute_berts_mouth_results),
-    # "pp_attachment": (Attachments, Attachments.compute_pp_results),
-    # "unbounded_dependencies": (Attachments, Attachments.compute_unbounded_results),
-    # "passives": (Attachments, Attachments.compute_passive_results),
-    # "unaccusatives": (Attachments, Attachments.compute_unaccusative_results),
+    "pp_attachment": (PPAttachment, SubcategoryMetadata(
+        display_name="PP attachment",
+        subcorpus_filename="pp_attachment",
+    )),
+    "unbounded_dependencies": (EdgeRecall, SubcategoryMetadata(
+        display_name="Unbounded dependencies",
+        tsv="unbounded_dependencies.tsv",
+        subcorpus_filename="unbounded_dependencies",
+        use_sense=False, source_column=2, edge_column=3, target_column=4, first_row_is_header=True)),
+    "passives": (EdgeRecall, SubcategoryMetadata(
+        display_name="Passives",
+        tsv="passives_filtered.tsv", use_sense=True
+    )),
+    "unaccusatives": (EdgeRecall, SubcategoryMetadata(
+        display_name="Unaccusatives",
+        tsv="unaccusatives2_filtered.tsv", use_sense=True
+    )),
     # "ellipsis": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_ellipsis_results),
     # "multinode_word_meanings": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_multinode_constants_results),
     # "imperatives": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_imperative_results)
@@ -194,7 +252,15 @@ def main():
     else:
         gold_graph_path = args.gold_amr_file
     gold_graphs = load(gold_graph_path)
+    # TODO make this the directory or testset file
     predicted_graphs = load(args.predicted_amr_file)
+    if info.subcorpus_filename == "pp_attachment":
+        print("Concatenating PP files")
+        for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
+            more_graphs = load(f"corpus/subcorpora/{filename}.txt")
+            gold_graphs += more_graphs
+            more_graphs = load(f"{args.predicted_amr_file}/{filename}.txt")
+            predicted_graphs += more_graphs
     if len(gold_graphs) != len(predicted_graphs):
         raise ValueError("Gold and predicted AMR files must contain the same number of AMRs."
                          "Got " + str(len(gold_graphs)) + " gold AMRs and " + str(len(predicted_graphs))

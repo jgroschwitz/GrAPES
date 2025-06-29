@@ -1,23 +1,25 @@
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
 
-from evaluation.testset.ne_types import get_ne_type_successes_and_sample_size
+from evaluation.testset.ne_types import get_ne_type_successes_and_sample_size, get_2_columns_from_tsv_by_id
 
 
 class EntityClassificationAndLinking(CategoryEvaluation):
 
     def _run_all_evaluations(self):
         self.set_dataset_name("Types of seen named entities")
+        id2labels = get_2_columns_from_tsv_by_id(f"{self.root_dir}/corpus/{self.category_metadata.tsv}")
         prereq, successes, sample_size = get_ne_type_successes_and_sample_size(
-            self.root_dir + "/corpus/seen_ne_types_test.tsv",
+            id2labels,
             self.gold_amrs,
             self.predicted_amrs)
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
         self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
 
         self.set_dataset_name("Types of unseen named entities")
-        prereq, successes, sample_size = get_ne_type_successes_and_sample_size(
-            self.root_dir + "/corpus/unseen_ne_types_test.tsv",
+        id2labels = get_2_columns_from_tsv_by_id(f"{self.root_dir}/corpus/{self.category_metadata.tsv}")
+
+        prereq, successes, sample_size = get_ne_type_successes_and_sample_size(id2labels,
             self.gold_amrs,
             self.predicted_amrs)
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])

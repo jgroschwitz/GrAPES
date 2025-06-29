@@ -5,6 +5,9 @@ from penman import load, Graph
 from evaluation.corpus_metrics import calculate_edge_prereq_recall_and_sample_size_counts, \
     calculate_node_label_successes_and_sample_size
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
+from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, \
+    calculate_date_or_name_successes_and_sample_size
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"
@@ -17,6 +20,7 @@ class CategoryEvaluation:
         self.predicted_amrs = predicted_amrs
         self.parser_name = parser_name
         self.root_dir = root_dir
+        self.corpus_path = f"{self.root_dir}/corpus"
         self.rows = []
         self.category_metadata = None
         self.print_dataset_name = True  # we want to print the dataset name only on the first metric calculation
@@ -97,6 +101,28 @@ class CategoryEvaluation:
         )
         metric_label = "Prerequisite" if prereq else self.category_metadata.metric_label
         return self.make_results_row(metric_label, EVAL_TYPE_SUCCESS_RATE, [success_count, sample_size])
+
+    def make_results_for_ne_types(self):
+        """
+        for named entities
+        Returns:
+
+        """
+        id2labels = get_2_columns_from_tsv_by_id(f"{self.corpus_path}/{self.category_metadata.tsv}")
+        prereq, successes, sample_size = get_ne_type_successes_and_sample_size(
+            id2labels,
+            self.gold_amrs,
+            self.predicted_amrs)
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
+
+    def make_results_for_ne(self):
+        id2labels_entities = get_graphid2labels_from_tsv_file(f"{self.corpus_path}/{self.category_metadata.tsv}",
+                                                              graph_id_column=self.category_metadata.graph_id_column)
+        successes, sample_size = calculate_date_or_name_successes_and_sample_size(
+            id2labels_entities, self.gold_amrs, self.predicted_amrs, self.category_metadata.entity_type)
+        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
+                                         [successes, sample_size])
 
     def get_result_rows(self):
         self._run_all_evaluations()
