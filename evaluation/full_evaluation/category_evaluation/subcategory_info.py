@@ -15,6 +15,8 @@ class SubcategoryMetadata:
     display_name: str
     tsv: str or None = None
     subcorpus_filename: str or None = None
+    other_display_name: str or None = None
+    other_subcorpus_filename: str or None = None
     graph_id_column: int = 0
     use_sense: bool = False
     use_sense_prereq = False

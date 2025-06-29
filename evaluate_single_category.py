@@ -121,16 +121,20 @@ category_name_to_set_class_and_metadata = {
                                                            use_sense=True,
                                                            run_prerequisites=False)),
     "rare_predicate_senses_excl_01": (NodeRecall, SubcategoryMetadata(
-        display_name="Rare predicate senses (excl.~\\nl{-01})",
+        display_name="Rare predicate senses (excl. -01)",
+        other_display_name="Rare predicate senses (excl.~\\nl{-01})",
         tsv="rare_senses_filtered.tsv",
         use_sense=True)),
     # "unseen_predicate_senses_excl_01": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_sense_results),
-    "rare_edge_labels_ARG2plus": (EdgeRecall, SubcategoryMetadata(display_name="Rare edge labels (\\nl{ARG2}+)",
-                                                                  tsv="rare_roles_arg2plus_filtered.tsv",
-                                                                  use_sense=True
+    "rare_edge_labels_ARG2plus": (EdgeRecall, SubcategoryMetadata(
+        display_name="Rare edge labels (ARG2+)",
+        other_display_name="Rare edge labels (\\nl{ARG2}+)",
+        tsv="rare_roles_arg2plus_filtered.tsv",
+        use_sense=True
                                   )),
     "unseen_edge_labels_ARG2plus": (EdgeRecall, SubcategoryMetadata(
-        display_name="Unseen edge labels (\\nl{ARG2}+)",
+        display_name="Unseen edge labels (ARG2+)",
+        other_display_name="Unseen edge labels (\\nl{ARG2}+)",
         tsv="unseen_roles_new_sentences.tsv", use_sense=True,
         subcorpus_filename="unseen_roles_new_sentences"
     )),
@@ -213,7 +217,7 @@ category_name_to_set_class_and_metadata = {
         tsv="ellipsis_filtered.tsv"
     )),
     "multinode_word_meanings": (SubgraphRecall, SubcategoryMetadata(
-        "Multinode constants",
+        "Multinode word meanings",
         tsv="multinode_constants_filtered.tsv",
         metric_label="Recall"
     )),

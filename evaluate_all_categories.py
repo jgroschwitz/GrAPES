@@ -9,7 +9,7 @@ from evaluation.full_evaluation.category_evaluation.ii_unambiguous_reentrancies 
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
-from evaluate_single_category import category_name_to_set_class_and_eval_function
+from evaluate_single_category import category_name_to_set_class_and_metadata
 from prettytable import PrettyTable
 
 set_names_with_category_names = [
@@ -289,4 +289,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+
+    for key in category_name_to_set_class_and_metadata:
+        if category_name_to_set_class_and_metadata[key][1].display_name != category_name_to_print_name[key]:
+            print(key, category_name_to_set_class_and_metadata[key][1].display_name, category_name_to_print_name[key])
