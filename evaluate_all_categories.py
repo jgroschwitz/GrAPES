@@ -155,7 +155,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     results = []
     struct_gen_by_size = {}
     for set_name, category_names in set_names_with_category_names:
-        print("Evaluating " + set_name)
+        print("\nEvaluating " + set_name)
         for category_name in category_names:
             if do_skip_category(category_name, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
                 try:
@@ -183,6 +183,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     predicted_graphs = predicted_graphs_grapes
 
                 evaluator = set_class(gold_graphs, predicted_graphs, "parser", ".", info)
+                if category_name.startswith("other"):
+                    print("\n\n#### \n", evaluator)
                 results_here = evaluator.run_evaluation()
                 rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
                                       results_here, set_name)
@@ -196,7 +198,6 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
 
 def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment, results_here,
                           set_name):
-    print("Include smatch?", not filter_out_f1)
     rows = []
     for r in results_here:
         metric_name = r[1]
@@ -205,7 +206,6 @@ def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edg
         if filter_out_unlabeled_edge_attachment and metric_name == "Unlabeled edge recall":
             continue
         metric_type = r[2]
-        print("metric_type", metric_type)
         if metric_type == EVAL_TYPE_SUCCESS_RATE:
             wilson_ci = wilson_score_interval(r[3], r[4])
             if r[4] > 0:
@@ -220,7 +220,6 @@ def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edg
                     "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
                 print(r)
         elif metric_type == EVAL_TYPE_F1:
-            print("Found Smatch!")
             rows.append([set_name[0], category_name_to_print_name[category_name], metric_name,
                             num_to_score(r[3]), "N/A", "N/A", "N/A"])
         else:

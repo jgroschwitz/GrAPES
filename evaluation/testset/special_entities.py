@@ -107,21 +107,20 @@ def calculate_date_or_name_successes_and_sample_size(id2labels_entities, gold_am
 
     recalled = 0
     total = 0
+    f = open("others_new.txt", "w")
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
         if gold_amr.metadata['id'] in id2labels_entities:
-            total += len(id2labels_entities[gold_amr.metadata['id']])
-            for gold_value_string in id2labels_entities[gold_amr.metadata['id']]:
+            gold_strings = id2labels_entities[gold_amr.metadata['id']]
+            total += len(gold_strings)
+            for gold_value_string in gold_strings:
                 if entity_type == "other":
+                    print("using Other eval")
                     gold_value_string = normalize_special_entity_value(gold_value_string)
-                    found = False
-                    for instance in predicted_amr.instances():
-                        if normalize_special_entity_value(instance.target) == gold_value_string:
-                            found = True
-                    for attribute in predicted_amr.attributes():
-                        if normalize_special_entity_value(attribute.target) == gold_value_string:
-                            found = True
-                    if found:
-                        recalled += 1
+                    for instance_or_attribute in predicted_amr.instances() + predicted_amr.attributes():
+                        if normalize_special_entity_value(instance_or_attribute.target) == gold_value_string:
+                            recalled += 1
+                            f.write(f"{gold_amr.metadata['id']}\t{gold_value_string}\n")
+                            break
                 else:
                     for instance in predicted_amr.instances():
                         if instance.target == entity_type:
@@ -129,6 +128,7 @@ def calculate_date_or_name_successes_and_sample_size(id2labels_entities, gold_am
                             if name_string == gold_value_string:
                                 recalled += 1
                                 break
+    f.close()
     return recalled, total
 
 
