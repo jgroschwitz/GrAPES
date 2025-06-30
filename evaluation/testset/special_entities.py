@@ -99,7 +99,6 @@ def calculate_date_successes_and_sample_size(tsv_file_path, gold_amrs, predicted
     return date_recalled, date_total
 
 def calculate_date_or_name_successes_and_sample_size(id2labels_entities, gold_amrs, predicted_amrs, entity_type):
-    print("Entity type:", entity_type)
     if entity_type == "date-entity":
         fun = get_date_string_for_date_instance
     elif entity_type == "name":
@@ -107,25 +106,17 @@ def calculate_date_or_name_successes_and_sample_size(id2labels_entities, gold_am
 
     recalled = 0
     total = 0
-    f = open("others_new.tsv", "w")
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
         if gold_amr.metadata['id'] in id2labels_entities:
             gold_strings = id2labels_entities[gold_amr.metadata['id']]
             total += len(gold_strings)
             for gold_value_string in gold_strings:
-
                 if entity_type == "other":
-                    found = False
                     gold_value_string = normalize_special_entity_value(gold_value_string)
                     for instance_or_attribute in predicted_amr.instances() + predicted_amr.attributes():
                         if normalize_special_entity_value(instance_or_attribute.target) == gold_value_string:
                             recalled += 1
-                            f.write(f"{gold_amr.metadata['id']}\t{gold_value_string}\tOK\n")
-                            found = True
                             break
-                    if not found:
-                        f.write(f"{gold_amr.metadata['id']}\t{gold_value_string}\tFALSE\n")
-
 
                 else:
                     for instance in predicted_amr.instances():
@@ -134,7 +125,6 @@ def calculate_date_or_name_successes_and_sample_size(id2labels_entities, gold_am
                             if name_string == gold_value_string:
                                 recalled += 1
                                 break
-    f.close()
     return recalled, total
 
 

@@ -183,8 +183,6 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     predicted_graphs = predicted_graphs_grapes
 
                 evaluator = set_class(gold_graphs, predicted_graphs, "parser", ".", info)
-                if category_name.startswith("other"):
-                    print("\n\n#### \n", evaluator)
                 results_here = evaluator.run_evaluation()
                 rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
                                       results_here, set_name)

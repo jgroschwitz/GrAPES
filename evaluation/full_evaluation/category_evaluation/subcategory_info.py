@@ -28,6 +28,7 @@ class SubcategoryMetadata:
     parent_edge_column: int or None = None
     # for named entities, word disambiguation, structural generalisation
     subtype: str or None = None
+    label_column: int = 1
 
     def get_latex_display_name(self):
         if self.latex_display_name is None:

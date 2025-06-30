@@ -203,13 +203,15 @@ category_name_to_set_class_and_metadata = {
         "Other seen entities",
         tsv="seen_special_entities.tsv",
         subtype="other",
-        metric_label="Recall"
+        metric_label="Recall",
+        label_column=3
     )),
     "other_unseen_entities": (NERecall, SubcategoryMetadata(
         "Other unseen entities",
         tsv="unseen_special_entities.tsv",
         subtype="other",
-        metric_label="Recall"
+        metric_label="Recall",
+        label_column=3
     )),
     "types_of_seen_named_entities": (NETypeRecall, SubcategoryMetadata(
         "Types of seen named entities",
