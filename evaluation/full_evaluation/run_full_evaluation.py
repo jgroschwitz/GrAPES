@@ -18,7 +18,11 @@ pickle_path = f"{results_path}/results_table.pickle"
 # parser_names = ["amparser", "cailam", "amrbart"]
 parser_names = ["amparser"]
 
+gold_testset_path = f"{root_dir}/data/raw/gold/test.txt"
+gold_amrs = load(gold_testset_path)
 
+full_grapes_name = "full_corpus"
+gold_grapes = load(f"{root_dir}/corpus/corpus.txt")
 
 def get_predictions_path_for_parser(parser):
     return f"{path_to_parser_outputs}/{parser}-output"
@@ -70,10 +74,9 @@ def get_arguments_for_evaluation_class(info: SubcategoryMetadata,
         else:
             return gold_graphs, predicted_graphs, parser_name, root_dir, info
 
-def update_generalisations_by_size_dict(generalisation_by_size_dict, parser_name, info, root_dir, predictions_directory):
-    predictions = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
-    golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-    by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
+def update_generalisations_by_size_dict(generalisation_by_size_dict, parser_name, info, by_size):
+    # predictions = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
+    # golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
     if parser_name in generalisation_by_size_dict:
         generalisation_by_size_dict[parser_name][info.display_name] = by_size
     else:
@@ -84,13 +87,11 @@ def update_generalisations_by_size_dict(generalisation_by_size_dict, parser_name
 
 def create_results_pickle():
 
-    gold_testset_path = f"{root_dir}/data/raw/gold/test.txt"
-    gold_amrs = load(gold_testset_path)
-
     parser_name2rows = dict()
 
     for parser_name in parser_names:
         testset_parser_outs = load_parser_output(parser_name, subcorpus_name="testset")
+        grapes_parser_outs = load_parser_output(parser_name, subcorpus_name=full_grapes_name)
 
         print("RESULTS FOR", parser_name)
 
@@ -106,137 +107,36 @@ def create_results_pickle():
 
             for subcategory in bunch2subcategory[bunch]:
                 eval_class, info = category_name_to_set_class_and_metadata[subcategory]
-                args = get_arguments_for_evaluation_class(info,
-                                                   get_predictions_path_for_parser(parser_name),
-                                                   parser_name,
-                                                   root_dir,
-                                                   gold_testset_path=gold_testset_path,
-                                                   predicted_testset_path=f"{get_predictions_path_for_parser(parser_name)}/testset.txt",
-                                                   gold_testset_graphs=gold_amrs,
-                                                   predicted_testset_graphs=testset_parser_outs,
-                                                   )
 
+                if info.subcorpus_filename is None:
+                    gold = gold_amrs
+                    pred = testset_parser_outs
+                else:
+                    gold = gold_grapes
+                    pred = grapes_parser_outs
+                # args = get_arguments_for_evaluation_class(info,
+                #                                    get_predictions_path_for_parser(parser_name),
+                #                                    parser_name,
+                #                                    root_dir,
+                #                                    gold_testset_path=gold_testset_path,
+                #                                    predicted_testset_path=f"{get_predictions_path_for_parser(parser_name)}/testset.txt",
+                #                                    gold_testset_graphs=gold_amrs,
+                #                                    predicted_testset_graphs=testset_parser_outs,
+                #                                    )
+
+                set = eval_class(gold, pred, parser_name, root_dir, info)
                 # Structural generalisation results by size
                 if info.subtype == "structural_generalization" and info.subcorpus_filename in size_mappers:
+                    print(info.subcorpus_filename)
                     generalisation_by_size = update_generalisations_by_size_dict(
                         generalisation_by_size,
-                        parser_name, info, root_dir, get_predictions_path_for_parser(parser_name)
+                        parser_name, info, set.get_results_by_size()
                     )
-                    # predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
-                    # golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-                    # by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
-                    # if parser_name in generalisation_by_size:
-                    #     generalisation_by_size[parser_name][info.display_name] = by_size
-                    # else:
-                    #     generalisation_by_size[parser_name] = {info.display_name: by_size}
 
-                set = eval_class(*args)
+                set = eval_class(gold, pred, parser_name, root_dir, info)
                 rows = set.run_evaluation()
                 all_result_rows += rows
 
-                # if info.subcorpus_filename is None:
-                #     print("Using test set")
-                #     predictions = testset_parser_outs
-                #     golds = gold_amrs
-                #     set = eval_class(golds, predictions, parser_name, root_dir, info)
-                # else:
-                #     print("Using", info.subcorpus_filename)
-                #     predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
-                #     golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-                #
-                #     # Special case for PP attachment: they're in separate files
-                #     # I don't know why the evaluation was even working because we were only looking at
-                #     # the files in pp_attachment.txt, which don't actually get evaluated.
-                #     if info.subcorpus_filename == "pp_attachment":
-                #         set = eval_class(parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
-                #     elif info.subtype == "structural_generalization":
-                #         print(eval_class.__name__)
-                #         sanity_check_name = add_sanity_check_suffix(info.subcorpus_filename)
-                #         gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
-                #         predictions_sanity = load_parser_output(parser_name, subcorpus_name=sanity_check_name)
-                #         set = eval_class(golds, predictions, gold_sanity, predictions_sanity, parser_name, root_dir, info, get_predictions_path_for_parser(parser_name))
-                #
-                #         if info.subcorpus_filename in size_mappers:
-                #             by_size = get_exact_match_by_size(golds, predictions, size_mappers[info.subcorpus_filename])
-                #             if parser_name in generalisation_by_size:
-                #                 generalisation_by_size[parser_name][info.display_name] = by_size
-                #             else:
-                #                 generalisation_by_size[parser_name] = {info.display_name: by_size}
-                #     else:
-                #         set = eval_class(golds, predictions, parser_name, root_dir, info)
-                #
-                # rows = set.run_evaluation()
-                # all_result_rows += rows
-
-
-
-        # category_1_evaluation = PragmaticReentrancies(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_1_evaluation.get_result_rows()
-        #
-        # all_result_rows.append(["2. Unambiguous Reentrancies"])
-        # print("2")
-        #
-        #
-        # category_2_evaluation = UnambiguousReentrancies(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_2_evaluation.get_result_rows()
-        #
-        # all_result_rows.append(["3. Structural Generalization"])
-        # print("3")
-        #
-        # category_3_evaluation = StructuralGeneralization(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_3_evaluation.get_result_rows()
-        #
-        # all_result_rows.append(["4. Rare Unseen Nodes Edges"])
-        # print("4")
-        #
-        # subcategories = ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
-        #                  "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"]
-        # for subcategory in subcategories:
-        #     eval_class, info = category_name_to_set_class_and_metadata[subcategory]
-        #     if info.subcorpus_filename is None:
-        #         predictions = testset_parser_outs
-        #         golds = gold_amrs
-        #     else:
-        #         predictions = load_parser_output(parser_name, subcorpus_name=info.subcorpus_filename)
-        #         golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-        #     set = eval_class(golds, predictions, parser_name, root_dir)
-        #     print("Using", set.__class__.__name__)
-        #     rows = set.run_single_evaluation(info)
-        #     all_result_rows += rows
-
-        #
-        # category_4_evaluation = RareUnseenNodesEdges(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_4_evaluation.get_result_rows()
-        #
-        # all_result_rows.append(["5. Names Dates Etc"])
-        # print("5")
-        #
-        # category_5_evaluation = NamesDatesEtc(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_5_evaluation.get_result_rows()
-        #
-        # all_result_rows.append(["6. Entity Classification And Linking"])
-        # print("6")
-        #
-        # category_6_evaluation = EntityClassificationAndLinking(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_6_evaluation.get_result_rows()
-        #
-        # all_result_rows.append(["7. Lexical Disambiguation"])
-        # print("7")
-        #
-        # category_7_evaluation = LexicalDisambiguation(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_7_evaluation.get_result_rows()
-        #
-        # all_result_rows.append(["8. Attachments"])
-        # print("8")
-        #
-        # category_8_evaluation = Attachments(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_8_evaluation.get_result_rows()
-        #
-        # all_result_rows.append(["9. Nontrivial Word2Node Relations"])
-        # print("9")
-        #
-        # category_9_evaluation = NontrivialWord2NodeRelations(gold_amrs, testset_parser_outs, parser_name, root_dir)
-        # all_result_rows += category_9_evaluation.get_result_rows()
 
         print("Structural Generalisation by length")
         pretty_print_structural_generalisation_by_size(generalisation_by_size)
