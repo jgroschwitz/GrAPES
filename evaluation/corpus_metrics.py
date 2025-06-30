@@ -1,4 +1,6 @@
+import os
 import pickle
+import shutil
 from typing import Counter, List, Union, Tuple
 import tempfile
 
@@ -90,6 +92,9 @@ def compute_smatch_f_from_graph_lists(gold_graphs: List[Graph], predicted_graphs
         with tempfile.NamedTemporaryFile(mode="w") as prediction_f:
             penman.dump(gold_graphs, gold_f)
             penman.dump(predicted_graphs, prediction_f)
+            # reset curser so we can read from the beginning of the file
+            gold_f.seek(0)
+            prediction_f.seek(0)
             return compute_smatch_f(gold_f.name, prediction_f.name)[2]
 
 

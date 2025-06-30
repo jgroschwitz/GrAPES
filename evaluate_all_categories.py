@@ -4,33 +4,24 @@ import os
 
 from penman import load
 
-from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
-    CategoryEvaluation
-from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-from evaluation.full_evaluation.run_full_evaluation import get_arguments_for_evaluation_class, \
-    update_generalisations_by_size_dict
+from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
+from evaluation.full_evaluation.run_full_evaluation import get_arguments_for_evaluation_class
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
 from evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name
 from prettytable import PrettyTable
 
-from evaluation.structural_generalization import size_mappers
 
 # TODO wrong:
 # Other seen entities                    | Recall                | 78    | 72          | 83          | 237
 # should be 80
 # | 5   | Other unseen entities                  | Recall                | 70    | 61          | 78          | 109         |
 # should be 74
-# | 6   | Seen and/or easy wiki links            | Prerequisite          | 70    | 68          | 72          | 2064        |
-# | 6   | Hard unseen wiki links                 | Prerequisite          | 0     | 0           | 1           | 277         |
-# shouldn't have prereq
 # | 7   | Word ambiguities (Karidi et al., 2021) | Recall                | 83    | 81          | 84          | 1471        |
 # Should have 95 total! Also should be 75
-#| 3   | CP recursion + coreference
-# | 3   | Sanity check                           | Exact match           | 38    | 18          | 61          | 16          |
-# sanity check is missing 3p graphs
-# all sanity check smatch are 0
+# Also: seems to be a problem with the encoded tsv: has old ids
+
 
 
 set_names_with_category_names = [
@@ -171,6 +162,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     # try to get the subcorpus from the same folder as the full corpus
                     eval_class, info = category_name_to_set_class_and_metadata[category_name]
                     eval_args = get_arguments_for_evaluation_class(info, predictions_directory, "parser", ".")
+                    print("\n ### Trying skipped category with args", eval_args[-1])
+                    print(f"gold len {len(eval_args[0])}, predicted len {len(eval_args[1])}")
                     set = eval_class(*eval_args)
                     results_here = set.run_evaluation()
                     rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
@@ -178,6 +171,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     results.extend(rows)
                 except Exception as e:
                     print(f"Can't get category {category_name}, error: {e}")
+                    # raise e
                     results.append(make_empty_result(set_name, category_name_to_print_name[category_name]))
             else:
                 set_class, info = category_name_to_set_class_and_metadata[category_name]
@@ -285,7 +279,9 @@ def main():
     results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
                           predictions_directory,
                           filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics)
-    csv.writer(open(f"data/processed/results/results.csv", "w", encoding="utf8")).writerows(results)
+    out_dir = f"data/processed/results"
+    os.makedirs(out_dir, exist_ok=True)
+    csv.writer(open(f"{out_dir}/results.csv", "w", encoding="utf8")).writerows(results)
 
     print_table = PrettyTable(field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
     print_table.align = "l"

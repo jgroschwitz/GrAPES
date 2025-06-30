@@ -4,6 +4,7 @@ from typing import Set
 from penman import Graph, encode
 
 
+
 def num_to_score(number):
     string_result = f"{(number*100):.0f}"
     if len(string_result) == 1:
@@ -160,3 +161,6 @@ def filter_amrs_for_name(name, gold_graphs, predicted_graphs):
             gold_graphs_filtered.append(g)
             predicted_graphs_filtered.append(p)
     return gold_graphs_filtered, predicted_graphs_filtered
+
+
+SANITY_CHECK = "Sanity check"

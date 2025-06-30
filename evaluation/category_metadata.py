@@ -2,12 +2,11 @@ from copy import copy
 
 from evaluation.full_evaluation.category_evaluation.evaluation_classes import EdgeRecall, NodeRecall, NERecall, \
     NETypeRecall, WordDisambiguationRecall, PPAttachment, EllipsisRecall, SubgraphRecall, ImperativeRecall, \
-    StructuralGeneralisation, ExactMatch
+    ExactMatch
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.structural_generalization import \
-    structural_generalization_corpus_names as structural_generalization_corpus_names, add_sanity_check_suffix
-
-SANITY_CHECK = "Sanity check"
+    add_sanity_check_suffix
+from evaluation.util import SANITY_CHECK
 
 # TODO check orders and completeness
 bunch2subcategory = {
@@ -223,12 +222,14 @@ category_name_to_set_class_and_metadata = {
     "seen_andor_easy_wiki_links": (NodeRecall, SubcategoryMetadata(
         "Seen and/or easy wiki links",
         tsv="seen_andor_easy_wiki_test_data.tsv",
-        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall"
+        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall",
+        run_prerequisites=False
     )),
     "hard_unseen_wiki_links": (NodeRecall, SubcategoryMetadata(
         "Hard unseen wiki links",
         tsv="hard_wiki_test_data.tsv",
-        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall"
+        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall",
+        run_prerequisites=False
     )),
     "frequent_predicate_senses_incl_01": (NodeRecall, SubcategoryMetadata(
         "Frequent predicate senses (incl. -01)",
