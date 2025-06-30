@@ -1,7 +1,8 @@
 from typing import List
 
 from evaluation.berts_mouth import evaluate_berts_mouth
-from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, compute_smatch_f
+from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, compute_smatch_f, \
+    compute_smatch_f_from_graph_lists
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
@@ -13,6 +14,7 @@ from evaluation.testset.ellipsis import get_ellipsis_success_counts
 from penman import load, Graph
 
 from evaluation.testset.imperative import get_imperative_success_counts
+from evaluation.util import filter_amrs_for_name
 from evaluation.word_disambiguation import evaluate_word_disambiguation
 
 
@@ -127,8 +129,70 @@ class WordDisambiguationRecall(CategoryEvaluation):
         successes, sample_size = fun(self.gold_amrs, self.predicted_amrs)
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 
+class ExactMatch(CategoryEvaluation):
+    def __init__(self, gold_amrs, predicted_amrs, parser_name, root_dir,
+                 category_metadata):
+        super().__init__(gold_amrs, predicted_amrs, parser_name, root_dir,
+                 category_metadata)
 
-class StructuralGeneralisation(CategoryEvaluation):
+        if self.category_metadata.subcorpus_filename == "deep_recursion_pronouns":
+            more_golds, more_preds = filter_amrs_for_name("deep_recursion_3s", self.gold_amrs, self.predicted_amrs)
+
+        self.gold_amrs, self.predicted_amrs = filter_amrs_for_name(
+            self.category_metadata.subcorpus_filename,
+            self.gold_amrs,
+            self.predicted_amrs)
+
+        if self.category_metadata.subcorpus_filename == "deep_recursion_pronouns":
+            self.gold_amrs += more_golds
+            self.predicted_amrs += more_preds
+
+    def run_evaluation(self):
+        if self.category_metadata.subcorpus_filename == "long_lists":
+            self.long_lists()
+        else:
+            self.make_success_results_for_structural_generalisation()
+        return self.rows
+
+    def make_success_results_for_structural_generalisation(self):
+
+        successes, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
+                                                                               match_edge_labels=False,
+                                                                               match_senses=False)
+
+        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
+                                         [successes, sample_size])
+
+        smatch_f1 = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
+        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])
+
+    def long_lists(self):
+        conj_total_gold, conj_total_predictions, conj_true_predictions = compute_conjunct_counts(self.gold_amrs,
+                                                                                                 self.predicted_amrs)
+
+        self.make_and_append_results_row("Conjunct recall", EVAL_TYPE_SUCCESS_RATE,
+                                         [conj_true_predictions, conj_total_gold])
+        self.make_and_append_results_row("Conjunct precision", EVAL_TYPE_SUCCESS_RATE,
+                                         [conj_true_predictions, conj_total_predictions])
+
+        opi_gen_total_gold, opi_gen_total_predictions, opi_gen_true_predictions = compute_generalization_op_counts(
+            self.gold_amrs, self.predicted_amrs)
+        self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
+                                         [opi_gen_true_predictions, opi_gen_total_gold])
+
+        # self.make_results_column(":opi f1", EVAL_TYPE_F1, [self.get_f_from_prf(op_f1)])
+        # self.make_results_column("Conjunct f1", EVAL_TYPE_F1, [self.get_f_from_prf(conjunct_f1)])
+        # self.make_results_column("Unseen :opi f1", EVAL_TYPE_F1, [self.get_f_from_prf(generalization_op_f1)])
+        # self.make_results_column("Conjunct f1 for unseen :opi", EVAL_TYPE_F1,
+        #                          [self.get_f_from_prf(generalization_conjunct_f1)])
+
+    def long_list_sanity_check(self):
+        success, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
+                                                                             match_edge_labels=False,
+                                                                             match_senses=False)
+        self.make_and_append_results_row("Exact match", EVAL_TYPE_SUCCESS_RATE, [success, sample_size])
+
+class StructuralGeneralisation(ExactMatch):
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph],
                  gold_sanity_check: List[Graph], predicted_sanity_check: List[Graph], parser_name: str, root_dir: str,
                  category_metadata: SubcategoryMetadata, path_to_predictions_folder: str):
@@ -139,11 +203,11 @@ class StructuralGeneralisation(CategoryEvaluation):
         self.path_to_predictions_folder = path_to_predictions_folder
         self.third_person_corpus = "deep_recursion_3s"
 
-    def get_predictions_path(self):
-        return f"{self.path_to_predictions_folder}/{self.category_metadata.subcorpus_filename}.txt"
-
     def get_3s_predictions_path(self):
         return f"{self.path_to_predictions_folder}/{self.third_person_corpus}.txt"
+
+    def get_predictions_path(self):
+        return f"{self.path_to_predictions_folder}/{self.category_metadata.subcorpus_filename}.txt"
 
     def get_gold_path(self):
         return f"{self.root_dir}/corpus/subcorpora/{self.category_metadata.subcorpus_filename}.txt"
@@ -151,6 +215,14 @@ class StructuralGeneralisation(CategoryEvaluation):
     def get_3s_gold_path(self):
         return f"{self.root_dir}/corpus/subcorpora/{self.third_person_corpus}.txt"
 
+    def get_smatch(self, gold_path: str = None, predicted_path: str = None):
+
+        if gold_path is None:
+            gold_path = self.get_gold_path()
+        if predicted_path is None:
+            predicted_path = self.get_predictions_path()
+        smatch_results = compute_smatch_f(gold_path, predicted_path)
+        return smatch_results
 
     def run_evaluation(self):
 
@@ -178,28 +250,6 @@ class StructuralGeneralisation(CategoryEvaluation):
 
         return self.rows
 
-    def make_success_results_for_structural_generalisation(self):
-        successes, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
-                                                                               match_edge_labels=False,
-                                                                               match_senses=False)
-
-        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
-                                         [successes, sample_size])
-        try:
-            smatch_results = self.get_smatch()
-            self.make_and_append_results_row("Smatch", EVAL_TYPE_F1,
-                                         [self.get_f_from_prf(smatch_results)])
-        except AssertionError:
-            print("Smatch will not be evaluated since there is no path to the AMRs")
-
-    def get_smatch(self, gold_path: str=None, predicted_path: str=None):
-
-        if gold_path is None:
-            gold_path = self.get_gold_path()
-        if predicted_path is None:
-            predicted_path = self.get_predictions_path()
-        smatch_results = compute_smatch_f(gold_path, predicted_path)
-        return smatch_results
 
     def pronouns(self):
         assert len(self.gold_amrs) == len(self.predicted_amrs)
@@ -214,7 +264,6 @@ class StructuralGeneralisation(CategoryEvaluation):
         successes_3s, sample_size_3s = compute_exact_match_successes_and_sample_size(extra_gold, extra_predictions,
                                                                                match_edge_labels=False,
                                                                                match_senses=False)
-        print("\n## sample sizes", sample_size, sample_size_3s)
         smatch_results_3s = self.get_smatch(gold_path=self.get_3s_gold_path(),
                                             predicted_path=self.get_3s_predictions_path())
 
@@ -225,28 +274,3 @@ class StructuralGeneralisation(CategoryEvaluation):
                                          # the larger corpus, but the sizes should be close enough.
                                          [(self.get_f_from_prf(smatch_results)+ self.get_f_from_prf(smatch_results_3s)) / 2])
 
-    def long_lists(self):
-        conj_total_gold, conj_total_predictions, conj_true_predictions = compute_conjunct_counts(self.gold_amrs,
-                                                                                                 self.predicted_amrs)
-
-        self.make_and_append_results_row("Conjunct recall", EVAL_TYPE_SUCCESS_RATE,
-                                         [conj_true_predictions, conj_total_gold])
-        self.make_and_append_results_row("Conjunct precision", EVAL_TYPE_SUCCESS_RATE,
-                                         [conj_true_predictions, conj_total_predictions])
-
-        opi_gen_total_gold, opi_gen_total_predictions, opi_gen_true_predictions = compute_generalization_op_counts(
-            self.gold_amrs, self.predicted_amrs)
-        self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
-                                         [opi_gen_true_predictions, opi_gen_total_gold])
-
-        # self.make_results_column(":opi f1", EVAL_TYPE_F1, [self.get_f_from_prf(op_f1)])
-        # self.make_results_column("Conjunct f1", EVAL_TYPE_F1, [self.get_f_from_prf(conjunct_f1)])
-        # self.make_results_column("Unseen :opi f1", EVAL_TYPE_F1, [self.get_f_from_prf(generalization_op_f1)])
-        # self.make_results_column("Conjunct f1 for unseen :opi", EVAL_TYPE_F1,
-        #                          [self.get_f_from_prf(generalization_conjunct_f1)])
-
-    def long_list_sanity_check(self):
-        success, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
-                                                                             match_edge_labels=False,
-                                                                             match_senses=False)
-        self.make_and_append_results_row("Exact match", EVAL_TYPE_SUCCESS_RATE, [success, sample_size])

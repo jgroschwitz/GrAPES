@@ -4,6 +4,7 @@ import csv
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
+from evaluation.full_evaluation.run_full_evaluation import get_arguments_for_evaluation_class
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
@@ -140,19 +141,23 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
 
     results = []
     for set_name, category_names in set_names_with_category_names:
+        print("Evaluating " + set_name)
         for category_name in category_names:
             if do_skip_category(category_name, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
                 results.append(make_empty_result(set_name, category_name_to_print_name[category_name]))
             else:
-                set_class, eval_function = category_name_to_set_class_and_eval_function[category_name]
-                set = set_class(None, None, None, "./")
+                set_class, info = category_name_to_set_class_and_metadata[category_name]
                 if category_names_to_source_corpus_name[category_name] == "testset":
                     gold_graphs = gold_graphs_testset
                     predicted_graphs = predicted_graphs_testset
                 else:
                     gold_graphs = gold_graphs_grapes
                     predicted_graphs = predicted_graphs_grapes
-                results_here = eval_function(set, gold_graphs, predicted_graphs)
+                eval_args = get_arguments_for_evaluation_class(info, None, "parser",
+                                                               ".", None, None,
+                                                               gold_graphs, predicted_graphs)
+                evaluator = set_class(*eval_args)
+                results_here = evaluator.run_evaluation()
                 for r in results_here:
                     metric_name = r[1]
                     if filter_out_f1 and metric_name == "Smatch":
@@ -201,6 +206,8 @@ def do_skip_category(category_name, use_testset, use_grapes, use_grapes_from_tes
 
 
 def main():
+    parser = "parser"
+
     args = parse_args()
     if args.gold_amr_testset_file is not None and args.predicted_amr_testset_file is not None:
         gold_graphs_testset = load(args.gold_amr_testset_file, encoding="utf8")
@@ -228,7 +235,7 @@ def main():
 
     results = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
                           filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics)
-    csv.writer(open("results.csv", "w", encoding="utf8")).writerows(results)
+    csv.writer(open(f"data/processed/results/results.csv", "w", encoding="utf8")).writerows(results)
 
     print_table = PrettyTable(field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
     print_table.align = "l"
@@ -238,8 +245,8 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
+    main()
 
-    for key in category_name_to_set_class_and_metadata:
-        if category_name_to_set_class_and_metadata[key][1].display_name != category_name_to_print_name[key]:
-            print(key, category_name_to_set_class_and_metadata[key][1].display_name, category_name_to_print_name[key])
+    # for key in category_name_to_set_class_and_metadata:
+    #     if category_name_to_set_class_and_metadata[key][1].display_name != category_name_to_print_name[key]:
+    #         print(key, category_name_to_set_class_and_metadata[key][1].display_name, category_name_to_print_name[key])

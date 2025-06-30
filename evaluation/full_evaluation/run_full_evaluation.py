@@ -29,29 +29,32 @@ def load_parser_output(parser_name, subcorpus_name):
 
 
 def get_arguments_for_evaluation_class(info: SubcategoryMetadata,
-                                       predictions_directory,
-                                       parser_name,
-                                       root_dir,
+                                       predictions_directory=None,
+                                       parser_name="parser",
+                                       root_dir=".",
                                        gold_testset_path=None,
                                        predicted_testset_path=None,
-                                       gold_testset_graphs=None,
-                                       predicted_testset_graphs=None):
+                                       gold_graphs=None,
+                                       predicted_graphs=None):
     if info.subcorpus_filename is None:
-        if gold_testset_graphs is None:
+        if gold_graphs is None:
             if gold_testset_path is None:
                 raise ValueError(f"Need gold testset path for {info.display_name}")
-            gold_testset_graphs = load(gold_testset_path)
-        if predicted_testset_graphs is None:
+            gold_graphs = load(gold_testset_path)
+        if predicted_graphs is None:
             if predicted_testset_path is None:
                 predicted_testset_path = f"{predictions_directory}/testset.txt"
-            predicted_testset_graphs = load(predicted_testset_path)
+            print("predicted_testset_path", predicted_testset_path)
+            predicted_graphs = load(predicted_testset_path)
 
-        return gold_testset_graphs, predicted_testset_graphs, parser_name, root_dir, info
+        return gold_graphs, predicted_graphs, parser_name, root_dir, info
     else:
         print("Using", info.subcorpus_filename)
 
-        predicted_graphs = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
-        golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+        if predicted_graphs is None:
+            predicted_graphs = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
+        if gold_graphs is None:
+            gold_graphs = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
 
         # Special case for PP attachment: they're in separate files
         # I don't know why the evaluation was even working because we were only looking at
@@ -62,10 +65,10 @@ def get_arguments_for_evaluation_class(info: SubcategoryMetadata,
             sanity_check_name = add_sanity_check_suffix(info.subcorpus_filename)
             gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
             predictions_sanity = load(f"{predictions_directory}/{sanity_check_name}.txt")
-            return golds, predicted_graphs, gold_sanity, predictions_sanity, parser_name, root_dir, info, predictions_directory
+            return gold_graphs, predicted_graphs, gold_sanity, predictions_sanity, parser_name, root_dir, info, predictions_directory
 
         else:
-            return golds, predicted_graphs, parser_name, root_dir, info
+            return gold_graphs, predicted_graphs, parser_name, root_dir, info
 
 def update_generalisations_by_size_dict(generalisation_by_size_dict, parser_name, info, root_dir, predictions_directory):
     predictions = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
@@ -130,11 +133,6 @@ def create_results_pickle():
                 set = eval_class(*args)
                 rows = set.run_evaluation()
                 all_result_rows += rows
-
-
-
-
-
 
                 # if info.subcorpus_filename is None:
                 #     print("Using test set")
