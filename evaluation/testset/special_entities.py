@@ -49,9 +49,9 @@ def evaluate_special_entities(gold_amrs=None, predicted_amrs=None, parser_name=N
         seen_special_entities_recall, seen_date_recall, seen_name_recall
 
 
-def calculate_special_entity_successes_and_sample_size(tsv_file_path,
-                                                       gold_amrs: List[Graph],
-                                                       predicted_amrs: List[Graph]):
+def calculate_other_special_entity_successes_and_sample_size(tsv_file_path,
+                                                             gold_amrs: List[Graph],
+                                                             predicted_amrs: List[Graph]):
     id2labels = get_graphid2labels_from_tsv_file(tsv_file_path, label_column=3)
     special_entity_recalled = 0
     special_entity_total = 0
@@ -98,7 +98,16 @@ def calculate_date_successes_and_sample_size(tsv_file_path, gold_amrs, predicted
                             break
     return date_recalled, date_total
 
-def calculate_date_or_name_successes_and_sample_size(id2labels_entities, gold_amrs, predicted_amrs, entity_type):
+def calculate_special_entity_successes_and_sample_size(id2labels_entities, gold_amrs, predicted_amrs, entity_type):
+    """
+    For names, dates, and others such as phone numbers. Finds matches on the actual contents (e.g. the phone number itself)
+    Args:
+        id2labels_entities: dict from graph ids to labels to match
+        gold_amrs: list of Penman graphs
+        predicted_amrs: "
+        entity_type: str: name, date-entity, or other.
+    Returns: found, total
+    """
     if entity_type == "date-entity":
         fun = get_date_string_for_date_instance
     elif entity_type == "name":
@@ -112,21 +121,22 @@ def calculate_date_or_name_successes_and_sample_size(id2labels_entities, gold_am
             total += len(gold_strings)
             for gold_value_string in gold_strings:
                 if entity_type == "other":
+                    # if not name or date, try both attributes and instances
                     gold_value_string = normalize_special_entity_value(gold_value_string)
                     for instance_or_attribute in predicted_amr.instances() + predicted_amr.attributes():
+                        # and we only need to normalise the one string
                         if normalize_special_entity_value(instance_or_attribute.target) == gold_value_string:
                             recalled += 1
                             break
-
                 else:
                     for instance in predicted_amr.instances():
                         if instance.target == entity_type:
+                            # get all the relevant attributes and put them into a string of the same format as the TSV
                             name_string = fun(predicted_amr, instance)
                             if name_string == gold_value_string:
                                 recalled += 1
                                 break
     return recalled, total
-
 
 
 def calculate_name_recall(tsv_file_path, gold_amrs, predicted_amrs):
@@ -175,7 +185,7 @@ def main():
     gold_amrs = load("../../corpus/testset.txt")
     predicted_amrs = load("../../amrbart-output/testset.txt")
     tsv_filename = "../../corpus/unseen_special_entities.tsv"
-    print(calculate_special_entity_successes_and_sample_size(tsv_filename, gold_amrs, predicted_amrs))
+    print(calculate_other_special_entity_successes_and_sample_size(tsv_filename, gold_amrs, predicted_amrs))
 
 
 if __name__ == '__main__':

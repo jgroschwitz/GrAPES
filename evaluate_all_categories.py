@@ -14,12 +14,6 @@ from prettytable import PrettyTable
 
 
 # TODO wrong:
-# Other seen entities                    | Recall                | 78    | 72          | 83          | 237
-# should be 80
-# | 5   | Other unseen entities                  | Recall                | 70    | 61          | 78          | 109         |
-# should be 74
-# | 7   | Word ambiguities (Karidi et al., 2021) | Recall                | 83    | 81          | 84          | 1471        |
-# Should have 95 total! Also should be 75
 # Also: seems to be a problem with the encoded tsv: has old ids
 
 

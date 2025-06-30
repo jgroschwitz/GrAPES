@@ -8,7 +8,7 @@ from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
 from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, \
-    calculate_date_or_name_successes_and_sample_size
+    calculate_special_entity_successes_and_sample_size
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"
@@ -127,7 +127,7 @@ class CategoryEvaluation:
         id2labels_entities = get_graphid2labels_from_tsv_file(f"{self.corpus_path}/{self.category_metadata.tsv}",
                                                               graph_id_column=self.category_metadata.graph_id_column,
                                                               label_column=self.category_metadata.label_column)
-        successes, sample_size = calculate_date_or_name_successes_and_sample_size(
+        successes, sample_size = calculate_special_entity_successes_and_sample_size(
             id2labels_entities, self.gold_amrs, self.predicted_amrs, self.category_metadata.subtype)
         self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
                                          [successes, sample_size])
