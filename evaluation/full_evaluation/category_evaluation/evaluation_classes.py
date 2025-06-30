@@ -174,16 +174,13 @@ class ExactMatch(CategoryEvaluation):
         return self.rows
 
     def make_success_results_for_structural_generalisation(self):
-
         successes, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
                                                                                match_edge_labels=False,
                                                                                match_senses=False)
 
         self.make_and_append_results_row("Exact match", EVAL_TYPE_SUCCESS_RATE,
                                          [successes, sample_size])
-
-        smatch_f1 = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
-        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])
+        self.make_smatch_results()
 
     def long_lists(self):
         conj_total_gold, conj_total_predictions, conj_true_predictions = compute_conjunct_counts(self.gold_amrs,

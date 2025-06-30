@@ -9,7 +9,8 @@ from evaluation.full_evaluation.run_full_evaluation import run_single_file, eval
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
-from evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name
+from evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name, \
+    is_grapes_category_with_testset_data, is_grapes_category_with_ptb_data
 from prettytable import PrettyTable
 
 
@@ -45,54 +46,54 @@ set_names_with_category_names = [
     ("9. Non-trivial word-to-node relations", ["ellipsis", "multinode_word_meanings", "imperatives"])
     ]
 
-category_names_to_source_corpus_name = {
-    "pragmatic_coreference_testset": "testset",
-    "pragmatic_coreference_winograd": "grapes",
-    "syntactic_gap_reentrancies": "testset",
-    "unambiguous_coreference": "testset",
-    "nested_control_and_coordination": "grapes",
-    "nested_control_and_coordination_sanity_check": "grapes",
-    "multiple_adjectives": "grapes",
-    "multiple_adjectives_sanity_check": "grapes",
-    "centre_embedding": "grapes",
-    "centre_embedding_sanity_check": "grapes",
-    "cp_recursion": "grapes",
-    "cp_recursion_sanity_check": "grapes",
-    "cp_recursion_plus_coreference": "grapes",
-    "cp_recursion_plus_coreference_sanity_check": "grapes",
-    "cp_recursion_plus_rc": "grapes",
-    "cp_recursion_plus_rc_sanity_check": "grapes",
-    "cp_recursion_plus_rc_plus_coreference": "grapes",
-    "cp_recursion_plus_rc_plus_coreference_sanity_check": "grapes",
-    "long_lists": "grapes",
-    "long_lists_sanity_check": "grapes",
-    "rare_node_labels": "testset",
-    "unseen_node_labels": "testset",
-    "rare_predicate_senses_excl_01": "testset",
-    "unseen_predicate_senses_excl_01": "grapes",
-    "rare_edge_labels_ARG2plus": "testset",
-    "unseen_edge_labels_ARG2plus": "grapes",
-    "seen_names": "testset",
-    "unseen_names": "testset",
-    "seen_dates": "testset",
-    "unseen_dates": "testset",
-    "other_seen_entities": "testset",
-    "other_unseen_entities": "testset",
-    "types_of_seen_named_entities": "testset",
-    "types_of_unseen_named_entities": "testset",
-    "seen_andor_easy_wiki_links": "testset",
-    "hard_unseen_wiki_links": "testset",
-    "frequent_predicate_senses_incl_01": "testset",
-    "word_ambiguities_handcrafted": "grapes_from_testset",
-    "word_ambiguities_karidi_et_al_2021": "grapes",
-    "pp_attachment": "grapes",
-    "unbounded_dependencies": "grapes_from_ptb",
-    "passives": "testset",
-    "unaccusatives": "testset",
-    "ellipsis": "testset",
-    "multinode_word_meanings": "testset",
-    "imperatives": "testset"
-}
+# category_names_to_source_corpus_name = {
+#     "pragmatic_coreference_testset": "testset",
+#     "pragmatic_coreference_winograd": "grapes",
+#     "syntactic_gap_reentrancies": "testset",
+#     "unambiguous_coreference": "testset",
+#     "nested_control_and_coordination": "grapes",
+#     "nested_control_and_coordination_sanity_check": "grapes",
+#     "multiple_adjectives": "grapes",
+#     "multiple_adjectives_sanity_check": "grapes",
+#     "centre_embedding": "grapes",
+#     "centre_embedding_sanity_check": "grapes",
+#     "cp_recursion": "grapes",
+#     "cp_recursion_sanity_check": "grapes",
+#     "cp_recursion_plus_coreference": "grapes",
+#     "cp_recursion_plus_coreference_sanity_check": "grapes",
+#     "cp_recursion_plus_rc": "grapes",
+#     "cp_recursion_plus_rc_sanity_check": "grapes",
+#     "cp_recursion_plus_rc_plus_coreference": "grapes",
+#     "cp_recursion_plus_rc_plus_coreference_sanity_check": "grapes",
+#     "long_lists": "grapes",
+#     "long_lists_sanity_check": "grapes",
+#     "rare_node_labels": "testset",
+#     "unseen_node_labels": "testset",
+#     "rare_predicate_senses_excl_01": "testset",
+#     "unseen_predicate_senses_excl_01": "grapes",
+#     "rare_edge_labels_ARG2plus": "testset",
+#     "unseen_edge_labels_ARG2plus": "grapes",
+#     "seen_names": "testset",
+#     "unseen_names": "testset",
+#     "seen_dates": "testset",
+#     "unseen_dates": "testset",
+#     "other_seen_entities": "testset",
+#     "other_unseen_entities": "testset",
+#     "types_of_seen_named_entities": "testset",
+#     "types_of_unseen_named_entities": "testset",
+#     "seen_andor_easy_wiki_links": "testset",
+#     "hard_unseen_wiki_links": "testset",
+#     "frequent_predicate_senses_incl_01": "testset",
+#     "word_ambiguities_handcrafted": "grapes_from_testset",
+#     "word_ambiguities_karidi_et_al_2021": "grapes",
+#     "pp_attachment": "grapes",
+#     "unbounded_dependencies": "grapes_from_ptb",
+#     "passives": "testset",
+#     "unaccusatives": "testset",
+#     "ellipsis": "testset",
+#     "multinode_word_meanings": "testset",
+#     "imperatives": "testset"
+# }
 
 
 def parse_args():
@@ -151,7 +152,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     for set_name, category_names in set_names_with_category_names:
         print("\nEvaluating " + set_name)
         for category_name in category_names:
-            if do_skip_category(category_name, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
+            set_class, info = category_name_to_set_class_and_metadata[category_name]
+            if do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
                 try:
                     # try to get the subcorpus from the same folder as the full corpus
                     eval_class, info = category_name_to_set_class_and_metadata[category_name]
@@ -165,7 +167,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     # raise e
                     results.append(make_empty_result(set_name, category_name_to_print_name[category_name]))
             else:
-                set_class, info = category_name_to_set_class_and_metadata[category_name]
+
                 if info.subcorpus_filename is None:  # testset
                     gold_graphs = gold_graphs_testset
                     predicted_graphs = predicted_graphs_testset
@@ -223,15 +225,18 @@ def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edg
 def make_empty_result(set_name, category_name):
     return [set_name[0], category_name, "N/A", "N/A", "N/A", "N/A", "N/A"]
 
+def is_testset_category(info):
+    return info.subcorpus_filename is None
 
-def do_skip_category(category_name, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
-    if not use_testset and category_names_to_source_corpus_name[category_name] == "testset":
+
+def do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
+    if not use_testset and is_testset_category(info):
         return True
-    if not use_grapes and category_names_to_source_corpus_name[category_name] == "grapes":
+    if not use_grapes and not is_testset_category(info):
         return True
-    if not use_grapes_from_testset and category_names_to_source_corpus_name[category_name] == "grapes_from_testset":
+    if not use_grapes_from_testset and is_grapes_category_with_testset_data(info):
         return True
-    if not use_grapes_from_ptb and category_names_to_source_corpus_name[category_name] == "grapes_from_ptb":
+    if not use_grapes_from_ptb and is_grapes_category_with_ptb_data(info):
         return True
     return False
 

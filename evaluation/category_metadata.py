@@ -25,7 +25,15 @@ bunch2subcategory = {
                                      "cp_recursion_plus_rc_plus_coreference", "long_lists"],
 }
 
-copyrighted_filenames = ["unbounded_dependencies", "word_disambiguation"]
+def is_grapes_category_with_testset_data(category_info):
+    return  category_info.subcorpus_filename == "word_disambiguation"
+
+def is_grapes_category_with_ptb_data(category_info):
+    return category_info.subcorpus_filename == "unbounded_dependencies"
+
+def is_copyrighted_data(category_info):
+    return is_grapes_category_with_testset_data(category_info) or is_grapes_category_with_ptb_data(category_info)
+
 
 category_name_to_print_name = {
     "pragmatic_coreference_testset": "Pragmatic coreference (testset)",

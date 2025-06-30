@@ -3,7 +3,8 @@ from typing import List
 from penman import load, Graph
 
 from evaluation.corpus_metrics import calculate_edge_prereq_recall_and_sample_size_counts, \
-    calculate_node_label_successes_and_sample_size, calculate_subgraph_existence_successes_and_sample_size
+    calculate_node_label_successes_and_sample_size, calculate_subgraph_existence_successes_and_sample_size, \
+    compute_smatch_f_from_graph_lists
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
@@ -136,6 +137,10 @@ class CategoryEvaluation:
         recalled, sample_size = calculate_subgraph_existence_successes_and_sample_size(
             id2subgraphs, self.gold_amrs, self.predicted_amrs)
         self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
+
+    def make_smatch_results(self):
+        smatch_f1 = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
+        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])
 
     # def get_result_rows(self):
     #     self._run_all_evaluations()

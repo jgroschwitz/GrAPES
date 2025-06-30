@@ -10,7 +10,7 @@ from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
     CategoryEvaluation
-from evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, copyrighted_filenames
+from evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, is_copyrighted_data
 
 # globals
 root_dir_here = "../../"
@@ -157,17 +157,19 @@ def evaluate(eval_class, evaluator: CategoryEvaluation, info, root_dir=root_dir_
         return rows
     except AssertionError as e:
         print("WARNING: error trying to process", info.subcorpus_filename, e, file=sys.stderr)
-        if info.subcorpus_filename in copyrighted_filenames:
+        if is_copyrighted_data(info):
             print("Copyrighted data may not be in parser outputs. Trying with individual files.", file=sys.stderr)
             try:
                 rows = run_single_file(eval_class, info, root_dir=root_dir, parser_name=parser_name,
                                        predictions_directory=predictions_directory)
                 print("OK", file=sys.stderr)
+                sys.stdout.flush()
                 return rows
 
             except Exception as e:
                 print("Couldn't process", info.subcorpus_filename, e, file=sys.stderr)
-                raise e
+                sys.stdout.flush()
+                # raise e
         else:
             raise e
 
