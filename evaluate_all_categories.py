@@ -1,15 +1,21 @@
 import argparse
 import csv
+import os
 
 from penman import load
 
-from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.run_full_evaluation import get_arguments_for_evaluation_class
+from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
+    CategoryEvaluation
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.full_evaluation.run_full_evaluation import get_arguments_for_evaluation_class, \
+    update_generalisations_by_size_dict
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
 from evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name
 from prettytable import PrettyTable
+
+from evaluation.structural_generalization import size_mappers
 
 set_names_with_category_names = [
     ("1. Pragmatic reentrancies", ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"]),
@@ -111,7 +117,7 @@ def parse_args():
     return args
 
 
-def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
+def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes, predictions_directory,
                 filter_out_f1=True, filter_out_unlabeled_edge_attachment=True):
     """
     Returns a list of result rows. Each row has the following format:
@@ -140,53 +146,79 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
               " script; see the documentation on the GitHub page.")
 
     results = []
+    struct_gen_by_size = {}
     for set_name, category_names in set_names_with_category_names:
         print("Evaluating " + set_name)
         for category_name in category_names:
             if do_skip_category(category_name, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
-                results.append(make_empty_result(set_name, category_name_to_print_name[category_name]))
+                try:
+                    # try to get the subcorpus from the same folder as the full corpus
+                    eval_class, info = category_name_to_set_class_and_metadata[category_name]
+                    eval_args = get_arguments_for_evaluation_class(info, predictions_directory, "parser", ".")
+                    set = eval_class(*eval_args)
+                    results_here = set.run_evaluation()
+                    rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
+                                                 results_here, set_name)
+                    results.extend(rows)
+                except Exception as e:
+                    print(f"Can't get category {category_name}, error: {e}")
+                    results.append(make_empty_result(set_name, category_name_to_print_name[category_name]))
             else:
                 set_class, info = category_name_to_set_class_and_metadata[category_name]
-                if category_names_to_source_corpus_name[category_name] == "testset":
+                if info.subcorpus_filename is None:  # testset
                     gold_graphs = gold_graphs_testset
                     predicted_graphs = predicted_graphs_testset
                 else:
                     gold_graphs = gold_graphs_grapes
                     predicted_graphs = predicted_graphs_grapes
-                eval_args = get_arguments_for_evaluation_class(info, None, "parser",
-                                                               ".", None, None,
-                                                               gold_graphs, predicted_graphs)
-                evaluator = set_class(*eval_args)
+
+                evaluator = set_class(gold_graphs, predicted_graphs, "parser", ".", info)
                 results_here = evaluator.run_evaluation()
-                for r in results_here:
-                    metric_name = r[1]
-                    if filter_out_f1 and metric_name == "Smatch":
-                        continue
-                    if filter_out_unlabeled_edge_attachment and metric_name == "Unlabeled edge recall":
-                        continue
-                    metric_type = r[2]
-                    if metric_type == EVAL_TYPE_SUCCESS_RATE:
-                        wilson_ci = wilson_score_interval(r[3], r[4])
-                        if r[4] > 0:
-                            results.append([set_name[0], category_name_to_print_name[category_name], metric_name,
-                                            num_to_score(r[3] / r[4]),
-                                            num_to_score(wilson_ci[0]),
-                                            num_to_score(wilson_ci[1]),
-                                            r[4]])
-                        else:
-                            print(
-                                "ERROR: Division by zero! This means something unexpected went wrong (feel free to contact the "
-                                "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
-                            print(r)
-                    elif metric_type == EVAL_TYPE_F1:
-                        results.append([set_name[0], category_name_to_print_name[category_name], metric_name,
-                                        num_to_score(r[3]), "N/A", "N/A", "N/A"])
-                    else:
-                        print(
-                            "ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
-                            "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
-                        print(r)
-    return results
+                rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
+                                      results_here, set_name)
+                results.extend(rows)
+                if info.subtype == "structural_generalization":
+                    by_size = evaluator.get_results_by_size()
+                    struct_gen_by_size[info.display_name] = by_size
+
+    return results, struct_gen_by_size
+
+
+def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment, results_here,
+                          set_name):
+    print("Include smatch?", not filter_out_f1)
+    rows = []
+    for r in results_here:
+        metric_name = r[1]
+        if filter_out_f1 and metric_name == "Smatch":
+            continue
+        if filter_out_unlabeled_edge_attachment and metric_name == "Unlabeled edge recall":
+            continue
+        metric_type = r[2]
+        print("metric_type", metric_type)
+        if metric_type == EVAL_TYPE_SUCCESS_RATE:
+            wilson_ci = wilson_score_interval(r[3], r[4])
+            if r[4] > 0:
+                rows.append([set_name[0], category_name_to_print_name[category_name], metric_name,
+                                num_to_score(r[3] / r[4]),
+                                num_to_score(wilson_ci[0]),
+                                num_to_score(wilson_ci[1]),
+                                r[4]])
+            else:
+                print(
+                    "ERROR: Division by zero! This means something unexpected went wrong (feel free to contact the "
+                    "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
+                print(r)
+        elif metric_type == EVAL_TYPE_F1:
+            print("Found Smatch!")
+            rows.append([set_name[0], category_name_to_print_name[category_name], metric_name,
+                            num_to_score(r[3]), "N/A", "N/A", "N/A"])
+        else:
+            print(
+                "ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
+                "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
+            print(r)
+    return rows
 
 
 def make_empty_result(set_name, category_name):
@@ -223,6 +255,7 @@ def main():
     if args.gold_amr_grapes_file is not None and args.predicted_amr_grapes_file is not None:
         gold_graphs_grapes = load(args.gold_amr_grapes_file, encoding="utf8")
         predicted_graphs_grapes = load(args.predicted_amr_grapes_file, encoding="utf8")
+        predictions_directory = os.path.dirname(args.predicted_amr_grapes_file)
 
         if len(gold_graphs_grapes) != len(predicted_graphs_grapes):
             raise ValueError(
@@ -231,9 +264,10 @@ def main():
                 + " predicted AMRs.")
 
     else:
-        gold_graphs_grapes = predicted_graphs_grapes = None
+        gold_graphs_grapes = predicted_graphs_grapes = predictions_directory = None
 
-    results = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
+    results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
+                          predictions_directory,
                           filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics)
     csv.writer(open(f"data/processed/results/results.csv", "w", encoding="utf8")).writerows(results)
 
@@ -241,7 +275,40 @@ def main():
     print_table.align = "l"
     for row in results:
         print_table.add_row(row)
+
+    pretty_print_structural_generalisation_by_size(by_size)
+
+    print("\nAll results")
     print(print_table)
+
+
+def pretty_print_structural_generalisation_by_size(results):
+    """
+    Prints the structural generalisation results split up by size
+    Args:
+        results: dict from parser name to dataset name to dict from size to score
+    """
+    print(results)
+    from prettytable import PrettyTable
+    table = PrettyTable()
+    max_size = 10
+    field_names = ["Dataset"]
+    for n in range(1, max_size + 1):
+        field_names.append(str(n))
+    table.field_names = field_names
+    table.align = "l"
+    for dataset in results:
+        sizes = results[dataset].keys()
+        row = [dataset]
+        for n in range(1, max_size + 1):
+            if n in sizes:
+                row.append(results[dataset][n])
+            else:
+                row.append("")
+        table.add_row(row)
+
+    print("\nStructure generalisation results by size")
+    print(table)
 
 
 if __name__ == "__main__":

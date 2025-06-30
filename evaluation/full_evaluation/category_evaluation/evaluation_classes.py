@@ -9,7 +9,7 @@ from evaluation.full_evaluation.category_evaluation.category_evaluation import C
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.long_lists import compute_conjunct_counts, compute_generalization_op_counts
 from evaluation.pp_attachment import get_pp_attachment_success_counters
-from evaluation.structural_generalization import add_sanity_check_suffix
+from evaluation.structural_generalization import add_sanity_check_suffix, get_exact_match_by_size, size_mappers
 from evaluation.testset.ellipsis import get_ellipsis_success_counts
 from penman import load, Graph
 
@@ -45,18 +45,20 @@ class NodeRecall(CategoryEvaluation):
 
 class PPAttachment(CategoryEvaluation):
 
-    def __init__(self, parser_name: str, root_dir: str,
-                 category_metadata: SubcategoryMetadata, path_to_predictions_folder):
-        super().__init__([], [], parser_name, root_dir, category_metadata)
-        self.get_all_pp_graphs(path_to_predictions_folder)
-
-
     def run_evaluation(self):
 
         prereqs, unlabeled, recalled, sample_size = get_pp_attachment_success_counters(self.gold_amrs, self.predicted_amrs)
         return [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size]),
                 self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE, [unlabeled, sample_size]),
                 self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
+
+
+class PPAttachmentAlone(PPAttachment):
+
+    def __init__(self, parser_name: str, root_dir: str,
+                 category_metadata: SubcategoryMetadata, path_to_predictions_folder):
+        super().__init__([], [], parser_name, root_dir, category_metadata)
+        self.get_all_pp_graphs(path_to_predictions_folder)
 
     def get_all_pp_graphs(self, path_to_predictions_folder):
         """
@@ -70,6 +72,8 @@ class PPAttachment(CategoryEvaluation):
             self.gold_amrs += load(f"{self.root_dir}/corpus/subcorpora/{filename}.txt")
             self.predicted_amrs += load(f"{path_to_predictions_folder}/{filename}.txt")
         assert len(self.gold_amrs) == len(self.predicted_amrs) and len(self.gold_amrs) > 0
+
+
 
 class NETypeRecall(CategoryEvaluation):
 
@@ -147,6 +151,12 @@ class ExactMatch(CategoryEvaluation):
             self.gold_amrs += more_golds
             self.predicted_amrs += more_preds
 
+    def get_results_by_size(self):
+        if self.category_metadata.subcorpus_filename in size_mappers:
+            return get_exact_match_by_size(self.gold_amrs, self.predicted_amrs, size_mappers[self.category_metadata.subcorpus_filename])
+        else:
+            return {}
+
     def run_evaluation(self):
         if self.category_metadata.subcorpus_filename == "long_lists":
             self.long_lists()
@@ -160,7 +170,7 @@ class ExactMatch(CategoryEvaluation):
                                                                                match_edge_labels=False,
                                                                                match_senses=False)
 
-        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
+        self.make_and_append_results_row("Exact match", EVAL_TYPE_SUCCESS_RATE,
                                          [successes, sample_size])
 
         smatch_f1 = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)

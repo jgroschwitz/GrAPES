@@ -1,8 +1,31 @@
+from copy import copy
+
 from evaluation.full_evaluation.category_evaluation.evaluation_classes import EdgeRecall, NodeRecall, NERecall, \
     NETypeRecall, WordDisambiguationRecall, PPAttachment, EllipsisRecall, SubgraphRecall, ImperativeRecall, \
-    StructuralGeneralisation
+    StructuralGeneralisation, ExactMatch
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-from evaluation.structural_generalization import structural_generalization_corpus_names as structural_generalization_corpus_names
+from evaluation.structural_generalization import \
+    structural_generalization_corpus_names as structural_generalization_corpus_names, add_sanity_check_suffix
+
+SANITY_CHECK = "Sanity check"
+
+# TODO check orders and completeness
+bunch2subcategory = {
+    "1. Pragmatic Reentrancies": ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"],
+    "4. Rare Unseen Nodes Edges": ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
+                         "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"],
+    "2. Unambiguous Reentrancies": ["syntactic_gap_reentrancies", "unambiguous_coreference"],
+    "8. Attachments": ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"],
+    "6. Entity Classification And Linking": ["seen_andor_easy_wiki_links", "hard_unseen_wiki_links"],
+    "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
+                           "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"],
+    "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings", "imperatives"],
+    "7. Lexical Disambiguation": ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"],
+    "3. Structural Generalization": ["nested_control_and_coordination", "multiple_adjectives", "centre_embedding",
+                                     "cp_recursion", "cp_recursion_plus_coreference", "cp_recursion_plus_rc",
+                                     "cp_recursion_plus_rc_plus_coreference", "long_lists"],
+}
+
 
 category_name_to_print_name = {
     "pragmatic_coreference_testset": "Pragmatic coreference (testset)",
@@ -81,54 +104,46 @@ category_name_to_set_class_and_metadata = {
                                                                 tsv="reentrancies_unambiguous_coreference_filtered.tsv",
                                                                 parent_column=4,
                                                                 parent_edge_column=5)),
-    "nested_control_and_coordination": (StructuralGeneralisation, SubcategoryMetadata(
+    "nested_control_and_coordination": (ExactMatch, SubcategoryMetadata(
         display_name=category_name_to_print_name["nested_control_and_coordination"],
         subcorpus_filename="nested_control",
         subtype="structural_generalization",
     )),
-    # "nested_control_and_coordination_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_nested_control_and_coordination_sanity_check_results),
-    "multiple_adjectives": (StructuralGeneralisation, SubcategoryMetadata(
+    "multiple_adjectives": (ExactMatch, SubcategoryMetadata(
         display_name=category_name_to_print_name["multiple_adjectives"],
         subcorpus_filename="adjectives",
         subtype="structural_generalization",
     )),
-    # "multiple_adjectives_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_multiple_adjectives_sanity_check_results),
-    "centre_embedding": (StructuralGeneralisation, SubcategoryMetadata(
+    "centre_embedding": (ExactMatch, SubcategoryMetadata(
         display_name=category_name_to_print_name["centre_embedding"],
         subcorpus_filename="centre_embedding",
         subtype="structural_generalization",
     )),
-    # "centre_embedding_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_centre_embedding_sanity_check_results),
-    "cp_recursion": (StructuralGeneralisation, SubcategoryMetadata(
+    "cp_recursion": (ExactMatch, SubcategoryMetadata(
         display_name=category_name_to_print_name["cp_recursion"],
         subcorpus_filename="deep_recursion_basic",
         subtype="structural_generalization",
     )),
-    # "cp_recursion_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_sanity_check_results),
-    "cp_recursion_plus_coreference": (StructuralGeneralisation, SubcategoryMetadata(
+    "cp_recursion_plus_coreference": (ExactMatch, SubcategoryMetadata(
         display_name=category_name_to_print_name["cp_recursion_plus_coreference"],
         subcorpus_filename="deep_recursion_pronouns",
         subtype="structural_generalization",
     )),
-    # "cp_recursion_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_coref_sanity_check_results),
-    "cp_recursion_plus_rc": (StructuralGeneralisation, SubcategoryMetadata(
+    "cp_recursion_plus_rc": (ExactMatch, SubcategoryMetadata(
         display_name=category_name_to_print_name["cp_recursion_plus_rc"],
         subcorpus_filename="deep_recursion_rc",
         subtype="structural_generalization",
     )),
-    # "cp_recursion_plus_rc_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_sanity_check_results),
-    "cp_recursion_plus_rc_plus_coreference": (StructuralGeneralisation, SubcategoryMetadata(
+    "cp_recursion_plus_rc_plus_coreference": (ExactMatch, SubcategoryMetadata(
         display_name=category_name_to_print_name["cp_recursion_plus_rc_plus_coreference"],
         subcorpus_filename="deep_recursion_rc_contrastive_coref",
         subtype="structural_generalization",
     )),
-    # "cp_recursion_plus_rc_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_and_coref_sanity_check_results),
-    "long_lists": (StructuralGeneralisation, SubcategoryMetadata(
+    "long_lists": (ExactMatch, SubcategoryMetadata(
         display_name=category_name_to_print_name["long_lists"],
         subcorpus_filename="long_lists",
         subtype="structural_generalization",
     )),
-    # "long_lists_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_sanity_check_results),
     "rare_node_labels": (NodeRecall, SubcategoryMetadata(display_name="Rare node labels",
                                                          tsv="rare_node_labels_test.tsv",
                                                          use_sense=True,
@@ -142,7 +157,13 @@ category_name_to_set_class_and_metadata = {
         latex_display_name="Rare predicate senses (excl.~\\nl{-01})",
         tsv="rare_senses_filtered.tsv",
         use_sense=True)),
-    # "unseen_predicate_senses_excl_01": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_sense_results),
+    "unseen_predicate_senses_excl_01": (NodeRecall, SubcategoryMetadata(
+        display_name=category_name_to_print_name["unseen_predicate_senses_excl_01"],
+        latex_display_name="Unseen predicate senses (excl.~\\nl{-01})",
+        tsv="unseen_senses_new_sentences.tsv",
+        subcorpus_filename="unseen_senses_new_sentences",
+        use_sense=True,
+    )),
     "rare_edge_labels_ARG2plus": (EdgeRecall, SubcategoryMetadata(
         display_name="Rare edge labels (ARG2+)",
         latex_display_name="Rare edge labels (\\nl{ARG2}+)",
@@ -257,19 +278,11 @@ category_name_to_set_class_and_metadata = {
     ))
 }
 
-# TODO check orders and completeness
-bunch2subcategory = {
-    "1. Pragmatic Reentrancies": ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"],
-    "4. Rare Unseen Nodes Edges": ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
-                         "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"],
-    "2. Unambiguous Reentrancies": ["syntactic_gap_reentrancies", "unambiguous_coreference"],
-    "8. Attachments": ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"],
-    "6. Entity Classification And Linking": ["seen_andor_easy_wiki_links", "hard_unseen_wiki_links"],
-    "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
-                           "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"],
-    "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings", "imperatives"],
-    "7. Lexical Disambiguation": ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"],
-    "3. Structural Generalization": ["nested_control_and_coordination", "multiple_adjectives",
-                                     "cp_recursion", "cp_recursion_plus_coreference", "cp_recursion_plus_rc",
-                                     "cp_recursion_plus_rc_plus_coreference", "long_lists"],
-}
+for name in bunch2subcategory["3. Structural Generalization"]:
+    eval_class, info = category_name_to_set_class_and_metadata[name]
+    new_info = copy(info)
+    new_name = add_sanity_check_suffix(name)
+    new_info.display_name = SANITY_CHECK
+    new_info.subcorpus_filename = add_sanity_check_suffix(info.subcorpus_filename)
+    category_name_to_set_class_and_metadata[new_name] = eval_class, new_info
+
