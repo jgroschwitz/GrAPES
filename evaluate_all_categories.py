@@ -176,7 +176,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     predicted_graphs = predicted_graphs_grapes
 
                 evaluator = set_class(gold_graphs, predicted_graphs, ".", info)
-                results_here = evaluate(set_class, evaluator, info, ".", predictions_directory=predictions_directory)
+                results_here = evaluate(evaluator, info, ".", predictions_directory=predictions_directory)
 
                 rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
                                       results_here, set_name)

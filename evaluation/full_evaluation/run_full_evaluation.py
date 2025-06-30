@@ -1,6 +1,7 @@
 import pickle
 import sys
 
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachmentAlone
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.structural_generalization import add_sanity_check_suffix, get_exact_match_by_size, size_mappers
 from evaluation.util import num_to_score
@@ -137,7 +138,7 @@ def create_results_pickle():
                         parser_name, info, evaluator.get_results_by_size()
                     )
                 # evaluate
-                rows = evaluate(eval_class, evaluator, info, root_dir_here, parser_name, None)
+                rows = evaluate(evaluator, info, root_dir_here, parser_name, None)
                 all_result_rows += rows
 
         print("Structural Generalisation by length")
@@ -151,32 +152,56 @@ def create_results_pickle():
     pickle.dump(parser_name2rows, open(pickle_path, "wb"))
 
 
-def evaluate(eval_class, evaluator: CategoryEvaluation, info, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
+def evaluate(evaluator: CategoryEvaluation, info, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
+    """
+    Runs the given evaluator.
+    If it fails, tries on individual files.
+    Args:
+        evaluator: initialised CategoryEvaluation class
+        info:
+        root_dir:
+        parser_name:
+        predictions_directory:
+
+    Returns:
+
+    """
     try:
         rows = evaluator.run_evaluation()
         return rows
     except AssertionError as e:
         print("WARNING: error trying to process", info.subcorpus_filename, e, file=sys.stderr)
-        if is_copyrighted_data(info):
-            print("Copyrighted data may not be in parser outputs. Trying with individual files.", file=sys.stderr)
+
+        if is_copyrighted_data(info) :
             try:
-                rows = run_single_file(eval_class, info, root_dir=root_dir, parser_name=parser_name,
+                print("Copyrighted data may not be in parser outputs. Trying with individual files.",
+                          file=sys.stderr)
+                rows = run_single_file(type(evaluator), info, root_dir=root_dir, parser_name=parser_name,
                                        predictions_directory=predictions_directory)
                 print("OK", file=sys.stderr)
-                sys.stdout.flush()
                 return rows
 
             except Exception as e:
                 print("Couldn't process", info.subcorpus_filename, e, file=sys.stderr)
-                sys.stdout.flush()
+                # raise e
+        elif info.subcorpus_filename == "pp_attachment":
+            try:
+                print("Trying PP attachment files", file=sys.stderr)
+                evaluator = PPAttachmentAlone(root_dir, info, predictions_directory)
+                rows = evaluator.run_evaluation()
+                print("OK", file=sys.stderr)
+                return rows
+            except Exception as e:
+                print("Couldn't process", info.display_name, e, file=sys.stderr)
                 # raise e
         else:
             raise e
 
 
 def run_single_file(eval_class, info, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
+    pred = load_parser_output(info.subcorpus_filename, root_dir, parser_name=parser_name,
+                              predictions_directory=predictions_directory)
     gold = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-    pred = load_parser_output(info.subcorpus_filename, root_dir, parser_name=parser_name, predictions_directory=predictions_directory)
     evaluator = eval_class(gold, pred, root_dir, info)
     rows = evaluator.run_evaluation()
     return rows

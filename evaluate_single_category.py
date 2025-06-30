@@ -78,7 +78,7 @@ def main():
         generalisation_by_size = evaluator.get_results_by_size()
         pretty_print_structural_generalisation_by_size({info.subcorpus_filename: generalisation_by_size})
 
-    results = evaluate(eval_class, evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+    results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
 
     for row in results:
         metric_name = row[1]

@@ -54,8 +54,11 @@ class PPAttachment(CategoryEvaluation):
 
 
 class PPAttachmentAlone(PPAttachment):
+    """
+    This would be useful if you want the PP results but you only have separate output files
+    """
 
-    def __init__(self, parser_name: str, root_dir: str,
+    def __init__(self, root_dir: str,
                  category_metadata: SubcategoryMetadata, path_to_predictions_folder):
         super().__init__([], [], root_dir, category_metadata)
         self.get_all_pp_graphs(path_to_predictions_folder)
@@ -207,86 +210,4 @@ class ExactMatch(CategoryEvaluation):
                                                                              match_edge_labels=False,
                                                                              match_senses=False)
         self.make_and_append_results_row("Exact match", EVAL_TYPE_SUCCESS_RATE, [success, sample_size])
-
-class StructuralGeneralisation(ExactMatch):
-    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph],
-                 gold_sanity_check: List[Graph], predicted_sanity_check: List[Graph], root_dir: str,
-                 category_metadata: SubcategoryMetadata, path_to_predictions_folder: str):
-        super().__init__(gold_amrs, predicted_amrs, root_dir,
-                 category_metadata)
-        self.gold_sanity_check = gold_sanity_check
-        self.predicted_sanity_check = predicted_sanity_check
-        self.path_to_predictions_folder = path_to_predictions_folder
-        self.third_person_corpus = "deep_recursion_3s"
-
-    def get_3s_predictions_path(self):
-        return f"{self.path_to_predictions_folder}/{self.third_person_corpus}.txt"
-
-    def get_predictions_path(self):
-        return f"{self.path_to_predictions_folder}/{self.category_metadata.subcorpus_filename}.txt"
-
-    def get_gold_path(self):
-        return f"{self.root_dir}/corpus/subcorpora/{self.category_metadata.subcorpus_filename}.txt"
-
-    def get_3s_gold_path(self):
-        return f"{self.root_dir}/corpus/subcorpora/{self.third_person_corpus}.txt"
-
-    def get_smatch(self, gold_path: str = None, predicted_path: str = None):
-
-        if gold_path is None:
-            gold_path = self.get_gold_path()
-        if predicted_path is None:
-            predicted_path = self.get_predictions_path()
-        smatch_results = compute_smatch_f(gold_path, predicted_path)
-        return smatch_results
-
-    def run_evaluation(self):
-
-        if self.category_metadata.subcorpus_filename == "deep_recursion_pronouns":
-            self.pronouns()
-        elif self.category_metadata.subcorpus_filename == "long_lists":
-            self.long_lists()
-        else:
-            self.make_success_results_for_structural_generalisation()
-
-        # reset for sanity check
-        self.print_dataset_name = True
-        self.category_metadata.display_name = "Sanity check"
-        self.gold_amrs = self.gold_sanity_check
-        self.predicted_amrs = self.predicted_sanity_check
-        self.category_metadata.subcorpus_filename = add_sanity_check_suffix(self.category_metadata.subcorpus_filename)
-        self.third_person_corpus = add_sanity_check_suffix(self.third_person_corpus)
-
-        if self.category_metadata.subcorpus_filename == add_sanity_check_suffix("deep_recursion_pronouns"):
-            self.pronouns()
-        elif self.category_metadata.subcorpus_filename == add_sanity_check_suffix("long_lists"):
-            self.long_list_sanity_check()
-        else:
-            self.make_success_results_for_structural_generalisation()
-
-        return self.rows
-
-
-    def pronouns(self):
-        assert len(self.gold_amrs) == len(self.predicted_amrs)
-        successes, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
-                                                                               match_edge_labels=False,
-                                                                               match_senses=False)
-
-        smatch_results = self.get_smatch()
-        extra_predictions =  load(self.get_3s_predictions_path())
-        extra_gold =  load(self.get_3s_gold_path())
-        assert len(extra_predictions) == len(extra_gold)
-        successes_3s, sample_size_3s = compute_exact_match_successes_and_sample_size(extra_gold, extra_predictions,
-                                                                               match_edge_labels=False,
-                                                                               match_senses=False)
-        smatch_results_3s = self.get_smatch(gold_path=self.get_3s_gold_path(),
-                                            predicted_path=self.get_3s_predictions_path())
-
-        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
-                                         [successes + successes_3s, sample_size + sample_size_3s])
-        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1,
-                                         # taking the average for smatch (not exactly correct, since this overvalues
-                                         # the larger corpus, but the sizes should be close enough.
-                                         [(self.get_f_from_prf(smatch_results)+ self.get_f_from_prf(smatch_results_3s)) / 2])
 
