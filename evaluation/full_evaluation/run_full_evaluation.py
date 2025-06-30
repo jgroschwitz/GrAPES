@@ -17,12 +17,15 @@ results_path = f"{root_dir}/data/processed/results"
 pickle_path = f"{results_path}/results_table.pickle"
 # parser_names = ["amparser", "cailam", "amrbart"]
 parser_names = ["amparser"]
-
-gold_testset_path = f"{root_dir}/data/raw/gold/test.txt"
-gold_amrs = load(gold_testset_path)
-
 full_grapes_name = "full_corpus"
-gold_grapes = load(f"{root_dir}/corpus/corpus.txt")
+gold_testset_path = f"{root_dir}/data/raw/gold/test.txt"
+
+
+def import_graphs():
+    gold_amrs = load(gold_testset_path)
+
+    gold_grapes = load(f"{root_dir}/corpus/corpus.txt")
+    return gold_amrs, gold_grapes
 
 def get_predictions_path_for_parser(parser):
     return f"{path_to_parser_outputs}/{parser}-output"

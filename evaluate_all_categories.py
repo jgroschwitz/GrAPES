@@ -17,6 +17,22 @@ from prettytable import PrettyTable
 
 from evaluation.structural_generalization import size_mappers
 
+# TODO wrong:
+# Other seen entities                    | Recall                | 78    | 72          | 83          | 237
+# should be 80
+# | 5   | Other unseen entities                  | Recall                | 70    | 61          | 78          | 109         |
+# should be 74
+# | 6   | Seen and/or easy wiki links            | Prerequisite          | 70    | 68          | 72          | 2064        |
+# | 6   | Hard unseen wiki links                 | Prerequisite          | 0     | 0           | 1           | 277         |
+# shouldn't have prereq
+# | 7   | Word ambiguities (Karidi et al., 2021) | Recall                | 83    | 81          | 84          | 1471        |
+# Should have 95 total! Also should be 75
+#| 3   | CP recursion + coreference
+# | 3   | Sanity check                           | Exact match           | 38    | 18          | 61          | 16          |
+# sanity check is missing 3p graphs
+# all sanity check smatch are 0
+
+
 set_names_with_category_names = [
     ("1. Pragmatic reentrancies", ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"]),
     ("2. Unambiguous reentrancies", ["syntactic_gap_reentrancies", "unambiguous_coreference"]),
