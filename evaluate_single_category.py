@@ -4,68 +4,13 @@ import sys
 
 from penman import load
 
+from evaluate_all_categories import pretty_print_structural_generalisation_by_size
 from evaluation.category_metadata import category_name_to_set_class_and_metadata
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.run_full_evaluation import get_arguments_for_evaluation_class
+from evaluation.full_evaluation.run_full_evaluation import evaluate
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
-
-
-#  Category names are the same as in the paper (tables 3-5), but all lowercase, and with all punctuation, brackets etc.
-#  removed. Except for '+', which is replaced by 'plus', and whitespace ' ' which is replaced by '_'.
-#  Sanity checks include the name of the category they are checking, such as multiple_adjectives_sanity_check.
-#  Finally, in CP recursion names, "relative clause" is always abbreviated as "rc".
-# category_name_to_set_class_and_eval_function = {
-#     "pragmatic_coreference_testset": (PragmaticReentrancies, PragmaticReentrancies.compute_testset_results),
-#     "pragmatic_coreference_winograd": (PragmaticReentrancies, PragmaticReentrancies.compute_winograd_results),
-#     "syntactic_gap_reentrancies": (UnambiguousReentrancies, UnambiguousReentrancies.compute_syntactic_gap_results),
-#     "unambiguous_coreference": (UnambiguousReentrancies, UnambiguousReentrancies.compute_unambiguous_coreference_results),
-#     "nested_control_and_coordination": (StructuralGeneralization, StructuralGeneralization.computed_nested_control_and_coordination_results),
-#     "nested_control_and_coordination_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_nested_control_and_coordination_sanity_check_results),
-#     "multiple_adjectives": (StructuralGeneralization, StructuralGeneralization.compute_multiple_adjectives_results),
-#     "multiple_adjectives_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_multiple_adjectives_sanity_check_results),
-#     "centre_embedding": (StructuralGeneralization, StructuralGeneralization.compute_centre_embedding_results),
-#     "centre_embedding_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_centre_embedding_sanity_check_results),
-#     "cp_recursion": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_results),
-#     "cp_recursion_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_sanity_check_results),
-#     "cp_recursion_plus_coreference": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_coref_results),
-#     "cp_recursion_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_coref_sanity_check_results),
-#     "cp_recursion_plus_rc": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_results),
-#     "cp_recursion_plus_rc_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_sanity_check_results),
-#     "cp_recursion_plus_rc_plus_coreference": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_and_coref_results),
-#     "cp_recursion_plus_rc_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_and_coref_sanity_check_results),
-#     "long_lists": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_results),
-#     "long_lists_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_sanity_check_results),
-#     "rare_node_labels": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_rare_node_label_results),
-#     "unseen_node_labels": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_node_label_results),
-#     "rare_predicate_senses_excl_01": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_rare_sense_results),
-#     "unseen_predicate_senses_excl_01": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_sense_results),
-#     "rare_edge_labels_ARG2plus": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_rare_edge_label_results),
-#     "unseen_edge_labels_ARG2plus": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_edge_label_results),
-#     "seen_names": (NamesDatesEtc, NamesDatesEtc.compute_seen_names_results),
-#     "unseen_names": (NamesDatesEtc, NamesDatesEtc.compute_unseen_names_results),
-#     "seen_dates": (NamesDatesEtc, NamesDatesEtc.compute_seen_dates_results),
-#     "unseen_dates": (NamesDatesEtc, NamesDatesEtc.compute_unseen_dates_results),
-#     "other_seen_entities": (NamesDatesEtc, NamesDatesEtc.compute_seen_special_entities_results),
-#     "other_unseen_entities": (NamesDatesEtc, NamesDatesEtc.compute_unseen_special_entities_results),
-#     "types_of_seen_named_entities": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_seen_ne_types_results),
-#     "types_of_unseen_named_entities": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_unseen_ne_types_results),
-#     "seen_andor_easy_wiki_links": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_seen_andor_easy_wiki_results),
-#     "hard_unseen_wiki_links": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_hard_wiki_results),
-#     "frequent_predicate_senses_incl_01": (LexicalDisambiguation, LexicalDisambiguation.compute_common_senses_results),
-#     "word_ambiguities_handcrafted": (LexicalDisambiguation, LexicalDisambiguation.compute_grapes_word_disambiguation_results),
-#     "word_ambiguities_karidi_et_al_2021": (LexicalDisambiguation, LexicalDisambiguation.compute_berts_mouth_results),
-#     "pp_attachment": (Attachments, Attachments.compute_pp_results),
-#     "unbounded_dependencies": (Attachments, Attachments.compute_unbounded_results),
-#     "passives": (Attachments, Attachments.compute_passive_results),
-#     "unaccusatives": (Attachments, Attachments.compute_unaccusative_results),
-#     "ellipsis": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_ellipsis_results),
-#     "multinode_word_meanings": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_multinode_constants_results),
-#     "imperatives": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_imperative_results)
-# }
-
-
-
+from evaluation.structural_generalization import size_mappers
 
 
 def get_formatted_category_names():
@@ -76,71 +21,64 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Evaluate single category.")
     parser.add_argument('-c', '--category_name', type=str, help='Category to evaluate. Possible values are: '
                                                                 + get_formatted_category_names())
-    parser.add_argument('-g', '--gold_amr_file', type=str, help='Path to gold AMR file. Optional if a GrAPES-specific AMR file', default=None)
-    parser.add_argument('-p', '--predicted_amr_file_or_directory', type=str, help='Path to predicted AMR file. Must contain AMRs '
-                                                                     'for all sentences in the gold file, in the same '
-                                                                     'order.')
+    parser.add_argument('-g', '--gold_amr_file', type=str, help='Path to gold AMR file. '
+                                                                'Optional if a GrAPES-specific category, '
+                                                                'in which case we use corpus/corpus.txt',
+                        default=None)
+    parser.add_argument('-p', '--predicted_amr_file',
+                        type=str,
+                        help="Path to the predicted AMR file. May use the full corpus output (GrAPES or AMR 3.0)"
+                             " or a GrAPES subcorpus file")
     parser.add_argument('-n', '--parser_name', type=str,
                         help="name of parser (optional)", default="parser")
+
     args = parser.parse_args()
     return args
 
-
-def get_results(gold_graphs, predicted_graphs, category_name):
-    eval_class, info = category_name_to_set_class_and_metadata[category_name]
-    # set_class, eval_function = category_name_to_set_class_and_eval_function[category_name]
-    set = eval_class(gold_graphs, predicted_graphs, None, "./")
-    print("Using", set.__class__.__name__)
-    return set.run_evaluation(info)
 
 
 def main():
     args = parse_args()
     eval_class, info = category_name_to_set_class_and_metadata[args.category_name]
+    predictions_path = args.predicted_amr_file
 
-    if args.predicted_amr_file_or_directory is not None:
-        if os.path.isdir(args.predicted_amr_file_or_directory):
-            predicted_path = args.predicted_amr_file_or_directory
-            predicted_testset_path = None
-        elif os.path.isfile(args.predicted_amr_file_or_directory):
-            predicted_testset_path = args.predicted_amr_file_or_directory
-            predicted_path = None
-        else:
-            print("Predicted AMR file or directory not found.")
-            exit(1)
+    # if args.predicted_amr_file_or_directory is not None:
+    #     if os.path.isdir(args.predicted_amr_file_or_directory):
+    #         print("Using predictions directory", args.predicted_amr_file_or_directory)
+    #         predicted_path = args.predicted_amr_file_or_directory
+    #         predicted_testset_path = None
+    #     elif os.path.isfile(args.predicted_amr_file_or_directory):
+    #         print("Using predicted file", args.predicted_amr_file_or_directory)
+    #         predicted_testset_path = args.predicted_amr_file_or_directory
+    #         predicted_path = None
+    #     else:
+    #         print("Predicted AMR file or directory not found.")
+    #         exit(1)
 
+    if predictions_path.endswith(f"{info.subcorpus_filename}.txt"):
+        print("Using predicted AMR subcorpus file", predictions_path)
+    else:
+        print("Presumably this is the full GrAPES or AMR 3.0 testest parser output file: ", predictions_path)
 
-    eval_args = get_arguments_for_evaluation_class(info, predicted_path, args.parser_name, ".",
-                                                   args.gold_amr_file, predicted_testset_path)
-    set = eval_class(*eval_args)
-    print("Results on " + info.display_name)
-    results = set.run_evaluation()
+    if args.gold_amr_file is not None:
+        gold_amrs = load(args.gold_amr_file)
+    else:
+        gold_amrs = load("corpus/corpus.txt")
 
+    predicted_amrs = load(predictions_path)
+    predictions_directory = os.path.dirname(predictions_path)
 
-    # # Set gold graphs
-    # if info.subcorpus_filename is not None:
-    #     gold_graph_path = f"corpus/subcorpora/{info.subcorpus_filename}.txt"
-    # elif args.gold_amr_file is None:
-    #     print("Please give the path the gold AMR testset file")
-    #     exit(1)
-    # else:
-    #     gold_graph_path = args.gold_amr_file
-    # gold_graphs = load(gold_graph_path)
+    print(f"Results on {info.display_name}:\n")
+    evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
+    print(info.subcorpus_filename, evaluator.__class__.__name__)
 
-    # set predicted graphs
-    # predicted_graphs = load(args.predicted_amr_file)
-    # if info.subcorpus_filename == "pp_attachment":
-    #     print("Concatenating PP files")
-    #     for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
-    #         more_graphs = load(f"corpus/subcorpora/{filename}.txt")
-    #         gold_graphs += more_graphs
-    #         more_graphs = load(f"{args.predicted_amr_file}/{filename}.txt")
-    #         predicted_graphs += more_graphs
-    # if len(gold_graphs) != len(predicted_graphs):
-    #     raise ValueError("Gold and predicted AMR files must contain the same number of AMRs."
-    #                      "Got " + str(len(gold_graphs)) + " gold AMRs and " + str(len(predicted_graphs))
-    #                      + " predicted AMRs.")
-    # results = get_results(gold_graphs, predicted_graphs, args.category_name)
+    # Structural generalisation results by size
+    if info.subtype == "structural_generalization" and info.subcorpus_filename in size_mappers:
+        print(info.subcorpus_filename)
+        generalisation_by_size = evaluator.get_results_by_size()
+        pretty_print_structural_generalisation_by_size({info.subcorpus_filename: generalisation_by_size})
+
+    results = evaluate(eval_class, evaluator, info, root_dir=".", predictions_directory=predictions_directory)
 
     for row in results:
         metric_name = row[1]

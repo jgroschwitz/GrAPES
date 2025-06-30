@@ -105,29 +105,29 @@ class PPAttachmentEvaluator:
         self.evaluate_give_up_in_graphs()
 
     def evaluate_see_with_graphs(self):
-        golds, predictions = filter_amrs_for_name("see_with", self.gold_amrs, self.predicted_amrs)
-        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
+        golds, predictions = filter_amrs_for_name("see_with", self.gold_amrs, self.predicted_amrs, fail_ok=True)
+        assert len(golds) == len(predictions), f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":poss", ":instrument"})
 
     def evaluate_read_by_graphs(self):
-        golds, predictions = filter_amrs_for_name("read_by", self.gold_amrs, self.predicted_amrs)
-        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
+        golds, predictions = filter_amrs_for_name("read_by", self.gold_amrs, self.predicted_amrs, fail_ok=True)
+        assert len(golds) == len(predictions), f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":time", ":manner"},
                              node_labels_to_evaluate={"author-01"})
 
     def evaluate_bought_for_graphs(self):
-        golds, predictions = filter_amrs_for_name("bought_for", self.gold_amrs, self.predicted_amrs)
-        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
+        golds, predictions = filter_amrs_for_name("bought_for", self.gold_amrs, self.predicted_amrs, fail_ok=True)
+        assert len(golds) == len(predictions), f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":purpose", ":ARG3"})
 
     def evaluate_keep_from_graphs(self):
-        golds, predictions = filter_amrs_for_name("keep_from", self.gold_amrs, self.predicted_amrs)
-        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
+        golds, predictions = filter_amrs_for_name("keep_from", self.gold_amrs, self.predicted_amrs, fail_ok=True)
+        assert len(golds) == len(predictions), f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":source", ":ARG2"})
 
     def evaluate_give_up_in_graphs(self):
-        golds, predictions = filter_amrs_for_name("give_up_in", self.gold_amrs, self.predicted_amrs)
-        assert len(golds) == len(predictions) and len(golds) > 0, f"{len(golds)} gold graphs found"
+        golds, predictions = filter_amrs_for_name("give_up_in", self.gold_amrs, self.predicted_amrs, fail_ok=True)
+        assert len(golds) == len(predictions), f"{len(golds)} gold graphs found"
         self.evaluate_graphs(predictions, golds, edge_labels_to_evaluate={":time", ":topic"},
                              node_labels_to_evaluate={"cause-01"})
 

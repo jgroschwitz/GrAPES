@@ -5,7 +5,7 @@ import os
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.run_full_evaluation import get_arguments_for_evaluation_class
+from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
@@ -100,7 +100,7 @@ def parse_args():
     parser.add_argument('-gt', '--gold_amr_testset_file', type=str, help='Path to gold AMR file (testset). A single '
                                                                          'file containing all AMRs of the AMRBank 3.0'
                                                                          'testset.')
-    parser.add_argument('-gg', '--gold_amr_grapes_file', type=str, help='Path to GrAPES gold corpus file')
+    parser.add_argument('-gg', '--gold_amr_grapes_file', type=str, help='Path to GrAPES gold corpus file. Optional, default corpus/corpus.txt', default="corpus/corpus.txt")
     parser.add_argument('-pt', '--predicted_amr_testset_file', type=str,
                         help='Path to predicted AMR file. Must contain AMRs '
                              'for all sentences in the gold file, in the same '
@@ -155,11 +155,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                 try:
                     # try to get the subcorpus from the same folder as the full corpus
                     eval_class, info = category_name_to_set_class_and_metadata[category_name]
-                    eval_args = get_arguments_for_evaluation_class(info, predictions_directory, "parser", ".")
-                    print("\n ### Trying skipped category with args", eval_args[-1])
-                    print(f"gold len {len(eval_args[0])}, predicted len {len(eval_args[1])}")
-                    set = eval_class(*eval_args)
-                    results_here = set.run_evaluation()
+                    print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in {predictions_directory}")
+                    results_here = run_single_file(eval_class, info, ".", predictions_directory=predictions_directory)
                     rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
                                                  results_here, set_name)
                     results.extend(rows)
@@ -176,8 +173,9 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     gold_graphs = gold_graphs_grapes
                     predicted_graphs = predicted_graphs_grapes
 
-                evaluator = set_class(gold_graphs, predicted_graphs, "parser", ".", info)
-                results_here = evaluator.run_evaluation()
+                evaluator = set_class(gold_graphs, predicted_graphs, ".", info)
+                results_here = evaluate(set_class, evaluator, info, ".", predictions_directory=predictions_directory)
+
                 rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
                                       results_here, set_name)
                 results.extend(rows)

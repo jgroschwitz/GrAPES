@@ -16,11 +16,10 @@ EVAL_TYPE_F1 = "f1"
 
 class CategoryEvaluation:
 
-    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], parser_name: str, root_dir: str,
+    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
                  category_metadata: SubcategoryMetadata):
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
-        self.parser_name = parser_name
         self.root_dir = root_dir
         self.corpus_path = f"{self.root_dir}/corpus"
         self.rows = []

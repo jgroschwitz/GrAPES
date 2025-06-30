@@ -152,7 +152,7 @@ def get_node_name_for_gold_label(gold_label, gold_amr, is_attribute):
     return None
 
 
-def filter_amrs_for_name(name, gold_graphs, predicted_graphs):
+def filter_amrs_for_name(name, gold_graphs, predicted_graphs, fail_ok=False):
     regular_expression = name+"_[0-9]+"
     gold_graphs_filtered = []
     predicted_graphs_filtered = []
@@ -160,7 +160,11 @@ def filter_amrs_for_name(name, gold_graphs, predicted_graphs):
         if re.match(regular_expression, g.metadata["id"]):
             gold_graphs_filtered.append(g)
             predicted_graphs_filtered.append(p)
-    assert len(gold_graphs_filtered) > 0, f"Corpus does not contain any AMRs with ID matching {regular_expression}"
+    if len(gold_graphs_filtered) == 0 and fail_ok:
+        print("WARNING: didn't find any AMRs for", name)
+    else:
+        assert len(gold_graphs_filtered) > 0, f"Corpus does not contain any AMRs with ID matching {regular_expression}"
+
     return gold_graphs_filtered, predicted_graphs_filtered
 
 

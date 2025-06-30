@@ -57,7 +57,7 @@ class PPAttachmentAlone(PPAttachment):
 
     def __init__(self, parser_name: str, root_dir: str,
                  category_metadata: SubcategoryMetadata, path_to_predictions_folder):
-        super().__init__([], [], parser_name, root_dir, category_metadata)
+        super().__init__([], [], root_dir, category_metadata)
         self.get_all_pp_graphs(path_to_predictions_folder)
 
     def get_all_pp_graphs(self, path_to_predictions_folder):
@@ -136,10 +136,9 @@ class WordDisambiguationRecall(CategoryEvaluation):
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 
 class ExactMatch(CategoryEvaluation):
-    def __init__(self, gold_amrs, predicted_amrs, parser_name, root_dir,
+    def __init__(self, gold_amrs, predicted_amrs, root_dir,
                  category_metadata):
-        super().__init__(gold_amrs, predicted_amrs, parser_name, root_dir,
-                 category_metadata)
+        super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata)
 
         if self.need_3s():
             more_golds, more_preds = self.get_3s_amrs()
@@ -214,9 +213,9 @@ class ExactMatch(CategoryEvaluation):
 
 class StructuralGeneralisation(ExactMatch):
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph],
-                 gold_sanity_check: List[Graph], predicted_sanity_check: List[Graph], parser_name: str, root_dir: str,
+                 gold_sanity_check: List[Graph], predicted_sanity_check: List[Graph], root_dir: str,
                  category_metadata: SubcategoryMetadata, path_to_predictions_folder: str):
-        super().__init__(gold_amrs, predicted_amrs, parser_name, root_dir,
+        super().__init__(gold_amrs, predicted_amrs, root_dir,
                  category_metadata)
         self.gold_sanity_check = gold_sanity_check
         self.predicted_sanity_check = predicted_sanity_check
