@@ -25,6 +25,7 @@ bunch2subcategory = {
                                      "cp_recursion_plus_rc_plus_coreference", "long_lists"],
 }
 
+copyrighted_filenames = ["unbounded_dependencies", "word_disambiguation"]
 
 category_name_to_print_name = {
     "pragmatic_coreference_testset": "Pragmatic coreference (testset)",

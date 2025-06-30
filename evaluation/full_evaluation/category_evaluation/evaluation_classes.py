@@ -128,9 +128,10 @@ class WordDisambiguationRecall(CategoryEvaluation):
             fun = evaluate_word_disambiguation
         elif self.category_metadata.subtype == "bert":
             fun = evaluate_berts_mouth
-            self.gold_amrs, self.predicted_amrs = filter_amrs_for_name("berts_mouth", self.gold_amrs, self.predicted_amrs)
         else:
             raise NotImplementedError(f"subtype {self.category_metadata.subtype} not implemented: must be bert or hand-crafted")
+        self.gold_amrs, self.predicted_amrs = filter_amrs_for_name(self.category_metadata.subcorpus_filename,
+                                                                   self.gold_amrs, self.predicted_amrs)
         successes, sample_size = fun(self.gold_amrs, self.predicted_amrs)
         self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
 

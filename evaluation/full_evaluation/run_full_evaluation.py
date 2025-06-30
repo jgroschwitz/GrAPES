@@ -1,4 +1,5 @@
 import pickle
+import sys
 
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.structural_generalization import add_sanity_check_suffix, get_exact_match_by_size, size_mappers
@@ -8,7 +9,7 @@ from evaluation.full_evaluation.wilson_score_interval import wilson_score_interv
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
-from evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory
+from evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, copyrighted_filenames
 
 # globals
 root_dir = "../../"
@@ -89,7 +90,7 @@ def update_generalisations_by_size_dict(generalisation_by_size_dict, parser_name
 
 
 def create_results_pickle():
-
+    gold_amrs, gold_grapes = import_graphs()
     parser_name2rows = dict()
 
     for parser_name in parser_names:
@@ -127,19 +128,32 @@ def create_results_pickle():
                 #                                    predicted_testset_graphs=testset_parser_outs,
                 #                                    )
 
-                set = eval_class(gold, pred, parser_name, root_dir, info)
+                evaluator = eval_class(gold, pred, parser_name, root_dir, info)
                 # Structural generalisation results by size
                 if info.subtype == "structural_generalization" and info.subcorpus_filename in size_mappers:
                     print(info.subcorpus_filename)
                     generalisation_by_size = update_generalisations_by_size_dict(
                         generalisation_by_size,
-                        parser_name, info, set.get_results_by_size()
+                        parser_name, info, evaluator.get_results_by_size()
                     )
 
-                set = eval_class(gold, pred, parser_name, root_dir, info)
-                rows = set.run_evaluation()
-                all_result_rows += rows
-
+                evaluator = eval_class(gold, pred, parser_name, root_dir, info)
+                print(info.subcorpus_filename, evaluator.__class__.__name__)
+                try:
+                    rows = evaluator.run_evaluation()
+                    all_result_rows += rows
+                except AssertionError as e:
+                    print("WARNING: error trying to process", info.subcorpus_filename, e, file=sys.stderr)
+                    if info.subcorpus_filename in copyrighted_filenames:
+                        print("Copyrighted data may not be in parser outputs. Trying with individual files.", file=sys.stderr)
+                        try:
+                            rows = run_single_file(eval_class, info, parser_name)
+                            all_result_rows += rows
+                            print("OK", file=sys.stderr)
+                        except Exception as e:
+                            print("Couldn't process", info.subcorpus_filename, e, file=sys.stderr)
+                    else:
+                        raise e
 
         print("Structural Generalisation by length")
         pretty_print_structural_generalisation_by_size(generalisation_by_size)
@@ -150,6 +164,14 @@ def create_results_pickle():
         print_pretty_table(all_result_rows)
 
     pickle.dump(parser_name2rows, open(pickle_path, "wb"))
+
+
+def run_single_file(eval_class, info, parser_name):
+    gold = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+    pred = load_parser_output(parser_name, info.subcorpus_filename)
+    set = eval_class(gold, pred, parser_name, root_dir, info)
+    rows = set.run_evaluation()
+    return rows
 
 
 def pretty_print_structural_generalisation_by_size(results):
@@ -201,8 +223,8 @@ def print_pretty_table(result_rows):
                 table.add_row([category, row[1], num_to_score(row[3]/row[4]),
                                f"[{num_to_score(wilson_ci[0])}, {num_to_score(wilson_ci[1])}]", row[4]])
             else:
-                print("Division by zero!")
-                print(row)
+                print("Division by zero!", file=sys.stderr)
+                print(row[0].display_name, row[1:], file=sys.stderr)
         elif eval_type == EVAL_TYPE_F1:
             table.add_row([category, row[1],  num_to_score(row[3]), "", ""])
         elif eval_type == 1:

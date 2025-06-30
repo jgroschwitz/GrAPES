@@ -160,6 +160,7 @@ def filter_amrs_for_name(name, gold_graphs, predicted_graphs):
         if re.match(regular_expression, g.metadata["id"]):
             gold_graphs_filtered.append(g)
             predicted_graphs_filtered.append(p)
+    assert len(gold_graphs_filtered) > 0, f"Corpus does not contain any AMRs with ID matching {regular_expression}"
     return gold_graphs_filtered, predicted_graphs_filtered
 
 
