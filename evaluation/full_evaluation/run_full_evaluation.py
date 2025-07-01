@@ -1,31 +1,40 @@
+import csv
+import os
 import pickle
 import sys
 
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachmentAlone
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachmentAlone, ExactMatch
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.structural_generalization import size_mappers
-from evaluation.util import num_to_score
+from evaluation.util import num_to_score_with_preceding_0
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from prettytable import PrettyTable
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
     CategoryEvaluation
-from evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, \
+from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, \
     is_copyrighted_data, is_testset_category
 
 # globals
 root_dir_here = "../../"
 path_to_parser_outputs = f"{root_dir_here}/data/raw/parser_outputs/"
-results_path = f"{root_dir_here}/data/processed/results"
-pickle_path = f"{results_path}/results_table.pickle"
-by_size_pickle_path = f"{results_path}/structural_generation_by_size.pickle"
 
 # parser_names = ["amparser", "cailam", "amrbart"]
 parser_names = ["amparser"]
 full_grapes_name = "full_corpus"
 gold_testset_path = f"{root_dir_here}/data/raw/gold/test.txt"
 
+def get_results_path(root_dir):
+    x = f"{root_dir}/data/processed/results"
+    os.makedirs(x, exist_ok=True)
+    return x
+
+results_path = f"{get_results_path(root_dir_here)}/from_run_all_evaluations"
+os.makedirs(results_path, exist_ok=True)
+
+pickle_path = f"{results_path}/all_parsers_results_table.pickle"
+by_size_pickle_path = f"{results_path}/all_parsers_structural_generation_by_size.pickle"
 
 def import_graphs():
     gold_amrs = load(gold_testset_path)
@@ -33,11 +42,22 @@ def import_graphs():
     gold_grapes = load(f"{root_dir_here}/corpus/corpus.txt")
     return gold_amrs, gold_grapes
 
+
 def get_predictions_path_for_parser(parser):
     return f"{path_to_parser_outputs}/{parser}-output"
 
 
 def load_parser_output(subcorpus_name, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
+    """
+    Use the predictions directory, or make it from the parser name, to load a subcorpus.
+    Args:
+        subcorpus_name:
+        root_dir: path to root of the project from wherever this is being called
+        parser_name: Optional
+        predictions_directory: Optional if get_predictions_path_for_parser can get the path right
+
+    Returns: list of Penman graphs
+    """
     if parser_name is not None:
         try:
             return load(f"{get_predictions_path_for_parser(parser_name)}/{subcorpus_name}.txt")
@@ -103,24 +123,26 @@ def create_results_pickles():
         print("All result rows")
         # print(all_result_rows)
         print_pretty_table(all_result_rows)
+        csv.writer(open(f"{results_path}/{parser_name}.csv", "w", encoding="utf8")).writerows(all_result_rows)
 
     pickle.dump(parser_name2rows, open(pickle_path, "wb"))
     pickle.dump(all_generalisations_by_size_dict, open(by_size_pickle_path, "wb"))
+    print("Results pickled in ", results_path)
 
 
-def evaluate(evaluator: CategoryEvaluation, info, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
+def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
     """
     Runs the given evaluator.
     If it fails, tries on individual files.
     Args:
         evaluator: initialised CategoryEvaluation class
-        info:
+        info: SubcategoryMetadata about this category
         root_dir:
-        parser_name:
+        parser_name: Can be used to get predictions if load_parser_output works, or use predictions_directory
         predictions_directory:
 
     Returns:
-
+        list of rows of results: [dataset name, metric_name, eval_type] + metric_results
     """
     try:
         rows = evaluator.run_evaluation()
@@ -150,6 +172,14 @@ def evaluate(evaluator: CategoryEvaluation, info, root_dir=root_dir_here, parser
             except Exception as e:
                 print("Couldn't process", info.display_name, e, file=sys.stderr)
                 # raise e
+        elif info.subcorpus_filename == "deep_recursion_pronouns":
+            pred = load_parser_output(info.subcorpus_filename, root_dir, parser_name=parser_name,
+                                      predictions_directory=predictions_directory)
+            gold = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
+            pred += load_parser_output("deep_recursion_3s", root_dir, parser_name=parser_name, predictions_directory=predictions_directory)
+            gold += load(f"{root_dir}/corpus/subcorpora/deep_recursion_3s.txt")
+            evaluator = ExactMatch(gold, pred, root_dir, info)
+            return evaluator.run_evaluation()
         else:
             raise e
 
@@ -190,13 +220,13 @@ def print_pretty_table(result_rows):
         if eval_type == EVAL_TYPE_SUCCESS_RATE:
             wilson_ci = wilson_score_interval(row[3], row[4])
             if row[4] > 0:
-                table.add_row([category, row[1], num_to_score(row[3]/row[4]),
-                               f"[{num_to_score(wilson_ci[0])}, {num_to_score(wilson_ci[1])}]", row[4]])
+                table.add_row([category, row[1], num_to_score_with_preceding_0(row[3] / row[4]),
+                               f"[{num_to_score_with_preceding_0(wilson_ci[0])}, {num_to_score_with_preceding_0(wilson_ci[1])}]", row[4]])
             else:
                 print("Division by zero!", file=sys.stderr)
                 print(row[0].display_name, row[1:], file=sys.stderr)
         elif eval_type == EVAL_TYPE_F1:
-            table.add_row([category, row[1],  num_to_score(row[3]), "", ""])
+            table.add_row([category, row[1], num_to_score_with_preceding_0(row[3]), "", ""])
         elif eval_type == 1:
             table.add_row(["", "", "", "", ""])
             table.add_row([category, "", "", "", ""])
@@ -209,11 +239,7 @@ def print_pretty_table(result_rows):
 def make_latex_table(root_dir: str):
     """
     TODO This is not currently working with the refactoring
-    Args:
-        root_dir:
-
-    Returns:
-
+    Might not matter: I think the csv2latex one works
     """
     result_rows_by_parser_name = pickle.load(open(root_dir + "/results_table.pickle", "rb"))
 
@@ -275,13 +301,13 @@ def make_latex_table(root_dir: str):
             for i in range(len(parser_names)):
                 if is_success_rate_row:
                     wilson_ci = wilson_score_interval(row[3], row[4])
-                    score = num_to_score(row[3] / row[4])
+                    score = num_to_score_with_preceding_0(row[3] / row[4])
                     if not (is_prereq_row or is_sanity_check_row):
                         current_scores[i].append(row[3] / row[4])
                     if len(score) == 2:
                         score = "\\phantom{1}" + score
-                    lower_bound = num_to_score(wilson_ci[0])
-                    upper_bound = num_to_score(wilson_ci[1])
+                    lower_bound = num_to_score_with_preceding_0(wilson_ci[0])
+                    upper_bound = num_to_score_with_preceding_0(wilson_ci[1])
                     if len(lower_bound) == 2:
                         lower_bound = lower_bound
                     if len(upper_bound) == 2:
@@ -291,7 +317,7 @@ def make_latex_table(root_dir: str):
                 else:
                     if not (is_prereq_row or is_sanity_check_row):
                         current_scores[i].append(row[3])
-                    latex_line += f" & {num_to_score(row[3])}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ "
+                    latex_line += f" & {num_to_score_with_preceding_0(row[3])}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ "
 
             if is_success_rate_row:
                 latex_line += f" & {parser_rows[0][4]}\\\\\n"
@@ -310,7 +336,7 @@ def make_latex_table(root_dir: str):
             for scores in scores_by_parser:
                 # average the scores
                 score = sum(scores) / len(scores)
-                latex_line += f" & {num_to_score(score)}"
+                latex_line += f" & {num_to_score_with_preceding_0(score)}"
             latex_line += "\\\\\n"
             f.write(latex_line)
 
@@ -329,20 +355,12 @@ def make_latex_table(root_dir: str):
 # TODO: make a table that is average for categories (can't have wilson scores here,
 #  because we DON'T want to normalize by sample size here)
 
-# TODO: make a structural generalization table, broken down by sizes.
-
 
 def _get_row_evaluation_type(row):
     if len(row) >= 3:
         return row[2]
     else:
         return len(row)
-
-
-def main():
-    create_results_pickles()
-    # make_latex_table(results_path)
-
 
 def pretty_print_structural_generalisation_by_size(results):
     """
@@ -369,6 +387,12 @@ def pretty_print_structural_generalisation_by_size(results):
 
     print("\nStructure generalisation results by size")
     print(table)
+
+
+
+def main():
+    create_results_pickles()
+    # make_latex_table(results_path)
 
 if __name__ == '__main__':
     main()

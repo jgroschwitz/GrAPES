@@ -1,15 +1,16 @@
 import argparse
 import csv
 import os
+import pickle
 
 from penman import load
 
 from evaluate_single_category import SmartFormatter, load_predictions
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate, \
-    pretty_print_structural_generalisation_by_size
+    pretty_print_structural_generalisation_by_size, get_results_path
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
-from evaluation.single_eval import num_to_score
+from evaluation.util import num_to_score
 
 from evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name, \
     is_grapes_category_with_testset_data, is_grapes_category_with_ptb_data, get_formatted_category_names, \
@@ -72,6 +73,7 @@ def parse_args():
     parser.add_argument('-b', '--bunch', type=int, required=False, default=None, help='Only evaluate this "bunch" of categories. Optional.'
                                                         ' Choose a number from the following:\n'
                                                         + get_formatted_category_names([b for b, _ in set_names_with_category_names]))
+    parser.add_argument('-n', "--parser_name", type=str, required=False, default=None, help='Parser name. Optional, used for output storage. ')
     args = parser.parse_args()
     return args
 
@@ -233,9 +235,17 @@ def main():
     results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
                           predictions_directory,
                           filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics, bunch=args.bunch)
-    out_dir = f"data/processed/results"
-    os.makedirs(out_dir, exist_ok=True)
-    csv.writer(open(f"{out_dir}/results.csv", "w", encoding="utf8")).writerows(results)
+
+    results_dir = get_results_path(".")
+    os.makedirs(results_dir, exist_ok=True)
+    if args.parser_name is not None:
+        filename = args.parser_name
+    else:
+        filename = results
+    csv.writer(open(f"{results_dir}/{filename}.csv", "w", encoding="utf8")).writerows(results)
+    print(f"CSV of results written to {results_dir}/{filename}.csv")
+    pickle.dump(results, open(f"{results_dir}/{filename}.pickle", "wb"))
+    print(f"Pickle of results written to {results_dir}/results.pickle")
 
     print_table = PrettyTable(field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
     print_table.align = "l"

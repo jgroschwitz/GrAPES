@@ -3,11 +3,11 @@ import os
 
 from penman import load
 
-from evaluation.category_metadata import category_name_to_set_class_and_metadata, get_formatted_category_names
+from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, get_formatted_category_names
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
-from evaluation.single_eval import num_to_score
+from evaluation.util import num_to_score
 from evaluation.structural_generalization import size_mappers, add_sanity_check_suffix
 
 

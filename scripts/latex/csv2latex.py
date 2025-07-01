@@ -1,3 +1,4 @@
+import os
 import sys
 import csv
 
@@ -31,10 +32,12 @@ def main():
             csv_reader = csv.reader(f)
             csv_contents.append(list(csv_reader))
 
+    names = [os.path.basename(csv_file)[:-4] for csv_file in csv_files]
+
     transposed_csv_contents = [list(i) for i in zip(*csv_contents)]
     # print(csv_contents)
 
-    head_column = "Set ID & Dataset & Metric & " + " & ".join([name.replace("_", "") for name in csv_files]) + " & \\#"
+    head_column = "Set ID & Dataset & Metric & " + " & ".join([name.replace("_", "") for name in names]) + " & \\#"
     table_columns = "{l | l | l  | " + " | ".join(["c"] * len(csv_files)) + " | r }"
     header = "\\begin{tabular}" + table_columns + "\n\t" + head_column + "\\\\\\hline\n"
     closer = "\\end{tabular}"

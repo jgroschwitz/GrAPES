@@ -5,7 +5,7 @@ from penman import Graph, encode
 
 
 
-def num_to_score(number):
+def num_to_score_with_preceding_0(number):
     string_result = f"{(number*100):.0f}"
     if len(string_result) == 1:
         string_result = "0" + string_result
@@ -169,3 +169,7 @@ def filter_amrs_for_name(name, gold_graphs, predicted_graphs, fail_ok=False):
 
 
 SANITY_CHECK = "Sanity check"
+
+
+def num_to_score(number):
+    return f"{(number * 100):.0f}"

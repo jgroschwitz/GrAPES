@@ -19,6 +19,7 @@ def file_is_amr_corpus(filename):
         for line in f:
             if "::snt" in line:
                 return True
+    return False
 
 
 def add_ids_to_file(filename):

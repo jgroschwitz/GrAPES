@@ -105,7 +105,7 @@ If you don't have PTB:
 
 To evaluate on just one of the 36 categories, use the `evaluate_single_category.py` script and give the name of the category to evaluate, and provide the path to the relevant gold file (`-g`) and the relevant prediction file (`-p`). 
 
-Category names are listed below. The "relevant" gold file is either the path to the AMR testset, the path to the GrAPES gold `corpus.txt` file, or, if you prefer, the GrAPES subcorpus file, such as `adjectives.txt`. Similarly, your parser output can be the full GrAPES `corpus.txt` output, or just the output from running your parser on the one category.
+Category names are listed below. The "relevant" gold file is either the path to the AMR testset, the path to the GrAPES gold `corpus.txt` file, or, if you prefer, the GrAPES subcorpus file, such as `adjectives.txt`. Similarly, your parser output can be the full GrAPES `corpus.txt` output, or just the output from running your parser on the one file.
 
 For example, to evaluate on the category Adjectives, which is a GrAPES-only category, either of the following will work:
 
@@ -125,6 +125,16 @@ To evaluate an AMR testset category, e.g. here the Rare Senses category, run the
 ```commandline
 python evaluate_single_category.py -c rare_senses -g path/to/AMR/testset -p path/to/parser/AMR/testset/output
 ```
+
+#### Special Cases: PP attachment and Structural Generalisation
+
+Most categories correspond to one file, but not for these two categories.
+
+Structural generalisation categories will automatically include the separate `sanity_check` subcorpora.
+
+Moreover, the `cp_recursion_plus_coreference` category uses two files, which are both used if you provide the path to the full GrAPES dataset.
+
+The PP Attachemnt category has several files. If you provide the path to the GrAPES full output file, this will work. You can also provide the path only to one file. If you don't have the full GrAPES file, you can try providing the path to any file in the directory of output subcorpora and it will read in the relevant files.
 
 #### Category names for the command line
 
@@ -179,7 +189,7 @@ multinode_word_meanings
 imperatives
 ```
 
-## Details about the contruction of each category
+## Details about the construction of each category
 
 The appendix of the [paper](https://aclanthology.org/2023.emnlp-main.662/) provides extensive details for each of the 36 categories.
 
@@ -203,7 +213,6 @@ You can then view the graphs and sentences side-by-side with Vulcan from your Vu
 ```commandline
 python launch_vulcan.py path/to/pickle
 ```
-
 
 ## Structure of this repository
 
@@ -232,25 +241,20 @@ GrAPES
 ├── evaluation                              # all evaluation modules
 │ ├── corpus_metrics.py
 │ ├── full_evaluation                       # full evaluation modules
-│ │ ├── category_evaluation                 # evaluation modules by set
-│ │ │ ├── category_evaluation.py
-│ │ │ ├── i_pragmatic_reentrancies.py
-│ │ │ ├── ii_unambiguous_reentrancies.py
-│ │ │ ├── iii_structural_generalization.py
-│ │ │ ├── iv_rare_unseen_nodes_edges.py
-│ │ │ └── v_names_dates_etc.py
-│ │ │ ├── vi_entity_classification_and_linking.py
-│ │ │ ├── vii_lexical_disambiguation.py
-│ │ │ ├── viii_attachments.py
-│ │ │ ├── ix_nontrivial_word2node_relations.py
+│ │ ├── category_evaluation                 # evaluation modules
+│ │ │ ├── category_evaluation.py            # abstract class
+│ │ │ ├── evaluation_classes.py             # classes for specific evaluations
+│ │ │ ├── subcategory_info.py               # defines dataclass to store info about each subcategory needed by the evaluation classes
+│ │ │ └── category_metadata.py              # subcategory info by category
 │ │ ├── corpus_statistics.py
-│ │ ├── run_full_evaluation.py
+│ │ ├── run_full_evaluation.py              # runs evaluations on multiple parsers
 │ │ └── wilson_score_interval.py
 │ └── testset                               # evaluation modules for the AMR test set categories
 ├── grammars                                # Alto grammars for structural generalisation
 ├── scripts
 │ ├── full_evaluation.sh                    # script we used for the paper
 │ ├── file_manipulations                    # various scripts for changing files
+│ ├── latex                                 # converts csv outs from run_all_evaluations to LaTeX table
 │ ├── preprocessing                         # preprocessing scripts for AM parser and AMRBART
 │ └── single_evaluation.sh                  
 └── amrbank_analysis                        # various scripts and modules used in the creation of GrAPES

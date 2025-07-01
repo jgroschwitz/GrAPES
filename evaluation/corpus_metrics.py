@@ -95,11 +95,10 @@ def compute_smatch_f_from_graph_lists(gold_graphs: List[Graph], predicted_graphs
             # reset curser so we can read from the beginning of the file
             gold_f.seek(0)
             prediction_f.seek(0)
-            return compute_smatch_f(gold_f.name, prediction_f.name)[2]
+            return compute_smatch_f(gold_f.name, prediction_f.name)
 
 
 def calculate_node_label_recall(category_metadata: SubcategoryMetadata, gold_amrs=None, predicted_amrs=None,
-                                parser_name=None,
                                 root_dir="../../",
                                 prereq=False,
                                 error_analysis_output_filename=None, error_analysis_message=None):
