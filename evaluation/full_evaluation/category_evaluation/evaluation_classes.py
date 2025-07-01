@@ -197,11 +197,7 @@ class WordDisambiguationRecall(CategoryEvaluation):
 class ExactMatch(CategoryEvaluation):
     def __init__(self, gold_amrs, predicted_amrs, root_dir,
                  category_metadata):
-        if not gold_amrs[-1].metadata["id"].startswith("deep_recursion_3s"):
-            raise ValueError(f"{gold_amrs[-1].metadata['id']} is not deep recursion 3s")
         super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata)
-        if not self.gold_amrs[-1].metadata["id"].startswith("deep_recursion_3s"):
-            raise ValueError(f"{self.gold_amrs[-1].metadata['id']} is not deep recursion 3s")
 
         self.is_sanity_check = self.category_metadata.subtype.endswith("sanity_check")
 

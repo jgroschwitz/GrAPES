@@ -70,8 +70,6 @@ def main():
             if len(new_golds) == 0:
                 print("No graphs found!")
             gold_amrs += new_golds
-            if not gold_amrs[-1].metadata["id"].startswith("deep_recursion_3s"):
-                raise ValueError(f"{gold_amrs[-1].metadata['id']} is not deep recursion 3s")
             evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
         else:
             raise e
