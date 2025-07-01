@@ -4,7 +4,8 @@ import os
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
-    get_formatted_category_names, is_sanity_check
+    get_formatted_category_names
+from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size, \
     load_parser_output

@@ -4,7 +4,7 @@ import pickle
 import sys
 
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
-from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_copyrighted_data
 from evaluation.novel_corpus.structural_generalization import size_mappers
 from evaluation.util import num_to_score_with_preceding_0
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
@@ -14,7 +14,7 @@ from penman import load
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
     CategoryEvaluation, EVAL_TYPE_NONE, EVAL_TYPE_NA
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
-    is_copyrighted_data, is_testset_category, set_names_with_category_names, bunch2subcategory
+    is_testset_category, set_names_with_category_names, bunch2subcategory
 
 args = sys.argv
 if len(args) > 1:

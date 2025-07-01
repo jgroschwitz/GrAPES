@@ -148,3 +148,8 @@ class CategoryEvaluation:
             filtered_golds = self.gold_amrs
             filtered_preds = self.predicted_amrs
         return filtered_golds, filtered_preds
+
+    def get_all_gold_ids(self):
+        filtered_gold, _ = self.filter_graphs()
+        return [gold.metadata["id"] for gold in filtered_gold]
+

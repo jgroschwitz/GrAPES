@@ -7,6 +7,8 @@ from penman import load
 
 from evaluate_single_category import SmartFormatter, load_predictions
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
+from evaluation.full_evaluation.category_evaluation.subcategory_info import is_grapes_category_with_testset_data, \
+    is_grapes_category_with_ptb_data
 from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate, \
     pretty_print_structural_generalisation_by_size, get_results_path
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval

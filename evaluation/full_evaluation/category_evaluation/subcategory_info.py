@@ -41,3 +41,18 @@ class SubcategoryMetadata:
     def filename_belongs_to_subcategory(self,filename):
         return filename == self.subcorpus_filename or filename in self.extra_subcorpus_filenames
 
+
+def is_grapes_category_with_testset_data(category_info):
+    return  category_info.subcorpus_filename == "word_disambiguation"
+
+
+def is_grapes_category_with_ptb_data(category_info):
+    return category_info.subcorpus_filename == "unbounded_dependencies"
+
+
+def is_copyrighted_data(category_info):
+    return is_grapes_category_with_testset_data(category_info) or is_grapes_category_with_ptb_data(category_info)
+
+
+def is_sanity_check(category_info):
+    return category_info.subcorpus_filename.endswith("sanity_check")

@@ -1,11 +1,10 @@
-from evaluation.full_evaluation.category_evaluation.category_metadata import is_sanity_check
 from evaluation.novel_corpus.berts_mouth import evaluate_berts_mouth
 from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size,  calculate_subgraph_existence_successes_and_sample_size, \
     calculate_node_label_successes_and_sample_size, calculate_edge_prereq_recall_and_sample_size_counts
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_sanity_check
 from evaluation.novel_corpus.long_lists import compute_conjunct_counts, compute_generalization_op_counts
 from evaluation.novel_corpus.pp_attachment import get_pp_attachment_success_counters
 from evaluation.novel_corpus.structural_generalization import get_exact_match_by_size, size_mappers, \
