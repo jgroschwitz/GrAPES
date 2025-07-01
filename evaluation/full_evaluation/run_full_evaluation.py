@@ -176,6 +176,7 @@ def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata,
         return rows
     try:
         rows = evaluator.run_evaluation()
+        assert len(rows) > 0, "No results!"
         return rows
     except AssertionError as e:
         print("WARNING: error trying to process", info.subcorpus_filename, e, file=sys.stderr)

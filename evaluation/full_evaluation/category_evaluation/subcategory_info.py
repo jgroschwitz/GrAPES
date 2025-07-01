@@ -38,3 +38,6 @@ class SubcategoryMetadata:
             return self.display_name
         return self.latex_display_name
 
+    def filename_belongs_to_subcategory(self,filename):
+        return filename == self.subcorpus_filename or filename in self.extra_subcorpus_filenames
+

@@ -75,13 +75,18 @@ class PPAttachment(CategoryEvaluation):
         super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory)
         # if we read in the unused PP directory instead of the whole full_cprpus, replace it with the real ones
         if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):
+            print("Reading in additional files")
             self.gold_amrs, self.predicted_amrs = self.get_additional_graphs(read_in=True)
+        if len(self.gold_amrs) != len(self.predicted_amrs) or len(self.gold_amrs) ==0:
+            raise Exception("Different number of AMRs or 0")
 
     def make_results(self):
         prereqs, unlabeled, recalled, sample_size = get_pp_attachment_success_counters(self.gold_amrs, self.predicted_amrs)
-        return [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size]),
+        assert sample_size>0, "No results found!"
+        rows = [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size]),
                 self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE, [unlabeled, sample_size]),
                 self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
+        self.rows.extend(rows)
 
 #
 # class PPAttachmentAlone(PPAttachment):

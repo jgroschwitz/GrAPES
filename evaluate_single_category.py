@@ -49,7 +49,8 @@ def main():
     eval_class, info = category_name_to_set_class_and_metadata[args.category_name]
     predictions_path = args.predicted_amr_file
 
-    if predictions_path.endswith(f"{info.subcorpus_filename}.txt"):
+    prediction_file_name = os.path.basename(predictions_path)[:-4]
+    if info.filename_belongs_to_subcategory(prediction_file_name):
         print("Using predicted AMR subcorpus file", predictions_path)
         use_subcorpus = True
     else:
@@ -59,7 +60,8 @@ def main():
     if args.gold_amr_file is not None:
         gold_amrs = load(args.gold_amr_file)
     elif use_subcorpus:
-        gold_amrs = load(f"corpus/subcorpora/{info.subcorpus_filename}.txt")
+        print("using gold subcorpus", prediction_file_name)
+        gold_amrs = load(f"corpus/subcorpora/{prediction_file_name}.txt")
     else:
         gold_amrs = load("corpus/corpus.txt")
 
@@ -79,6 +81,7 @@ def main():
         # else:
             raise e
     results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+    assert len(results) > 0, "No results!"
 
     caption = f"\nResults on {info.display_name}"
 

@@ -40,15 +40,17 @@ class CategoryEvaluation:
                 filtered_golds += more_golds
                 filtered_preds += more_preds
             return filtered_golds, filtered_preds
-        if self.predictions_directory is not None:
-            extra_predictions = []
-            extra_golds = []
-            for filename in self.extra_subcorpus_filenames:
-                extra_predictions += penman.load(f"{self.predictions_directory}/{filename}.txt")
-                extra_golds += penman.load(f"{self.corpus_path}/subcorpora/{filename}.txt")
-            return extra_golds, extra_predictions
         else:
-            raise NotImplementedError("Can't get additional graphs without predictions directory and filenames")
+            if self.predictions_directory is not None:
+                extra_predictions = []
+                extra_golds = []
+                for filename in self.extra_subcorpus_filenames:
+                    print("reading in", filename)
+                    extra_predictions += penman.load(f"{self.predictions_directory}/{filename}.txt")
+                    extra_golds += penman.load(f"{self.corpus_path}/subcorpora/{filename}.txt")
+                return extra_golds, extra_predictions
+            else:
+                raise NotImplementedError("Can't get additional graphs without predictions directory and filenames")
 
 
     def make_and_append_results_row(self, metric_name: str, eval_type: str, metric_results: List):

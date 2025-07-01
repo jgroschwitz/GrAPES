@@ -36,7 +36,6 @@ set_names_with_category_names = [
     ]
 
 bunch2subcategory = dict(set_names_with_category_names)
-print(len(bunch2subcategory))
 
 
 def is_grapes_category_with_testset_data(category_info):
