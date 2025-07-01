@@ -1,18 +1,15 @@
-from typing import List
-
 from evaluation.berts_mouth import evaluate_berts_mouth
-from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, compute_smatch_f, \
-    compute_smatch_f_from_graph_lists, calculate_subgraph_existence_successes_and_sample_size, \
+from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size,  calculate_subgraph_existence_successes_and_sample_size, \
     calculate_node_label_successes_and_sample_size, calculate_edge_prereq_recall_and_sample_size_counts
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
-    EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
+    EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.long_lists import compute_conjunct_counts, compute_generalization_op_counts
 from evaluation.pp_attachment import get_pp_attachment_success_counters
 from evaluation.structural_generalization import add_sanity_check_suffix, get_exact_match_by_size, size_mappers
 from evaluation.testset.ellipsis import get_ellipsis_success_counts
-from penman import load, Graph
+from penman import load
 
 from evaluation.testset.imperative import get_imperative_success_counts
 from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size

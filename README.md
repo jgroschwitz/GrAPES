@@ -189,6 +189,8 @@ multinode_word_meanings
 imperatives
 ```
 
+The files each category uses are in `evaluation`
+
 ## Details about the construction of each category
 
 The appendix of the [paper](https://aclanthology.org/2023.emnlp-main.662/) provides extensive details for each of the 36 categories.

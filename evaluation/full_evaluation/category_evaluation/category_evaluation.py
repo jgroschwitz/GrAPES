@@ -1,13 +1,10 @@
 from typing import List
 
-from penman import load, Graph
+from penman import Graph
 
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
-from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
-from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, \
-    calculate_special_entity_successes_and_sample_size
+
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"

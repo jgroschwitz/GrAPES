@@ -3,6 +3,9 @@ import os
 import pickle
 import sys
 
+import smatch
+
+from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
 from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachmentAlone, ExactMatch
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.structural_generalization import size_mappers
@@ -89,8 +92,13 @@ def create_results_pickles():
 
         print("Running", parser_name, "...")
 
+        smatch = compute_smatch_f_from_graph_lists(gold_grapes, grapes_parser_outs)
+        print("Smatch on GrAPES:")
+        print(smatch)
+
         all_result_rows = []
         parser_name2rows[parser_name] = all_result_rows
+        all_result_rows.append(["Overall on novel GrAPES corpus", "Smatch", EVAL_TYPE_F1,  smatch[2], len(gold_grapes)])
 
         generalisation_by_size = {}
 
@@ -221,7 +229,11 @@ def print_pretty_table(result_rows):
                 print("Division by zero!", file=sys.stderr)
                 print(row[0].display_name, row[1:], file=sys.stderr)
         elif eval_type == EVAL_TYPE_F1:
-            table.add_row([category, row[1], num_to_score_with_preceding_0(row[3]), "", ""])
+            if len(row) > 4:
+                sample_size = row[4]
+            else:
+                sample_size = ""
+            table.add_row([category, row[1], num_to_score_with_preceding_0(row[3]), "", sample_size])
         elif eval_type == 1:
             table.add_row(["", "", "", "", ""])
             table.add_row([category, "", "", "", ""])
