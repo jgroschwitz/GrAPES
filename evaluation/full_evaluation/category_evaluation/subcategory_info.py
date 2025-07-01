@@ -15,7 +15,6 @@ class SubcategoryMetadata:
     other_subcorpus_filename: str or None = None
     graph_id_column: int = 0
     use_sense: bool = False
-    use_sense_prereq = False
     first_row_is_header: bool = False
     # for nodes
     use_attributes: bool = False

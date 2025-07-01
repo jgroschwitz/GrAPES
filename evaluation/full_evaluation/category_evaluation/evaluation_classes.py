@@ -20,7 +20,7 @@ from evaluation.testset.imperative import get_imperative_success_counts
 from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
 from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, \
     calculate_special_entity_successes_and_sample_size
-from evaluation.util import filter_amrs_for_name, get_node_name_for_gold_label
+from evaluation.util import filter_amrs_for_name, get_node_name_for_gold_label, strip_sense
 from evaluation.novel_corpus.word_disambiguation import evaluate_word_disambiguation
 
 
@@ -57,53 +57,96 @@ class EdgeRecall(CategoryEvaluation):
 class NodeRecall(CategoryEvaluation):
     def run_evaluation(self):
         self.make_results()
-        if self.category_metadata.run_prerequisites:
-            self.make_results(prereq=True)
+        # if self.category_metadata.run_prerequisites:
+        #     self.make_results(prereq=True)
         return self.rows
 
-    def make_results(self, prereq=False):
-        success_count, sample_size = self.calculate_node_label_successes_and_sample_size_and_do_error_analysis(   #calculate_node_label_successes_and_sample_size(
-            prereq=prereq,
-        )
-        metric_label = "Prerequisite" if prereq else self.category_metadata.metric_label
-        row = self.make_results_row(metric_label, EVAL_TYPE_SUCCESS_RATE, [success_count, sample_size])
+    def make_results(self):
+        success_count, prereq_success, sample_size = self.calculate_node_label_successes_and_sample_size_and_do_error_analysis()   #calculate_node_label_successes_and_sample_size(
+        row = self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE, [success_count, sample_size])
         self.rows.append(row)
+        if self.category_metadata.run_prerequisites:
+            row = self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success, sample_size])
+            self.rows.append(row)
 
-    def calculate_node_label_successes_and_sample_size_and_do_error_analysis(self, prereq=False,
-                                                                             ):
+    def _get_predicted_labels_based_on_evaluation_case(self, predicted_amr, use_sense=None):
+        """
+        Get the instances or attributes in the given predicted AMR
+        Note that if use_attributes and use_sense are both true, we get the attributes, not the senses.
+            If they are both false, we get the instances without their senses.
+        :param predicted_amr: AMR to search through
+        :param use_sense: if True, get all instances with their senses; otherwise all instances without their senses
+        :return: list of either attributes or senses (not both)
+        """
+        if use_sense is None:
+            use_sense = self.category_metadata.use_sense
+        if self.category_metadata.use_attributes:
+            if self.category_metadata.attribute_label:
+                predicted_labels = [attr.target.replace("\"", "") for attr in
+                                    predicted_amr.attributes(role=self.category_metadata.attribute_label)]
+            else:
+                predicted_labels = [attr.target.replace("\"", "") for attr in predicted_amr.attributes()]
+        elif use_sense:
+            predicted_labels = [instance.target for instance in predicted_amr.instances()]
+        else:
+            predicted_labels = [strip_sense(instance.target) for instance in predicted_amr.instances()]
+        return predicted_labels
+
+    def calculate_node_label_successes_and_sample_size_and_do_error_analysis(self):
         """
         Just a test case for generalising error analysis
         """
         print("Using new method")
-        if prereq:
-            use_sense = self.category_metadata.use_sense_prereq
-        else:
-            use_sense = self.category_metadata.use_sense
         id2labels = read_label_tsv(self.root_dir, self.category_metadata.tsv)
-        success_count = 0
-        sample_size = 0
-        error_analysis = {"correct_ids": [], "incorrect_ids": []}
+        error_analysis = {"correct_ids": [], "incorrect_ids": [], "correct_prereqs": [], "incorrect_prereqs": []}
         for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
             graph_id = gold_amr.metadata['id']
             if graph_id in id2labels:
-                sample_size += len(id2labels[graph_id])
-                predicted_labels = _get_predicted_labels_based_on_evaluation_case(self.category_metadata.attribute_label,
+                # We want the unlabelled version for prereqs if we're doing them and
+                # the main analysis if use_sense=False
+                if not self.category_metadata.use_sense or self.category_metadata.run_prerequisites:
+                    predicted_labels_no_sense = self._get_predicted_labels_based_on_evaluation_case(
                                                                                   predicted_amr,
-                                                                                  self.category_metadata.use_attributes,
-                                                                                  use_sense=use_sense)
+                                                                                  use_sense=False)
+                else:
+                    predicted_labels_no_sense = None
+                # We always need them with senses if use_sense=True
+                if self.category_metadata.use_sense:
+                    predicted_labels = self._get_predicted_labels_based_on_evaluation_case(
+                        predicted_amr,
+                        use_sense=True)
+                else:
+                    predicted_labels = None
+
+                # run through the labels we want to find for this graph
                 for target_label in id2labels[graph_id]:
-                    label_found = self.find_label(predicted_labels, target_label, use_sense)
-                    if label_found:
-                        success_count += 1
-                        error_analysis["correct_ids"].append(graph_id)
-                    else:
-                        error_analysis["incorrect_ids"].append(graph_id)
-        assert len(error_analysis["correct_ids"]) + len(error_analysis["incorrect_ids"]) == sample_size
+                    # start without senses if we're doing it at all, because we can skip the real analysis if it fails
+                    check_senses = predicted_labels is not None
+                    if predicted_labels_no_sense is not None:
+                        label_found = self.find_label(predicted_labels_no_sense, target_label, False)
+                        error_status = "correct" if label_found else "incorrect"
+                        error_version = "prereqs" if self.category_metadata.run_prerequisites else "ids"
+                        error_analysis[f"{error_status}_{error_version}"].append(graph_id)
+                        if not label_found and check_senses:
+                            # if that failed no need to check with senses
+                            error_analysis["incorrect_ids"].append(graph_id)
+                            check_senses = False
+
+                    # if the prereqs worked, now check for the full label
+                    if check_senses and predicted_labels is not None:
+                        label_found = self.find_label(predicted_labels, target_label, True)
+                        error_status = "correct" if label_found else "incorrect"
+                        error_analysis[f"{error_status}_ids"].append(graph_id)
+
         # write to pickle
-        # TODO shuffle the error analysis lists (synchronously), so that we can get a random sample of the errors
         with open(f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle", "wb") as f:
             pickle.dump(error_analysis, f)
-        return success_count, sample_size
+
+        # get the metrics from the error analysis
+        success_count = len(error_analysis["correct_ids"])
+        prereq_success_count = len(error_analysis["correct_prereqs"])
+        sample_size = success_count + len(error_analysis["incorrect_ids"])
+        return success_count, prereq_success_count, sample_size
 
     def find_label(self, predicted_labels, target_label, use_sense):
         label_found = _label_exists_in_predicted_labels(predicted_labels, target_label, use_sense)

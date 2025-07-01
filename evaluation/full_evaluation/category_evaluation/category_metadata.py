@@ -154,7 +154,8 @@ category_name_to_set_class_and_metadata = {
         "unseen_edge_labels_ARG2plus",
         display_name="Unseen edge labels (ARG2+)",
         latex_display_name="Unseen edge labels (\\nl{ARG2}+)",
-        tsv="unseen_roles_new_sentences.tsv", use_sense=True,
+        tsv="unseen_roles_new_sentences.tsv",
+        use_sense=True,
         subcorpus_filename="unseen_roles_new_sentences"
     )),
     "seen_names": (NERecall, SubcategoryMetadata(
