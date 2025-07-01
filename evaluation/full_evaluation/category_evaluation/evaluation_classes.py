@@ -4,8 +4,9 @@ from evaluation.novel_corpus.berts_mouth import evaluate_berts_mouth
 from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, \
     calculate_subgraph_existence_successes_and_sample_size, \
     calculate_node_label_successes_and_sample_size, calculate_edge_prereq_recall_and_sample_size_counts, \
-    graph_is_in_ids, _get_predicted_labels_based_on_evaluation_case, _label_exists_in_predicted_labels
-from evaluation.file_utils import read_label_tsv
+    graph_is_in_ids, _get_predicted_labels_based_on_evaluation_case, _label_exists_in_predicted_labels, \
+    _check_prerequisites_for_edge_tuple, check_edge_existence, _check_edge_existence_with_multiple_label_options
+from evaluation.file_utils import read_label_tsv, read_edge_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_sanity_check
@@ -52,6 +53,51 @@ class EdgeRecall(CategoryEvaluation):
                                       [unlabeled_recalled, sample_size]),
                 self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
         self.rows.extend(rows)
+
+    def _calculate_edge_recall(self):
+        id2labels = read_edge_tsv(self.root_dir, self.category_metadata)
+        error_analysis = {"correct_ids": [], "incorrect_ids": [], "correct_prereqs": [], "correct_unlabelled": [],"incorrect_unlabelled": []}
+
+
+        for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
+            graph_id = gold_amr.metadata['id']
+            if graph_id in id2labels:
+                predictions_to_look_at = predicted_amr
+
+                for target_tuple in id2labels[graph_id]:
+                    self.update_error_analysis(error_analysis, graph_id, predicted_amr, target_tuple)
+
+        if do_error_analysis:
+            # write to pickle
+            # TODO shuffle the error analysis lists (synchronously), so that we can get a random sample of the errors
+            with open(f"{root_dir}/error_analysis/{error_analysis_output_filename}", "wb") as f:
+                pickle.dump(error_analysis, f)
+        assert total > 0, f"No matching graphs found! Started with {len(gold_amrs)} gold AMRs."
+        return prereqs, unlabeled_recalled, recalled, total
+
+    def update_error_analysis(self, error_analysis, graph_id, predicted, target):
+        prereqs_ok = _check_prerequisites_for_edge_tuple(target, predicted)
+        if prereqs_ok:
+            error_analysis["correct_prereqs"].append(graph_id)
+            unlabeled_edge_found = check_edge_existence(target, predicted,
+                                                        match_edge_labels=False,
+                                                        match_senses=self.category_metadata.use_sense)
+            if unlabeled_edge_found:
+                error_analysis["correct_unlabelled"].append(graph_id)
+
+                edge_found = _check_edge_existence_with_multiple_label_options(target, predicted_amr,
+                                                                               use_sense=self.category_metadata.use_sense)
+                if edge_found:
+                    error_analysis["correct_ids"].append(graph_id)
+                else:
+                    error_analysis["incorrect_ids"].append(graph_id)
+            else:
+                error_analysis["incorrect_unlabelled"].append(graph_id)
+                error_analysis["incorrect_ids"].append(graph_id)
+        else:
+            error_analysis["incorrect_prereqs"].append(graph_id)
+            error_analysis["incorrect_unlabelled"].append(graph_id)
+            error_analysis["incorrect_ids"].append(graph_id)
 
 
 class NodeRecall(CategoryEvaluation):
@@ -104,39 +150,13 @@ class NodeRecall(CategoryEvaluation):
             if graph_id in id2labels:
                 # We want the unlabelled version for prereqs if we're doing them and
                 # the main analysis if use_sense=False
-                if not self.category_metadata.use_sense or self.category_metadata.run_prerequisites:
-                    predicted_labels_no_sense = self._get_predicted_labels_based_on_evaluation_case(
-                                                                                  predicted_amr,
-                                                                                  use_sense=False)
-                else:
-                    predicted_labels_no_sense = None
-                # We always need them with senses if use_sense=True
-                if self.category_metadata.use_sense:
-                    predicted_labels = self._get_predicted_labels_based_on_evaluation_case(
-                        predicted_amr,
-                        use_sense=True)
-                else:
-                    predicted_labels = None
+                predicted_labels, predicted_labels_no_sense = self.get_predicted_labels(predicted_amr)
 
                 # run through the labels we want to find for this graph
                 for target_label in id2labels[graph_id]:
                     # start without senses if we're doing it at all, because we can skip the real analysis if it fails
-                    check_senses = predicted_labels is not None
-                    if predicted_labels_no_sense is not None:
-                        label_found = self.find_label(predicted_labels_no_sense, target_label, False)
-                        error_status = "correct" if label_found else "incorrect"
-                        error_version = "prereqs" if self.category_metadata.run_prerequisites else "ids"
-                        error_analysis[f"{error_status}_{error_version}"].append(graph_id)
-                        if not label_found and check_senses:
-                            # if that failed no need to check with senses
-                            error_analysis["incorrect_ids"].append(graph_id)
-                            check_senses = False
-
-                    # if the prereqs worked, now check for the full label
-                    if check_senses and predicted_labels is not None:
-                        label_found = self.find_label(predicted_labels, target_label, True)
-                        error_status = "correct" if label_found else "incorrect"
-                        error_analysis[f"{error_status}_ids"].append(graph_id)
+                    self.update_error_analysis(error_analysis, graph_id, (predicted_labels, predicted_labels_no_sense),
+                                               target_label)
 
         # write to pickle
         with open(f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle", "wb") as f:
@@ -147,6 +167,41 @@ class NodeRecall(CategoryEvaluation):
         prereq_success_count = len(error_analysis["correct_prereqs"])
         sample_size = success_count + len(error_analysis["incorrect_ids"])
         return success_count, prereq_success_count, sample_size
+
+    def update_error_analysis(self, error_analysis, graph_id, predicted,
+                              target):
+        predicted_labels, predicted_labels_no_sense = predicted
+        check_senses = predicted_labels is not None
+        if predicted_labels_no_sense is not None:
+            label_found = self.find_label(predicted_labels_no_sense, target, False)
+            error_status = "correct" if label_found else "incorrect"
+            error_version = "prereqs" if self.category_metadata.run_prerequisites else "ids"
+            error_analysis[f"{error_status}_{error_version}"].append(graph_id)
+            if not label_found and check_senses:
+                # if that failed no need to check with senses
+                error_analysis["incorrect_ids"].append(graph_id)
+                check_senses = False
+        # if the prereqs worked, now check for the full label
+        if check_senses and predicted_labels is not None:
+            label_found = self.find_label(predicted_labels, target, True)
+            error_status = "correct" if label_found else "incorrect"
+            error_analysis[f"{error_status}_ids"].append(graph_id)
+
+    def get_predicted_labels(self, predicted_amr):
+        if not self.category_metadata.use_sense or self.category_metadata.run_prerequisites:
+            predicted_labels_no_sense = self._get_predicted_labels_based_on_evaluation_case(
+                predicted_amr,
+                use_sense=False)
+        else:
+            predicted_labels_no_sense = None
+        # We always need them with senses if use_sense=True
+        if self.category_metadata.use_sense:
+            predicted_labels = self._get_predicted_labels_based_on_evaluation_case(
+                predicted_amr,
+                use_sense=True)
+        else:
+            predicted_labels = None
+        return predicted_labels, predicted_labels_no_sense
 
     def find_label(self, predicted_labels, target_label, use_sense):
         label_found = _label_exists_in_predicted_labels(predicted_labels, target_label, use_sense)
