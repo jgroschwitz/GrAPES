@@ -68,18 +68,7 @@ def main():
     predicted_amrs = load_predictions(predictions_path)
     predictions_directory = os.path.dirname(predictions_path)
 
-    try:
-        evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory)
-    except Exception as e:
-        # if args.category_name == "cp_recursion_plus_coreference":
-        #     predicted_amrs += load_parser_output("deep_recursion_3s", ".", predictions_directory=predictions_directory)
-        #     new_golds = load("corpus/subcorpora/deep_recursion_3s.txt")
-        #     if len(new_golds) == 0:
-        #         print("No graphs found!")
-        #     gold_amrs += new_golds
-        #     evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory)
-        # else:
-            raise e
+    evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory)
     results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
     assert len(results) > 0, "No results!"
 

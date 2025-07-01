@@ -7,6 +7,7 @@ from penman import Graph
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists, graph_is_in_ids
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.novel_corpus.structural_generalization import size_mappers, get_exact_match_by_size
 from evaluation.util import filter_amrs_for_name
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
@@ -30,6 +31,10 @@ class CategoryEvaluation:
         self.predictions_directory = predictions_directory
 
     def get_additional_graphs(self, read_in):
+        """
+        If there are additional graphs required by this category, we can read them in or filter them from the larger set.
+        :param: read_in: if True, read them in from a file, otherwise filter them from the stored corpora
+        """
         if self.extra_subcorpus_filenames is None:
             raise ValueError("extra_subcorpus_filenames is not defined")
         if not read_in:
@@ -50,7 +55,7 @@ class CategoryEvaluation:
                     extra_golds += penman.load(f"{self.corpus_path}/subcorpora/{filename}.txt")
                 return extra_golds, extra_predictions
             else:
-                raise NotImplementedError("Can't get additional graphs without predictions directory and filenames")
+                raise NotImplementedError("Can't get additional graphs without predictions directory")
 
 
     def make_and_append_results_row(self, metric_name: str, eval_type: str, metric_results: List):
@@ -58,7 +63,6 @@ class CategoryEvaluation:
         :param eval_type: either EVAL_TYPE_SUCCESS_RATE or EVAL_TYPE_F1 (the constants given category_evaluation.py)
         :param metric_name:
         :param metric_results:
-        :return:
         """
         new_row = self.make_results_row(metric_name, eval_type, metric_results)
         self.rows.append(new_row)
@@ -68,10 +72,9 @@ class CategoryEvaluation:
         Include the main dataset name in the result rows only the first time to reduce clutter.
         Args:
             metric_name: Name of the metric such a Edge Recall
-            eval_type:
+            eval_type: used to guide printing
             metric_results: Output of an evaluation, e.g. [successes, sample_size]
         Returns: new row: [display name if new, metric name, eval type, successes, sample_size]
-
         """
         if self.print_dataset_name:
             ds_name = self.category_metadata #.display_name TODO
@@ -89,6 +92,14 @@ class CategoryEvaluation:
         smatch = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
         smatch_f1 = self.get_f_from_prf(smatch)
         self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])
+
+    def get_results_by_size(self):
+        """Split up the generalisation by size as marked in corpora.
+        Currently just used for structural generalisation"""
+        if self.category_metadata.subcorpus_filename in size_mappers:
+            return get_exact_match_by_size(self.gold_amrs, self.predicted_amrs, size_mappers[self.category_metadata.subcorpus_filename])
+        else:
+            return {}
 
     def make_results(self):
         raise NotImplementedError("This method must be implemented by subclasses.")
@@ -129,6 +140,7 @@ class CategoryEvaluation:
                     filtered_golds.extend(more_gold)
                     filtered_preds.extend(more_preds)
         else:
+            print("No filtering done")
             filtered_golds = self.gold_amrs
             filtered_preds = self.predicted_amrs
         if len(filtered_golds) == 0:
