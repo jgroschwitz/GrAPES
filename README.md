@@ -130,7 +130,7 @@ python evaluate_single_category.py -c rare_senses -g path/to/AMR/testset -p path
 
 Most categories correspond to one file, but not for these two categories.
 
-Structural generalisation categories will automatically include the separate `sanity_check` subcorpora.
+Structural generalisation categories will automatically include the separate `sanity_check` subcorpora if you provide the whole corpus. If you provide separate files, run the sanity check separately.
 
 Moreover, the `cp_recursion_plus_coreference` category uses two files, which are both used if you provide the path to the full GrAPES dataset.
 

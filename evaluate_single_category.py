@@ -65,9 +65,12 @@ def main():
     try:
         evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
     except Exception as e:
-        if info.subcorpus_filename == "deep_recursion_pronouns":
+        if args.category_name == "cp_recursion_plus_coreference":
             predicted_amrs += load_parser_output("deep_recursion_3s", ".", predictions_directory=predictions_directory)
-            gold_amrs += load(f"corpus/subcorpora/deep_recursion_3s.txt")
+            new_golds = load("corpus/subcorpora/deep_recursion_3s.txt")
+            if len(new_golds) == 0:
+                print("No graphs found!")
+            gold_amrs += new_golds
             evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
         else:
             raise e
@@ -82,18 +85,15 @@ def main():
             generalisation_by_size = evaluator.get_results_by_size()
             pretty_print_structural_generalisation_by_size({info.subcorpus_filename: generalisation_by_size})
 
-        try:
-            eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
-        except Exception as e:
-            if info.subcorpus_filename == add_sanity_check_suffix("deep_recursion_pronouns"):
-                corpus_name = add_sanity_check_suffix("deep_recursion_3s")
-                predicted_amrs += load_parser_output(corpus_name, ".", predictions_directory=predictions_directory)
-                gold_amrs += load(f"corpus/subcorpora/{corpus_name}.txt")
-            else:
-                raise e
-        evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
-        results += evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
-        caption += " and Sanity Check"
+        if not args.category_name.endswith("sanity_check"):
+            # Try doing the sanity check for a main class
+            try:
+                eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
+                evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
+                results += evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+                caption += " and Sanity Check"
+            except Exception as e:
+                print("(No Sanity Check: Need full or separate file)")
 
     print(caption)
     print()

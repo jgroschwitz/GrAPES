@@ -218,8 +218,8 @@ class ExactMatch(CategoryEvaluation):
         return self.category_metadata.subcorpus_filename.startswith("deep_recursion_pronouns")
 
     def get_3s_amrs(self):
-        filter_name = add_sanity_check_suffix("deep_recursion_3s") if self.category_metadata.subcorpus_filename.endswith("sanity_check") else "deep_recursion_3s"
-        more_golds, more_preds = filter_amrs_for_name(filter_name, self.gold_amrs, self.predicted_amrs)
+        print(len(self.gold_amrs))
+        more_golds, more_preds = filter_amrs_for_name(self.category_metadata.subcorpus_filename, self.gold_amrs, self.predicted_amrs)
         return more_golds, more_preds
 
     def get_results_by_size(self):

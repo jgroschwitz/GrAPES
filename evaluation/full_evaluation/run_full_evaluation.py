@@ -64,7 +64,10 @@ def load_parser_output(subcorpus_name, root_dir=root_dir_here, parser_name=None,
         except FileNotFoundError:
             pass
     if predictions_directory is not None:
-        return load(f"{root_dir}/{predictions_directory}/{subcorpus_name}.txt")
+        graphs = load(f"{root_dir}/{predictions_directory}/{subcorpus_name}.txt")
+        if len(graphs) == 0:
+            print(f"No graphs found for {subcorpus_name}", file=sys.stderr)
+        return graphs
     else:
         raise ValueError("parser name or predictions directory must be specified")
 
