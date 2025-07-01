@@ -4,13 +4,16 @@ import os
 
 from penman import load
 
+from evaluate_single_category import SmartFormatter, load_predictions
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate
+from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate, \
+    pretty_print_structural_generalisation_by_size
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
 
 from evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name, \
-    is_grapes_category_with_testset_data, is_grapes_category_with_ptb_data
+    is_grapes_category_with_testset_data, is_grapes_category_with_ptb_data, get_formatted_category_names, \
+    is_testset_category
 from prettytable import PrettyTable
 
 
@@ -46,58 +49,9 @@ set_names_with_category_names = [
     ("9. Non-trivial word-to-node relations", ["ellipsis", "multinode_word_meanings", "imperatives"])
     ]
 
-# category_names_to_source_corpus_name = {
-#     "pragmatic_coreference_testset": "testset",
-#     "pragmatic_coreference_winograd": "grapes",
-#     "syntactic_gap_reentrancies": "testset",
-#     "unambiguous_coreference": "testset",
-#     "nested_control_and_coordination": "grapes",
-#     "nested_control_and_coordination_sanity_check": "grapes",
-#     "multiple_adjectives": "grapes",
-#     "multiple_adjectives_sanity_check": "grapes",
-#     "centre_embedding": "grapes",
-#     "centre_embedding_sanity_check": "grapes",
-#     "cp_recursion": "grapes",
-#     "cp_recursion_sanity_check": "grapes",
-#     "cp_recursion_plus_coreference": "grapes",
-#     "cp_recursion_plus_coreference_sanity_check": "grapes",
-#     "cp_recursion_plus_rc": "grapes",
-#     "cp_recursion_plus_rc_sanity_check": "grapes",
-#     "cp_recursion_plus_rc_plus_coreference": "grapes",
-#     "cp_recursion_plus_rc_plus_coreference_sanity_check": "grapes",
-#     "long_lists": "grapes",
-#     "long_lists_sanity_check": "grapes",
-#     "rare_node_labels": "testset",
-#     "unseen_node_labels": "testset",
-#     "rare_predicate_senses_excl_01": "testset",
-#     "unseen_predicate_senses_excl_01": "grapes",
-#     "rare_edge_labels_ARG2plus": "testset",
-#     "unseen_edge_labels_ARG2plus": "grapes",
-#     "seen_names": "testset",
-#     "unseen_names": "testset",
-#     "seen_dates": "testset",
-#     "unseen_dates": "testset",
-#     "other_seen_entities": "testset",
-#     "other_unseen_entities": "testset",
-#     "types_of_seen_named_entities": "testset",
-#     "types_of_unseen_named_entities": "testset",
-#     "seen_andor_easy_wiki_links": "testset",
-#     "hard_unseen_wiki_links": "testset",
-#     "frequent_predicate_senses_incl_01": "testset",
-#     "word_ambiguities_handcrafted": "grapes_from_testset",
-#     "word_ambiguities_karidi_et_al_2021": "grapes",
-#     "pp_attachment": "grapes",
-#     "unbounded_dependencies": "grapes_from_ptb",
-#     "passives": "testset",
-#     "unaccusatives": "testset",
-#     "ellipsis": "testset",
-#     "multinode_word_meanings": "testset",
-#     "imperatives": "testset"
-# }
-
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Evaluate all categories.")
+    parser = argparse.ArgumentParser(description="Evaluate all categories.", formatter_class=SmartFormatter)
     parser.add_argument('-gt', '--gold_amr_testset_file', type=str, help='Path to gold AMR file (testset). A single '
                                                                          'file containing all AMRs of the AMRBank 3.0'
                                                                          'testset.')
@@ -115,12 +69,19 @@ def parse_args():
                                                                    'computed. Affected metrics are Smatch for'
                                                                    ' structural generalization, and unlabeled edge '
                                                                    'attachment scores.')
+    parser.add_argument('-b', '--bunch', type=int, required=False, default=None, help='Only evaluate this "bunch" of categories. Optional.'
+                                                        ' Choose a number from the following:\n'
+                                                        + get_formatted_category_names([b for b, _ in set_names_with_category_names]))
     args = parser.parse_args()
     return args
 
 
+def do_this_category(bunch, category_name):
+    return bunch is None or category_name.startswith(str(bunch)+".")
+
+
 def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes, predictions_directory,
-                filter_out_f1=True, filter_out_unlabeled_edge_attachment=True):
+                filter_out_f1=True, filter_out_unlabeled_edge_attachment=True, bunch=None):
     """
     Returns a list of result rows. Each row has the following format:
     [set number, category name, metric name, score, lower_bound, upper_bound, sample_size]
@@ -147,9 +108,12 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
               " 'Edge attachments' compact evaluation results. You can add the graphs from the PTB with a"
               " script; see the documentation on the GitHub page.")
 
+
     results = []
     struct_gen_by_size = {}
     for set_name, category_names in set_names_with_category_names:
+        if not do_this_category(bunch, set_name):
+            continue
         print("\nEvaluating " + set_name)
         for category_name in category_names:
             set_class, info = category_name_to_set_class_and_metadata[category_name]
@@ -225,9 +189,6 @@ def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edg
 def make_empty_result(set_name, category_name):
     return [set_name[0], category_name, "N/A", "N/A", "N/A", "N/A", "N/A"]
 
-def is_testset_category(info):
-    return info.subcorpus_filename is None
-
 
 def do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
     if not use_testset and is_testset_category(info):
@@ -242,12 +203,11 @@ def do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use
 
 
 def main():
-    parser = "parser"
 
     args = parse_args()
     if args.gold_amr_testset_file is not None and args.predicted_amr_testset_file is not None:
         gold_graphs_testset = load(args.gold_amr_testset_file, encoding="utf8")
-        predicted_graphs_testset = load(args.predicted_amr_testset_file)
+        predicted_graphs_testset = load_predictions(args.predicted_amr_testset_file)
         if len(gold_graphs_testset) != len(predicted_graphs_testset):
             raise ValueError(
                 "Gold and predicted AMR files must contain the same number of AMRs. This is not the case for the testset here."
@@ -258,7 +218,7 @@ def main():
 
     if args.gold_amr_grapes_file is not None and args.predicted_amr_grapes_file is not None:
         gold_graphs_grapes = load(args.gold_amr_grapes_file, encoding="utf8")
-        predicted_graphs_grapes = load(args.predicted_amr_grapes_file, encoding="utf8")
+        predicted_graphs_grapes = load_predictions(args.predicted_amr_grapes_file, encoding="utf8")
         predictions_directory = os.path.dirname(args.predicted_amr_grapes_file)
 
         if len(gold_graphs_grapes) != len(predicted_graphs_grapes):
@@ -272,7 +232,7 @@ def main():
 
     results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
                           predictions_directory,
-                          filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics)
+                          filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics, bunch=args.bunch)
     out_dir = f"data/processed/results"
     os.makedirs(out_dir, exist_ok=True)
     csv.writer(open(f"{out_dir}/results.csv", "w", encoding="utf8")).writerows(results)
@@ -282,39 +242,14 @@ def main():
     for row in results:
         print_table.add_row(row)
 
-    pretty_print_structural_generalisation_by_size(by_size)
+    if len(by_size) > 0:
+        pretty_print_structural_generalisation_by_size(by_size)
 
-    print("\nAll results")
+    header = "\nAll results"
+    if args.bunch is not None:
+        header += f" for bunch {args.bunch}"
+    print(header)
     print(print_table)
-
-
-def pretty_print_structural_generalisation_by_size(results):
-    """
-    Prints the structural generalisation results split up by size
-    Args:
-        results: dict from parser name to dataset name to dict from size to score
-    """
-    print(results)
-    from prettytable import PrettyTable
-    table = PrettyTable()
-    max_size = 10
-    field_names = ["Dataset"]
-    for n in range(1, max_size + 1):
-        field_names.append(str(n))
-    table.field_names = field_names
-    table.align = "l"
-    for dataset in results:
-        sizes = results[dataset].keys()
-        row = [dataset]
-        for n in range(1, max_size + 1):
-            if n in sizes:
-                row.append(results[dataset][n])
-            else:
-                row.append("")
-        table.add_row(row)
-
-    print("\nStructure generalisation results by size")
-    print(table)
 
 
 if __name__ == "__main__":

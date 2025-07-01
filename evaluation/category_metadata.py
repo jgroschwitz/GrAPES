@@ -298,3 +298,10 @@ for name in bunch2subcategory["3. Structural Generalization"]:
     new_info.subcorpus_filename = add_sanity_check_suffix(info.subcorpus_filename)
     category_name_to_set_class_and_metadata[new_name] = eval_class, new_info
 
+
+def get_formatted_category_names(names=category_name_to_set_class_and_metadata.keys()):
+    return "\n".join(names)
+
+
+def is_testset_category(info):
+    return info.subcorpus_filename is None

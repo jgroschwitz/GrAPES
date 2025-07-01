@@ -238,7 +238,6 @@ def calculate_edge_prereq_recall_and_sample_size_counts(subcategory_info,
     # predicted_amrs = gold_amrs  # this is for debugging: check if the gold matches what is written in the tsv file
     #  (both recall and prerequisites should be 1.0, except if the gold graph has an error and the tsv is correct)
     id2labels = read_edge_tsv(root_dir, subcategory_info=subcategory_info)
-    print(f"Found {len(id2labels)} items")
     prereq_successes, unlabeled_successes, recall_successes, sample_size = _calculate_edge_recall(
         error_analysis_message,
         error_analysis_output_filename,
@@ -247,7 +246,6 @@ def calculate_edge_prereq_recall_and_sample_size_counts(subcategory_info,
         predicted_amrs,
         root_dir,
         subcategory_info.use_sense)
-    print(prereq_successes, unlabeled_successes, recall_successes, sample_size)
     return prereq_successes, unlabeled_successes, recall_successes, sample_size
 
 

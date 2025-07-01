@@ -56,28 +56,14 @@ class CategoryEvaluation:
         else:
             ds_name = None  # ""
         new_row = [ds_name, metric_name, eval_type] + metric_results
-        print(new_row)
         return new_row
 
     def make_results_columns_for_edge_recall(self):
         # gold_amrs, predicted_amrs = self.manage_override_amrs(self.category_metadata.override_gold_amrs,
         #                                                       self.category_metadata.override_predicted_amrs)
         self.rows.extend(self.make_results_columns_for_edge_recall_from_graphs(self.gold_amrs, self.predicted_amrs))
-        print("Rows are now", self.rows)
-
-    # def manage_override_amrs(self, override_gold_amrs, override_predicted_amrs):
-    #     if override_gold_amrs:
-    #         gold_amrs = override_gold_amrs
-    #     else:
-    #         gold_amrs = self.gold_amrs
-    #     if override_predicted_amrs:
-    #         predicted_amrs = override_predicted_amrs
-    #     else:
-    #         predicted_amrs = self.predicted_amrs
-    #     return gold_amrs, predicted_amrs
 
     def make_results_columns_for_edge_recall_from_graphs(self, gold_amrs, predicted_amrs):
-        print(f"Running edge recall on up to {len(gold_amrs)} graphs")
         prereqs, unlabeled_recalled, labeled_recalled, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
             self.category_metadata,
             gold_amrs=gold_amrs,
@@ -90,9 +76,6 @@ class CategoryEvaluation:
                 self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
 
     def make_results_column_for_node_recall(self, prereq=False):
-        # gold_amrs, predicted_amrs = self.manage_override_amrs(self.category_metadata.override_gold_amrs,
-        #                                                       self.category_metadata.override_predicted_amrs)
-
         self.rows.append(self.make_results_column_for_node_recall_from_graphs(self.gold_amrs, self.predicted_amrs, prereq))
 
     def make_results_column_for_node_recall_from_graphs(self,
@@ -141,13 +124,6 @@ class CategoryEvaluation:
     def make_smatch_results(self):
         smatch_f1 = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
         self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])
-
-    # def get_result_rows(self):
-    #     self._run_all_evaluations()
-    #     return self.rows
-
-    # def _run_all_evaluations(self):
-    #     raise NotImplementedError("This method must be implemented by subclasses.")
 
     def run_evaluation(self):
         raise NotImplementedError("This method must be implemented by subclasses.")

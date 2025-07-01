@@ -3,21 +3,24 @@ import sys
 
 from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachmentAlone
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-from evaluation.structural_generalization import add_sanity_check_suffix, get_exact_match_by_size, size_mappers
+from evaluation.structural_generalization import size_mappers
 from evaluation.util import num_to_score
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
-
+from prettytable import PrettyTable
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
     CategoryEvaluation
-from evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, is_copyrighted_data
+from evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, \
+    is_copyrighted_data, is_testset_category
 
 # globals
 root_dir_here = "../../"
 path_to_parser_outputs = f"{root_dir_here}/data/raw/parser_outputs/"
 results_path = f"{root_dir_here}/data/processed/results"
 pickle_path = f"{results_path}/results_table.pickle"
+by_size_pickle_path = f"{results_path}/structural_generation_by_size.pickle"
+
 # parser_names = ["amparser", "cailam", "amrbart"]
 parser_names = ["amparser"]
 full_grapes_name = "full_corpus"
@@ -36,76 +39,32 @@ def get_predictions_path_for_parser(parser):
 
 def load_parser_output(subcorpus_name, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
     if parser_name is not None:
-        pred_path = f"{get_predictions_path_for_parser(parser_name)}/{subcorpus_name}.txt"
-    elif predictions_directory is not None:
-        pred_path = f"{root_dir}/{predictions_directory}/{subcorpus_name}.txt"
+        try:
+            return load(f"{get_predictions_path_for_parser(parser_name)}/{subcorpus_name}.txt")
+        except FileNotFoundError:
+            pass
+    if predictions_directory is not None:
+        return load(f"{root_dir}/{predictions_directory}/{subcorpus_name}.txt")
     else:
         raise ValueError("parser name or predictions directory must be specified")
-    return load(pred_path)
 
 
-# def get_arguments_for_evaluation_class(info: SubcategoryMetadata,
-#                                        predictions_directory=None,
-#                                        parser_name="parser",
-#                                        root_dir=".",
-#                                        gold_testset_path=None,
-#                                        predicted_testset_path=None,
-#                                        gold_graphs=None,
-#                                        predicted_graphs=None):
-#     if info.subcorpus_filename is None:
-#         if gold_graphs is None:
-#             if gold_testset_path is None:
-#                 raise ValueError(f"Need gold testset path for {info.display_name}")
-#             gold_graphs = load(gold_testset_path)
-#         if predicted_graphs is None:
-#             if predicted_testset_path is None:
-#                 predicted_testset_path = f"{predictions_directory}/testset.txt"
-#             print("predicted_testset_path", predicted_testset_path)
-#             predicted_graphs = load(predicted_testset_path)
-#
-#         return gold_graphs, predicted_graphs, root_dir, info
-#     else:
-#         print("Using", info.subcorpus_filename)
-#
-#         if predicted_graphs is None:
-#             predicted_graphs = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
-#         if gold_graphs is None:
-#             gold_graphs = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-#
-#         # Special case for PP attachment: they're in separate files
-#         # I don't know why the evaluation was even working because we were only looking at
-#         # the files in pp_attachment.txt, which don't actually get evaluated.
-#         if info.subcorpus_filename == "pp_attachment":
-#             return parser_name, root_dir, info, get_predictions_path_for_parser(parser_name)
-#         elif info.subtype == "structural_generalization":
-#             sanity_check_name = add_sanity_check_suffix(info.subcorpus_filename)
-#             gold_sanity = load(f"{root_dir}/corpus/subcorpora/{sanity_check_name}.txt")
-#             predictions_sanity = load(f"{predictions_directory}/{sanity_check_name}.txt")
-#             return gold_graphs, predicted_graphs, gold_sanity, predictions_sanity, root_dir, info, predictions_directory
-#
-#         else:
-#             return gold_graphs, predicted_graphs, root_dir, info
+def create_results_pickles():
+    """
+    Main evaluation function. Runs evaluation on all categories for all parsers. See/update global variables
+     for where parser results should be stored.
 
-def update_generalisations_by_size_dict(generalisation_by_size_dict, parser_name, info, by_size):
-    # predictions = load(f"{predictions_directory}/{info.subcorpus_filename}.txt")
-    # golds = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-    if parser_name in generalisation_by_size_dict:
-        generalisation_by_size_dict[parser_name][info.display_name] = by_size
-    else:
-        generalisation_by_size_dict[parser_name] = {info.display_name: by_size}
-    return generalisation_by_size_dict
-
-
-
-def create_results_pickle():
+    Pickles and prints the results
+    """
     gold_amrs, gold_grapes = import_graphs()
     parser_name2rows = dict()
+    all_generalisations_by_size_dict = dict()
 
     for parser_name in parser_names:
         testset_parser_outs = load_parser_output("testset", parser_name=parser_name)
         grapes_parser_outs = load_parser_output(full_grapes_name, parser_name=parser_name)
 
-        print("RESULTS FOR", parser_name)
+        print("Running", parser_name, "...")
 
         all_result_rows = []
         parser_name2rows[parser_name] = all_result_rows
@@ -115,41 +74,38 @@ def create_results_pickle():
         for bunch in sorted(bunch2subcategory.keys()):
 
             all_result_rows.append([bunch])
-            print(bunch)
+            print("Doing Bunch", bunch)
 
             for subcategory in bunch2subcategory[bunch]:
                 eval_class, info = category_name_to_set_class_and_metadata[subcategory]
 
-                if info.subcorpus_filename is None:
+                # get the appropriate corpora
+                if is_testset_category(info):
                     gold = gold_amrs
                     pred = testset_parser_outs
                 else:
                     gold = gold_grapes
                     pred = grapes_parser_outs
 
-                print(eval_class.__name__)
                 evaluator = eval_class(gold, pred, root_dir_here, info)
 
                 # Structural generalisation results by size
                 if info.subtype == "structural_generalization" and info.subcorpus_filename in size_mappers:
-                    print(info.subcorpus_filename)
-                    generalisation_by_size = update_generalisations_by_size_dict(
-                        generalisation_by_size,
-                        parser_name, info, evaluator.get_results_by_size()
-                    )
-                # evaluate
+                    generalisation_by_size[info.display_name] =  evaluator.get_results_by_size()
+
                 rows = evaluate(evaluator, info, root_dir_here, parser_name, None)
                 all_result_rows += rows
 
-        print("Structural Generalisation by length")
+        print("\nRESULTS FOR", parser_name)
         pretty_print_structural_generalisation_by_size(generalisation_by_size)
-
+        all_generalisations_by_size_dict[parser_name] = generalisation_by_size
 
         print("All result rows")
         # print(all_result_rows)
         print_pretty_table(all_result_rows)
 
     pickle.dump(parser_name2rows, open(pickle_path, "wb"))
+    pickle.dump(all_generalisations_by_size_dict, open(by_size_pickle_path, "wb"))
 
 
 def evaluate(evaluator: CategoryEvaluation, info, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
@@ -198,7 +154,19 @@ def evaluate(evaluator: CategoryEvaluation, info, root_dir=root_dir_here, parser
             raise e
 
 
-def run_single_file(eval_class, info, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
+def run_single_file(eval_class, info: SubcategoryMetadata, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
+    """
+    Evaluates one subcorpus file
+    Args:
+        eval_class: CategoryEvaluation class to initialise
+        info: SubcategoryMetadata for the file
+        root_dir: path to root directory of this project from wherever this function is called from
+        parser_name: optional. Can be used to make the predictions folder if
+        predictions_directory: optional. The actual predictions folder. One of the last two must be given.
+
+    Returns:
+
+    """
     pred = load_parser_output(info.subcorpus_filename, root_dir, parser_name=parser_name,
                               predictions_directory=predictions_directory)
     gold = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
@@ -207,38 +175,7 @@ def run_single_file(eval_class, info, root_dir=root_dir_here, parser_name=None, 
     return rows
 
 
-def pretty_print_structural_generalisation_by_size(results):
-    """
-    Prints the structural generalisation results split up by size
-    Args:
-        results: dict from parser name to dataset name to dict from size to score
-    """
-    print(results)
-    from prettytable import PrettyTable
-    table = PrettyTable()
-    max_size = 10
-    field_names = ["Parser", "Dataset"]
-    for n in range(1, max_size + 1):
-        field_names.append(str(n))
-    table.field_names = field_names
-    table.align = "l"
-    parsers = list(results.keys())
-    for dataset in results[parsers[0]]:
-        sizes = results[parsers[0]][dataset].keys()
-        for parser in parsers:
-            row = [parser, dataset]
-            for n in range(1, max_size + 1):
-                if n in sizes:
-                    row.append(results[parser][dataset][n])
-                else:
-                    row.append("")
-            table.add_row(row)
-
-    print(table)
-
-
 def print_pretty_table(result_rows):
-    from prettytable import PrettyTable
     table = PrettyTable()
     table.field_names = ["Dataset", "Metric", "Score", "Wilson CI", "Sample size"]
     table.align = "l"
@@ -403,9 +340,35 @@ def _get_row_evaluation_type(row):
 
 
 def main():
-    create_results_pickle()
+    create_results_pickles()
     # make_latex_table(results_path)
 
+
+def pretty_print_structural_generalisation_by_size(results):
+    """
+    Prints the structural generalisation results split up by size
+    Args:
+        results: dict from parser name to dataset name to dict from size to score
+    """
+    table = PrettyTable()
+    max_size = 10
+    field_names = ["Dataset"]
+    for n in range(1, max_size + 1):
+        field_names.append(str(n))
+    table.field_names = field_names
+    table.align = "l"
+    for dataset in results:
+        sizes = results[dataset].keys()
+        row = [dataset]
+        for n in range(1, max_size + 1):
+            if n in sizes:
+                row.append(int(results[dataset][n] * 100))
+            else:
+                row.append("")
+        table.add_row(row)
+
+    print("\nStructure generalisation results by size")
+    print(table)
 
 if __name__ == '__main__':
     main()

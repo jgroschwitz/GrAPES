@@ -1,25 +1,30 @@
 import argparse
 import os
-import sys
 
 from penman import load
 
-from evaluate_all_categories import pretty_print_structural_generalisation_by_size
-from evaluation.category_metadata import category_name_to_set_class_and_metadata
+from evaluation.category_metadata import category_name_to_set_class_and_metadata, get_formatted_category_names
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.run_full_evaluation import evaluate
+from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.single_eval import num_to_score
-from evaluation.structural_generalization import size_mappers
+from evaluation.structural_generalization import size_mappers, add_sanity_check_suffix
 
 
-def get_formatted_category_names():
-    return "\n".join(category_name_to_set_class_and_metadata.keys())  # TODO linebreak doesn't seem to work in help
+class SmartFormatter(argparse.HelpFormatter):
+    """
+    Custom Help Formatter used to split help text when '\n' was
+    inserted in it.
+    """
+    def _split_lines(self, text, width):
+        r = []
+        for t in text.splitlines(): r.extend(argparse.HelpFormatter._split_lines(self, t, width))
+        return r
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Evaluate single category.")
-    parser.add_argument('-c', '--category_name', type=str, help='Category to evaluate. Possible values are: '
+    parser = argparse.ArgumentParser(description="Evaluate single category.", formatter_class=SmartFormatter)
+    parser.add_argument('-c', '--category_name', type=str, help='Category to evaluate. Possible values are:\n'
                                                                 + get_formatted_category_names())
     parser.add_argument('-g', '--gold_amr_file', type=str, help='Path to gold AMR file. '
                                                                 'Optional if a GrAPES-specific category, '
@@ -42,19 +47,6 @@ def main():
     eval_class, info = category_name_to_set_class_and_metadata[args.category_name]
     predictions_path = args.predicted_amr_file
 
-    # if args.predicted_amr_file_or_directory is not None:
-    #     if os.path.isdir(args.predicted_amr_file_or_directory):
-    #         print("Using predictions directory", args.predicted_amr_file_or_directory)
-    #         predicted_path = args.predicted_amr_file_or_directory
-    #         predicted_testset_path = None
-    #     elif os.path.isfile(args.predicted_amr_file_or_directory):
-    #         print("Using predicted file", args.predicted_amr_file_or_directory)
-    #         predicted_testset_path = args.predicted_amr_file_or_directory
-    #         predicted_path = None
-    #     else:
-    #         print("Predicted AMR file or directory not found.")
-    #         exit(1)
-
     if predictions_path.endswith(f"{info.subcorpus_filename}.txt"):
         print("Using predicted AMR subcorpus file", predictions_path)
     else:
@@ -65,20 +57,27 @@ def main():
     else:
         gold_amrs = load("corpus/corpus.txt")
 
-    predicted_amrs = load(predictions_path)
+    predicted_amrs = load_predictions(predictions_path)
     predictions_directory = os.path.dirname(predictions_path)
 
-    print(f"Results on {info.display_name}:\n")
     evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
-    print(info.subcorpus_filename, evaluator.__class__.__name__)
+    results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+
+    caption = f"\nResults on {info.display_name}"
 
     # Structural generalisation results by size
-    if info.subtype == "structural_generalization" and info.subcorpus_filename in size_mappers:
-        print(info.subcorpus_filename)
-        generalisation_by_size = evaluator.get_results_by_size()
-        pretty_print_structural_generalisation_by_size({info.subcorpus_filename: generalisation_by_size})
+    if info.subtype == "structural_generalization":
+        do_by_size = info.subcorpus_filename in size_mappers
+        if do_by_size:
+            generalisation_by_size = evaluator.get_results_by_size()
+            pretty_print_structural_generalisation_by_size({info.subcorpus_filename: generalisation_by_size})
+        eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
+        evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
+        results += evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+        caption += " and Sanity Check"
 
-    results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+    print(caption)
+    print()
 
     for row in results:
         metric_name = row[1]
@@ -98,6 +97,16 @@ def main():
             print("ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
                   "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
             print(row)
+
+
+def load_predictions(predictions_path, encoding="utf8"):
+    """
+    Add some printing around loading predictions in case of warnings from Penman
+    """
+    print("\nLoading predicted AMRs...")
+    predicted_amrs = load(predictions_path, encoding=encoding)
+    print("Done\n")
+    return predicted_amrs
 
 
 if __name__ == "__main__":

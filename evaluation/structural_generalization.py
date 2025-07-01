@@ -99,7 +99,7 @@ def main():
             predicted_graphs_sanity_check = load(predicted_graphs_sanity_check_path)
 
             # print("Exact match by size:")
-            print(get_exact_match_by_size(gold_graphs, predicted_graphs, size_mapper=size_mappers[corpus_name]))
+            # print(get_exact_match_by_size(gold_graphs, predicted_graphs, size_mapper=size_mappers[corpus_name]))
 
             # print("Smatch:")
             # print(compute_smatch_f(gold_graphs_path, predicted_graphs_path))
