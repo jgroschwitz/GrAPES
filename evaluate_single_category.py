@@ -5,7 +5,9 @@ from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, get_formatted_category_names
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import ExactMatch
+from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size, \
+    load_parser_output
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score
 from evaluation.structural_generalization import size_mappers, add_sanity_check_suffix
@@ -60,7 +62,15 @@ def main():
     predicted_amrs = load_predictions(predictions_path)
     predictions_directory = os.path.dirname(predictions_path)
 
-    evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
+    try:
+        evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
+    except Exception as e:
+        if info.subcorpus_filename == "deep_recursion_pronouns":
+            predicted_amrs += load_parser_output("deep_recursion_3s", ".", predictions_directory=predictions_directory)
+            gold_amrs += load(f"corpus/subcorpora/deep_recursion_3s.txt")
+            evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
+        else:
+            raise e
     results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
 
     caption = f"\nResults on {info.display_name}"
@@ -71,7 +81,16 @@ def main():
         if do_by_size:
             generalisation_by_size = evaluator.get_results_by_size()
             pretty_print_structural_generalisation_by_size({info.subcorpus_filename: generalisation_by_size})
-        eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
+
+        try:
+            eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
+        except Exception as e:
+            if info.subcorpus_filename == add_sanity_check_suffix("deep_recursion_pronouns"):
+                corpus_name = add_sanity_check_suffix("deep_recursion_3s")
+                predicted_amrs += load_parser_output(corpus_name, ".", predictions_directory=predictions_directory)
+                gold_amrs += load(f"corpus/subcorpora/{corpus_name}.txt")
+            else:
+                raise e
         evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
         results += evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
         caption += " and Sanity Check"

@@ -172,14 +172,6 @@ def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, root_dir=
             except Exception as e:
                 print("Couldn't process", info.display_name, e, file=sys.stderr)
                 # raise e
-        elif info.subcorpus_filename == "deep_recursion_pronouns":
-            pred = load_parser_output(info.subcorpus_filename, root_dir, parser_name=parser_name,
-                                      predictions_directory=predictions_directory)
-            gold = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-            pred += load_parser_output("deep_recursion_3s", root_dir, parser_name=parser_name, predictions_directory=predictions_directory)
-            gold += load(f"{root_dir}/corpus/subcorpora/deep_recursion_3s.txt")
-            evaluator = ExactMatch(gold, pred, root_dir, info)
-            return evaluator.run_evaluation()
         else:
             raise e
 
