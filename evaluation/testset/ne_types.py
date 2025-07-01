@@ -1,4 +1,4 @@
-from evaluation.corpus_metrics import calculate_node_label_recall
+from evaluation.corpus_metrics import calculate_node_label_recall, graph_is_in_ids
 from evaluation.file_utils import load_corpus_from_folder
 from evaluation.util import get_name, get_node_by_name
 from penman import load
@@ -40,7 +40,7 @@ def get_ne_type_successes_and_sample_size(id2labels, gold_amrs, predicted_amrs):
     type_recalled = 0
     total = 0
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
-        if gold_amr.metadata['id'] in id2labels:
+        if graph_is_in_ids(gold_amr, id2labels.keys()):
             total += len(id2labels[gold_amr.metadata['id']])
             for type_and_name in id2labels[gold_amr.metadata['id']]:
                 for edge in predicted_amr.edges(role=":name"):

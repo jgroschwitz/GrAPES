@@ -67,16 +67,16 @@ def main():
     predictions_directory = os.path.dirname(predictions_path)
 
     try:
-        evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
+        evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory)
     except Exception as e:
-        if args.category_name == "cp_recursion_plus_coreference":
-            predicted_amrs += load_parser_output("deep_recursion_3s", ".", predictions_directory=predictions_directory)
-            new_golds = load("corpus/subcorpora/deep_recursion_3s.txt")
-            if len(new_golds) == 0:
-                print("No graphs found!")
-            gold_amrs += new_golds
-            evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
-        else:
+        # if args.category_name == "cp_recursion_plus_coreference":
+        #     predicted_amrs += load_parser_output("deep_recursion_3s", ".", predictions_directory=predictions_directory)
+        #     new_golds = load("corpus/subcorpora/deep_recursion_3s.txt")
+        #     if len(new_golds) == 0:
+        #         print("No graphs found!")
+        #     gold_amrs += new_golds
+        #     evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory)
+        # else:
             raise e
     results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
 
@@ -93,7 +93,7 @@ def main():
             # Try doing the sanity check for a main class
             try:
                 eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
-                evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
+                evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory)
                 new_rows = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
                 results += new_rows
                 caption += " and Sanity Check"

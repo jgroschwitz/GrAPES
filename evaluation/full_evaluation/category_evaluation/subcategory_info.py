@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -29,6 +30,8 @@ class SubcategoryMetadata:
     # for named entities, word disambiguation, structural generalisation
     subtype: str or None = None
     label_column: int = 1
+    # for pps and deep recusion with pronouns
+    extra_subcorpus_filenames: List[str] or None = None
 
     def get_latex_display_name(self):
         if self.latex_display_name is None:

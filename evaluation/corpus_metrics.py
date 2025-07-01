@@ -111,6 +111,8 @@ def calculate_node_label_recall(category_metadata: SubcategoryMetadata, gold_amr
     recall = success_count / sample_size if sample_size > 0 else 1.0
     return recall
 
+def graph_is_in_ids(graph:penman.Graph, ids):
+    return graph.metadata['id'] in ids
 
 def calculate_node_label_successes_and_sample_size(category_metadata: SubcategoryMetadata,
                                                    gold_amrs=None,
@@ -129,7 +131,7 @@ def calculate_node_label_successes_and_sample_size(category_metadata: Subcategor
     error_analysis = {"gold_graphs": [], "predicted_graphs": [], "sentences": [], "highlights": [],
                       "message": error_analysis_message}
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
-        if gold_amr.metadata['id'] in id2labels:
+        if graph_is_in_ids(gold_amr, id2labels.keys()):
             sample_size += len(id2labels[gold_amr.metadata['id']])
             predicted_labels = _get_predicted_labels_based_on_evaluation_case(category_metadata.attribute_label, predicted_amr,
                                                                               category_metadata.use_attributes, use_sense=use_sense)
@@ -163,7 +165,7 @@ def calculate_subgraph_existence_successes_and_sample_size(id2subgraphs, gold_am
     success_count = 0
     sample_size = 0
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
-        if gold_amr.metadata['id'] in id2subgraphs:
+        if graph_is_in_ids(gold_amr, id2subgraphs.keys()):
             sample_size += len(id2subgraphs[gold_amr.metadata['id']])
             for subgraph_string in id2subgraphs[gold_amr.metadata['id']]:
                 if check_fragment_existence(subgraph_string, predicted_amr):
@@ -259,7 +261,7 @@ def _calculate_edge_recall(error_analysis_message, error_analysis_output_filenam
     error_analysis = {"gold_graphs": [], "predicted_graphs": [], "sentences": [], "highlights": [],
                       "message": error_analysis_message}
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
-        if gold_amr.metadata['id'] in id2labels:
+        if graph_is_in_ids(gold_amr, id2labels.keys()):
             total += len(id2labels[gold_amr.metadata['id']])
 
             for target_tuple in id2labels[gold_amr.metadata['id']]:

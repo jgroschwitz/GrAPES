@@ -1,6 +1,6 @@
 from typing import List
 
-from evaluation.corpus_metrics import calculate_node_label_recall
+from evaluation.corpus_metrics import calculate_node_label_recall, graph_is_in_ids
 from evaluation.file_utils import load_corpus_from_folder
 from penman import load, Graph, encode
 import csv
@@ -116,7 +116,7 @@ def calculate_special_entity_successes_and_sample_size(id2labels_entities, gold_
     recalled = 0
     total = 0
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
-        if gold_amr.metadata['id'] in id2labels_entities:
+        if graph_is_in_ids(gold_amr, id2labels_entities.keys()):
             gold_strings = id2labels_entities[gold_amr.metadata['id']]
             total += len(gold_strings)
             for gold_value_string in gold_strings:

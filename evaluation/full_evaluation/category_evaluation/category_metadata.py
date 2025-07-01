@@ -8,22 +8,36 @@ from evaluation.novel_corpus.structural_generalization import \
     add_sanity_check_suffix
 from evaluation.util import SANITY_CHECK
 
-# TODO check orders and completeness
-bunch2subcategory = {
-    "1. Pragmatic Reentrancies": ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"],
-    "4. Rare Unseen Nodes Edges": ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01",
-                         "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"],
-    "2. Unambiguous Reentrancies": ["syntactic_gap_reentrancies", "unambiguous_coreference"],
-    "8. Attachments": ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"],
-    "6. Entity Classification And Linking": ["seen_andor_easy_wiki_links", "hard_unseen_wiki_links"],
-    "5. Names Dates Etc": ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities",
-                           "other_unseen_entities",  "types_of_seen_named_entities", "types_of_unseen_named_entities"],
-    "9. Nontrivial Word2Node Relations": ["ellipsis", "multinode_word_meanings", "imperatives"],
-    "7. Lexical Disambiguation": ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"],
-    "3. Structural Generalization": ["nested_control_and_coordination", "multiple_adjectives", "centre_embedding",
-                                     "cp_recursion", "cp_recursion_plus_coreference", "cp_recursion_plus_rc",
-                                     "cp_recursion_plus_rc_plus_coreference", "long_lists"],
-}
+set_names_with_category_names = [
+    ("1. Pragmatic reentrancies", ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"]),
+    ("2. Unambiguous reentrancies", ["syntactic_gap_reentrancies", "unambiguous_coreference"]),
+    ("3. Structural generalization",
+     ["nested_control_and_coordination", "nested_control_and_coordination_sanity_check",
+      "multiple_adjectives", "multiple_adjectives_sanity_check",
+      "centre_embedding", "centre_embedding_sanity_check",
+      "cp_recursion", "cp_recursion_sanity_check",
+      "cp_recursion_plus_coreference", "cp_recursion_plus_coreference_sanity_check",
+      "cp_recursion_plus_rc", "cp_recursion_plus_rc_sanity_check",
+      "cp_recursion_plus_rc_plus_coreference", "cp_recursion_plus_rc_plus_coreference_sanity_check",
+      "long_lists", "long_lists_sanity_check"
+      ]),
+    ("4. Rare and unseen words",
+     ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01", "unseen_predicate_senses_excl_01",
+      "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"]),
+    ("5. Special entities",
+     ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities", "other_unseen_entities"]),
+    ("6. Entity classification and linking",
+     ["types_of_seen_named_entities", "types_of_unseen_named_entities", "seen_andor_easy_wiki_links",
+      "hard_unseen_wiki_links"]),
+    ("7. Lexical disambiguations",
+     ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"]),
+    ("8. Edge attachments", ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"]),
+    ("9. Non-trivial word-to-node relations", ["ellipsis", "multinode_word_meanings", "imperatives"])
+    ]
+
+bunch2subcategory = dict(set_names_with_category_names)
+print(len(bunch2subcategory))
+
 
 def is_grapes_category_with_testset_data(category_info):
     return  category_info.subcorpus_filename == "word_disambiguation"
@@ -36,6 +50,8 @@ def is_copyrighted_data(category_info):
 
 def is_sanity_check(category_info):
     return category_info.subcorpus_filename.endswith("sanity_check")
+
+
 
 category_name_to_set_class_and_metadata = {
     "pragmatic_coreference_testset": (EdgeRecall, SubcategoryMetadata(
@@ -85,6 +101,7 @@ category_name_to_set_class_and_metadata = {
         display_name="CP recursion + coreference",
         subcorpus_filename="deep_recursion_pronouns",
         subtype="structural_generalization",
+        extra_subcorpus_filenames=["deep_recursion_3s"]
     )),
     "cp_recursion_plus_rc": (ExactMatch, SubcategoryMetadata(
         display_name="CP recursion + relative clause (RC)",
@@ -210,6 +227,7 @@ category_name_to_set_class_and_metadata = {
     "pp_attachment": (PPAttachment, SubcategoryMetadata(
         display_name="PP attachment",
         subcorpus_filename="pp_attachment",
+        extra_subcorpus_filenames=["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]
     )),
     "unbounded_dependencies": (EdgeRecall, SubcategoryMetadata(
         display_name="Unbounded dependencies",
@@ -239,13 +257,17 @@ category_name_to_set_class_and_metadata = {
     ))
 }
 
-for name in bunch2subcategory["3. Structural Generalization"]:
+for name in bunch2subcategory["3. Structural generalization"]:
     eval_class, info = category_name_to_set_class_and_metadata[name]
     new_info = copy(info)
     new_name = add_sanity_check_suffix(name)
     new_info.display_name = SANITY_CHECK
     new_info.subcorpus_filename = add_sanity_check_suffix(info.subcorpus_filename)
+    if new_info.extra_subcorpus_filenames is not None:
+        new_info.extra_subcorpus_filenames = [add_sanity_check_suffix(filename) for filename in info.extra_subcorpus_filenames]
+
     category_name_to_set_class_and_metadata[new_name] = eval_class, new_info
+
 
 
 def get_formatted_category_names(names=category_name_to_set_class_and_metadata.keys()):
@@ -254,3 +276,5 @@ def get_formatted_category_names(names=category_name_to_set_class_and_metadata.k
 
 def is_testset_category(info):
     return info.subcorpus_filename is None
+
+

@@ -276,7 +276,7 @@ GrAPES
 │ └── testset                               # evaluation modules for the AMR test set categories
 ├── grammars                                # Alto grammars for structural generalisation
 ├── scripts
-│ ├── full_evaluation.sh                    # script we used for the paper
+│ ├── full_evaluation.sh                    # script we used for the paper (may be obsolete)
 │ ├── file_manipulations                    # various scripts for changing files
 │ ├── latex                                 # converts csv outs from run_all_evaluations to LaTeX table
 │ ├── preprocessing                         # preprocessing scripts for AM parser and AMRBART

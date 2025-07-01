@@ -4,7 +4,6 @@ import pickle
 import sys
 
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachmentAlone
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.novel_corpus.structural_generalization import size_mappers
 from evaluation.util import num_to_score_with_preceding_0
@@ -14,8 +13,8 @@ from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
     CategoryEvaluation, EVAL_TYPE_NONE, EVAL_TYPE_NA
-from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, \
-    is_copyrighted_data, is_testset_category
+from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
+    is_copyrighted_data, is_testset_category, set_names_with_category_names, bunch2subcategory
 
 args = sys.argv
 if len(args) > 1:
@@ -137,8 +136,11 @@ def create_results_pickles():
                 all_result_rows += rows
 
         print("\nRESULTS FOR", parser_name)
-        pretty_print_structural_generalisation_by_size(generalisation_by_size)
+        table = pretty_print_structural_generalisation_by_size(generalisation_by_size)
         all_generalisations_by_size_dict[parser_name] = generalisation_by_size
+        csv.writer(open(f"{results_path}/{parser_name}_by_size.csv", "w")).writerow(table.field_names)
+        csv.writer(open(f"{results_path}/{parser_name}_by_size.csv", "a", encoding="utf8")).writerows(table.rows)
+
 
         print("All result rows")
         # print(all_result_rows)
@@ -190,16 +192,16 @@ def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata,
             except Exception as e:
                 return warn_and_make_empty_row(e, info)
                 # raise e
-        elif info.subcorpus_filename == "pp_attachment":
-            try:
-                print("Trying PP attachment files", file=sys.stderr)
-                evaluator = PPAttachmentAlone(root_dir, info, predictions_directory)
-                rows = evaluator.run_evaluation()
-                print("OK", file=sys.stderr)
-                return rows
-            except Exception as e:
-                return warn_and_make_empty_row(e, info)
-                # raise e
+        # elif info.subcorpus_filename == "pp_attachment":
+        #     try:
+        #         print("Trying PP attachment files", file=sys.stderr)
+        #         evaluator = PPAttachmentAlone(root_dir, info, predictions_directory)
+        #         rows = evaluator.run_evaluation()
+        #         print("OK", file=sys.stderr)
+        #         return rows
+        #     except Exception as e:
+        #         return warn_and_make_empty_row(e, info)
+        #         # raise e
         else:
             if fail_ok == 1:
                 return warn_and_make_empty_row(e, info)
@@ -422,6 +424,7 @@ def pretty_print_structural_generalisation_by_size(results):
 
     print("\nStructure generalisation results by size")
     print(table)
+    return table
 
 
 

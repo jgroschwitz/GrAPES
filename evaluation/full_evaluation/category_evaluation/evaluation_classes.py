@@ -71,34 +71,44 @@ class NodeRecall(CategoryEvaluation):
 
 
 class PPAttachment(CategoryEvaluation):
+    def __init__(self, gold_amrs, predicted_amrs, root_dir, info, predictions_directory=None):
+        super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory)
+        # if we read in the unused PP directory instead of the whole full_cprpus, replace it with the real ones
+        if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):
+            self.gold_amrs, self.predicted_amrs = self.get_additional_graphs(read_in=True)
+
     def make_results(self):
         prereqs, unlabeled, recalled, sample_size = get_pp_attachment_success_counters(self.gold_amrs, self.predicted_amrs)
         return [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size]),
                 self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE, [unlabeled, sample_size]),
                 self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
 
-
-class PPAttachmentAlone(PPAttachment):
-    """
-    This is called from evaluate_single_category if you want the PP results but you only have separate output files
-    """
-    def __init__(self, root_dir: str,
-                 category_metadata: SubcategoryMetadata, path_to_predictions_folder):
-        super().__init__([], [], root_dir, category_metadata)
-        self.get_all_pp_graphs(path_to_predictions_folder)
-
-    def get_all_pp_graphs(self, path_to_predictions_folder):
-        """
-        Assumes all predictions are in the same folder and have the same names as the golds
-        Args:
-            path_to_predictions_folder: path to the parser output AMR files such as see_with.txt
-        updates empty self.gold_amrs and self.predicted_amrs with concatenated gold AMRs, concatenated predicted AMRs
-        """
-        print("Concatenating PP files")
-        for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
-            self.gold_amrs += load(f"{self.root_dir}/corpus/subcorpora/{filename}.txt")
-            self.predicted_amrs += load(f"{path_to_predictions_folder}/{filename}.txt")
-        assert len(self.gold_amrs) == len(self.predicted_amrs) and len(self.gold_amrs) > 0
+#
+# class PPAttachmentAlone(PPAttachment):
+#     """
+#     This is called from evaluate_single_category if you want the PP results but you only have separate output files
+#     """
+#     def __init__(self, root_dir: str,
+#                  category_metadata: SubcategoryMetadata, path_to_predictions_folder):
+#         super().__init__([], [], root_dir, category_metadata)
+#         self.gold_amrs, self.predicted_amrs = self.get_all_pp_graphs(path_to_predictions_folder, self.root_dir)
+#
+#     @staticmethod
+#     def get_all_pp_graphs(path_to_predictions_folder, root_dir="."):
+#         """
+#         Assumes all predictions are in the same folder and have the same names as the golds
+#         Args:
+#             path_to_predictions_folder: path to the parser output AMR files such as see_with.txt
+#         updates empty self.gold_amrs and self.predicted_amrs with concatenated gold AMRs, concatenated predicted AMRs
+#         """
+#         gold_amrs = []
+#         predicted_amrs = []
+#         print("Concatenating PP files")
+#         for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
+#             gold_amrs += load(f"{root_dir}/corpus/subcorpora/{filename}.txt")
+#             predicted_amrs += load(f"{root_dir}/{path_to_predictions_folder}/{filename}.txt")
+#         assert len(gold_amrs) == len(predicted_amrs) and len(gold_amrs) > 0
+#         return gold_amrs, predicted_amrs
 
 
 class NETypeRecall(CategoryEvaluation):
@@ -172,32 +182,24 @@ class WordDisambiguationRecall(CategoryEvaluation):
 
 class ExactMatch(CategoryEvaluation):
     def __init__(self, gold_amrs, predicted_amrs, root_dir,
-                 category_metadata):
-        super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata)
+                 category_metadata, predictions_directory=None):
+        super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory)
 
         self.is_sanity_check = self.category_metadata.subtype.endswith("sanity_check")
 
-        if self.need_3s():
-            more_golds, more_preds = self.get_3s_amrs()
-
-        self.gold_amrs, self.predicted_amrs = filter_amrs_for_name(
+        gold_amrs, predicted_amrs = filter_amrs_for_name(
             self.category_metadata.subcorpus_filename,
             self.gold_amrs,
             self.predicted_amrs)
 
-        if self.need_3s():
-            self.gold_amrs += more_golds
-            self.predicted_amrs += more_preds
+        if self.extra_subcorpus_filenames is not None:
+            read_in = len(self.gold_amrs) == 100  # exactly 100 deep recursion with pronouns, and that's the only such category
+            more_gold, more_pred =  self.get_additional_graphs(read_in=read_in)
+            gold_amrs += more_gold
+            predicted_amrs += more_pred
 
-    def need_3s(self):
-        return self.category_metadata.subcorpus_filename.startswith("deep_recursion_pronouns")
-
-    def get_3s_amrs(self):
-        corpus = "deep_recursion_3s"
-        if self.is_sanity_check:
-            corpus = add_sanity_check_suffix(corpus)
-        more_golds, more_preds = filter_amrs_for_name(corpus, self.gold_amrs, self.predicted_amrs)
-        return more_golds, more_preds
+        self.gold_amrs = gold_amrs
+        self.predicted_amrs = predicted_amrs
 
     def get_results_by_size(self):
         if self.category_metadata.subcorpus_filename in size_mappers:

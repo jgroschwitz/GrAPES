@@ -1,10 +1,13 @@
+import sys
 from typing import List
 
+import penman
 from penman import Graph
 
-from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
+from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists, graph_is_in_ids
+from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-
+from evaluation.util import filter_amrs_for_name
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"
@@ -15,7 +18,7 @@ EVAL_TYPE_NA = 0
 class CategoryEvaluation:
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
-                 category_metadata: SubcategoryMetadata):
+                 category_metadata: SubcategoryMetadata, predictions_directory=None):
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
         self.root_dir = root_dir
@@ -23,6 +26,30 @@ class CategoryEvaluation:
         self.rows = []
         self.category_metadata = category_metadata
         self.print_dataset_name = True  # we want to print the dataset name only on the first metric calculation
+        self.extra_subcorpus_filenames = category_metadata.extra_subcorpus_filenames
+        self.predictions_directory = predictions_directory
+
+    def get_additional_graphs(self, read_in):
+        if self.extra_subcorpus_filenames is None:
+            raise ValueError("extra_subcorpus_filenames is not defined")
+        if not read_in:
+            filtered_golds = []
+            filtered_preds = []
+            for name in self.extra_subcorpus_filenames:
+                more_golds, more_preds = filter_amrs_for_name(name, self.gold_amrs, self.predicted_amrs)
+                filtered_golds += more_golds
+                filtered_preds += more_preds
+            return filtered_golds, filtered_preds
+        if self.predictions_directory is not None:
+            extra_predictions = []
+            extra_golds = []
+            for filename in self.extra_subcorpus_filenames:
+                extra_predictions += penman.load(f"{self.predictions_directory}/{filename}.txt")
+                extra_golds += penman.load(f"{self.corpus_path}/subcorpora/{filename}.txt")
+            return extra_golds, extra_predictions
+        else:
+            raise NotImplementedError("Can't get additional graphs without predictions directory and filenames")
+
 
     def make_and_append_results_row(self, metric_name: str, eval_type: str, metric_results: List):
         """
@@ -77,5 +104,33 @@ class CategoryEvaluation:
             dataset_filename = self.category_metadata.subcorpus_filename
         return self.root_dir + "/corpus/" + dataset_filename + ".txt"
 
-
-
+    def filter_graphs(self):
+        """
+        Filter by TSV or id containing info.subcorpus_filename
+        If neither works (neither true or we get 0 graphs this way) just return the whole stored graph lists.
+        Returns: filtered_golds, filtered_predicted
+        """
+        filtered_golds = []
+        filtered_preds = []
+        if self.category_metadata.tsv is not None:
+            ids = read_label_tsv(self.root_dir, self.category_metadata.tsv, graph_id_column=self.category_metadata.graph_id_column).keys()
+            for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
+                if graph_is_in_ids(gold_amr, ids):
+                    filtered_golds.append(gold_amr)
+                    filtered_preds.append(predicted_amr)
+        elif self.category_metadata.subcorpus_filename is not None:
+            filtered_golds, filtered_preds = filter_amrs_for_name(self.category_metadata.subcorpus_filename, self.gold_amrs, self.predicted_amrs, fail_ok=True)
+            if self.category_metadata.extra_subcorpus_filenames is not None:
+                for name in self.category_metadata.extra_subcorpus_filenames:
+                    more_gold, more_preds = filter_amrs_for_name(name, self.gold_amrs, self.predicted_amrs,
+                                                                          fail_ok=False)
+                    filtered_golds.extend(more_gold)
+                    filtered_preds.extend(more_preds)
+        else:
+            filtered_golds = self.gold_amrs
+            filtered_preds = self.predicted_amrs
+        if len(filtered_golds) == 0:
+            print("WARNING: filtering gave us 0 graphs! Returning all", file=sys.stderr)
+            filtered_golds = self.gold_amrs
+            filtered_preds = self.predicted_amrs
+        return filtered_golds, filtered_preds

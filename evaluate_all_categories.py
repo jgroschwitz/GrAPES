@@ -20,35 +20,6 @@ from prettytable import PrettyTable
 # Also: seems to be a problem with the encoded tsv: has old ids
 
 
-
-set_names_with_category_names = [
-    ("1. Pragmatic reentrancies", ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"]),
-    ("2. Unambiguous reentrancies", ["syntactic_gap_reentrancies", "unambiguous_coreference"]),
-    ("3. Structural generalization",
-     ["nested_control_and_coordination", "nested_control_and_coordination_sanity_check",
-      "multiple_adjectives", "multiple_adjectives_sanity_check",
-      "centre_embedding", "centre_embedding_sanity_check",
-      "cp_recursion", "cp_recursion_sanity_check",
-      "cp_recursion_plus_coreference", "cp_recursion_plus_coreference_sanity_check",
-      "cp_recursion_plus_rc", "cp_recursion_plus_rc_sanity_check",
-      "cp_recursion_plus_rc_plus_coreference", "cp_recursion_plus_rc_plus_coreference_sanity_check",
-      "long_lists", "long_lists_sanity_check"
-      ]),
-    ("4. Rare and unseen words",
-     ["rare_node_labels", "unseen_node_labels", "rare_predicate_senses_excl_01", "unseen_predicate_senses_excl_01",
-      "rare_edge_labels_ARG2plus", "unseen_edge_labels_ARG2plus"]),
-    ("5. Special entities",
-     ["seen_names", "unseen_names", "seen_dates", "unseen_dates", "other_seen_entities", "other_unseen_entities"]),
-    ("6. Entity classification and linking",
-     ["types_of_seen_named_entities", "types_of_unseen_named_entities", "seen_andor_easy_wiki_links",
-      "hard_unseen_wiki_links"]),
-    ("7. Lexical disambiguations",
-     ["frequent_predicate_senses_incl_01", "word_ambiguities_handcrafted", "word_ambiguities_karidi_et_al_2021"]),
-    ("8. Edge attachments", ["pp_attachment", "unbounded_dependencies", "passives", "unaccusatives"]),
-    ("9. Non-trivial word-to-node relations", ["ellipsis", "multinode_word_meanings", "imperatives"])
-    ]
-
-
 def parse_args():
     parser = argparse.ArgumentParser(description="Evaluate all categories.", formatter_class=SmartFormatter)
     parser.add_argument('-gt', '--gold_amr_testset_file', type=str, help='Path to gold AMR file (testset). A single '
@@ -70,7 +41,8 @@ def parse_args():
                                                                    'attachment scores.')
     parser.add_argument('-b', '--bunch', type=int, required=False, default=None, help='Only evaluate this "bunch" of categories. Optional.'
                                                         ' Choose a number from the following:\n'
-                                                        + get_formatted_category_names([b for b, _ in set_names_with_category_names]))
+                                                        + get_formatted_category_names([b for b, _ in
+                                                                                        set_names_with_category_names]))
     parser.add_argument('-n', "--parser_name", type=str, required=False, default=None, help='Parser name. Optional, used for output storage. ')
     parser.add_argument('-s', "--strict", action='store_true', required=False, default=False, help='Strict mode: fail if any errors encountered')
     args = parser.parse_args()
