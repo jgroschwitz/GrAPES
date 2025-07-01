@@ -12,9 +12,7 @@ from evaluation.full_evaluation.run_full_evaluation import run_single_file, eval
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score
 
-from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name, \
-    is_grapes_category_with_testset_data, is_grapes_category_with_ptb_data, get_formatted_category_names, \
-    is_testset_category
+from evaluation.full_evaluation.category_evaluation.category_metadata import *
 from prettytable import PrettyTable
 
 
@@ -167,7 +165,7 @@ def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edg
         if metric_type == EVAL_TYPE_SUCCESS_RATE:
             wilson_ci = wilson_score_interval(r[3], r[4])
             if r[4] > 0:
-                rows.append([set_name[0], category_name_to_print_name[category_name], metric_name,
+                rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
                                 num_to_score(r[3] / r[4]),
                                 num_to_score(wilson_ci[0]),
                                 num_to_score(wilson_ci[1]),
@@ -178,7 +176,7 @@ def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edg
                     "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
                 print(r)
         elif metric_type == EVAL_TYPE_F1:
-            rows.append([set_name[0], category_name_to_print_name[category_name], metric_name,
+            rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
                             num_to_score(r[3]), "N/A", "N/A", "N/A"])
         else:
             print(

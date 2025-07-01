@@ -7,7 +7,8 @@ from evaluation.full_evaluation.category_evaluation.category_evaluation import C
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.novel_corpus.long_lists import compute_conjunct_counts, compute_generalization_op_counts
 from evaluation.novel_corpus.pp_attachment import get_pp_attachment_success_counters
-from evaluation.novel_corpus.structural_generalization import get_exact_match_by_size, size_mappers
+from evaluation.novel_corpus.structural_generalization import get_exact_match_by_size, size_mappers, \
+    add_sanity_check_suffix
 from evaluation.testset.ellipsis import get_ellipsis_success_counts
 from penman import load
 
@@ -196,9 +197,14 @@ class WordDisambiguationRecall(CategoryEvaluation):
 class ExactMatch(CategoryEvaluation):
     def __init__(self, gold_amrs, predicted_amrs, root_dir,
                  category_metadata):
+        if not gold_amrs[-1].metadata["id"].startswith("deep_recursion_3s"):
+            raise ValueError(f"{gold_amrs[-1].metadata['id']} is not deep recursion 3s")
         super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata)
+        if not self.gold_amrs[-1].metadata["id"].startswith("deep_recursion_3s"):
+            raise ValueError(f"{self.gold_amrs[-1].metadata['id']} is not deep recursion 3s")
 
-        #
+        self.is_sanity_check = self.category_metadata.subtype.endswith("sanity_check")
+
         if self.need_3s():
             more_golds, more_preds = self.get_3s_amrs()
 
@@ -215,8 +221,10 @@ class ExactMatch(CategoryEvaluation):
         return self.category_metadata.subcorpus_filename.startswith("deep_recursion_pronouns")
 
     def get_3s_amrs(self):
-        print(len(self.gold_amrs))
-        more_golds, more_preds = filter_amrs_for_name(self.category_metadata.subcorpus_filename, self.gold_amrs, self.predicted_amrs)
+        corpus = "deep_recursion_3s"
+        if self.is_sanity_check:
+            corpus = add_sanity_check_suffix(corpus)
+        more_golds, more_preds = filter_amrs_for_name(corpus, self.gold_amrs, self.predicted_amrs)
         return more_golds, more_preds
 
     def get_results_by_size(self):

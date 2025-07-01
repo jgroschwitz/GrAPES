@@ -91,8 +91,6 @@ def create_results_pickles():
         print("Running", parser_name, "...")
 
         smatch = compute_smatch_f_from_graph_lists(gold_grapes, grapes_parser_outs)
-        print("Smatch on GrAPES:")
-        print(smatch)
 
         all_result_rows = []
         parser_name2rows[parser_name] = all_result_rows
