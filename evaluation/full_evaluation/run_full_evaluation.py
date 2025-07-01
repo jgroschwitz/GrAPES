@@ -3,12 +3,10 @@ import os
 import pickle
 import sys
 
-import smatch
-
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachmentAlone, ExactMatch
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachmentAlone
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-from evaluation.structural_generalization import size_mappers
+from evaluation.novel_corpus.structural_generalization import size_mappers
 from evaluation.util import num_to_score_with_preceding_0
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from prettytable import PrettyTable

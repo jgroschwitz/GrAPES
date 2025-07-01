@@ -240,13 +240,15 @@ GrAPES
 ├── docker-compose                          # Docker compose files for AM parser and AMRBART
 ├── error_analysis                          # a good place for Vulcan pickles
 │ └── README.md
+── documents
+│   └── grapes.pdf                          # the paper, including detailed appendix re categories
 ├── evaluation                              # all evaluation modules
 │ ├── corpus_metrics.py
 │ ├── full_evaluation                       # full evaluation modules
-│ │ ├── category_evaluation                 # evaluation modules
+│ │ ├── category_evaluation                 # category evaluation modules
 │ │ │ ├── category_evaluation.py            # abstract class
 │ │ │ ├── evaluation_classes.py             # classes for specific evaluations
-│ │ │ ├── subcategory_info.py               # defines dataclass to store info about each subcategory needed by the evaluation classes
+│ │ │ ├── subcategory_info.py               # defines dataclass to store info about each subcategory for evaluation
 │ │ │ └── category_metadata.py              # subcategory info by category
 │ │ ├── corpus_statistics.py
 │ │ ├── run_full_evaluation.py              # runs evaluations on multiple parsers
@@ -269,3 +271,8 @@ Authors: Jonas Groschwitz, Shay B. Cohen, Lucia Donatelli, & Meaghan Fowlie
 This work builds on (and contains parts of) the [Winograd Schema Challenge](https://cs.nyu.edu/~davise/papers/WinogradSchemas/WS.html), which is published under the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license.
 
 This work also builds on the [Putting Words into BERT's Mouth](https://github.com/tai314159/PWIBM-Putting-Words-in-Bert-s-Mouth) corpus.
+
+
+```
+
+```

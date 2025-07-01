@@ -1,10 +1,9 @@
 from evaluation import util
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
-    EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
+    EVAL_TYPE_SUCCESS_RATE
 
-from evaluation.testset.ne_types import get_ne_type_successes_and_sample_size
-from evaluation.berts_mouth import evaluate_berts_mouth
-from evaluation.word_disambiguation import evaluate_word_disambiguation
+from evaluation.novel_corpus.berts_mouth import evaluate_berts_mouth
+from evaluation.novel_corpus.word_disambiguation import evaluate_word_disambiguation
 
 class LexicalDisambiguation(CategoryEvaluation):
 

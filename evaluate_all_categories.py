@@ -12,7 +12,7 @@ from evaluation.full_evaluation.run_full_evaluation import run_single_file, eval
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score
 
-from evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name, \
+from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, category_name_to_print_name, \
     is_grapes_category_with_testset_data, is_grapes_category_with_ptb_data, get_formatted_category_names, \
     is_testset_category
 from prettytable import PrettyTable

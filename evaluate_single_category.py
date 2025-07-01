@@ -9,7 +9,7 @@ from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_prin
     load_parser_output
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score
-from evaluation.structural_generalization import size_mappers, add_sanity_check_suffix
+from evaluation.novel_corpus.structural_generalization import size_mappers, add_sanity_check_suffix
 
 
 class SmartFormatter(argparse.HelpFormatter):

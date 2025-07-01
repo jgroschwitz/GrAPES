@@ -1,0 +1,252 @@
+.
+├── .gitattributes
+├── .gitignore
+├── LICENSE
+├── README.md
+├── TODO.txt
+├── amrbank_analysis
+│   ├── __init__.py
+│   ├── coord_ambiguities.py
+│   ├── count_named_entity_types.py
+│   ├── count_special_entities.py
+│   ├── filtered_tsv_from_labeled_tsv.py
+│   ├── find_rare_node_labels.py
+│   ├── get_ambiguous_words_from_leamr.py
+│   ├── get_crossing_dependencies_from_leamr.py
+│   ├── get_ellipsis_from_leamr.py
+│   ├── get_long_range_dependencies_from_leamr.py
+│   ├── get_multinodes_from_leamr.py
+│   ├── get_negations_for_vulcan.py
+│   ├── get_nontrivial_wiki_links.py
+│   ├── get_rare_senses_test.py
+│   ├── get_unseen_names_and_dates.py
+│   ├── get_unseen_senses_and_roles.py
+│   ├── grammar_helpers
+│   │   ├── __init__.py
+│   │   ├── concat_amr_file.py
+│   │   ├── count_all_labels.py
+│   │   └── get_countries_and_companies.py
+│   ├── imperatives.py
+│   ├── reentrancies.py
+│   ├── sense_prompting_input.py
+│   ├── unaccusatives.py
+│   ├── util.py
+│   ├── vulcan_pickle_builder.py
+│   └── wiki_required.py
+├── complete_the_corpus.py
+├── concatenate_amr_files.py
+├── corpus
+│   ├── berts_mouth.tsv
+│   ├── common_senses.tsv
+│   ├── common_senses_filtered.tsv
+│   ├── common_senses_labeled.tsv
+│   ├── copyrighted_data
+│   │   ├── encoded_unbounded_dep_tsv.txt
+│   │   └── encoded_unbounded_dep_txt.txt
+│   ├── corpus.txt
+│   ├── ellipsis.tsv
+│   ├── ellipsis_filtered.tsv
+│   ├── ellipsis_labeled.tsv
+│   ├── hard_unseen_senses.tsv
+│   ├── hard_wiki_test_data.tsv
+│   ├── hard_wiki_test_data_labeled.tsv
+│   ├── imperatives.tsv
+│   ├── imperatives_filtered.tsv
+│   ├── imperatives_labeled.tsv
+│   ├── multinode_constants.tsv
+│   ├── multinode_constants_filtered.tsv
+│   ├── multinode_constants_labeled.tsv
+│   ├── ne_types_test.tsv
+│   ├── passives_filtered.tsv
+│   ├── rare_node_labels_test.tsv
+│   ├── rare_node_labels_test_labelled.csv
+│   ├── rare_roles.tsv
+│   ├── rare_roles_arg2plus.tsv
+│   ├── rare_roles_arg2plus_filtered.tsv
+│   ├── rare_roles_arg2plus_labelled.tsv
+│   ├── rare_senses.tsv
+│   ├── rare_senses_filtered.tsv
+│   ├── rare_senses_labeled.tsv
+│   ├── rare_senses_test.tsv
+│   ├── reentrancies.tsv
+│   ├── reentrancies_labeled.tsv
+│   ├── reentrancies_labeled_clean.tsv
+│   ├── reentrancies_pragmatic_filtered.tsv
+│   ├── reentrancies_syntactic_gap_filtered.tsv
+│   ├── reentrancies_unambiguous_coreference_filtered.tsv
+│   ├── seen_andor_easy_wiki_test_data.tsv
+│   ├── seen_dates.tsv
+│   ├── seen_names.tsv
+│   ├── seen_ne_types_test.tsv
+│   ├── seen_special_entities.tsv
+│   ├── special_entities_seen.tsv
+│   ├── special_entities_unseen.tsv
+│   ├── subcorpora
+│   │   ├── adjectives.txt
+│   │   ├── adjectives_sanity_check.txt
+│   │   ├── berts_mouth.txt
+│   │   ├── bought_for.txt
+│   │   ├── centre_embedding.txt
+│   │   ├── centre_embedding_sanity_check.txt
+│   │   ├── deep_recursion_3s.txt
+│   │   ├── deep_recursion_3s_sanity_check.txt
+│   │   ├── deep_recursion_basic.txt
+│   │   ├── deep_recursion_basic_sanity_check.txt
+│   │   ├── deep_recursion_pronouns.txt
+│   │   ├── deep_recursion_pronouns_sanity_check.txt
+│   │   ├── deep_recursion_rc.txt
+│   │   ├── deep_recursion_rc_contrastive_coref.txt
+│   │   ├── deep_recursion_rc_contrastive_coref_sanity_check.txt
+│   │   ├── deep_recursion_rc_sanity_check.txt
+│   │   ├── give_up_in.txt
+│   │   ├── keep_from.txt
+│   │   ├── long_lists.txt
+│   │   ├── long_lists_sanity_check.txt
+│   │   ├── nested_control.txt
+│   │   ├── nested_control_sanity_check.txt
+│   │   ├── pp_attachment.txt
+│   │   ├── read_by.txt
+│   │   ├── see_with.txt
+│   │   ├── unseen_roles_new_sentences.txt
+│   │   ├── unseen_senses_new_sentences.txt
+│   │   └── winograd.txt
+│   ├── unaccusatives.tsv
+│   ├── unaccusatives2.tsv
+│   ├── unaccusatives2_filtered.tsv
+│   ├── unaccusatives2_labelled.tsv
+│   ├── unaccusatives_labeled.tsv
+│   ├── unbounded_dependencies_stripped.tsv
+│   ├── unseen_dates.tsv
+│   ├── unseen_names.tsv
+│   ├── unseen_ne_types_test.tsv
+│   ├── unseen_ne_types_test_labeled.tsv
+│   ├── unseen_node_labels_test.tsv
+│   ├── unseen_node_labels_test_filtered.tsv
+│   ├── unseen_node_labels_test_labelled.csv
+│   ├── unseen_roles.tsv
+│   ├── unseen_roles_arg2plus.tsv
+│   ├── unseen_roles_new_sentences.tsv
+│   ├── unseen_roles_new_sentences_old_ids.tsv
+│   ├── unseen_senses_new_sentences.tsv
+│   ├── unseen_senses_new_sentences_old_ids.tsv
+│   ├── unseen_senses_test.tsv
+│   ├── unseen_special_entities.tsv
+│   ├── wiki_test_data.tsv
+│   ├── winograd.tsv
+│   ├── winograd_notes.tsv
+│   ├── winograd_old_ids.tsv
+│   └── word_disambiguation_clean.txt
+├── create_vulcan_pickle.py
+├── docker-compose
+│   ├── amparser.yml
+│   ├── amparser_single.sh
+│   ├── amrbart.yml
+│   └── amrbart_single.sh
+├── documents
+│   └── grapes.pdf
+├── error_analysis
+│   └── README.md
+├── evaluate_all_categories.py
+├── evaluate_single_category.py
+├── evaluation
+│   ├── __init__.py
+│   ├── berts_mouth.py
+│   ├── check_unseen_roles_prerequisites.py
+│   ├── corpus_metrics.py
+│   ├── create_own_graphs_vulcan_pickle.py
+│   ├── file_utils.py
+│   ├── full_evaluation
+│   │   ├── __init__.py
+│   │   ├── category_evaluation
+│   │   │   ├── __init__.py
+│   │   │   ├── category_evaluation.py
+│   │   │   ├── category_metadata.py
+│   │   │   ├── evaluation_classes.py
+│   │   │   ├── i_pragmatic_reentrancies.py
+│   │   │   ├── ii_unambiguous_reentrancies.py
+│   │   │   ├── iii_structural_generalization.py
+│   │   │   ├── iv_rare_unseen_nodes_edges.py
+│   │   │   ├── ix_nontrivial_word2node_relations.py
+│   │   │   ├── subcategory_info.py
+│   │   │   ├── v_names_dates_etc.py
+│   │   │   ├── vi_entity_classification_and_linking.py
+│   │   │   ├── vii_lexical_disambiguation.py
+│   │   │   └── viii_attachments.py
+│   │   ├── corpus_statistics.py
+│   │   ├── run_full_evaluation.py
+│   │   └── wilson_score_interval.py
+│   ├── graph_matcher.py
+│   ├── long_lists.py
+│   ├── pp_attachment.py
+│   ├── run_all_testset_eval.py
+│   ├── structural_generalization.py
+│   ├── testset
+│   │   ├── __init__.py
+│   │   ├── compute_exact_match.py
+│   │   ├── compute_smatch.py
+│   │   ├── create_testset_vulcan_pickle.py
+│   │   ├── ellipsis.py
+│   │   ├── imperative.py
+│   │   ├── ne_types.py
+│   │   ├── rare_senses.py
+│   │   ├── reentrancies.py
+│   │   ├── special_entities.py
+│   │   ├── unseen_and_rare_labels.py
+│   │   ├── unseen_and_rare_roles.py
+│   │   ├── wiki_test.py
+│   │   └── word_ambiguities.py
+│   ├── util.py
+│   └── word_disambiguation.py
+├── grammars
+│   ├── adjectives.irtg
+│   ├── alternative_to.irtg
+│   ├── and_ice_cream.irtg
+│   ├── bought_for.irtg
+│   ├── centre_embedding.irtg
+│   ├── deep_recursion.irtg
+│   ├── deep_recursion_3s.irtg
+│   ├── deep_recursion_basic.irtg
+│   ├── deep_recursion_pronouns.irtg
+│   ├── deep_recursion_rc.irtg
+│   ├── deep_recursion_rc_contrastive_coref.irtg
+│   ├── deep_recursion_rcs.irtg
+│   ├── give_up_in.irtg
+│   ├── i_counted.irtg
+│   ├── keep_from.irtg
+│   ├── nested_control.irtg
+│   ├── please_buy.irtg
+│   ├── read_by.irtg
+│   ├── see_with.irtg
+│   ├── she_visited_countries.irtg
+│   ├── simple_nouns_reference.txt
+│   └── stop_to.irtg
+├── scripts
+│   ├── __init__.py
+│   ├── evaluate_grammar_generated_corpora.sh
+│   ├── evaluate_hand_annotations.sh
+│   ├── evaluate_pp_attachments.sh
+│   ├── file_manipulations
+│   │   ├── __init__.py
+│   │   ├── add_ids_to_amr_files.py
+│   │   ├── check_corpus.py
+│   │   ├── clean_quotechar_from_tsv.py
+│   │   ├── combine_amr_files.py
+│   │   ├── concatenate_long_list_files.py
+│   │   ├── create_prediction_versions.py
+│   │   ├── make_cailam_input.py
+│   │   ├── tsv2corpus.py
+│   │   ├── unseen_senses_corpus2tsv.py
+│   │   └── write_copyrighted_data.py
+│   ├── full_evaluation.sh
+│   ├── latex
+│   │   ├── __init__.py
+│   │   └── csv2latex.py
+│   ├── preprocessing
+│   │   ├── __init__.py
+│   │   ├── amr_file_to_tokenized_text_input.py
+│   │   └── to_amrbart_input_format.py
+│   ├── run_cai_lam_single.sh
+│   └── single_evaluation.sh
+└── tree.txt
+
+17 directories, 232 files

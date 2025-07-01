@@ -4,7 +4,7 @@ from evaluation.full_evaluation.category_evaluation.evaluation_classes import Ed
     NETypeRecall, WordDisambiguationRecall, PPAttachment, EllipsisRecall, SubgraphRecall, ImperativeRecall, \
     ExactMatch
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-from evaluation.structural_generalization import \
+from evaluation.novel_corpus.structural_generalization import \
     add_sanity_check_suffix
 from evaluation.util import SANITY_CHECK
 

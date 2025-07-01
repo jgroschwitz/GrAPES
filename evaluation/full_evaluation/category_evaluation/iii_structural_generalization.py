@@ -1,7 +1,7 @@
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
-from evaluation.structural_generalization import get_all_success_counts
-from evaluation.long_lists import compute_conjunct_counts, \
+from evaluation.novel_corpus.structural_generalization import get_all_success_counts
+from evaluation.novel_corpus.long_lists import compute_conjunct_counts, \
     compute_generalization_op_counts
 from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, compute_smatch_f_from_graph_lists
 
