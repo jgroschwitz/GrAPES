@@ -23,7 +23,7 @@ from evaluation.novel_corpus.word_disambiguation import evaluate_word_disambigua
 class EdgeRecall(CategoryEvaluation):
     def run_evaluation(self):
         try:
-            self.make_results_columns_for_edge_recall()
+            self.make_results()
         except IndexError as e:
             if self.category_metadata.subcorpus_filename == "unbounded_dependencies":
                 print("Check that corpus/unbounded_dependencies.tsv has 66 rows")
@@ -36,7 +36,7 @@ class EdgeRecall(CategoryEvaluation):
             raise e
         return self.rows
 
-    def make_results_columns_for_edge_recall(self):
+    def make_results(self):
         prereqs, unlabeled_recalled, labeled_recalled, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
             self.category_metadata,
             gold_amrs=self.gold_amrs,
@@ -52,12 +52,12 @@ class EdgeRecall(CategoryEvaluation):
 
 class NodeRecall(CategoryEvaluation):
     def run_evaluation(self):
-        self.make_results_column_for_node_recall()
+        self.make_results()
         if self.category_metadata.run_prerequisites:
-            self.make_results_column_for_node_recall(prereq=True)
+            self.make_results(prereq=True)
         return self.rows
 
-    def make_results_column_for_node_recall(self, prereq=False):
+    def make_results(self, prereq=False):
         success_count, sample_size = calculate_node_label_successes_and_sample_size(
             self.category_metadata,
             gold_amrs=self.gold_amrs,
@@ -71,7 +71,7 @@ class NodeRecall(CategoryEvaluation):
 
 
 class PPAttachment(CategoryEvaluation):
-    def run_evaluation(self):
+    def make_results(self):
         prereqs, unlabeled, recalled, sample_size = get_pp_attachment_success_counters(self.gold_amrs, self.predicted_amrs)
         return [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size]),
                 self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE, [unlabeled, sample_size]),
@@ -102,11 +102,7 @@ class PPAttachmentAlone(PPAttachment):
 
 
 class NETypeRecall(CategoryEvaluation):
-    def run_evaluation(self):
-        self.make_results_for_ne_types()
-        return self.rows
-
-    def make_results_for_ne_types(self):
+    def make_results(self):
         """
         for named entities
         Returns:
@@ -121,11 +117,7 @@ class NETypeRecall(CategoryEvaluation):
 
 
 class NERecall(CategoryEvaluation):
-    def run_evaluation(self):
-        self.make_results_for_ne()
-        return self.rows
-
-    def make_results_for_ne(self):
+    def make_results(self):
         id2labels_entities = get_graphid2labels_from_tsv_file(f"{self.corpus_path}/{self.category_metadata.tsv}",
                                                               graph_id_column=self.category_metadata.graph_id_column,
                                                               label_column=self.category_metadata.label_column)
@@ -136,11 +128,7 @@ class NERecall(CategoryEvaluation):
 
 
 class SubgraphRecall(CategoryEvaluation):
-    def run_evaluation(self):
-        self.make_results_for_subgraph()
-        return self.rows
-
-    def make_results_for_subgraph(self):
+    def make_results(self):
         id2subgraphs = read_label_tsv(root_dir=self.root_dir, tsv_file_name=self.category_metadata.tsv)
         recalled, sample_size = calculate_subgraph_existence_successes_and_sample_size(
             id2subgraphs, self.gold_amrs, self.predicted_amrs)
@@ -148,11 +136,7 @@ class SubgraphRecall(CategoryEvaluation):
 
 
 class EllipsisRecall(CategoryEvaluation):
-    def run_evaluation(self):
-        self.make_results_for_ellipsis()
-        return self.rows
-
-    def make_results_for_ellipsis(self):
+    def make_results(self):
         id2labels = read_label_tsv(root_dir=self.root_dir, tsv_file_name=self.category_metadata.tsv)
         prereqs, recalled, sample_size = get_ellipsis_success_counts(
             id2labels, self.gold_amrs, self.predicted_amrs)
@@ -161,11 +145,7 @@ class EllipsisRecall(CategoryEvaluation):
 
 
 class ImperativeRecall(CategoryEvaluation):
-    def run_evaluation(self):
-        self.make_results_for_imperative()
-        return self.rows
-
-    def make_results_for_imperative(self):
+    def make_results(self):
         id2labels = read_label_tsv(root_dir=self.root_dir, tsv_file_name=self.category_metadata.tsv, columns=[1,2,3])
         prereqs, recalled, with_correct_target, sample_size = get_imperative_success_counts(id2labels,
                                                                                             gold_amrs=self.gold_amrs,
@@ -177,11 +157,7 @@ class ImperativeRecall(CategoryEvaluation):
 
 
 class WordDisambiguationRecall(CategoryEvaluation):
-    def run_evaluation(self):
-        self.make_results_for_disambiguation()
-        return self.rows
-
-    def make_results_for_disambiguation(self):
+    def make_results(self):
         if self.category_metadata.subtype == "hand-crafted":
             fun = evaluate_word_disambiguation
         elif self.category_metadata.subtype == "bert":
@@ -232,11 +208,13 @@ class ExactMatch(CategoryEvaluation):
     def run_evaluation(self):
         if self.category_metadata.subcorpus_filename == "long_lists":
             self.long_lists()
+        elif self.category_metadata.subcorpus_filename.startswith("long_lists"):
+            self.long_list_sanity_check()
         else:
-            self.make_success_results_for_structural_generalisation()
+            self.make_results()
         return self.rows
 
-    def make_success_results_for_structural_generalisation(self):
+    def make_results(self):
         successes, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
                                                                                match_edge_labels=False,
                                                                                match_senses=False)

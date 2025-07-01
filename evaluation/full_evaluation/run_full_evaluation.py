@@ -13,16 +13,22 @@ from prettytable import PrettyTable
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
-    CategoryEvaluation
+    CategoryEvaluation, EVAL_TYPE_NONE, EVAL_TYPE_NA
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, bunch2subcategory, \
     is_copyrighted_data, is_testset_category
+
+args = sys.argv
+if len(args) > 1:
+    parser_names = args[1:]
+else:
+    # parser_names = ["amparser", "cailam", "amrbart"]
+    parser_names = ["amparser"]
 
 # globals
 root_dir_here = "../../"
 path_to_parser_outputs = f"{root_dir_here}/data/raw/parser_outputs/"
 
-# parser_names = ["amparser", "cailam", "amrbart"]
-parser_names = ["amparser"]
+
 full_grapes_name = "full_corpus"
 gold_testset_path = f"{root_dir_here}/data/raw/gold/test.txt"
 
@@ -31,11 +37,12 @@ def get_results_path(root_dir):
     os.makedirs(x, exist_ok=True)
     return x
 
-results_path = f"{get_results_path(root_dir_here)}/from_run_all_evaluations"
-os.makedirs(results_path, exist_ok=True)
-
-pickle_path = f"{results_path}/all_parsers_results_table.pickle"
-by_size_pickle_path = f"{results_path}/all_parsers_structural_generation_by_size.pickle"
+def make_results_path():
+    results_path = f"{get_results_path(root_dir_here)}/from_run_all_evaluations"
+    os.makedirs(results_path, exist_ok=True)
+    pickle_path = f"{results_path}/all_parsers_results_table.pickle"
+    by_size_pickle_path = f"{results_path}/all_parsers_structural_generation_by_size.pickle"
+    return results_path, pickle_path, by_size_pickle_path
 
 def import_graphs():
     gold_amrs = load(gold_testset_path)
@@ -62,8 +69,13 @@ def load_parser_output(subcorpus_name, root_dir=root_dir_here, parser_name=None,
     if parser_name is not None:
         try:
             return load(f"{get_predictions_path_for_parser(parser_name)}/{subcorpus_name}.txt")
-        except FileNotFoundError:
-            pass
+        except FileNotFoundError as e:
+            if predictions_directory is not None:
+                print(f"Could not find {subcorpus_name} in {get_predictions_path_for_parser(parser_name)}\n"
+                      f"trying with given predictions directory {predictions_directory}", file=sys.stderr)
+                pass
+            else:
+                raise e
     if predictions_directory is not None:
         graphs = load(f"{root_dir}/{predictions_directory}/{subcorpus_name}.txt")
         if len(graphs) == 0:
@@ -81,6 +93,7 @@ def create_results_pickles():
     Pickles and prints the results
     """
     gold_amrs, gold_grapes = import_graphs()
+    results_path, pickle_path, by_size_pickle_path = make_results_path()
     parser_name2rows = dict()
     all_generalisations_by_size_dict = dict()
 
@@ -88,7 +101,7 @@ def create_results_pickles():
         testset_parser_outs = load_parser_output("testset", parser_name=parser_name)
         grapes_parser_outs = load_parser_output(full_grapes_name, parser_name=parser_name)
 
-        print("Running", parser_name, "...")
+        print("Running evaluation for", parser_name, "...")
 
         smatch = compute_smatch_f_from_graph_lists(gold_grapes, grapes_parser_outs)
 
@@ -137,7 +150,8 @@ def create_results_pickles():
     print("Results pickled in ", results_path)
 
 
-def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
+def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata,
+             root_dir=root_dir_here, parser_name=None, predictions_directory=None, fail_ok=0):
     """
     Runs the given evaluator.
     If it fails, tries on individual files.
@@ -147,10 +161,17 @@ def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, root_dir=
         root_dir:
         parser_name: Can be used to get predictions if load_parser_output works, or use predictions_directory
         predictions_directory:
+        fail_ok:
+            if 1, if processing a category throws an error, we just continue
+            if 0, true for copyrighted data and PP attachment.
+            if -1: strict: always stop if something goes wrong.
 
     Returns:
         list of rows of results: [dataset name, metric_name, eval_type] + metric_results
     """
+    if fail_ok == -1:
+        rows = evaluator.run_evaluation()
+        return rows
     try:
         rows = evaluator.run_evaluation()
         return rows
@@ -167,7 +188,7 @@ def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, root_dir=
                 return rows
 
             except Exception as e:
-                print("Couldn't process", info.subcorpus_filename, e, file=sys.stderr)
+                return warn_and_make_empty_row(e, info)
                 # raise e
         elif info.subcorpus_filename == "pp_attachment":
             try:
@@ -177,10 +198,17 @@ def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, root_dir=
                 print("OK", file=sys.stderr)
                 return rows
             except Exception as e:
-                print("Couldn't process", info.display_name, e, file=sys.stderr)
+                return warn_and_make_empty_row(e, info)
                 # raise e
         else:
+            if fail_ok == 1:
+                return warn_and_make_empty_row(e, info)
             raise e
+
+
+def warn_and_make_empty_row(e, info):
+    print("Couldn't process", info.display_name, e, file=sys.stderr)
+    return [CategoryEvaluation.make_empty_row(category_name=info.display_name)]
 
 
 def run_single_file(eval_class, info: SubcategoryMetadata, root_dir=root_dir_here, parser_name=None, predictions_directory=None):
@@ -196,6 +224,8 @@ def run_single_file(eval_class, info: SubcategoryMetadata, root_dir=root_dir_her
     Returns:
 
     """
+    if info.subcorpus_filename is None:
+        raise ValueError(f"{info.display_name} is an AMR 3.0 category, but we're trying to get it from a GrAPES corpus file")
     pred = load_parser_output(info.subcorpus_filename, root_dir, parser_name=parser_name,
                               predictions_directory=predictions_directory)
     gold = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
@@ -230,9 +260,11 @@ def print_pretty_table(result_rows):
             else:
                 sample_size = ""
             table.add_row([category, row[1], num_to_score_with_preceding_0(row[3]), "", sample_size])
-        elif eval_type == 1:
+        elif eval_type == EVAL_TYPE_NONE:
             table.add_row(["", "", "", "", ""])
             table.add_row([category, "", "", "", ""])
+        elif eval_type == EVAL_TYPE_NA:
+            table.add_row([category, row[1], "N/A", "N/A", "N/A"])
         else:
             print(row)
             raise Exception(f"Unknown evaluation type: {eval_type}")

@@ -3,12 +3,13 @@ import os
 
 from penman import load
 
-from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, get_formatted_category_names
+from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
+    get_formatted_category_names, is_sanity_check
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size, \
     load_parser_output
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
-from evaluation.util import num_to_score
+from evaluation.util import num_to_score, SANITY_CHECK
 from evaluation.novel_corpus.structural_generalization import size_mappers, add_sanity_check_suffix
 
 
@@ -50,11 +51,15 @@ def main():
 
     if predictions_path.endswith(f"{info.subcorpus_filename}.txt"):
         print("Using predicted AMR subcorpus file", predictions_path)
+        use_subcorpus = True
     else:
         print("Presumably this is the full GrAPES or AMR 3.0 testest parser output file: ", predictions_path)
+        use_subcorpus = False
 
     if args.gold_amr_file is not None:
         gold_amrs = load(args.gold_amr_file)
+    elif use_subcorpus:
+        gold_amrs = load(f"corpus/subcorpora/{info.subcorpus_filename}.txt")
     else:
         gold_amrs = load("corpus/corpus.txt")
 
@@ -84,22 +89,26 @@ def main():
             generalisation_by_size = evaluator.get_results_by_size()
             pretty_print_structural_generalisation_by_size({info.subcorpus_filename: generalisation_by_size})
 
-        if not args.category_name.endswith("sanity_check"):
+        if not is_sanity_check(info):
             # Try doing the sanity check for a main class
             try:
                 eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
                 evaluator = eval_class(gold_amrs, predicted_amrs, ".", info)
-                results += evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+                new_rows = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+                results += new_rows
                 caption += " and Sanity Check"
             except Exception as e:
-                print("(No Sanity Check: Need full or separate file)")
+                print("(No Sanity Check: Need full GrAPES corpus or separate sanity_check file)")
 
     print(caption)
     print()
 
     for row in results:
+        info = row[0]
         metric_name = row[1]
         metric_type = row[2]
+        if info is not None and info.display_name == SANITY_CHECK:
+            metric_name = f"{SANITY_CHECK} {metric_name}"
         if metric_type == EVAL_TYPE_SUCCESS_RATE:
             wilson_ci = wilson_score_interval(row[3], row[4])
             if row[4] > 0:

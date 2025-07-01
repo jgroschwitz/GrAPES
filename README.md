@@ -191,9 +191,29 @@ imperatives
 
 The files each category uses are in `evaluation`
 
+## Running evaluations on multiple parsers at once
+
+You can use `evaluation/full_evaluation/run_all_evaluations.py` if you set yourself up as follows:
+
+* in `data/raw/gold`, place a copy of your concatenated AMR 3.0 testset and call it `test.txt`
+* For each parser:
+  * Choose a name e.g. `"my_parser"` 
+  * create a directory in `data/raw/parser_outputs` called `my_parser-outputs`
+  * place all output files here:
+    * the output of the full grapes corpus as `full_corpus.txt`
+    * any single-category output files
+    * the output on the AMR 3.0 testset as `testset.txt`
+* For Python Path reasons, running this as a script can be hard. You have (at least) two choices:
+  1. Edit the `parser_names` variable at the top of the file to be your parser names, and just run the file from within your IDE
+  2. Run it as a script from its folder, with python path set to two directories up (`../..`). For each parser you want to include, include a command line argument For example:
+
+```commandline
+PYTHONPATH=../../ python run_full_evaluation.py amparser amrbart
+```
+
 ## Details about the construction of each category
 
-The appendix of the [paper](https://aclanthology.org/2023.emnlp-main.662/) provides extensive details for each of the 36 categories.
+The appendix of the [paper](https://aclanthology.org/2023.emnlp-main.662/) (also in documents/grapes.pdf) provides extensive details for each of the 36 categories.
 
 ## Looking at example outputs
 
@@ -222,7 +242,7 @@ python launch_vulcan.py path/to/pickle
 * All required python scripts are at the root level
 * The evaluation modules are in `evaluation/`
 * Code that was used for the paper (but that you don't need to use) is also included. 
-  * You may find that running scripts that are not at the root level gives you `PYTHONPATH` trouble. In Mac and Linux, try prepending `PYTHONPATH=./` to the command. In Windows, try to add the parent directory to the Python Path environment variable.
+* You may find that running scripts that are not at the root level gives you `PYTHONPATH` trouble. In Mac and Linux, try prepending `PYTHONPATH=./` to the command. In Windows, try to add the parent directory to the Python Path environment variable.
 
 
 ```

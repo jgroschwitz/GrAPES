@@ -18,16 +18,17 @@ fi
 # run parser in docker image. This will move the output file into the correct location already
 # The --rm flag removes the container after the run, so that it stops taking up memory
 echo "Running $parser on $dataset"
-mkdir -p ${parser}-output
+out_dir="data/raw/parser_outputs/${parser}-output"
+mkdir -p $out_dir
 if [ "$parser" = "cailam" ]; then
-	. scripts/run_cai_lam_single.sh $dataset &> ${parser}-output/${dataset}_log.txt
+	. scripts/run_cai_lam_single.sh $dataset &> ${out_dir}/${dataset}_log.txt
 else
 	cd docker-compose
-	docker-compose -f $parser.yml run --rm mycontainer bash -c "cd /mounted/docker-compose && bash ${parser}_single.sh ${dataset}" &> ../${parser}-output/${dataset}_log.txt
+	docker-compose -f $parser.yml run --rm mycontainer bash -c "cd /mounted/docker-compose && bash ${parser}_single.sh ${dataset}" &> ../${out_dir}${dataset}_log.txt
 	cd ..
 fi
 
 # run evaluation
 cd evaluation
-PYTHONPATH=../ python3 single_eval.py $parser $dataset
+PYTHONPATH=../ python3 single_eval.py $dataset $parser
 cd ..

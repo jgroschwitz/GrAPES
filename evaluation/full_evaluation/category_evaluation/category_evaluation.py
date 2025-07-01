@@ -8,6 +8,8 @@ from evaluation.full_evaluation.category_evaluation.subcategory_info import Subc
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"
+EVAL_TYPE_NONE = 1
+EVAL_TYPE_NA = 0
 
 
 class CategoryEvaluation:
@@ -50,13 +52,21 @@ class CategoryEvaluation:
         new_row = [ds_name, metric_name, eval_type] + metric_results
         return new_row
 
+    @staticmethod
+    def make_empty_row(category_name="", metric_name="-"):
+        return [category_name, metric_name, EVAL_TYPE_NA] + []
+
     def make_smatch_results(self):
         smatch = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
         smatch_f1 = self.get_f_from_prf(smatch)
         self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])
 
-    def run_evaluation(self):
+    def make_results(self):
         raise NotImplementedError("This method must be implemented by subclasses.")
+
+    def run_evaluation(self):
+        self.make_results()
+        return self.rows
 
     @staticmethod
     def get_f_from_prf(triple):
