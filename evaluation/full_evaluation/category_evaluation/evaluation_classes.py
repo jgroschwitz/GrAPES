@@ -1,6 +1,10 @@
+import pickle
+
 from evaluation.novel_corpus.berts_mouth import evaluate_berts_mouth
-from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size,  calculate_subgraph_existence_successes_and_sample_size, \
-    calculate_node_label_successes_and_sample_size, calculate_edge_prereq_recall_and_sample_size_counts
+from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, \
+    calculate_subgraph_existence_successes_and_sample_size, \
+    calculate_node_label_successes_and_sample_size, calculate_edge_prereq_recall_and_sample_size_counts, \
+    graph_is_in_ids, _get_predicted_labels_based_on_evaluation_case, _label_exists_in_predicted_labels
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE
@@ -16,7 +20,7 @@ from evaluation.testset.imperative import get_imperative_success_counts
 from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
 from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, \
     calculate_special_entity_successes_and_sample_size
-from evaluation.util import filter_amrs_for_name
+from evaluation.util import filter_amrs_for_name, get_node_name_for_gold_label
 from evaluation.novel_corpus.word_disambiguation import evaluate_word_disambiguation
 
 
@@ -58,16 +62,57 @@ class NodeRecall(CategoryEvaluation):
         return self.rows
 
     def make_results(self, prereq=False):
-        success_count, sample_size = calculate_node_label_successes_and_sample_size(
-            self.category_metadata,
-            gold_amrs=self.gold_amrs,
-            predicted_amrs=self.predicted_amrs,
-            root_dir=self.root_dir,
-            prereq=prereq
+        success_count, sample_size = self.calculate_node_label_successes_and_sample_size_and_do_error_analysis(   #calculate_node_label_successes_and_sample_size(
+            prereq=prereq,
         )
         metric_label = "Prerequisite" if prereq else self.category_metadata.metric_label
         row = self.make_results_row(metric_label, EVAL_TYPE_SUCCESS_RATE, [success_count, sample_size])
         self.rows.append(row)
+
+    def calculate_node_label_successes_and_sample_size_and_do_error_analysis(self, prereq=False,
+                                                                             ):
+        """
+        Just a test case for generalising error analysis
+        """
+        print("Using new method")
+        if prereq:
+            use_sense = self.category_metadata.use_sense_prereq
+        else:
+            use_sense = self.category_metadata.use_sense
+        id2labels = read_label_tsv(self.root_dir, self.category_metadata.tsv)
+        success_count = 0
+        sample_size = 0
+        error_analysis = {"correct_ids": [], "incorrect_ids": []}
+        for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
+            graph_id = gold_amr.metadata['id']
+            if graph_id in id2labels:
+                sample_size += len(id2labels[graph_id])
+                predicted_labels = _get_predicted_labels_based_on_evaluation_case(self.category_metadata.attribute_label,
+                                                                                  predicted_amr,
+                                                                                  self.category_metadata.use_attributes,
+                                                                                  use_sense=use_sense)
+                for target_label in id2labels[graph_id]:
+                    label_found = self.find_label(predicted_labels, target_label, use_sense)
+                    if label_found:
+                        success_count += 1
+                        error_analysis["correct_ids"].append(graph_id)
+                    else:
+                        error_analysis["incorrect_ids"].append(graph_id)
+        assert len(error_analysis["correct_ids"]) + len(error_analysis["incorrect_ids"]) == sample_size
+        # write to pickle
+        # TODO shuffle the error analysis lists (synchronously), so that we can get a random sample of the errors
+        with open(f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle", "wb") as f:
+            pickle.dump(error_analysis, f)
+        return success_count, sample_size
+
+    def find_label(self, predicted_labels, target_label, use_sense):
+        label_found = _label_exists_in_predicted_labels(predicted_labels, target_label, use_sense)
+        if not label_found and " " in target_label:
+            for target_label_variant in target_label.split(" "):
+                if _label_exists_in_predicted_labels(predicted_labels, target_label_variant, use_sense):
+                    label_found = True
+                    break
+        return label_found
 
 
 class PPAttachment(CategoryEvaluation):

@@ -7,6 +7,7 @@ class SubcategoryMetadata:
     """
     Stores info about each subcategory
     """
+    name: str
     display_name: str
     tsv: str or None = None
     subcorpus_filename: str or None = None
@@ -39,7 +40,7 @@ class SubcategoryMetadata:
         return self.latex_display_name
 
     def filename_belongs_to_subcategory(self,filename):
-        return filename == self.subcorpus_filename or filename in self.extra_subcorpus_filenames
+        return filename == self.subcorpus_filename or self.extra_subcorpus_filenames is not None and filename in self.extra_subcorpus_filenames
 
 
 def is_grapes_category_with_testset_data(category_info):

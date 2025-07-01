@@ -369,3 +369,5 @@ def invert_edge_label(edge_label: str) -> str:
         return edge_label[:-3]
     else:
         return edge_label + "-of"
+
+
