@@ -1,3 +1,4 @@
+from evaluation.full_evaluation.category_evaluation.category_metadata import is_sanity_check
 from evaluation.novel_corpus.berts_mouth import evaluate_berts_mouth
 from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size,  calculate_subgraph_existence_successes_and_sample_size, \
     calculate_node_label_successes_and_sample_size, calculate_edge_prereq_recall_and_sample_size_counts
@@ -72,8 +73,13 @@ class NodeRecall(CategoryEvaluation):
 
 class PPAttachment(CategoryEvaluation):
     def __init__(self, gold_amrs, predicted_amrs, root_dir, info, predictions_directory=None):
+        """
+        Pragmatic attachments of ambiguous PPs
+        PP Attachments come from multiple files, so if they're not already in the given graphs, we try to get them.
+        """
         super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory)
         # if we read in the unused PP directory instead of the whole full_cprpus, replace it with the real ones
+        # These have ids pp_attachment_n
         if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):
             print("Reading in additional files")
             self.gold_amrs, self.predicted_amrs = self.get_additional_graphs(read_in=True)
@@ -88,40 +94,10 @@ class PPAttachment(CategoryEvaluation):
                 self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
         self.rows.extend(rows)
 
-#
-# class PPAttachmentAlone(PPAttachment):
-#     """
-#     This is called from evaluate_single_category if you want the PP results but you only have separate output files
-#     """
-#     def __init__(self, root_dir: str,
-#                  category_metadata: SubcategoryMetadata, path_to_predictions_folder):
-#         super().__init__([], [], root_dir, category_metadata)
-#         self.gold_amrs, self.predicted_amrs = self.get_all_pp_graphs(path_to_predictions_folder, self.root_dir)
-#
-#     @staticmethod
-#     def get_all_pp_graphs(path_to_predictions_folder, root_dir="."):
-#         """
-#         Assumes all predictions are in the same folder and have the same names as the golds
-#         Args:
-#             path_to_predictions_folder: path to the parser output AMR files such as see_with.txt
-#         updates empty self.gold_amrs and self.predicted_amrs with concatenated gold AMRs, concatenated predicted AMRs
-#         """
-#         gold_amrs = []
-#         predicted_amrs = []
-#         print("Concatenating PP files")
-#         for filename in ["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]:
-#             gold_amrs += load(f"{root_dir}/corpus/subcorpora/{filename}.txt")
-#             predicted_amrs += load(f"{root_dir}/{path_to_predictions_folder}/{filename}.txt")
-#         assert len(gold_amrs) == len(predicted_amrs) and len(gold_amrs) > 0
-#         return gold_amrs, predicted_amrs
-
 
 class NETypeRecall(CategoryEvaluation):
+    """Identifying named entity types"""
     def make_results(self):
-        """
-        for named entities
-        Returns:
-        """
         id2labels = get_2_columns_from_tsv_by_id(f"{self.corpus_path}/{self.category_metadata.tsv}")
         prereq, successes, sample_size = get_ne_type_successes_and_sample_size(
             id2labels,
@@ -132,6 +108,7 @@ class NETypeRecall(CategoryEvaluation):
 
 
 class NERecall(CategoryEvaluation):
+    """Correctly creating attributes for named entities, such as the components of a name"""
     def make_results(self):
         id2labels_entities = get_graphid2labels_from_tsv_file(f"{self.corpus_path}/{self.category_metadata.tsv}",
                                                               graph_id_column=self.category_metadata.graph_id_column,
@@ -143,6 +120,7 @@ class NERecall(CategoryEvaluation):
 
 
 class SubgraphRecall(CategoryEvaluation):
+    """For multinode word meanings like "teacher" = person <- teach-01"""
     def make_results(self):
         id2subgraphs = read_label_tsv(root_dir=self.root_dir, tsv_file_name=self.category_metadata.tsv)
         recalled, sample_size = calculate_subgraph_existence_successes_and_sample_size(
@@ -151,6 +129,7 @@ class SubgraphRecall(CategoryEvaluation):
 
 
 class EllipsisRecall(CategoryEvaluation):
+    """Find two instances of a subgraph where one is elided in the sentence"""
     def make_results(self):
         id2labels = read_label_tsv(root_dir=self.root_dir, tsv_file_name=self.category_metadata.tsv)
         prereqs, recalled, sample_size = get_ellipsis_success_counts(
@@ -190,27 +169,22 @@ class ExactMatch(CategoryEvaluation):
                  category_metadata, predictions_directory=None):
         super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory)
 
-        self.is_sanity_check = self.category_metadata.subtype.endswith("sanity_check")
+        self.is_sanity_check = is_sanity_check(self.category_metadata)
 
         gold_amrs, predicted_amrs = filter_amrs_for_name(
             self.category_metadata.subcorpus_filename,
             self.gold_amrs,
             self.predicted_amrs)
 
+        # Add extra graphs for deep_recursion_pronouns
         if self.extra_subcorpus_filenames is not None:
-            read_in = len(self.gold_amrs) == 100  # exactly 100 deep recursion with pronouns, and that's the only such category
+            read_in = len(self.gold_amrs) == 100  # exactly 100 graphs in deep_recursion_pronouns.txt.
             more_gold, more_pred =  self.get_additional_graphs(read_in=read_in)
             gold_amrs += more_gold
             predicted_amrs += more_pred
 
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
-
-    def get_results_by_size(self):
-        if self.category_metadata.subcorpus_filename in size_mappers:
-            return get_exact_match_by_size(self.gold_amrs, self.predicted_amrs, size_mappers[self.category_metadata.subcorpus_filename])
-        else:
-            return {}
 
     def run_evaluation(self):
         if self.category_metadata.subcorpus_filename == "long_lists":
