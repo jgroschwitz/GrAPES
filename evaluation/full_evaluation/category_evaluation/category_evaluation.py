@@ -212,8 +212,10 @@ class CategoryEvaluation:
         return ret
 
     def get_predictions_for_comparison(self, predicted_amr):
-        """Default is just the graph"""
-        return predicted_amr
+        """
+        A handy way to get something other than just hte predicted amr needed for comparison to the target
+        """
+        return None
 
     def _get_all_results(self):
         """
