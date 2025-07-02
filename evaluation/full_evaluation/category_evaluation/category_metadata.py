@@ -1,8 +1,9 @@
 from copy import copy
 
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import NERecall, \
-    NETypeRecall, WordDisambiguationRecall, PPAttachment, EllipsisRecall, SubgraphRecall, ImperativeRecall, \
-    ExactMatch
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import WordDisambiguationRecall, PPAttachment, EllipsisRecall, SubgraphRecall, ImperativeRecall
+from evaluation.full_evaluation.category_evaluation.exact_match import ExactMatch
+from evaluation.full_evaluation.category_evaluation.list_accuracy import ListAccuracy
+from evaluation.full_evaluation.category_evaluation.named_entities import NETypeRecall, NERecall
 from evaluation.full_evaluation.category_evaluation.node_recall import NodeRecall
 from evaluation.full_evaluation.category_evaluation.edge_recall import EdgeRecall
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
@@ -43,7 +44,7 @@ category_name_to_set_class_and_metadata = {
     "pragmatic_coreference_testset": (EdgeRecall, SubcategoryMetadata(
     "pragmatic_coreference_testset",
     "Pragmatic coreference (testset)",
-    "reentrancies_pragmatic_filtered.tsv",
+    tsv="reentrancies_pragmatic_filtered.tsv",
     parent_column=4,
     parent_edge_column=5, metric_label="Edge Recall"
     )),
@@ -115,11 +116,11 @@ category_name_to_set_class_and_metadata = {
         subcorpus_filename="deep_recursion_rc_contrastive_coref",
         subtype="structural_generalization",
     )),
-    "long_lists": (ExactMatch, SubcategoryMetadata(
+    "long_lists": (ListAccuracy, SubcategoryMetadata(
         "long_lists",
         display_name="Long lists",
         subcorpus_filename="long_lists",
-        subtype="structural_generalization",
+        metric_label="Conjunct recall"
     )),
     "rare_node_labels": (NodeRecall, SubcategoryMetadata(
         "rare_node_labels",
@@ -304,6 +305,8 @@ for name in bunch2subcategory["3. Structural generalization"]:
     new_info.subcorpus_filename = add_sanity_check_suffix(info.subcorpus_filename)
     if new_info.extra_subcorpus_filenames is not None:
         new_info.extra_subcorpus_filenames = [add_sanity_check_suffix(filename) for filename in info.extra_subcorpus_filenames]
+    if info.name == "long_lists":
+        new_info.metric_label = "Exact Match"
 
     category_name_to_set_class_and_metadata[new_name] = eval_class, new_info
 

@@ -8,6 +8,7 @@ from penman import Graph
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists, graph_is_in_ids
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.graph_matcher import equals_modulo_isomorphy
 from evaluation.novel_corpus.structural_generalization import size_mappers, get_exact_match_by_size
 from evaluation.util import filter_amrs_for_name
 
@@ -37,6 +38,7 @@ class CategoryEvaluation:
             self.error_analysis_dict.update({"correct_prereqs": [], "incorrect_prereqs": []})
         if self.measure_unlabelled_edges():
             self.error_analysis_dict.update({"correct_unlabelled": [],"incorrect_unlabelled": []})
+
 
     @staticmethod
     def measure_unlabelled_edges():
@@ -209,17 +211,42 @@ class CategoryEvaluation:
         Loops through graphs and updates error analysis record
         """
         print("Using new method")
-        id2labels = self.read_tsv()
-        for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
-            graph_id = gold_amr.metadata['id']
-            if graph_id in id2labels:
-                predictions_for_comparison = self.get_predictions_for_comparison(predicted_amr)
-                for target in id2labels[graph_id]:
-                    self.update_error_analysis(graph_id, predictions_for_comparison,
-                                               target)
+
+        if self.category_metadata.tsv is not None:
+            # read in the TSV to get the targets for comparison
+            id2labels = self.read_tsv()
+            for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
+                graph_id = gold_amr.metadata['id']
+                if graph_id in id2labels:
+                    # occasionally we need something other than just the predicted graph for comparison
+                    predictions_for_comparison = self.get_predictions_for_comparison(predicted_amr)
+                    for target in id2labels[graph_id]:
+                        # update results for this item
+                        # if we have a TSV, update_error_analysis is per item in the TSV
+                        self.update_error_analysis(graph_id, predictions_for_comparison,
+                                                   target)
+        else:
+            for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
+                graph_id = gold_amr.metadata['id']
+                # if no TSV, update_error_analysis is per graph pair
+                self.update_error_analysis(graph_id, predicted_amr, gold_amr)
 
     def update_error_analysis(self, graph_id, predictions_for_comparison, target):
-        raise NotImplementedError("Needs to be implemented in subclass")
+        """
+        Default: exact match, modulo edge labels and senses
+        Args:
+            graph_id:
+            predictions_for_comparison:
+            target:
+
+        Returns:
+
+        """
+        print("Running exact match (default)")
+        if equals_modulo_isomorphy(target, predictions_for_comparison, match_edge_labels=False, match_senses=False):
+            self.add_success(graph_id)
+        else:
+            self.add_fail(graph_id)
 
     def add_prereq_success(self, graph_id):
         self.error_analysis_dict["correct_prereqs"].append(graph_id)
