@@ -3,6 +3,7 @@ import sys
 from typing import List
 
 import penman
+from nltk.twitter.common import extract_fields
 from penman import Graph
 
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists, graph_is_in_ids
@@ -37,25 +38,32 @@ class CategoryEvaluation:
         if len(self.predicted_amrs) == 0:
             print("No predicted amrs found!")
 
-        if do_error_analysis:
-            self.error_analysis_dict = {"correct_ids": [], "incorrect_ids": []}
+        extra_fields = []
+        if self.category_metadata.run_prerequisites:
+            extra_fields.append("prereqs")
+        if self.measure_unlabelled_edges():
+            extra_fields.append("unlabelled")
+        if not do_error_analysis:
+            self.results = CountResults(additional_fields=extra_fields)
 
-            if self.category_metadata.run_prerequisites:
-                self.error_analysis_dict.update({"correct_prereqs": [], "incorrect_prereqs": []})
-            if self.measure_unlabelled_edges():
-                self.error_analysis_dict.update({"correct_unlabelled": [],"incorrect_unlabelled": []})
-            self.success_adder = self.add_success_to_dict
-            self.failure_adder = self.add_fail_to_dict
-            self.success_totaler = self.sum_successes
-            self.failure_totaler = self.sum_failures
-        else:
-            print("not doing error analysis")
-            self.success_adder = self.add_success_to_count
-            self.failure_adder = self.add_fail_to_count
-            self.success_totaler = self.get_success_from_count
-            self.failure_totaler = self.get_failure_from_count
-            self.success_count = 0
-            self.failure_count = 0
+        # if do_error_analysis:
+        #     self.error_analysis_dict = {"correct_ids": [], "incorrect_ids": []}
+        #
+        #     if self.category_metadata.run_prerequisites:
+        #         self.error_analysis_dict.update({"correct_prereqs": [], "incorrect_prereqs": []})
+        #     if self.measure_unlabelled_edges():
+        #         self.error_analysis_dict.update({"correct_unlabelled": [],"incorrect_unlabelled": []})
+        #     self.success_adder = self.add_success_to_dict
+        #     self.failure_adder = self.add_fail_to_dict
+        #     self.success_totaler = self.sum_successes
+        #     self.failure_totaler = self.sum_failures
+        # else:
+        #     self.success_adder = self.add_success_to_count
+        #     self.failure_adder = self.add_fail_to_count
+        #     self.success_totaler = self.get_success_from_count
+        #     self.failure_totaler = self.get_failure_from_count
+        #     self.success_count = 0
+        #     self.failure_count = 0
 
     @staticmethod
     def measure_unlabelled_edges():
@@ -285,17 +293,16 @@ class CategoryEvaluation:
         self.error_analysis_dict["incorrect_unlabelled"].append(graph_id)
 
     def add_success(self, gold: Graph, predicted):
-        self.success_adder(gold, predicted)
-        # self.error_analysis_dict["correct_ids"].append(gold.metadata["id"])
+        self.results.add_success(gold, predicted)
 
     def add_fail(self, gold, predicted):
-        self.failure_adder(gold, predicted)
+        self.results.add_fail(gold, predicted)
 
     def get_success_count(self):
-        return self.success_totaler()
+        return self.results.get_success_count()
 
     def get_failure_count(self):
-        return self.failure_totaler()
+        return self.results.get_failure_count()
 
     def add_success_to_dict(self, gold: Graph, predicted):
         self.error_analysis_dict["correct_ids"].append(gold.metadata["id"])
@@ -320,3 +327,41 @@ class CategoryEvaluation:
     def get_failure_from_count(self):
         return self.failure_count
 
+class CountResults:
+    def __init__(self, additional_fields: List[str]=None, default_field: str = "id"):
+        if additional_fields is None:
+            additional_fields = []
+        for field in [default_field] + additional_fields:
+            setattr(self, self.make_success_key(field), 0)
+            setattr(self, self.make_failure_key(field), 0)
+        self.default_field = default_field
+
+    def add_success(self, gold: Graph, predicted: Graph, success_type=None):
+        if success_type is None:
+            success_type = self.default_field
+        key = self.make_success_key(success_type)
+        setattr(self, key, getattr(self, key) + 1)
+
+    def add_fail(self, gold: Graph, predicted: Graph, failure_type=None):
+        if failure_type is None:
+            failure_type = self.default_field
+        key = self.make_failure_key(failure_type)
+        setattr(self, key, getattr(self, key) + 1)
+
+    def get_success_count(self, field=None):
+        if field is None:
+            field = self.default_field
+        return getattr(self, self.make_success_key(field))
+
+    def get_failure_count(self, field=None):
+        if field is None:
+            field = self.default_field
+        return getattr(self, self.make_failure_key(field))
+
+    @staticmethod
+    def make_success_key(field):
+        return f"correct_{field}"
+
+    @staticmethod
+    def make_failure_key(field):
+        return f"incorrect_{field}"

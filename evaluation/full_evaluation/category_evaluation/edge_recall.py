@@ -28,11 +28,11 @@ class EdgeRecall(CategoryEvaluation):
     def read_tsv(self):
         return read_edge_tsv(self.root_dir, self.category_metadata)
 
-    def update_error_analysis(self, graph_id, predicted, target):
-        prereqs_ok = _check_prerequisites_for_edge_tuple(target, predicted)
+    def update_error_analysis(self, gold_amr, predicted_amr, target):
+        prereqs_ok = _check_prerequisites_for_edge_tuple(target, predicted_amr)
         if prereqs_ok:
-            self.add_prereq_success(graph_id)
-            unlabeled_edge_found = check_edge_existence(target, predicted,
+            self.add_prereq_success(gold_amr, predicted_amr)
+            unlabeled_edge_found = check_edge_existence(target, predicted_amr,
                                                         match_edge_labels=False,
                                                         match_senses=self.category_metadata.use_sense)
             if unlabeled_edge_found:
