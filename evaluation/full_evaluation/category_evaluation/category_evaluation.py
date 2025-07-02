@@ -1,3 +1,4 @@
+import pickle
 import sys
 from typing import List
 
@@ -29,6 +30,23 @@ class CategoryEvaluation:
         self.print_dataset_name = True  # we want to print the dataset name only on the first metric calculation
         self.extra_subcorpus_filenames = category_metadata.extra_subcorpus_filenames
         self.predictions_directory = predictions_directory
+
+        self.error_analysis_dict = {"correct_ids": [], "incorrect_ids": []}
+
+        if self.category_metadata.run_prerequisites:
+            self.error_analysis_dict.update({"correct_prereqs": [], "incorrect_prereqs": []})
+        if self.measure_unlabelled_edges():
+            self.error_analysis_dict.update({"correct_unlabelled": [],"incorrect_unlabelled": []})
+
+    @staticmethod
+    def measure_unlabelled_edges():
+        # only true for EdgeRecall
+        return False
+
+    def run_evaluation(self):
+        self._get_all_results()
+        self._calculate_metrics_and_add_all_rows()
+        return self.rows
 
     def get_additional_graphs(self, read_in):
         """
@@ -104,9 +122,9 @@ class CategoryEvaluation:
     def make_results(self):
         raise NotImplementedError("This method must be implemented by subclasses.")
 
-    def run_evaluation(self):
-        self.make_results()
-        return self.rows
+    # def run_evaluation(self):
+    #     self.make_results()
+    #     return self.rows
 
     @staticmethod
     def get_f_from_prf(triple):
@@ -153,3 +171,69 @@ class CategoryEvaluation:
         filtered_gold, _ = self.filter_graphs()
         return [gold.metadata["id"] for gold in filtered_gold]
 
+    def read_tsv(self):
+        return read_label_tsv(self.root_dir, self.category_metadata.tsv)
+
+    def dump_error_analysis_pickle(self):
+        with open(f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle", "wb") as f:
+            pickle.dump(self.error_analysis_dict, f)
+
+    def _calculate_metrics_and_add_all_rows(self):
+
+        success_count = len(self.error_analysis_dict["correct_ids"])
+        sample_size = success_count + len(self.error_analysis_dict["incorrect_ids"])
+        ret = [success_count, sample_size]
+        self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
+                                               [success_count, sample_size]))
+        if self.measure_unlabelled_edges():
+            unlabelled_success_count = len(self.error_analysis_dict["correct_unlabelled"])
+            ret.append(unlabelled_success_count)
+            self.rows.append(self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
+            [unlabelled_success_count, sample_size]))
+        if self.category_metadata.run_prerequisites:
+            prereq_success_count = len(self.error_analysis_dict["correct_prereqs"])
+            ret.append(prereq_success_count)
+            self.rows.append(self.make_results_row(
+                "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
+        print("Metrics:", ret)
+        self.dump_error_analysis_pickle()
+        return ret
+
+    def get_predictions_for_comparison(self, predicted_amr):
+        """Default is just the graph"""
+        return predicted_amr
+
+    def _get_all_results(self):
+        """
+        Loops through graphs and updates error analysis record
+        """
+        print("Using new method")
+        id2labels = self.read_tsv()
+        for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
+            graph_id = gold_amr.metadata['id']
+            if graph_id in id2labels:
+                predictions_for_comparison = self.get_predictions_for_comparison(predicted_amr)
+                for target in id2labels[graph_id]:
+                    self.update_error_analysis(graph_id, predictions_for_comparison,
+                                               target)
+
+    def update_error_analysis(self, graph_id, predictions_for_comparison, target):
+        raise NotImplementedError("Needs to be implemented in subclass")
+
+    def add_prereq_success(self, graph_id):
+        self.error_analysis_dict["correct_prereqs"].append(graph_id)
+
+    def add_prereq_fail(self, graph_id):
+        self.error_analysis_dict["incorrect_prereqs"].append(graph_id)
+
+    def add_success(self, graph_id):
+        self.error_analysis_dict["correct_ids"].append(graph_id)
+
+    def add_fail(self, graph_id):
+        self.error_analysis_dict["incorrect_ids"].append(graph_id)
+
+    def add_unlabelled_success(self, graph_id):
+        self.error_analysis_dict["correct_unlabelled"].append(graph_id)
+
+    def add_unlabelled_fail(self, graph_id):
+        self.error_analysis_dict["incorrect_unlabelled"].append(graph_id)

@@ -43,7 +43,7 @@ category_name_to_set_class_and_metadata = {
     "Pragmatic coreference (testset)",
     "reentrancies_pragmatic_filtered.tsv",
     parent_column=4,
-    parent_edge_column=5,
+    parent_edge_column=5, metric_label="Edge Recall"
     )),
     "pragmatic_coreference_winograd": (EdgeRecall, SubcategoryMetadata(
         "pragmatic_coreference_winograd",
@@ -52,21 +52,21 @@ category_name_to_set_class_and_metadata = {
         subcorpus_filename="winograd",
         parent_column=4,
         parent_edge_column=5,
-        first_row_is_header=True
+        first_row_is_header=True, metric_label="Edge Recall"
     )),
     "syntactic_gap_reentrancies": (EdgeRecall, SubcategoryMetadata(
         "syntactic_gap_reentrancies",
         display_name="Syntactic (gap) reentrancies",
         tsv="reentrancies_syntactic_gap_filtered.tsv",
         parent_column=4,
-        parent_edge_column=5
+        parent_edge_column=5, metric_label="Edge Recall"
     )),
     "unambiguous_coreference": (EdgeRecall, SubcategoryMetadata(
         "unambiguous_coreference",
         display_name="Unambiguous coreference",
         tsv="reentrancies_unambiguous_coreference_filtered.tsv",
         parent_column=4,
-        parent_edge_column=5
+        parent_edge_column=5, metric_label="Edge Recall"
     )),
     "nested_control_and_coordination": (ExactMatch, SubcategoryMetadata(
         "nested_control_and_coordination",
@@ -122,18 +122,19 @@ category_name_to_set_class_and_metadata = {
         display_name="Rare node labels",
         tsv="rare_node_labels_test.tsv",
         use_sense=True,
-        run_prerequisites=False)),
+        run_prerequisites=False, metric_label="Label Recall"
+    )),
     "unseen_node_labels": (NodeRecall, SubcategoryMetadata(
         "unseen_node_labels",
         display_name="Unseen node labels",
         tsv="unseen_node_labels_test_filtered.tsv",
-        use_sense=True,
+        use_sense=True, metric_label="Label Recall",
         run_prerequisites=False)),
     "rare_predicate_senses_excl_01": (NodeRecall, SubcategoryMetadata(
         "rare_predicate_senses_excl_01",
         display_name="Rare predicate senses (excl. -01)",
         latex_display_name="Rare predicate senses (excl.~\\nl{-01})",
-        tsv="rare_senses_filtered.tsv",
+        tsv="rare_senses_filtered.tsv", metric_label="Label Recall",
         use_sense=True)),
     "unseen_predicate_senses_excl_01": (NodeRecall, SubcategoryMetadata(
         "unseen_predicate_senses_excl_01",
@@ -141,14 +142,15 @@ category_name_to_set_class_and_metadata = {
         latex_display_name="Unseen predicate senses (excl.~\\nl{-01})",
         tsv="unseen_senses_new_sentences.tsv",
         subcorpus_filename="unseen_senses_new_sentences",
-        use_sense=True,
+        use_sense=True, metric_label="Label Recall",
+
     )),
     "rare_edge_labels_ARG2plus": (EdgeRecall, SubcategoryMetadata(
         "rare_edge_labels_ARG2plus",
         display_name="Rare edge labels (ARG2+)",
         latex_display_name="Rare edge labels (\\nl{ARG2}+)",
         tsv="rare_roles_arg2plus_filtered.tsv",
-        use_sense=True
+        use_sense=True, metric_label="Edge Recall"
                                   )),
     "unseen_edge_labels_ARG2plus": (EdgeRecall, SubcategoryMetadata(
         "unseen_edge_labels_ARG2plus",
@@ -156,51 +158,52 @@ category_name_to_set_class_and_metadata = {
         latex_display_name="Unseen edge labels (\\nl{ARG2}+)",
         tsv="unseen_roles_new_sentences.tsv",
         use_sense=True,
-        subcorpus_filename="unseen_roles_new_sentences"
+        subcorpus_filename="unseen_roles_new_sentences", metric_label="Edge Recall"
     )),
     "seen_names": (NERecall, SubcategoryMetadata(
         "seen_names",
         "Seen names",
         tsv="seen_names.tsv",
         subtype="name",
-        metric_label="Recall"
+        run_prerequisites=False
     )),
     "unseen_names": (NERecall, SubcategoryMetadata(
         "unseen_names",
         "Unseen names",
         tsv="unseen_names.tsv",
         subtype="name",
-        metric_label="Recall"
+        run_prerequisites=False
     )),
     "seen_dates": (NERecall, SubcategoryMetadata(
         "seen_dates",
         "Seen dates",
         tsv="seen_dates.tsv",
         subtype="date-entity",
-        metric_label="Recall"
+        run_prerequisites=False
     )),
     "unseen_dates": (NERecall, SubcategoryMetadata(
         "unseen_dates",
         "Unseen dates",
         tsv="unseen_dates.tsv",
         subtype="date-entity",
-        metric_label="Recall"
     )),
     "other_seen_entities": (NERecall, SubcategoryMetadata(
         "other_seen_entities",
         "Other seen entities",
         tsv="seen_special_entities.tsv",
         subtype="other",
-        metric_label="Recall",
-        label_column=3
+        label_column=3,
+        run_prerequisites=False
+
     )),
     "other_unseen_entities": (NERecall, SubcategoryMetadata(
         "other_unseen_entities",
         "Other unseen entities",
         tsv="unseen_special_entities.tsv",
         subtype="other",
-        metric_label="Recall",
-        label_column=3
+        label_column=3,
+        run_prerequisites=False
+
     )),
     "types_of_seen_named_entities": (NETypeRecall, SubcategoryMetadata(
         "types_of_seen_named_entities",
@@ -216,21 +219,21 @@ category_name_to_set_class_and_metadata = {
         "seen_andor_easy_wiki_links",
         "Seen and/or easy wiki links",
         tsv="seen_andor_easy_wiki_test_data.tsv",
-        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall",
+        use_sense=True, use_attributes=True, attribute_label=":wiki",
         run_prerequisites=False
     )),
     "hard_unseen_wiki_links": (NodeRecall, SubcategoryMetadata(
         "hard_unseen_wiki_links",
         "Hard unseen wiki links",
         tsv="hard_wiki_test_data.tsv",
-        use_sense=True, use_attributes=True, attribute_label=":wiki", metric_label="Recall",
+        use_sense=True, use_attributes=True, attribute_label=":wiki",
         run_prerequisites=False
     )),
     "frequent_predicate_senses_incl_01": (NodeRecall, SubcategoryMetadata(
         "frequent_predicate_senses_incl_01",
         "Frequent predicate senses (incl. -01)",
         latex_display_name="Frequent predicate senses (incl. ~\\nl{-01})",
-        tsv="common_senses_filtered.tsv", use_sense=True, run_prerequisites=True
+        tsv="common_senses_filtered.tsv", use_sense=True, run_prerequisites=True,
     )),
     "word_ambiguities_handcrafted": (WordDisambiguationRecall, SubcategoryMetadata(
         "word_ambiguities_handcrafted",
@@ -249,18 +252,21 @@ category_name_to_set_class_and_metadata = {
         "pp_attachment",
         display_name="PP attachment",
         subcorpus_filename="pp_attachment",
-        extra_subcorpus_filenames=["see_with", "read_by", "bought_for", "keep_from", "give_up_in"]
+        extra_subcorpus_filenames=["see_with", "read_by", "bought_for", "keep_from", "give_up_in"],
+        metric_label="Edge Recall"
     )),
     "unbounded_dependencies": (EdgeRecall, SubcategoryMetadata(
         "unbounded_dependencies",
         display_name="Unbounded dependencies",
         tsv="unbounded_dependencies.tsv",
         subcorpus_filename="unbounded_dependencies",
-        use_sense=False, source_column=2, edge_column=3, target_column=4, first_row_is_header=True)),
+        use_sense=False, source_column=2, edge_column=3, target_column=4,
+        first_row_is_header=True, metric_label="Edge Recall"
+    )),
     "passives": (EdgeRecall, SubcategoryMetadata(
         "passives",
         display_name="Passives",
-        tsv="passives_filtered.tsv", use_sense=True
+        tsv="passives_filtered.tsv", use_sense=True, metric_label="Edge Recall"
     )),
     "unaccusatives": (EdgeRecall, SubcategoryMetadata(
         "unaccusatives",

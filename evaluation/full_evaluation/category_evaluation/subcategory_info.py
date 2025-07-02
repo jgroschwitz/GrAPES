@@ -19,7 +19,7 @@ class SubcategoryMetadata:
     # for nodes
     use_attributes: bool = False
     attribute_label: str or None = None
-    metric_label: str = "Label recall"
+    metric_label: str = "Recall"
     run_prerequisites: bool = True
     # for edges
     source_column: int or None = 1

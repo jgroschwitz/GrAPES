@@ -1,5 +1,7 @@
 import pickle
 
+from amrbank_analysis.get_unseen_names_and_dates import get_date_string_for_date_instance, \
+    get_name_string_for_name_instance
 from evaluation.novel_corpus.berts_mouth import evaluate_berts_mouth
 from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, \
     calculate_subgraph_existence_successes_and_sample_size, \
@@ -20,15 +22,17 @@ from penman import load
 from evaluation.testset.imperative import get_imperative_success_counts
 from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
 from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, \
-    calculate_special_entity_successes_and_sample_size
-from evaluation.util import filter_amrs_for_name, get_node_name_for_gold_label, strip_sense
+    calculate_special_entity_successes_and_sample_size, normalize_special_entity_value
+from evaluation.util import filter_amrs_for_name, get_node_name_for_gold_label, strip_sense, get_node_by_name, get_name
 from evaluation.novel_corpus.word_disambiguation import evaluate_word_disambiguation
 
 
 class EdgeRecall(CategoryEvaluation):
     def run_evaluation(self):
         try:
-            self.make_results()
+            self._get_all_results()
+            self._calculate_metrics_and_add_all_rows()
+            return self.rows
         except IndexError as e:
             if self.category_metadata.subcorpus_filename == "unbounded_dependencies":
                 print("Check that corpus/unbounded_dependencies.tsv has 66 rows")
@@ -39,81 +43,39 @@ class EdgeRecall(CategoryEvaluation):
                 print("Check that corpus/unbounded_dependencies.tsv exists")
                 print("Something may have gone wrong in extending the GrAPES testset with PTB data")
             raise e
-        return self.rows
 
-    def make_results(self):
-        prereqs, unlabeled_recalled, labeled_recalled, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
-            self.category_metadata,
-            gold_amrs=self.gold_amrs,
-            predicted_amrs=self.predicted_amrs,
-            root_dir=self.root_dir,
-        )
-        rows = [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [labeled_recalled, sample_size]),
-                self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
-                                      [unlabeled_recalled, sample_size]),
-                self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
-        self.rows.extend(rows)
+    @staticmethod
+    def measure_unlabelled_edges():
+        return True
 
-    def _calculate_edge_recall(self):
-        id2labels = read_edge_tsv(self.root_dir, self.category_metadata)
-        error_analysis = {"correct_ids": [], "incorrect_ids": [], "correct_prereqs": [], "correct_unlabelled": [],"incorrect_unlabelled": []}
+    def read_tsv(self):
+        return read_edge_tsv(self.root_dir, self.category_metadata)
 
-
-        for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
-            graph_id = gold_amr.metadata['id']
-            if graph_id in id2labels:
-                predictions_to_look_at = predicted_amr
-
-                for target_tuple in id2labels[graph_id]:
-                    self.update_error_analysis(error_analysis, graph_id, predicted_amr, target_tuple)
-
-        if do_error_analysis:
-            # write to pickle
-            # TODO shuffle the error analysis lists (synchronously), so that we can get a random sample of the errors
-            with open(f"{root_dir}/error_analysis/{error_analysis_output_filename}", "wb") as f:
-                pickle.dump(error_analysis, f)
-        assert total > 0, f"No matching graphs found! Started with {len(gold_amrs)} gold AMRs."
-        return prereqs, unlabeled_recalled, recalled, total
-
-    def update_error_analysis(self, error_analysis, graph_id, predicted, target):
+    def update_error_analysis(self, graph_id, predicted, target):
         prereqs_ok = _check_prerequisites_for_edge_tuple(target, predicted)
         if prereqs_ok:
-            error_analysis["correct_prereqs"].append(graph_id)
+            self.add_prereq_success(graph_id)
             unlabeled_edge_found = check_edge_existence(target, predicted,
                                                         match_edge_labels=False,
                                                         match_senses=self.category_metadata.use_sense)
             if unlabeled_edge_found:
-                error_analysis["correct_unlabelled"].append(graph_id)
-
-                edge_found = _check_edge_existence_with_multiple_label_options(target, predicted_amr,
-                                                                               use_sense=self.category_metadata.use_sense)
+                self.add_unlabelled_success(graph_id)
+                edge_found = _check_edge_existence_with_multiple_label_options(target, predicted,
+                                                      use_sense=self.category_metadata.use_sense)
                 if edge_found:
-                    error_analysis["correct_ids"].append(graph_id)
+                    self.add_success(graph_id)
                 else:
-                    error_analysis["incorrect_ids"].append(graph_id)
+                    self.add_fail(graph_id)
             else:
-                error_analysis["incorrect_unlabelled"].append(graph_id)
-                error_analysis["incorrect_ids"].append(graph_id)
+                self.add_unlabelled_fail(graph_id)
+                self.add_fail(graph_id)
         else:
-            error_analysis["incorrect_prereqs"].append(graph_id)
-            error_analysis["incorrect_unlabelled"].append(graph_id)
-            error_analysis["incorrect_ids"].append(graph_id)
+            self.add_prereq_fail(graph_id)
+            self.add_unlabelled_fail(graph_id)
+            self.add_fail(graph_id)
 
 
 class NodeRecall(CategoryEvaluation):
-    def run_evaluation(self):
-        self.make_results()
-        # if self.category_metadata.run_prerequisites:
-        #     self.make_results(prereq=True)
-        return self.rows
-
-    def make_results(self):
-        success_count, prereq_success, sample_size = self.calculate_node_label_successes_and_sample_size_and_do_error_analysis()   #calculate_node_label_successes_and_sample_size(
-        row = self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE, [success_count, sample_size])
-        self.rows.append(row)
-        if self.category_metadata.run_prerequisites:
-            row = self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success, sample_size])
-            self.rows.append(row)
 
     def _get_predicted_labels_based_on_evaluation_case(self, predicted_amr, use_sense=None):
         """
@@ -138,56 +100,38 @@ class NodeRecall(CategoryEvaluation):
             predicted_labels = [strip_sense(instance.target) for instance in predicted_amr.instances()]
         return predicted_labels
 
-    def calculate_node_label_successes_and_sample_size_and_do_error_analysis(self):
-        """
-        Just a test case for generalising error analysis
-        """
-        print("Using new method")
-        id2labels = read_label_tsv(self.root_dir, self.category_metadata.tsv)
-        error_analysis = {"correct_ids": [], "incorrect_ids": [], "correct_prereqs": [], "incorrect_prereqs": []}
-        for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
-            graph_id = gold_amr.metadata['id']
-            if graph_id in id2labels:
-                # We want the unlabelled version for prereqs if we're doing them and
-                # the main analysis if use_sense=False
-                predicted_labels, predicted_labels_no_sense = self.get_predicted_labels(predicted_amr)
-
-                # run through the labels we want to find for this graph
-                for target_label in id2labels[graph_id]:
-                    # start without senses if we're doing it at all, because we can skip the real analysis if it fails
-                    self.update_error_analysis(error_analysis, graph_id, (predicted_labels, predicted_labels_no_sense),
-                                               target_label)
-
-        # write to pickle
-        with open(f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle", "wb") as f:
-            pickle.dump(error_analysis, f)
-
-        # get the metrics from the error analysis
-        success_count = len(error_analysis["correct_ids"])
-        prereq_success_count = len(error_analysis["correct_prereqs"])
-        sample_size = success_count + len(error_analysis["incorrect_ids"])
-        return success_count, prereq_success_count, sample_size
-
-    def update_error_analysis(self, error_analysis, graph_id, predicted,
+    def update_error_analysis(self, graph_id, predicted,
                               target):
         predicted_labels, predicted_labels_no_sense = predicted
+
+        # we only check senses if use_senses=True
         check_senses = predicted_labels is not None
+
+        # we also check without senses if uses_senses=False or we're running prereqs
         if predicted_labels_no_sense is not None:
             label_found = self.find_label(predicted_labels_no_sense, target, False)
+            # store the result. If we running prereqs, this sense-less version is the prereqs, otherwise it's main
+            # (there's no other way of doing prereqs in NodeRecall)
             error_status = "correct" if label_found else "incorrect"
             error_version = "prereqs" if self.category_metadata.run_prerequisites else "ids"
-            error_analysis[f"{error_status}_{error_version}"].append(graph_id)
+            self.error_analysis_dict[f"{error_status}_{error_version}"].append(graph_id)
             if not label_found and check_senses:
                 # if that failed no need to check with senses
-                error_analysis["incorrect_ids"].append(graph_id)
+                self.add_fail(graph_id)
                 check_senses = False
-        # if the prereqs worked, now check for the full label
-        if check_senses and predicted_labels is not None:
+        # if the prereqs worked and , now check for the full label if use_sense=True
+        if check_senses:
             label_found = self.find_label(predicted_labels, target, True)
             error_status = "correct" if label_found else "incorrect"
-            error_analysis[f"{error_status}_ids"].append(graph_id)
+            self.error_analysis_dict[f"{error_status}_ids"].append(graph_id)
 
-    def get_predicted_labels(self, predicted_amr):
+    def get_predictions_for_comparison(self, predicted_amr):
+        """
+        Extract the relevant labels
+        Args:
+            predicted_amr: penman Graph
+        Returns: relevant node labels, with and without senses. If either isn't needed, it's None instead.
+        """
         if not self.category_metadata.use_sense or self.category_metadata.run_prerequisites:
             predicted_labels_no_sense = self._get_predicted_labels_based_on_evaluation_case(
                 predicted_amr,
@@ -239,26 +183,65 @@ class PPAttachment(CategoryEvaluation):
 
 class NETypeRecall(CategoryEvaluation):
     """Identifying named entity types"""
-    def make_results(self):
-        id2labels = get_2_columns_from_tsv_by_id(f"{self.corpus_path}/{self.category_metadata.tsv}")
-        prereq, successes, sample_size = get_ne_type_successes_and_sample_size(
-            id2labels,
-            self.gold_amrs,
-            self.predicted_amrs)
-        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
-        self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
+
+    def read_tsv(self):
+        return get_2_columns_from_tsv_by_id(f"{self.corpus_path}/{self.category_metadata.tsv}")
+
+    def update_error_analysis(self, graph_id, predictions_for_comparison, target):
+        found = False
+        prereq_success = False
+        for edge in predictions_for_comparison.edges(role=":name"):  #.edges(role=":name"):
+            entity_label = get_node_by_name(edge.source, predictions_for_comparison).target
+            name_string = get_name(edge.target, predictions_for_comparison)
+            if name_string == target[1]:
+                self.add_prereq_success(graph_id)
+                prereq_success = True
+                if entity_label == target[0]:
+                    self.add_success(graph_id)
+                    found = True
+                break
+        if not found:
+            self.add_fail(graph_id)
+        if not prereq_success:
+            self.add_prereq_fail(graph_id)
 
 
 class NERecall(CategoryEvaluation):
     """Correctly creating attributes for named entities, such as the components of a name"""
-    def make_results(self):
-        id2labels_entities = get_graphid2labels_from_tsv_file(f"{self.corpus_path}/{self.category_metadata.tsv}",
-                                                              graph_id_column=self.category_metadata.graph_id_column,
-                                                              label_column=self.category_metadata.label_column)
-        successes, sample_size = calculate_special_entity_successes_and_sample_size(
-            id2labels_entities, self.gold_amrs, self.predicted_amrs, self.category_metadata.subtype)
-        self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
-                                         [successes, sample_size])
+
+    def read_tsv(self):
+        return get_graphid2labels_from_tsv_file(f"{self.corpus_path}/{self.category_metadata.tsv}",
+                                         graph_id_column=self.category_metadata.graph_id_column,
+                                         label_column=self.category_metadata.label_column)
+
+
+
+    def update_error_analysis(self, graph_id, predictions_for_comparison, target):
+        found = False
+        entity_type = self.category_metadata.subtype
+        if entity_type == "other":
+            # if not name or date, try both attributes and instances
+            gold_value_string = normalize_special_entity_value(target)
+            for instance_or_attribute in predictions_for_comparison.instances() + predictions_for_comparison.attributes():
+                # and we only need to normalise the one string
+                if normalize_special_entity_value(instance_or_attribute.target) == gold_value_string:
+                    self.add_success(graph_id)
+                    break
+        else:
+            for instance in predictions_for_comparison.instances():
+                if instance.target == entity_type:
+
+                    if entity_type == "date-entity":
+                        name_string = get_date_string_for_date_instance(predictions_for_comparison, instance)
+                    elif entity_type == "name":
+                        name_string = get_name_string_for_name_instance(predictions_for_comparison, instance)
+                    # get all the relevant attributes and put them into a string of the same format as the TSV
+                    if name_string == target:
+                        self.add_success(graph_id)
+                        found = True
+                        break
+        if not found:
+            self.add_fail(graph_id)
 
 
 class SubgraphRecall(CategoryEvaluation):
