@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 from typing import List
 
 import penman
-from nltk.twitter.common import extract_fields
 from penman import Graph
 
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists, graph_is_in_ids
@@ -348,7 +347,7 @@ class Results(ABC):
         """
         raise NotImplementedError
 
-    def make_success_key(self, field):
+    def make_success_key(self, field=None):
         if field is None:
             field = self.default_field
         return f"correct_{field}"
