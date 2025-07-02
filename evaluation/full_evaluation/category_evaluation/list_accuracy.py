@@ -25,6 +25,7 @@ class ListAccuracy(CategoryEvaluation):
                                          "correct_opi": [],
                                          "incorrect_opi": []
                                     })
+        self.gold_amrs, self.predicted_amrs = self.filter_graphs()
 
 
     def _get_all_results(self):
