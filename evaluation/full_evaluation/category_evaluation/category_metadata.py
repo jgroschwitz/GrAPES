@@ -1,8 +1,10 @@
 from copy import copy
 
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import EdgeRecall, NodeRecall, NERecall, \
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import NERecall, \
     NETypeRecall, WordDisambiguationRecall, PPAttachment, EllipsisRecall, SubgraphRecall, ImperativeRecall, \
     ExactMatch
+from evaluation.full_evaluation.category_evaluation.node_recall import NodeRecall
+from evaluation.full_evaluation.category_evaluation.edge_recall import EdgeRecall
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.novel_corpus.structural_generalization import \
     add_sanity_check_suffix
@@ -91,6 +93,8 @@ category_name_to_set_class_and_metadata = {
         display_name="CP recursion",
         subcorpus_filename="deep_recursion_basic",
         subtype="structural_generalization",
+        run_prerequisites=False,
+        metric_label="Exact Match"
     )),
     "cp_recursion_plus_coreference": (ExactMatch, SubcategoryMetadata(
         "cp_recursion_plus_coreference",

@@ -107,6 +107,7 @@ class CategoryEvaluation:
         return [category_name, metric_name, EVAL_TYPE_NA] + []
 
     def make_smatch_results(self):
+        print("running Smatch...")
         smatch = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
         smatch_f1 = self.get_f_from_prf(smatch)
         self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])

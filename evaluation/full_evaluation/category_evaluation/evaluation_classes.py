@@ -1,160 +1,23 @@
-import pickle
-
 from amrbank_analysis.get_unseen_names_and_dates import get_date_string_for_date_instance, \
     get_name_string_for_name_instance
+from evaluation.graph_matcher import equals_modulo_isomorphy
 from evaluation.novel_corpus.berts_mouth import evaluate_berts_mouth
 from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, \
-    calculate_subgraph_existence_successes_and_sample_size, \
-    calculate_node_label_successes_and_sample_size, calculate_edge_prereq_recall_and_sample_size_counts, \
-    graph_is_in_ids, _get_predicted_labels_based_on_evaluation_case, _label_exists_in_predicted_labels, \
-    _check_prerequisites_for_edge_tuple, check_edge_existence, _check_edge_existence_with_multiple_label_options
-from evaluation.file_utils import read_label_tsv, read_edge_tsv
+    calculate_subgraph_existence_successes_and_sample_size
+from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_sanity_check
+from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check
 from evaluation.novel_corpus.long_lists import compute_conjunct_counts, compute_generalization_op_counts
 from evaluation.novel_corpus.pp_attachment import get_pp_attachment_success_counters
-from evaluation.novel_corpus.structural_generalization import get_exact_match_by_size, size_mappers, \
-    add_sanity_check_suffix
 from evaluation.testset.ellipsis import get_ellipsis_success_counts
-from penman import load
 
 from evaluation.testset.imperative import get_imperative_success_counts
-from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id, get_ne_type_successes_and_sample_size
+from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id
 from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, \
-    calculate_special_entity_successes_and_sample_size, normalize_special_entity_value
-from evaluation.util import filter_amrs_for_name, get_node_name_for_gold_label, strip_sense, get_node_by_name, get_name
+    normalize_special_entity_value
+from evaluation.util import filter_amrs_for_name, get_node_by_name, get_name
 from evaluation.novel_corpus.word_disambiguation import evaluate_word_disambiguation
-
-
-class EdgeRecall(CategoryEvaluation):
-    def run_evaluation(self):
-        try:
-            self._get_all_results()
-            self._calculate_metrics_and_add_all_rows()
-            return self.rows
-        except IndexError as e:
-            if self.category_metadata.subcorpus_filename == "unbounded_dependencies":
-                print("Check that corpus/unbounded_dependencies.tsv has 66 rows")
-                print("Something may have gone wrong in extending the GrAPES testset with PTB data")
-            raise e
-        except FileNotFoundError as e:
-            if self.category_metadata.subcorpus_filename == "unbounded_dependencies":
-                print("Check that corpus/unbounded_dependencies.tsv exists")
-                print("Something may have gone wrong in extending the GrAPES testset with PTB data")
-            raise e
-
-    @staticmethod
-    def measure_unlabelled_edges():
-        return True
-
-    def read_tsv(self):
-        return read_edge_tsv(self.root_dir, self.category_metadata)
-
-    def update_error_analysis(self, graph_id, predicted, target):
-        prereqs_ok = _check_prerequisites_for_edge_tuple(target, predicted)
-        if prereqs_ok:
-            self.add_prereq_success(graph_id)
-            unlabeled_edge_found = check_edge_existence(target, predicted,
-                                                        match_edge_labels=False,
-                                                        match_senses=self.category_metadata.use_sense)
-            if unlabeled_edge_found:
-                self.add_unlabelled_success(graph_id)
-                edge_found = _check_edge_existence_with_multiple_label_options(target, predicted,
-                                                      use_sense=self.category_metadata.use_sense)
-                if edge_found:
-                    self.add_success(graph_id)
-                else:
-                    self.add_fail(graph_id)
-            else:
-                self.add_unlabelled_fail(graph_id)
-                self.add_fail(graph_id)
-        else:
-            self.add_prereq_fail(graph_id)
-            self.add_unlabelled_fail(graph_id)
-            self.add_fail(graph_id)
-
-
-class NodeRecall(CategoryEvaluation):
-
-    def _get_predicted_labels_based_on_evaluation_case(self, predicted_amr, use_sense=None):
-        """
-        Get the instances or attributes in the given predicted AMR
-        Note that if use_attributes and use_sense are both true, we get the attributes, not the senses.
-            If they are both false, we get the instances without their senses.
-        :param predicted_amr: AMR to search through
-        :param use_sense: if True, get all instances with their senses; otherwise all instances without their senses
-        :return: list of either attributes or senses (not both)
-        """
-        if use_sense is None:
-            use_sense = self.category_metadata.use_sense
-        if self.category_metadata.use_attributes:
-            if self.category_metadata.attribute_label:
-                predicted_labels = [attr.target.replace("\"", "") for attr in
-                                    predicted_amr.attributes(role=self.category_metadata.attribute_label)]
-            else:
-                predicted_labels = [attr.target.replace("\"", "") for attr in predicted_amr.attributes()]
-        elif use_sense:
-            predicted_labels = [instance.target for instance in predicted_amr.instances()]
-        else:
-            predicted_labels = [strip_sense(instance.target) for instance in predicted_amr.instances()]
-        return predicted_labels
-
-    def update_error_analysis(self, graph_id, predicted,
-                              target):
-        predicted_labels, predicted_labels_no_sense = predicted
-
-        # we only check senses if use_senses=True
-        check_senses = predicted_labels is not None
-
-        # we also check without senses if uses_senses=False or we're running prereqs
-        if predicted_labels_no_sense is not None:
-            label_found = self.find_label(predicted_labels_no_sense, target, False)
-            # store the result. If we running prereqs, this sense-less version is the prereqs, otherwise it's main
-            # (there's no other way of doing prereqs in NodeRecall)
-            error_status = "correct" if label_found else "incorrect"
-            error_version = "prereqs" if self.category_metadata.run_prerequisites else "ids"
-            self.error_analysis_dict[f"{error_status}_{error_version}"].append(graph_id)
-            if not label_found and check_senses:
-                # if that failed no need to check with senses
-                self.add_fail(graph_id)
-                check_senses = False
-        # if the prereqs worked and , now check for the full label if use_sense=True
-        if check_senses:
-            label_found = self.find_label(predicted_labels, target, True)
-            error_status = "correct" if label_found else "incorrect"
-            self.error_analysis_dict[f"{error_status}_ids"].append(graph_id)
-
-    def get_predictions_for_comparison(self, predicted_amr):
-        """
-        Extract the relevant labels
-        Args:
-            predicted_amr: penman Graph
-        Returns: relevant node labels, with and without senses. If either isn't needed, it's None instead.
-        """
-        if not self.category_metadata.use_sense or self.category_metadata.run_prerequisites:
-            predicted_labels_no_sense = self._get_predicted_labels_based_on_evaluation_case(
-                predicted_amr,
-                use_sense=False)
-        else:
-            predicted_labels_no_sense = None
-        # We always need them with senses if use_sense=True
-        if self.category_metadata.use_sense:
-            predicted_labels = self._get_predicted_labels_based_on_evaluation_case(
-                predicted_amr,
-                use_sense=True)
-        else:
-            predicted_labels = None
-        return predicted_labels, predicted_labels_no_sense
-
-    def find_label(self, predicted_labels, target_label, use_sense):
-        label_found = _label_exists_in_predicted_labels(predicted_labels, target_label, use_sense)
-        if not label_found and " " in target_label:
-            for target_label_variant in target_label.split(" "):
-                if _label_exists_in_predicted_labels(predicted_labels, target_label_variant, use_sense):
-                    label_found = True
-                    break
-        return label_found
 
 
 class PPAttachment(CategoryEvaluation):
@@ -312,13 +175,29 @@ class ExactMatch(CategoryEvaluation):
         self.predicted_amrs = predicted_amrs
 
     def run_evaluation(self):
-        if self.category_metadata.subcorpus_filename == "long_lists":
-            self.long_lists()
-        elif self.category_metadata.subcorpus_filename.startswith("long_lists"):
-            self.long_list_sanity_check()
-        else:
-            self.make_results()
+        self._get_all_results()
+        self._calculate_metrics_and_add_all_rows()
+        self.make_smatch_results()
         return self.rows
+
+    def _get_all_results(self):
+        """
+        Loops through graphs and updates error analysis record
+        """
+        for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
+            graph_id = gold_amr.metadata['id']
+            if self.category_metadata.subcorpus_filename == "long_lists":
+                self.long_lists()
+            elif self.category_metadata.subcorpus_filename.startswith("long_lists"):
+                self.long_list_sanity_check()
+            else:
+                self.update_error_analysis(graph_id, predicted_amr, gold_amr)
+
+    def update_error_analysis(self, graph_id, predictions_for_comparison, target):
+        if equals_modulo_isomorphy(target, predictions_for_comparison, match_edge_labels=False, match_senses=False):
+            self.add_success(graph_id)
+        else:
+            self.add_fail(graph_id)
 
     def make_results(self):
         successes, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
