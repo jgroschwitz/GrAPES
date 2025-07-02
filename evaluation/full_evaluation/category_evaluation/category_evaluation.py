@@ -21,7 +21,8 @@ EVAL_TYPE_NA = 0
 class CategoryEvaluation:
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
-                 category_metadata: SubcategoryMetadata, predictions_directory=None):
+                 category_metadata: SubcategoryMetadata, predictions_directory=None, do_error_analysis: bool = False):
+        print("initializing category evaluation")
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
         self.root_dir = root_dir
@@ -31,14 +32,30 @@ class CategoryEvaluation:
         self.print_dataset_name = True  # we want to print the dataset name only on the first metric calculation
         self.extra_subcorpus_filenames = category_metadata.extra_subcorpus_filenames
         self.predictions_directory = predictions_directory
+        self.do_error_analysis = do_error_analysis
 
-        self.error_analysis_dict = {"correct_ids": [], "incorrect_ids": []}
+        if len(self.predicted_amrs) == 0:
+            print("No predicted amrs found!")
 
-        if self.category_metadata.run_prerequisites:
-            self.error_analysis_dict.update({"correct_prereqs": [], "incorrect_prereqs": []})
-        if self.measure_unlabelled_edges():
-            self.error_analysis_dict.update({"correct_unlabelled": [],"incorrect_unlabelled": []})
+        if do_error_analysis:
+            self.error_analysis_dict = {"correct_ids": [], "incorrect_ids": []}
 
+            if self.category_metadata.run_prerequisites:
+                self.error_analysis_dict.update({"correct_prereqs": [], "incorrect_prereqs": []})
+            if self.measure_unlabelled_edges():
+                self.error_analysis_dict.update({"correct_unlabelled": [],"incorrect_unlabelled": []})
+            self.success_adder = self.add_success_to_dict
+            self.failure_adder = self.add_fail_to_dict
+            self.success_totaler = self.sum_successes
+            self.failure_totaler = self.sum_failures
+        else:
+            print("not doing error analysis")
+            self.success_adder = self.add_success_to_count
+            self.failure_adder = self.add_fail_to_count
+            self.success_totaler = self.get_success_from_count
+            self.failure_totaler = self.get_failure_from_count
+            self.success_count = 0
+            self.failure_count = 0
 
     @staticmethod
     def measure_unlabelled_edges():
@@ -178,13 +195,15 @@ class CategoryEvaluation:
         return read_label_tsv(self.root_dir, self.category_metadata.tsv)
 
     def dump_error_analysis_pickle(self):
-        with open(f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle", "wb") as f:
+        pickle_path = f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle"
+        with open(pickle_path, "wb") as f:
             pickle.dump(self.error_analysis_dict, f)
+        print("Wrote error analysis pickle to " + pickle_path)
 
     def _calculate_metrics_and_add_all_rows(self):
 
-        success_count = len(self.error_analysis_dict["correct_ids"])
-        sample_size = success_count + len(self.error_analysis_dict["incorrect_ids"])
+        success_count = self.get_success_count()
+        sample_size = success_count + self.get_failure_count()
         ret = [success_count, sample_size]
         self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
                                                [success_count, sample_size]))
@@ -199,7 +218,8 @@ class CategoryEvaluation:
             self.rows.append(self.make_results_row(
                 "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
         print("Metrics:", ret)
-        self.dump_error_analysis_pickle()
+        if self.do_error_analysis:
+            self.dump_error_analysis_pickle()
         return ret
 
     def get_predictions_for_comparison(self, predicted_amr):
@@ -223,30 +243,28 @@ class CategoryEvaluation:
                     for target in id2labels[graph_id]:
                         # update results for this item
                         # if we have a TSV, update_error_analysis is per item in the TSV
-                        self.update_error_analysis(graph_id, predictions_for_comparison,
-                                                   target)
+                        self.update_error_analysis(gold_amr, predicted_amr, target, predictions_for_comparison)
         else:
             for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
-                graph_id = gold_amr.metadata['id']
                 # if no TSV, update_error_analysis is per graph pair
-                self.update_error_analysis(graph_id, predicted_amr, gold_amr)
+                self.update_error_analysis(gold_amr, predicted_amr)
 
-    def update_error_analysis(self, graph_id, predictions_for_comparison, target):
+    def update_error_analysis(self, gold_amr, predicted_amr, target=None, predictions_for_comparison=None):
         """
         Default: exact match, modulo edge labels and senses
         Args:
-            graph_id:
-            predictions_for_comparison:
-            target:
-
-        Returns:
-
+            gold_amr: Graph
+            predicted_amr: Graph
+            target: optional: gold thing to match with.
+            predictions_for_comparison: optional: predicted thing to match.
         """
         print("Running exact match (default)")
-        if equals_modulo_isomorphy(target, predictions_for_comparison, match_edge_labels=False, match_senses=False):
-            self.add_success(graph_id)
+        if equals_modulo_isomorphy(gold_amr, predicted_amr, match_edge_labels=False, match_senses=False):
+            # self.add_success(graph_id)
+            self.add_success(gold_amr, predicted_amr)
         else:
-            self.add_fail(graph_id)
+            self.add_fail(gold_amr, predicted_amr)
+            # self.add_fail(graph_id)
 
     def add_prereq_success(self, graph_id):
         self.error_analysis_dict["correct_prereqs"].append(graph_id)
@@ -254,14 +272,51 @@ class CategoryEvaluation:
     def add_prereq_fail(self, graph_id):
         self.error_analysis_dict["incorrect_prereqs"].append(graph_id)
 
-    def add_success(self, graph_id):
-        self.error_analysis_dict["correct_ids"].append(graph_id)
-
-    def add_fail(self, graph_id):
-        self.error_analysis_dict["incorrect_ids"].append(graph_id)
+    # def add_success(self, graph_id):
+    #     self.error_analysis_dict["correct_ids"].append(graph_id)
+    #
+    # def add_fail(self, graph_id):
+    #     self.error_analysis_dict["incorrect_ids"].append(graph_id)
 
     def add_unlabelled_success(self, graph_id):
         self.error_analysis_dict["correct_unlabelled"].append(graph_id)
 
     def add_unlabelled_fail(self, graph_id):
         self.error_analysis_dict["incorrect_unlabelled"].append(graph_id)
+
+    def add_success(self, gold: Graph, predicted):
+        self.success_adder(gold, predicted)
+        # self.error_analysis_dict["correct_ids"].append(gold.metadata["id"])
+
+    def add_fail(self, gold, predicted):
+        self.failure_adder(gold, predicted)
+
+    def get_success_count(self):
+        return self.success_totaler()
+
+    def get_failure_count(self):
+        return self.failure_totaler()
+
+    def add_success_to_dict(self, gold: Graph, predicted):
+        self.error_analysis_dict["correct_ids"].append(gold.metadata["id"])
+
+    def add_fail_to_dict(self, gold, predicted):
+        self.error_analysis_dict["incorrect_ids"].append(gold.metadata["id"])
+
+    def sum_successes(self):
+        return len(self.error_analysis_dict["correct_ids"])
+
+    def sum_failures(self):
+        return len(self.error_analysis_dict["incorrect_ids"])
+
+    def add_success_to_count(self, gold: Graph, predicted):
+        self.success_count += 1
+
+    def add_fail_to_count(self, gold: Graph, predicted):
+        self.failure_count +=1
+
+    def get_success_from_count(self):
+        return self.success_count
+    def get_failure_from_count(self):
+        return self.failure_count
+

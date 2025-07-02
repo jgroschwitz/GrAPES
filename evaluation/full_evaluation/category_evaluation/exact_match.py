@@ -13,8 +13,8 @@ class ExactMatch(CategoryEvaluation):
     Checks exact match and Smatch.
     """
     def __init__(self, gold_amrs, predicted_amrs, root_dir,
-                 category_metadata, predictions_directory=None):
-        super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory)
+                 category_metadata, predictions_directory=None, do_error_analysis=False):
+        super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory, do_error_analysis)
 
         self.is_sanity_check = is_sanity_check(self.category_metadata)
 

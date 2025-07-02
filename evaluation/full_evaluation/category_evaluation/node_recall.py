@@ -28,9 +28,8 @@ class NodeRecall(CategoryEvaluation):
             predicted_labels = [strip_sense(instance.target) for instance in predicted_amr.instances()]
         return predicted_labels
 
-    def update_error_analysis(self, graph_id, predicted,
-                              target):
-        predicted_labels, predicted_labels_no_sense = predicted
+    def update_error_analysis(self, gold_amr, predicted_amr, target, predictions_for_comparison):
+        predicted_labels, predicted_labels_no_sense = predictions_for_comparison
 
         # we only check senses if use_senses=True
         check_senses = predicted_labels is not None
@@ -40,18 +39,28 @@ class NodeRecall(CategoryEvaluation):
             label_found = self.find_label(predicted_labels_no_sense, target, False)
             # store the result. If we running prereqs, this sense-less version is the prereqs, otherwise it's main
             # (there's no other way of doing prereqs in NodeRecall)
-            error_status = "correct" if label_found else "incorrect"
-            error_version = "prereqs" if self.category_metadata.run_prerequisites else "ids"
-            self.error_analysis_dict[f"{error_status}_{error_version}"].append(graph_id)
+            if label_found:
+                if self.category_metadata.run_prerequisites:
+                    self.error_analysis_dict["correct_prereqs"].append(graph_id)
+                else:
+                    self.add_success(gold_amr, predicted_amr)
+            else:
+                if self.category_metadata.run_prerequisites:
+                    self.error_analysis_dict["incorrect_prereqs"].append(graph_id)
+                else:
+                    self.add_fail(gold_amr, predicted_amr)
+
             if not label_found and check_senses:
                 # if that failed no need to check with senses
-                self.add_fail(graph_id)
+                self.add_fail(gold_amr, predicted_amr)
                 check_senses = False
         # if the prereqs worked and , now check for the full label if use_sense=True
         if check_senses:
             label_found = self.find_label(predicted_labels, target, True)
-            error_status = "correct" if label_found else "incorrect"
-            self.error_analysis_dict[f"{error_status}_ids"].append(graph_id)
+            if label_found:
+                self.add_success(gold_amr, predicted_amr)
+            else:
+                self.add_fail(gold_amr, predicted_amr)
 
     def get_predictions_for_comparison(self, predicted_amr):
         """

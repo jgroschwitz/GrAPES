@@ -4,7 +4,7 @@ import os
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
-    get_formatted_category_names
+    get_formatted_category_names, is_testset_category
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size, \
@@ -39,6 +39,7 @@ def parse_args():
                              " or a GrAPES subcorpus file")
     parser.add_argument('-n', '--parser_name', type=str,
                         help="name of parser (optional)", default="parser")
+    parser.add_argument("-e", "--error_analysis", action="store_true", help="Pickle correct and incorrect graph ids")
 
     args = parser.parse_args()
     return args
@@ -49,6 +50,11 @@ def main():
     args = parse_args()
     eval_class, info = category_name_to_set_class_and_metadata[args.category_name]
     predictions_path = args.predicted_amr_file
+
+    if is_testset_category(info):
+        if args.gold_amr_file is None:
+            print(f"No gold AMR 3.0 testset file provided for testset category {info.name}; exiting")
+            exit(1)
 
     prediction_file_name = os.path.basename(predictions_path)[:-4]
     if info.filename_belongs_to_subcategory(prediction_file_name):
@@ -69,7 +75,7 @@ def main():
     predicted_amrs = load_predictions(predictions_path)
     predictions_directory = os.path.dirname(predictions_path)
 
-    evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory)
+    evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory, do_error_analysis=args.error_analysis)
     results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
     assert len(results) > 0, "No results!"
 
@@ -86,7 +92,7 @@ def main():
             # Try doing the sanity check for a main class
             try:
                 eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
-                evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory)
+                evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory, args.error_analysis)
                 new_rows = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
                 results += new_rows
                 caption += " and Sanity Check"

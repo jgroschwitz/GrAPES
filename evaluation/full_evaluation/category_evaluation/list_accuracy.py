@@ -89,9 +89,11 @@ class ListAccuracy(CategoryEvaluation):
             contains_an_error = True
 
         if contains_an_error:
-            self.add_fail(graph_id)
+            # self.add_fail(graph_id)
+            self.add_fail(gold, pred)
         else:
-            self.add_success(graph_id)
+            self.add_success(gold, pred)
+            #self.add_success(graph_id)
 
         self.error_analysis_dict["recalled_conjuncts"] += recalled_edges
 
