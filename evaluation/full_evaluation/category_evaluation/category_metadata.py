@@ -1,12 +1,15 @@
 from copy import copy
 
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import WordDisambiguationRecall, PPAttachment, EllipsisRecall, SubgraphRecall, ImperativeRecall
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachment, \
+    EllipsisRecall, SubgraphRecall, ImperativeRecall, TARGET
 from evaluation.full_evaluation.category_evaluation.exact_match import ExactMatch
 from evaluation.full_evaluation.category_evaluation.list_accuracy import ListAccuracy
 from evaluation.full_evaluation.category_evaluation.named_entities import NETypeRecall, NERecall
 from evaluation.full_evaluation.category_evaluation.node_recall import NodeRecall
 from evaluation.full_evaluation.category_evaluation.edge_recall import EdgeRecall
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.full_evaluation.category_evaluation.word_disambiguation_berts_mouth import WordDisambiguationBertsMouth
+from evaluation.full_evaluation.category_evaluation.word_disambiguation_handcrafted import  WordDisambiguationHandcrafted
 from evaluation.novel_corpus.structural_generalization import \
     add_sanity_check_suffix
 from evaluation.util import SANITY_CHECK
@@ -241,13 +244,13 @@ category_name_to_set_class_and_metadata = {
         latex_display_name="Frequent predicate senses (incl. ~\\nl{-01})",
         tsv="common_senses_filtered.tsv", use_sense=True, run_prerequisites=True,
     )),
-    "word_ambiguities_handcrafted": (WordDisambiguationRecall, SubcategoryMetadata(
+    "word_ambiguities_handcrafted": (WordDisambiguationHandcrafted, SubcategoryMetadata(
         "word_ambiguities_handcrafted",
         "Word ambiguities (handcrafted)",
         subcorpus_filename="word_disambiguation",
         subtype="hand-crafted",
     )),
-    "word_ambiguities_karidi_et_al_2021": (WordDisambiguationRecall, SubcategoryMetadata(
+    "word_ambiguities_karidi_et_al_2021": (WordDisambiguationBertsMouth, SubcategoryMetadata(
         "word_ambiguities_karidi_et_al_2021",
         "Word ambiguities (karidi-et-al-2021)",
         latex_display_name="Word ambiguities \cite{karidi-etal-2021-putting}",
@@ -294,6 +297,7 @@ category_name_to_set_class_and_metadata = {
         "imperatives",
         display_name="Imperatives",
         tsv="imperatives_filtered.tsv",
+        additional_fields=[TARGET]
     ))
 }
 

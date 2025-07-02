@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 
@@ -32,6 +32,8 @@ class SubcategoryMetadata:
     label_column: int = 1
     # for pps and deep recusion with pronouns
     extra_subcorpus_filenames: List[str] or None = None
+    # for gathering results
+    additional_fields: List[str] = field(default_factory=list)
 
     def get_latex_display_name(self):
         if self.latex_display_name is None:

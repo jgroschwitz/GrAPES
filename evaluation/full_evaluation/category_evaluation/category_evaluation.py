@@ -41,7 +41,7 @@ class CategoryEvaluation:
         if len(self.predicted_amrs) == 0:
             print("No predicted amrs found!")
 
-        extra_fields = []
+        extra_fields = self.category_metadata.additional_fields
         if self.category_metadata.run_prerequisites:
             extra_fields.append(PREREQS)
         if self.measure_unlabelled_edges():
@@ -133,13 +133,6 @@ class CategoryEvaluation:
         else:
             return {}
 
-    def make_results(self):
-        raise NotImplementedError("This method must be implemented by subclasses.")
-
-    # def run_evaluation(self):
-    #     self.make_results()
-    #     return self.rows
-
     @staticmethod
     def get_f_from_prf(triple):
         return triple[2]
@@ -176,9 +169,8 @@ class CategoryEvaluation:
             filtered_golds = self.gold_amrs
             filtered_preds = self.predicted_amrs
         if len(filtered_golds) == 0:
-            print("WARNING: filtering gave us 0 graphs! Returning all", file=sys.stderr)
-            filtered_golds = self.gold_amrs
-            filtered_preds = self.predicted_amrs
+            print("WARNING: filtering gave us 0 graphs!", file=sys.stderr)
+            return [],[]
         return filtered_golds, filtered_preds
 
     def get_all_gold_ids(self):
@@ -242,11 +234,14 @@ class CategoryEvaluation:
                         # if we have a TSV, update_error_analysis is per item in the TSV
                         self.update_results(gold_amr, predicted_amr, target, predictions_for_comparison)
         else:
+            self.gold_amrs, self.predicted_amrs = self.filter_graphs()
+            if len(self.gold_amrs) == 0:
+                raise RuntimeError("No matching AMRs in given corpus")
             for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
                 # if no TSV, update_error_analysis is per graph pair
-                self.update_results(gold_amr, predicted_amr)
+                self.update_results(gold_amr, predicted_amr, None, None)
 
-    def update_results(self, gold_amr, predicted_amr, target=None, predictions_for_comparison=None):
+    def update_results(self, gold_amr, predicted_amr, target, predictions_for_comparison):
         """
         Default: exact match, modulo edge labels and senses
         Args:
