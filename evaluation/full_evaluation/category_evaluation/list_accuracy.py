@@ -136,8 +136,13 @@ class ListAccuracy(CategoryEvaluation):
         self.results.correct_unseen_opi = true_predictions
 
 
-
 class ListResults(IDResults):
+    """
+    A mash-up of error analysis and counts
+    Stores the relevant info as numbers (including numbers for precision)
+    Also writes a coarse-grained pickle of predictions with and without any errors in two categories
+    Measures unseen opi edge recall and precision and recall on conjuncts
+    """
     def __init__(self):
         additional_fields = [OPi]
         super().__init__(additional_fields=additional_fields, default_field="conjuncts")

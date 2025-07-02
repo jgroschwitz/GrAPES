@@ -1,3 +1,4 @@
+from evaluation.graph_matcher import check_fragment_existence
 from evaluation.novel_corpus.berts_mouth import evaluate_berts_mouth
 from evaluation.corpus_metrics import calculate_subgraph_existence_successes_and_sample_size
 from evaluation.file_utils import read_label_tsv
@@ -42,6 +43,12 @@ class SubgraphRecall(CategoryEvaluation):
         recalled, sample_size = calculate_subgraph_existence_successes_and_sample_size(
             id2subgraphs, self.gold_amrs, self.predicted_amrs)
         self.make_and_append_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size])
+
+    def update_results(self, gold_amr, predicted_amr, label, predictions_for_comparison=None):
+        if check_fragment_existence(label, predicted_amr):
+            self.add_success(gold_amr, predicted_amr)
+        else:
+            self.add_fail(gold_amr, predicted_amr)
 
 
 class EllipsisRecall(CategoryEvaluation):
