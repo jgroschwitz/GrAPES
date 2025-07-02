@@ -120,7 +120,8 @@ category_name_to_set_class_and_metadata = {
         "long_lists",
         display_name="Long lists",
         subcorpus_filename="long_lists",
-        metric_label="Conjunct recall"
+        metric_label="Conjunct recall",
+        subtype = "structural_generalization"
     )),
     "rare_node_labels": (NodeRecall, SubcategoryMetadata(
         "rare_node_labels",
@@ -307,6 +308,7 @@ for name in bunch2subcategory["3. Structural generalization"]:
         new_info.extra_subcorpus_filenames = [add_sanity_check_suffix(filename) for filename in info.extra_subcorpus_filenames]
     if info.name == "long_lists":
         new_info.metric_label = "Exact Match"
+        eval_class = ExactMatch
 
     category_name_to_set_class_and_metadata[new_name] = eval_class, new_info
 

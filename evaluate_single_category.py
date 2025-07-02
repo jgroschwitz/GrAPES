@@ -92,6 +92,7 @@ def main():
                 caption += " and Sanity Check"
             except Exception as e:
                 print("(No Sanity Check: Need full GrAPES corpus or separate sanity_check file)")
+                raise e
 
     print(caption)
     print()

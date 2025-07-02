@@ -15,27 +15,32 @@ from evaluation.util import copy_graph, remove_edge, get_connected_subgraph_from
 
 
 class ListAccuracy(CategoryEvaluation):
+    """ For the Long Lists category. Note that the Sanity Check uses ExactMatch instead."""
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
                  category_metadata: SubcategoryMetadata, predictions_directory=None):
+        """
+        We add space for storing counts to the error analysis because (a) there are a lot of edges per graph,
+        and we don't want a copy for each mistake, and (b) we also want to calculate precision.
+        """
         super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory)
-        self.error_analysis_dict.update({"recalled_conjuncts": 0,
-                                    "conj_total_gold": 0,
-                                    "conj_total_predictions": 0,
-                                         "correct_opi": [],
-                                         "incorrect_opi": []
-                                    })
+        self.error_analysis_dict.update({
+            "recalled_conjuncts": 0,
+            "conj_total_gold": 0,
+            "conj_total_predictions": 0,
+            "correct_unseen_opi": [],
+            "incorrect_unseen_opi": [],
+            "message:": "incorrect graphs are all graphs that contain a type 1 or type 2 error."
+            })
         self.gold_amrs, self.predicted_amrs = self.filter_graphs()
 
-
     def _get_all_results(self):
+        """
+        Runs both conjunct recall and precision and the unseen opi recall.
+        """
         for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
             graph_id = gold_amr.metadata['id']
-            if is_sanity_check(self.category_metadata):
-                self.update_error_analysis(graph_id, predicted_amr, gold_amr)
-            else:
-                self.long_lists_update_error_analysis(graph_id, predicted_amr, gold_amr)
-        if not is_sanity_check(self.category_metadata):
+            self.update_error_analysis(graph_id, predicted_amr, gold_amr)
             self.compute_generalization_op_counts()
 
     def _calculate_metrics_and_add_all_rows(self):
@@ -58,10 +63,7 @@ class ListAccuracy(CategoryEvaluation):
         self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
                                          [true_predictions, total_gold])
 
-
-
-
-    def long_lists_update_error_analysis(self,graph_id, pred, gold):
+    def update_error_analysis(self,graph_id, pred, gold):
         """
         Unusually, here we store counts, not just graph IDs, and only one copy of graph IDs for successes and failures
         """
@@ -78,11 +80,9 @@ class ListAccuracy(CategoryEvaluation):
         for gold_op_edge in gold_op_edges:
             hit = self.gold_edge_has_a_match(gold, gold_op_edge, pred, pred_op_edges)
             if hit:
-                # hit
                 recalled_edges += 1
                 spurious_predictions -= 1
             else:
-                # miss
                 contains_an_error = True
         if spurious_predictions > 0:
             # predictions that weren't matched with an edge in gold graph
@@ -94,7 +94,6 @@ class ListAccuracy(CategoryEvaluation):
             self.add_success(graph_id)
 
         self.error_analysis_dict["recalled_conjuncts"] += recalled_edges
-
 
     def gold_edge_has_a_match(self, gold, gold_op_edge, pred, pred_op_edges):
         gold_graph_without_op_edge = copy_graph(gold)
@@ -133,9 +132,9 @@ class ListAccuracy(CategoryEvaluation):
 
             # update error analysis
             if predicted_unseen != gold_unseen:
-                self.error_analysis_dict["incorrect_opi"].append(gold.metadata['id'])
+                self.add_opi_fail(gold.metadata['id'])
             else:
-                self.error_analysis_dict["correct_opi"].append(gold.metadata['id'])
+                self.add_opi_success(gold.metadata['id'])
 
         total_gold, total_predictions, true_predictions = compute_correctness_counts_from_counter_lists(
             counter_list_gold, counter_list_predictions)
@@ -144,23 +143,8 @@ class ListAccuracy(CategoryEvaluation):
         self.error_analysis_dict["unseen_opi_total_predictions"] = total_predictions
         self.error_analysis_dict["unseen_opi_true_predictions"] = true_predictions
 
+    def add_opi_success(self, graph_id):
+        self.error_analysis_dict["correct_unseen_opi"].append(graph_id)
 
-    def long_lists(self):
-        conj_total_gold, conj_total_predictions, conj_true_predictions = compute_conjunct_counts(self.gold_amrs,
-                                                                                                 self.predicted_amrs)
-
-        self.make_and_append_results_row("Conjunct recall", EVAL_TYPE_SUCCESS_RATE,
-                                         [conj_true_predictions, conj_total_gold])
-        self.make_and_append_results_row("Conjunct precision", EVAL_TYPE_SUCCESS_RATE,
-                                         [conj_true_predictions, conj_total_predictions])
-
-        opi_gen_total_gold, opi_gen_total_predictions, opi_gen_true_predictions = compute_generalization_op_counts(
-            self.gold_amrs, self.predicted_amrs)
-        self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
-                                         [opi_gen_true_predictions, opi_gen_total_gold])
-
-    def long_list_sanity_check(self):
-        success, sample_size = compute_exact_match_successes_and_sample_size(self.gold_amrs, self.predicted_amrs,
-                                                                             match_edge_labels=False,
-                                                                             match_senses=False)
-        self.make_and_append_results_row("Exact match", EVAL_TYPE_SUCCESS_RATE, [success, sample_size])
+    def add_opi_fail(self, graph_id):
+        self.error_analysis_dict["incorrect_unseen_opi"].append(graph_id)
