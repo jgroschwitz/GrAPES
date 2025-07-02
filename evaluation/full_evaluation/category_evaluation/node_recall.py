@@ -1,5 +1,5 @@
 from evaluation.corpus_metrics import _label_exists_in_predicted_labels
-from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation
+from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, PREREQS
 from evaluation.util import strip_sense
 
 
@@ -28,7 +28,7 @@ class NodeRecall(CategoryEvaluation):
             predicted_labels = [strip_sense(instance.target) for instance in predicted_amr.instances()]
         return predicted_labels
 
-    def update_error_analysis(self, gold_amr, predicted_amr, target, predictions_for_comparison):
+    def update_results(self, gold_amr, predicted_amr, target, predictions_for_comparison):
         predicted_labels, predicted_labels_no_sense = predictions_for_comparison
 
         # we only check senses if use_senses=True
@@ -41,12 +41,12 @@ class NodeRecall(CategoryEvaluation):
             # (there's no other way of doing prereqs in NodeRecall)
             if label_found:
                 if self.category_metadata.run_prerequisites:
-                    self.error_analysis_dict["correct_prereqs"].append(graph_id)
+                    self.add_success(gold_amr, predicted_labels, PREREQS)
                 else:
                     self.add_success(gold_amr, predicted_amr)
             else:
                 if self.category_metadata.run_prerequisites:
-                    self.error_analysis_dict["incorrect_prereqs"].append(graph_id)
+                    self.add_fail(gold_amr, predicted_labels, PREREQS)
                 else:
                     self.add_fail(gold_amr, predicted_amr)
 

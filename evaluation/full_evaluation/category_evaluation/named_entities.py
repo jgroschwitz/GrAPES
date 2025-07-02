@@ -12,7 +12,7 @@ class NETypeRecall(CategoryEvaluation):
     def read_tsv(self):
         return get_2_columns_from_tsv_by_id(f"{self.corpus_path}/{self.category_metadata.tsv}")
 
-    def update_error_analysis(self, graph_id, predictions_for_comparison, target):
+    def update_results(self, graph_id, predictions_for_comparison, target):
         found = False
         prereq_success = False
         for edge in predictions_for_comparison.edges(role=":name"):  #.edges(role=":name"):
@@ -39,7 +39,7 @@ class NERecall(CategoryEvaluation):
                                          graph_id_column=self.category_metadata.graph_id_column,
                                          label_column=self.category_metadata.label_column)
 
-    def update_error_analysis(self, graph_id, predictions_for_comparison, target):
+    def update_results(self, graph_id, predictions_for_comparison, target):
         found = False
         entity_type = self.category_metadata.subtype
         if entity_type == "other":

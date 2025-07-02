@@ -1,5 +1,6 @@
 import pickle
 import sys
+from abc import ABC, abstractmethod
 from typing import List
 
 import penman
@@ -17,6 +18,9 @@ EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"
 EVAL_TYPE_NONE = 1
 EVAL_TYPE_NA = 0
+
+PREREQS = "prereqs"
+UNLABELLED = "unlabelled"
 
 
 class CategoryEvaluation:
@@ -40,30 +44,13 @@ class CategoryEvaluation:
 
         extra_fields = []
         if self.category_metadata.run_prerequisites:
-            extra_fields.append("prereqs")
+            extra_fields.append(PREREQS)
         if self.measure_unlabelled_edges():
-            extra_fields.append("unlabelled")
-        if not do_error_analysis:
+            extra_fields.append(UNLABELLED)
+        if do_error_analysis:
+            self.results = IDResults(additional_fields=extra_fields)
+        else:
             self.results = CountResults(additional_fields=extra_fields)
-
-        # if do_error_analysis:
-        #     self.error_analysis_dict = {"correct_ids": [], "incorrect_ids": []}
-        #
-        #     if self.category_metadata.run_prerequisites:
-        #         self.error_analysis_dict.update({"correct_prereqs": [], "incorrect_prereqs": []})
-        #     if self.measure_unlabelled_edges():
-        #         self.error_analysis_dict.update({"correct_unlabelled": [],"incorrect_unlabelled": []})
-        #     self.success_adder = self.add_success_to_dict
-        #     self.failure_adder = self.add_fail_to_dict
-        #     self.success_totaler = self.sum_successes
-        #     self.failure_totaler = self.sum_failures
-        # else:
-        #     self.success_adder = self.add_success_to_count
-        #     self.failure_adder = self.add_fail_to_count
-        #     self.success_totaler = self.get_success_from_count
-        #     self.failure_totaler = self.get_failure_from_count
-        #     self.success_count = 0
-        #     self.failure_count = 0
 
     @staticmethod
     def measure_unlabelled_edges():
@@ -203,10 +190,13 @@ class CategoryEvaluation:
         return read_label_tsv(self.root_dir, self.category_metadata.tsv)
 
     def dump_error_analysis_pickle(self):
-        pickle_path = f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle"
-        with open(pickle_path, "wb") as f:
-            pickle.dump(self.error_analysis_dict, f)
-        print("Wrote error analysis pickle to " + pickle_path)
+        if self.do_error_analysis:
+            pickle_path = f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle"
+            with open(pickle_path, "wb") as f:
+                pickle.dump(self.results.error_analysis_dict, f)
+            print("Wrote error analysis pickle to " + pickle_path)
+        else:
+            print("No error analysis data was stored, so no pickle to write")
 
     def _calculate_metrics_and_add_all_rows(self):
 
@@ -216,12 +206,12 @@ class CategoryEvaluation:
         self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
                                                [success_count, sample_size]))
         if self.measure_unlabelled_edges():
-            unlabelled_success_count = len(self.error_analysis_dict["correct_unlabelled"])
+            unlabelled_success_count = self.get_success_count(UNLABELLED)
             ret.append(unlabelled_success_count)
             self.rows.append(self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
             [unlabelled_success_count, sample_size]))
         if self.category_metadata.run_prerequisites:
-            prereq_success_count = len(self.error_analysis_dict["correct_prereqs"])
+            prereq_success_count = self.get_success_count(PREREQS)
             ret.append(prereq_success_count)
             self.rows.append(self.make_results_row(
                 "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
@@ -251,13 +241,13 @@ class CategoryEvaluation:
                     for target in id2labels[graph_id]:
                         # update results for this item
                         # if we have a TSV, update_error_analysis is per item in the TSV
-                        self.update_error_analysis(gold_amr, predicted_amr, target, predictions_for_comparison)
+                        self.update_results(gold_amr, predicted_amr, target, predictions_for_comparison)
         else:
             for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
                 # if no TSV, update_error_analysis is per graph pair
-                self.update_error_analysis(gold_amr, predicted_amr)
+                self.update_results(gold_amr, predicted_amr)
 
-    def update_error_analysis(self, gold_amr, predicted_amr, target=None, predictions_for_comparison=None):
+    def update_results(self, gold_amr, predicted_amr, target=None, predictions_for_comparison=None):
         """
         Default: exact match, modulo edge labels and senses
         Args:
@@ -274,67 +264,113 @@ class CategoryEvaluation:
             self.add_fail(gold_amr, predicted_amr)
             # self.add_fail(graph_id)
 
-    def add_prereq_success(self, graph_id):
-        self.error_analysis_dict["correct_prereqs"].append(graph_id)
+    def add_success(self, gold: Graph, predicted, field=None):
+        self.results.add_success(gold, predicted, field)
 
-    def add_prereq_fail(self, graph_id):
-        self.error_analysis_dict["incorrect_prereqs"].append(graph_id)
+    def add_fail(self, gold, predicted, field=None):
+        self.results.add_fail(gold, predicted, field)
 
-    # def add_success(self, graph_id):
-    #     self.error_analysis_dict["correct_ids"].append(graph_id)
-    #
-    # def add_fail(self, graph_id):
-    #     self.error_analysis_dict["incorrect_ids"].append(graph_id)
+    def get_success_count(self, field=None):
+        return self.results.get_success_count(field)
 
-    def add_unlabelled_success(self, graph_id):
-        self.error_analysis_dict["correct_unlabelled"].append(graph_id)
+    def get_failure_count(self, field=None):
+        return self.results.get_fail_count(field)
 
-    def add_unlabelled_fail(self, graph_id):
-        self.error_analysis_dict["incorrect_unlabelled"].append(graph_id)
 
-    def add_success(self, gold: Graph, predicted):
-        self.results.add_success(gold, predicted)
 
-    def add_fail(self, gold, predicted):
-        self.results.add_fail(gold, predicted)
 
-    def get_success_count(self):
-        return self.results.get_success_count()
 
-    def get_failure_count(self):
-        return self.results.get_failure_count()
 
-    def add_success_to_dict(self, gold: Graph, predicted):
-        self.error_analysis_dict["correct_ids"].append(gold.metadata["id"])
 
-    def add_fail_to_dict(self, gold, predicted):
-        self.error_analysis_dict["incorrect_ids"].append(gold.metadata["id"])
-
-    def sum_successes(self):
-        return len(self.error_analysis_dict["correct_ids"])
-
-    def sum_failures(self):
-        return len(self.error_analysis_dict["incorrect_ids"])
-
-    def add_success_to_count(self, gold: Graph, predicted):
-        self.success_count += 1
-
-    def add_fail_to_count(self, gold: Graph, predicted):
-        self.failure_count +=1
-
-    def get_success_from_count(self):
-        return self.success_count
-    def get_failure_from_count(self):
-        return self.failure_count
-
-class CountResults:
+class Results(ABC):
     def __init__(self, additional_fields: List[str]=None, default_field: str = "id"):
+        """
+        For each field, including the default, initialise a way to store results
+        For example, CountResults initialises variables, while IDResults initialises a dict with these as keys.
+        These variables/keys can be made with self.make_success_key and self.make_failure_key.
+        Args:
+            additional_fields: list of names of types of results to store. e.g. "prereq"
+            default_field: for the main analysis.
+        """
+        self.default_field = default_field
+
+    @abstractmethod
+    def add_success(self, gold: Graph, predicted: Graph, field:str=None):
+        """
+        Updates the success counter by one
+            For example, CountResults just increments the count,
+            and IDResults adds the graph ID to a dictionary under "correct_<field>".
+            Both graphs are provided as arguments in case you want to do something like store them in a Vulcan-readable pickle.
+        Args:
+            gold: gold AMR
+            predicted: predicted AMR
+            field: name for the kind of result we're storing. Default is usually just "id" as in graph id,
+             but common alternatives are "prereq" and "unlabelled"
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def add_fail(self, gold: Graph, predicted: Graph, field:str=None):
+        """
+        Updates the failure counter by one
+            For example, CountResults just increments the count,
+            and IDResults adds the graph ID to a dictionary under "correct_<field>".
+            Both graphs are provided as arguments in case you want to do something like store them in a Vulcan-readable pickle.
+        Args:
+            gold: gold AMR
+            predicted: predicted AMR
+            field: name for the kind of result we're storing. Default is usually just "id" as in graph id,
+             but common alternatives are "prereq" and "unlabelled"
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_success_count(self, field=None):
+        """
+        Use the stored successes to get their actual count.
+            for example, CountResults just gets the stored count, while IDResults gets the length of the stored IDs.
+        Args:
+            field: name for the kind of result we're storing. Default is usually just "id" as in graph id,
+             but common alternatives are "prereq" and "unlabelled"
+        Returns: int
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_fail_count(self, field=None):
+        """
+        Use the stored successes to get their actual count.
+            for example, CountResults just gets the stored count, while IDResults gets the length of the stored IDs.
+        Args:
+            field: name for the kind of result we're storing. Default is usually just "id" as in graph id,
+             but common alternatives are "prereq" and "unlabelled"
+        Returns: int
+        """
+        raise NotImplementedError
+
+    def make_success_key(self, field):
+        if field is None:
+            field = self.default_field
+        return f"correct_{field}"
+
+    def make_fail_key(self, field=None):
+        if field is None:
+            field = self.default_field
+        return f"incorrect_{field}"
+
+
+
+class CountResults(Results):
+    """
+    Just counts everything, no storage of which graph is which
+    """
+    def __init__(self, additional_fields: List[str]=None, default_field: str = "id"):
+        super().__init__(additional_fields, default_field)
         if additional_fields is None:
             additional_fields = []
         for field in [default_field] + additional_fields:
             setattr(self, self.make_success_key(field), 0)
-            setattr(self, self.make_failure_key(field), 0)
-        self.default_field = default_field
+            setattr(self, self.make_fail_key(field), 0)
 
     def add_success(self, gold: Graph, predicted: Graph, success_type=None):
         if success_type is None:
@@ -345,7 +381,7 @@ class CountResults:
     def add_fail(self, gold: Graph, predicted: Graph, failure_type=None):
         if failure_type is None:
             failure_type = self.default_field
-        key = self.make_failure_key(failure_type)
+        key = self.make_fail_key(failure_type)
         setattr(self, key, getattr(self, key) + 1)
 
     def get_success_count(self, field=None):
@@ -353,15 +389,34 @@ class CountResults:
             field = self.default_field
         return getattr(self, self.make_success_key(field))
 
-    def get_failure_count(self, field=None):
+    def get_fail_count(self, field=None):
         if field is None:
             field = self.default_field
-        return getattr(self, self.make_failure_key(field))
+        return getattr(self, self.make_fail_key(field))
 
-    @staticmethod
-    def make_success_key(field):
-        return f"correct_{field}"
+class IDResults(Results):
+    """
+    Stores graph IDs of predictions that did and did not pass the evaluation.
+    """
+    def __init__(self, additional_fields: List[str]=None, default_field: str = "id"):
+        super().__init__(additional_fields, default_field)
 
-    @staticmethod
-    def make_failure_key(field):
-        return f"incorrect_{field}"
+        self.error_analysis_dict = {}
+
+        if additional_fields is None:
+            additional_fields = []
+        for field in [default_field] + additional_fields:
+            self.error_analysis_dict[self.make_success_key(field)] = []
+            self.error_analysis_dict[self.make_fail_key(field)] = []
+
+    def add_success(self, gold: Graph, predicted: Graph, field=None):
+        self.error_analysis_dict[self.make_success_key(field)].append(gold.metadata["id"])
+
+    def add_fail(self, gold: Graph, predicted: Graph, field=None):
+        self.error_analysis_dict[self.make_fail_key(field)].append(gold.metadata["id"])
+
+    def get_success_count(self, field=None):
+        return len(self.error_analysis_dict[self.make_success_key(field)])
+
+    def get_fail_count(self, field=None):
+        return len(self.error_analysis_dict[self.make_fail_key(field)])

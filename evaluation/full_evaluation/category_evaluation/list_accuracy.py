@@ -40,7 +40,7 @@ class ListAccuracy(CategoryEvaluation):
         """
         for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
             graph_id = gold_amr.metadata['id']
-            self.update_error_analysis(graph_id, predicted_amr, gold_amr)
+            self.update_results(graph_id, predicted_amr, gold_amr)
             self.compute_generalization_op_counts()
 
     def _calculate_metrics_and_add_all_rows(self):
@@ -63,7 +63,7 @@ class ListAccuracy(CategoryEvaluation):
         self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
                                          [true_predictions, total_gold])
 
-    def update_error_analysis(self,graph_id, pred, gold):
+    def update_results(self, graph_id, pred, gold):
         """
         Unusually, here we store counts, not just graph IDs, and only one copy of graph IDs for successes and failures
         """
