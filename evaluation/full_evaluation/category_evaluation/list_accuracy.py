@@ -16,14 +16,14 @@ OPi = "unseen_opi"
 class ListAccuracy(CategoryEvaluation):
     """ For the Long Lists category. Note that the Sanity Check uses ExactMatch instead."""
 
-    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
-                 category_metadata: SubcategoryMetadata, predictions_directory=None, do_error_analysis=False,
-                 parser_name=None, verbose_error_analysis=True):
+    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], category_metadata: SubcategoryMetadata,
+                 root_dir: str = ".", predictions_directory=None, do_error_analysis=False, parser_name=None,
+                 verbose_error_analysis=True):
         """
         We add space for storing counts to the error analysis because (a) there are a lot of edges per graph,
         and we don't want a copy for each mistake, and (b) we also want to calculate precision.
         """
-        super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory,
+        super().__init__(gold_amrs, predicted_amrs, category_metadata, root_dir, predictions_directory,
                          do_error_analysis, parser_name, verbose_error_analysis)
         self.gold_amrs, self.predicted_amrs = self.filter_graphs()
         if self.do_error_analysis:

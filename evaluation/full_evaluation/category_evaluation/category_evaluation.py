@@ -25,8 +25,8 @@ UNLABELLED = "unlabelled"
 
 class CategoryEvaluation:
 
-    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
-                 category_metadata: SubcategoryMetadata, predictions_directory=None, do_error_analysis: bool = False,
+    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], category_metadata: SubcategoryMetadata,
+                 root_dir: str = ".", predictions_directory=None, do_error_analysis: bool = False,
                  parser_name: str = None, verbose_error_analysis: bool = True):
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs

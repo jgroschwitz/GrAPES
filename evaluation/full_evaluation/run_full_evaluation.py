@@ -145,7 +145,8 @@ def create_results_pickles():
                     gold = gold_grapes
                     pred = grapes_parser_outs
 
-                evaluator = eval_class(gold, pred, root_dir_here, info, get_predictions_path_for_parser(parser_name),
+                evaluator = eval_class(gold, pred,  info, root_dir=root_dir_here,
+                                       predictions_directory=get_predictions_path_for_parser(parser_name),
                                        do_error_analysis=do_error_analysis, parser_name=parser_name,
                                        verbose_error_analysis=False)
 
@@ -258,7 +259,7 @@ def run_single_file(eval_class, info: SubcategoryMetadata, root_dir=root_dir_her
     pred = load_parser_output(info.subcorpus_filename, root_dir, parser_name=parser_name,
                               predictions_directory=predictions_directory)
     gold = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-    evaluator = eval_class(gold, pred, root_dir, info, predictions_directory=None, do_error_analysis=do_error_analysis, parser_name=parser_name)
+    evaluator = eval_class(gold, pred,  info, root_dir=root_dir, predictions_directory=None, do_error_analysis=do_error_analysis, parser_name=parser_name)
     rows = evaluator.run_evaluation()
     return rows
 

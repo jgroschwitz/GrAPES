@@ -121,7 +121,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     gold_graphs = gold_graphs_grapes
                     predicted_graphs = predicted_graphs_grapes
 
-                evaluator = eval_class(gold_graphs, predicted_graphs, ".", info, do_error_analysis=do_error_analysis,
+                evaluator = eval_class(gold_graphs, predicted_graphs, info, do_error_analysis=do_error_analysis,
                                        parser_name=parser_name, verbose_error_analysis=False)
                 results_here = evaluate(evaluator, info, ".", predictions_directory=predictions_directory, fail_ok=fail_ok)
 

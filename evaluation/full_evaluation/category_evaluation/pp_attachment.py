@@ -83,13 +83,13 @@ class PPAttachment(CategoryEvaluation):
         predictions_directory: list of predicted graphs
 
     """
-    def __init__(self, gold_amrs, predicted_amrs, root_dir, info, predictions_directory=None, do_error_analysis=False,
-                 parser_name=None, verbose_error_analysis=True):
+    def __init__(self, gold_amrs, predicted_amrs, info, root_dir=".", predictions_directory=None,
+                 do_error_analysis=False, parser_name=None, verbose_error_analysis=True):
         """
         Pragmatic attachments of ambiguous PPs
         PP Attachments come from multiple files, so if they're not already in the given graphs, we try to get them.
         """
-        super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory, do_error_analysis,
+        super().__init__(gold_amrs, predicted_amrs, info, root_dir, predictions_directory, do_error_analysis,
                          parser_name, verbose_error_analysis)
         # if we read in the unused PP directory instead of the whole full_corpus, replace it with the real ones
         # These have ids pp_attachment_n
@@ -386,12 +386,12 @@ def exists_unlabeled_edge_match(gold_source, gold_target, predicted_graph):
 
 
 def evaluate_pp_attachments(gold_directory, predictions_directory):
-    evaluator = PPAttachmentEvaluator(gold_directory, predictions_directory)
-    return evaluator.evaluate_all()
+    evaluator = PPAttachment(gold_directory, predictions_directory, )
+    return evaluator._get_all_results()
 
 
 def get_pp_attachment_success_counters(gold_amrs, predicted_amrs):
-    evaluator = PPAttachmentEvaluator(gold_amrs, predicted_amrs)
-    evaluator.evaluate_all()
+    evaluator = PPAttachment(gold_amrs, predicted_amrs, )
+    evaluator._get_all_results()
     return evaluator.prerequisites_counter, evaluator.unlabeled_counter, evaluator.labeled_counter,\
            evaluator.total_counter

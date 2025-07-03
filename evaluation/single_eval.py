@@ -11,10 +11,10 @@ def main(args):
     parser = args[1]
     dataset = args[2]
 
-    gold_file_path = f"../corpus/{dataset}.txt"
+    gold_file_path = f"../corpus/subcorpora/{dataset}.txt"
     golds = load(gold_file_path)
 
-    prediction_folder = "../" + parser + "-output/"
+    prediction_folder = "../data/processed/parser_outputs/" + parser + "-output/"
     prediction_file_path = prediction_folder + dataset + ".txt"
     predictions = load(prediction_file_path)
 

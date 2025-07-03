@@ -76,7 +76,8 @@ def main():
     predicted_amrs = load_predictions(predictions_path)
     predictions_directory = os.path.dirname(predictions_path)
 
-    evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory, do_error_analysis=args.error_analysis)
+    evaluator = eval_class(gold_amrs, predicted_amrs, info, predictions_directory=predictions_directory,
+                           do_error_analysis=args.error_analysis)
     results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
     assert len(results) > 0, "No results!"
 
@@ -93,7 +94,7 @@ def main():
             # Try doing the sanity check for a main class
             try:
                 eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
-                evaluator = eval_class(gold_amrs, predicted_amrs, ".", info, predictions_directory, args.error_analysis)
+                evaluator = eval_class(gold_amrs, predicted_amrs, info, predictions_directory, args.error_analysis)
                 new_rows = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
                 results += new_rows
                 caption += " and Sanity Check"
