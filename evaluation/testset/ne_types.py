@@ -55,14 +55,14 @@ def get_ne_type_successes_and_sample_size(id2labels, gold_amrs, predicted_amrs):
     return name_recalled, type_recalled, total
 
 
-def get_2_columns_from_tsv_by_id(filename):
+def get_2_columns_from_tsv_by_id(filename, id_column=0, column_1=1, column_2=2):
     id2labels = dict()
     with open(filename, "r") as f:
         csvreader = csv.reader(f, delimiter='\t', quotechar=None)
         for row in csvreader:
-            graph_id = row[0]
-            ne_type = row[1]
-            name_string = row[2]
+            graph_id = row[id_column]
+            ne_type = row[column_1]
+            name_string = row[column_2]
             labels_here = id2labels.setdefault(graph_id, [])
             labels_here.append((ne_type, name_string))
     return id2labels

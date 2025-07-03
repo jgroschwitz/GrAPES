@@ -92,6 +92,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
         if not do_this_category(bunch, set_name):
             continue
         print("\nEvaluating " + set_name)
+        results.append([""]*7)
         for category_name in category_names:
             eval_class, info = category_name_to_set_class_and_metadata[category_name]
             if do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
