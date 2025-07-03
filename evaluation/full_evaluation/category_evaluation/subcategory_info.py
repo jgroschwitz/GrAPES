@@ -45,11 +45,11 @@ class SubcategoryMetadata:
 
 
 def is_grapes_category_with_testset_data(category_info):
-    return  category_info.subcorpus_filename == "word_disambiguation"
+    return  category_info.name == "word_ambiguities_handcrafted"
 
 
 def is_grapes_category_with_ptb_data(category_info):
-    return category_info.subcorpus_filename == "unbounded_dependencies"
+    return category_info.name == "unbounded_dependencies"
 
 
 def is_copyrighted_data(category_info):

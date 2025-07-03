@@ -1,4 +1,4 @@
-from typing import List, Tuple, Set
+from typing import List, Set
 
 import penman
 
@@ -83,12 +83,14 @@ class PPAttachment(CategoryEvaluation):
         predictions_directory: list of predicted graphs
 
     """
-    def __init__(self, gold_amrs, predicted_amrs, root_dir, info, predictions_directory=None, do_error_analysis=False):
+    def __init__(self, gold_amrs, predicted_amrs, root_dir, info, predictions_directory=None, do_error_analysis=False,
+                 parser_name=None, verbose_error_analysis=True):
         """
         Pragmatic attachments of ambiguous PPs
         PP Attachments come from multiple files, so if they're not already in the given graphs, we try to get them.
         """
-        super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory, do_error_analysis)
+        super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory, do_error_analysis,
+                         parser_name, verbose_error_analysis)
         # if we read in the unused PP directory instead of the whole full_corpus, replace it with the real ones
         # These have ids pp_attachment_n
         if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):

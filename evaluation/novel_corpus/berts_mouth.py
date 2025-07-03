@@ -51,11 +51,9 @@ def evaluate_berts_mouth(gold_amrs: List[Graph], predicted_amrs: List[Graph]):
 
     return success_count, sample_size
 
-
 def is_relation_present_in_graph(edge_label, graph, reification):
     return len(graph.edges(role=edge_label)) >= 1 \
            or len([inst for inst in graph.instances() if inst.target == reification]) >= 1
-
 
 def main():
     gold_amrs = load("../corpus/berts_mouth.txt")

@@ -10,7 +10,7 @@ from evaluation.full_evaluation.category_evaluation.category_evaluation import E
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_grapes_category_with_testset_data, \
     is_grapes_category_with_ptb_data
 from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate, \
-    pretty_print_structural_generalisation_by_size, get_results_path
+    pretty_print_structural_generalisation_by_size, get_root_results_path, do_error_analysis
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score
 
@@ -47,6 +47,8 @@ def parse_args():
                                                                                         set_names_with_category_names]))
     parser.add_argument('-n', "--parser_name", type=str, required=False, default=None, help='Parser name. Optional, used for output storage. ')
     parser.add_argument('-s', "--strict", action='store_true', required=False, default=False, help='Strict mode: fail if any errors encountered')
+    parser.add_argument("-e", "--error_analysis", action="store_true", help="Pickle correct and incorrect graph ids")
+
     args = parser.parse_args()
     return args
 
@@ -56,7 +58,7 @@ def do_this_category(bunch, category_name):
 
 
 def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes, predictions_directory,
-                filter_out_f1=True, filter_out_unlabeled_edge_attachment=True, bunch=None, fail_ok=0):
+                filter_out_f1=True, filter_out_unlabeled_edge_attachment=True, bunch=None, fail_ok=0, do_error_analysis=False, parser_name=None):
     """
     Returns a list of result rows. Each row has the following format:
     [set number, category name, metric name, score, lower_bound, upper_bound, sample_size]
@@ -93,19 +95,22 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
         for category_name in category_names:
             eval_class, info = category_name_to_set_class_and_metadata[category_name]
             if do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
-                try:
-                    # try to get the subcorpus from the same folder as the full corpus
-                    print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in {predictions_directory}")
-                    results_here = run_single_file(eval_class, info, ".", predictions_directory=predictions_directory)
-                    rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
-                                                 results_here, set_name)
-                    results.extend(rows)
-                except Exception as e:
-                    print(f"Can't get category {category_name}, error: {e}")
-                    if fail_ok > -1:
-                        results.append(make_empty_result(set_name, info.display_name))
-                    else:
-                        raise e
+                if predictions_directory is not None:
+                    try:
+                        # try to get the subcorpus from the same folder as the full corpus
+                        print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in {predictions_directory}")
+                        results_here = run_single_file(eval_class, info, ".",
+                                                       predictions_directory=predictions_directory,
+                                                       do_error_analysis=do_error_analysis, parser_name=parser_name)
+                        rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
+                                                     results_here, set_name)
+                        results.extend(rows)
+                    except Exception as e:
+                        print(f"Can't get category {category_name}, error: {e}")
+                        if fail_ok > -1:
+                            results.append(make_empty_result(set_name, info.display_name))
+                        else:
+                            raise e
             else:
 
                 if info.subcorpus_filename is None:  # testset
@@ -115,7 +120,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     gold_graphs = gold_graphs_grapes
                     predicted_graphs = predicted_graphs_grapes
 
-                evaluator = eval_class(gold_graphs, predicted_graphs, ".", info)
+                evaluator = eval_class(gold_graphs, predicted_graphs, ".", info, do_error_analysis=do_error_analysis,
+                                       parser_name=parser_name, verbose_error_analysis=False)
                 results_here = evaluate(evaluator, info, ".", predictions_directory=predictions_directory, fail_ok=fail_ok)
 
                 rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
@@ -153,7 +159,7 @@ def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edg
                 print(r)
         elif metric_type == EVAL_TYPE_F1:
             rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
-                            num_to_score(r[3]), "N/A", "N/A", "N/A"])
+                            num_to_score(r[3]), "-", "-", "-"])
         else:
             print(
                 "ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
@@ -214,7 +220,7 @@ def main():
     results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
                           predictions_directory,
                           filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics,
-                                   bunch=args.bunch, fail_ok=fail_ok)
+                                   bunch=args.bunch, fail_ok=fail_ok, do_error_analysis=args.error_analysis, parser_name=args.parser_name)
 
     store_results(args.parser_name, results)
 
@@ -234,7 +240,7 @@ def main():
 
 
 def store_results(parser_name, results, root_dir="."):
-    results_dir = get_results_path(root_dir)
+    results_dir = get_root_results_path(root_dir)
     os.makedirs(results_dir, exist_ok=True)
     if parser_name is not None:
         filename = parser_name

@@ -1,5 +1,3 @@
-from debugpy.server.cli import TARGET
-
 from evaluation.graph_matcher import check_fragment_existence
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
@@ -38,8 +36,7 @@ class EllipsisRecall(CategoryEvaluation):
 TARGET = "modulo_imperative_target"
 
 class ImperativeRecall(CategoryEvaluation):
-    def __init__(self, gold_amrs, predicted_amrs, root_dir, info, predictions_directory=None, do_error_analysis=False):
-        super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory, do_error_analysis)
+
 
     def read_tsv(self):
         return read_label_tsv(root_dir=self.root_dir, tsv_file_name=self.category_metadata.tsv, columns=[1, 2, 3])

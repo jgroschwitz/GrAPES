@@ -1,3 +1,4 @@
+import os
 import pickle
 import sys
 from abc import ABC, abstractmethod
@@ -25,7 +26,8 @@ UNLABELLED = "unlabelled"
 class CategoryEvaluation:
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
-                 category_metadata: SubcategoryMetadata, predictions_directory=None, do_error_analysis: bool = False):
+                 category_metadata: SubcategoryMetadata, predictions_directory=None, do_error_analysis: bool = False,
+                 parser_name: str = None, verbose_error_analysis: bool = True):
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
         self.root_dir = root_dir
@@ -46,9 +48,15 @@ class CategoryEvaluation:
         if self.measure_unlabelled_edges():
             extra_fields.append(UNLABELLED)
         if do_error_analysis:
-            self.results = IDResults(additional_fields=extra_fields)
+            if parser_name is None:
+                parser_name = "unnamed_parser"
+                print("WARNING: error analysis pickle will be stored in the general unnamed_parser directory, since no parser name was provided")
+
+            pickle_path = f"{self.root_dir}/error_analysis/{parser_name}/{self.category_metadata.name}.pickle"
+            self.results = IDResults(additional_fields=extra_fields, pickle_path=pickle_path, verbose=verbose_error_analysis)
         else:
             self.results = CountResults(additional_fields=extra_fields)
+        self.parser_name = parser_name
 
     @staticmethod
     def measure_unlabelled_edges():
@@ -71,6 +79,7 @@ class CategoryEvaluation:
             filtered_golds = []
             filtered_preds = []
             for name in self.extra_subcorpus_filenames:
+                print("Filtering additional subcorpus for", name)
                 more_golds, more_preds = filter_amrs_for_name(name, self.gold_amrs, self.predicted_amrs)
                 filtered_golds += more_golds
                 filtered_preds += more_preds
@@ -180,10 +189,10 @@ class CategoryEvaluation:
 
     def dump_error_analysis_pickle(self):
         if self.do_error_analysis:
-            pickle_path = f"{self.root_dir}/error_analysis/{self.category_metadata.name}.pickle"
-            with open(pickle_path, "wb") as f:
-                pickle.dump(self.results.error_analysis_dict, f)
-            print("Wrote error analysis pickle to " + pickle_path)
+            try:
+                self.results.write_pickle()
+            except Exception as e:
+                print("WARNING: no error analysis written:", e, file=sys.stderr)
         else:
             print("No error analysis data was stored, so no pickle to write")
 
@@ -191,6 +200,7 @@ class CategoryEvaluation:
 
         success_count = self.get_success_count()
         sample_size = success_count + self.get_failure_count()
+        assert sample_size > 0, "No results for _calculate_metrics_and_add_all_rows"
         ret = [success_count, sample_size]
 
         self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
@@ -208,7 +218,7 @@ class CategoryEvaluation:
 
         if self.do_error_analysis:
             self.dump_error_analysis_pickle()
-        print("Metrics:", ret)
+        # print("Metrics:", ret)
         return ret
 
     def get_predictions_for_comparison(self, predicted_amr):
@@ -275,16 +285,18 @@ class CategoryEvaluation:
 
 
 class Results(ABC):
-    def __init__(self, additional_fields: List[str]=None, default_field: str = "id"):
+    def __init__(self, additional_fields: List[str] = None, default_field: str = "id", verbose=True):
         """
         For each field, including the default, initialise a way to store results
         For example, CountResults initialises variables, while IDResults initialises a dict with these as keys.
         These variables/keys can be made with self.make_success_key and self.make_failure_key.
         Args:
+            verbose:
             additional_fields: list of names of types of results to store. e.g. "prereq"
             default_field: for the main analysis.
         """
         self.default_field = default_field
+        self.verbose = verbose
 
     @abstractmethod
     def add_success(self, gold: Graph, predicted: Graph, field:str=None):
@@ -390,10 +402,12 @@ class IDResults(Results):
     """
     Stores graph IDs of predictions that did and did not pass the evaluation.
     """
-    def __init__(self, additional_fields: List[str]=None, default_field: str = "id"):
-        super().__init__(additional_fields, default_field)
+    def __init__(self, additional_fields: List[str]=None, default_field: str = "id", pickle_path: str=None,
+                 verbose=True):
+        super().__init__(additional_fields, default_field, verbose=verbose)
 
         self.error_analysis_dict = {}
+        self.pickle_path = pickle_path
 
         if additional_fields is None:
             additional_fields = []
@@ -412,3 +426,14 @@ class IDResults(Results):
 
     def get_fail_count(self, field=None):
         return len(self.error_analysis_dict[self.make_fail_key(field)])
+
+    def write_pickle(self):
+        os.makedirs(os.path.dirname(self.pickle_path), exist_ok=True)
+        with open(self.pickle_path, "wb") as f:
+            pickle.dump(self.error_analysis_dict, f)
+        if self.verbose:
+            print("Wrote error analysis pickle to " + self.pickle_path)
+
+
+
+

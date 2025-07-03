@@ -8,8 +8,8 @@ from evaluation.full_evaluation.category_evaluation.named_entities import NEType
 from evaluation.full_evaluation.category_evaluation.node_recall import NodeRecall
 from evaluation.full_evaluation.category_evaluation.edge_recall import EdgeRecall
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
-from evaluation.full_evaluation.category_evaluation.word_disambiguation_berts_mouth import WordDisambiguationBertsMouth
-from evaluation.full_evaluation.category_evaluation.word_disambiguation_handcrafted import  WordDisambiguationHandcrafted
+from evaluation.full_evaluation.category_evaluation.word_disambiguation import WordDisambiguationBertsMouth, \
+    WordDisambiguationHandcrafted
 from evaluation.full_evaluation.category_evaluation.pp_attachment import PPAttachment
 from evaluation.novel_corpus.structural_generalization import \
     add_sanity_check_suffix
@@ -80,18 +80,24 @@ category_name_to_set_class_and_metadata = {
         display_name="Nested control and coordination",
         subcorpus_filename="nested_control",
         subtype="structural_generalization",
+        run_prerequisites=False,
+        metric_label="Exact Match"
     )),
     "multiple_adjectives": (ExactMatch, SubcategoryMetadata(
         "multiple_adjectives",
         display_name="Multiple adjectives",
         subcorpus_filename="adjectives",
         subtype="structural_generalization",
+        run_prerequisites=False,
+        metric_label="Exact Match"
     )),
     "centre_embedding": (ExactMatch, SubcategoryMetadata(
         "centre_embedding",
         display_name="Centre embedding",
         subcorpus_filename="centre_embedding",
         subtype="structural_generalization",
+        run_prerequisites=False,
+        metric_label="Exact Match"
     )),
     "cp_recursion": (ExactMatch, SubcategoryMetadata(
         "cp_recursion",
@@ -106,26 +112,33 @@ category_name_to_set_class_and_metadata = {
         display_name="CP recursion + coreference",
         subcorpus_filename="deep_recursion_pronouns",
         subtype="structural_generalization",
-        extra_subcorpus_filenames=["deep_recursion_3s"]
+        extra_subcorpus_filenames=["deep_recursion_3s"],
+        run_prerequisites=False,
+        metric_label="Exact Match"
     )),
     "cp_recursion_plus_rc": (ExactMatch, SubcategoryMetadata(
         "cp_recursion_plus_rc",
         display_name="CP recursion + relative clause (RC)",
         subcorpus_filename="deep_recursion_rc",
         subtype="structural_generalization",
+        run_prerequisites=False,
+        metric_label="Exact Match"
     )),
     "cp_recursion_plus_rc_plus_coreference": (ExactMatch, SubcategoryMetadata(
         "cp_recursion_plus_rc_plus_coreference",
         display_name="CP recursion + RC + coreference",
         subcorpus_filename="deep_recursion_rc_contrastive_coref",
         subtype="structural_generalization",
+        run_prerequisites=False,
+        metric_label="Exact Match"
     )),
     "long_lists": (ListAccuracy, SubcategoryMetadata(
         "long_lists",
         display_name="Long lists",
         subcorpus_filename="long_lists",
         metric_label="Conjunct recall",
-        subtype = "structural_generalization"
+        subtype = "structural_generalization",
+        run_prerequisites=False
     )),
     "rare_node_labels": (NodeRecall, SubcategoryMetadata(
         "rare_node_labels",
@@ -250,13 +263,15 @@ category_name_to_set_class_and_metadata = {
         "Word ambiguities (handcrafted)",
         subcorpus_filename="word_disambiguation",
         subtype="hand-crafted",
+        run_prerequisites=False
     )),
     "word_ambiguities_karidi_et_al_2021": (WordDisambiguationBertsMouth, SubcategoryMetadata(
         "word_ambiguities_karidi_et_al_2021",
         "Word ambiguities (karidi-et-al-2021)",
         latex_display_name="Word ambiguities \cite{karidi-etal-2021-putting}",
         subcorpus_filename="berts_mouth",
-        subtype="bert"
+        subtype="bert",
+        run_prerequisites=False
     )),
     "pp_attachment": (PPAttachment, SubcategoryMetadata(
         "pp_attachment",
@@ -292,7 +307,8 @@ category_name_to_set_class_and_metadata = {
         "multinode_word_meanings",
         "Multinode word meanings",
         tsv="multinode_constants_filtered.tsv",
-        metric_label="Recall"
+        metric_label="Recall",
+        run_prerequisites=False
     )),
     "imperatives": (ImperativeRecall, SubcategoryMetadata(
         "imperatives",
@@ -316,6 +332,24 @@ for name in bunch2subcategory["3. Structural generalization"]:
         eval_class = ExactMatch
 
     category_name_to_set_class_and_metadata[new_name] = eval_class, new_info
+
+
+def get_formatted_category_names_by_main_file():
+    grapes = []
+    testset = []
+    for bunch in sorted(bunch2subcategory.keys()):
+        for category in bunch2subcategory[bunch]:
+            if is_testset_category(category_name_to_set_class_and_metadata[category][1]):
+                testset.append(category)
+            else:
+                grapes.append(category)
+    header = "AMR 3.0 testset category names:"
+    ret = f"\n{'-'*len(header)}\n{header}\n{'-'*len(header)}\n"
+    ret += "\n\t".join(testset)
+    header = "GrAPES category names:"
+    ret += f"\n{'-'*len(header)}\n{header}\n{'-'*len(header)}\n"
+    ret += "\n\t".join(grapes)
+    return ret
 
 
 

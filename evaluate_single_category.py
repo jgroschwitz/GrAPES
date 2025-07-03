@@ -4,7 +4,7 @@ import os
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
-    get_formatted_category_names, is_testset_category
+    get_formatted_category_names, is_testset_category, get_formatted_category_names_by_main_file
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
 from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size, \
@@ -26,9 +26,10 @@ class SmartFormatter(argparse.HelpFormatter):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Evaluate single category.", formatter_class=SmartFormatter)
+    parser = argparse.ArgumentParser(description="Evaluate single category. Make sure you provide paths to the AMR 3.0 testset for AMR 3.0 testset categories and GrAPES for GrAPES ", formatter_class=SmartFormatter,
+                                     )
     parser.add_argument('-c', '--category_name', type=str, help='Category to evaluate. Possible values are:\n'
-                                                                + get_formatted_category_names())
+                                                                + get_formatted_category_names_by_main_file())
     parser.add_argument('-g', '--gold_amr_file', type=str, help='Path to gold AMR file. '
                                                                 'Optional if a GrAPES-specific category, '
                                                                 'in which case we use corpus/corpus.txt',

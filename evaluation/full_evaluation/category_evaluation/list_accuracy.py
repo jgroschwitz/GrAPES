@@ -3,14 +3,12 @@ from typing import List
 
 from penman import Graph
 
-from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, \
-    compute_correctness_counts_from_counter_lists
+from evaluation.corpus_metrics import  compute_correctness_counts_from_counter_lists
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
-    EVAL_TYPE_SUCCESS_RATE, Results, IDResults, CountResults
+    EVAL_TYPE_SUCCESS_RATE, IDResults, CountResults
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check, SubcategoryMetadata
 from evaluation.graph_matcher import equals_modulo_isomorphy
-from evaluation.novel_corpus.long_lists import compute_conjunct_counts, get_all_opi_edges, \
-    compute_generalization_op_counts, get_all_unseen_opi_edges
+from evaluation.novel_corpus.long_lists import get_all_opi_edges, get_all_unseen_opi_edges
 from evaluation.util import copy_graph, remove_edge, get_connected_subgraph_from_node, get_target, with_edge_removed
 
 OPi = "unseen_opi"
@@ -19,15 +17,17 @@ class ListAccuracy(CategoryEvaluation):
     """ For the Long Lists category. Note that the Sanity Check uses ExactMatch instead."""
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
-                 category_metadata: SubcategoryMetadata, predictions_directory=None, do_error_analysis=False):
+                 category_metadata: SubcategoryMetadata, predictions_directory=None, do_error_analysis=False,
+                 parser_name=None, verbose_error_analysis=True):
         """
         We add space for storing counts to the error analysis because (a) there are a lot of edges per graph,
         and we don't want a copy for each mistake, and (b) we also want to calculate precision.
         """
-        super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory, do_error_analysis)
+        super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory,
+                         do_error_analysis, parser_name, verbose_error_analysis)
         self.gold_amrs, self.predicted_amrs = self.filter_graphs()
         if self.do_error_analysis:
-            self.results = ListResults()
+            self.results = ListResults(verbose=verbose_error_analysis)
         else:
             self.results = ListCountResults()
 
@@ -42,6 +42,7 @@ class ListAccuracy(CategoryEvaluation):
     def _calculate_metrics_and_add_all_rows(self):
         conj_true_predictions = self.get_success_count()
         conj_total_gold = self.results.get_total_gold()
+        assert conj_total_gold > 0, "No conjunct results for _calculate_metrics_and_add_all_rows"
         conj_total_predictions = self.results.get_total_predictions()
 
         self.make_and_append_results_row("Conjunct recall", EVAL_TYPE_SUCCESS_RATE,
@@ -51,6 +52,7 @@ class ListAccuracy(CategoryEvaluation):
 
         # unseen opis
         opi_total_gold = self.results.get_total_gold(OPi)
+        assert opi_total_gold > 0, "No unseen opi results for _calculate_metrics_and_add_all_rows"
         true_predictions = self.get_success_count(OPi)
         self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
                                          [true_predictions, opi_total_gold])
@@ -146,9 +148,9 @@ class ListResults(IDResults):
     Also writes a coarse-grained pickle of predictions with and without any errors in two categories
     Measures unseen opi edge recall and precision and recall on conjuncts
     """
-    def __init__(self):
+    def __init__(self, verbose=True):
         additional_fields = [OPi]
-        super().__init__(additional_fields=additional_fields, default_field="conjuncts")
+        super().__init__(additional_fields=additional_fields, default_field="conjuncts", verbose=verbose)
 
         for field in additional_fields + [self.default_field]:
             setattr(self, f"correct_{field}", 0)
