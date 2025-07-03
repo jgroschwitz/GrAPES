@@ -10,7 +10,7 @@ from evaluation.full_evaluation.category_evaluation.category_evaluation import E
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_grapes_category_with_testset_data, \
     is_grapes_category_with_ptb_data
 from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate, \
-    pretty_print_structural_generalisation_by_size, get_root_results_path, do_error_analysis
+    pretty_print_structural_generalisation_by_size, get_root_results_path
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score
 
@@ -18,8 +18,7 @@ from evaluation.full_evaluation.category_evaluation.category_metadata import *
 from prettytable import PrettyTable
 
 
-# TODO wrong:
-# Also: seems to be a problem with the encoded tsv: has old ids
+# TODO  seems to be a problem with the encoded tsv: has old ids
 
 
 def parse_args():
