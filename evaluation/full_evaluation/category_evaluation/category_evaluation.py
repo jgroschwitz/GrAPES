@@ -192,25 +192,22 @@ class CategoryEvaluation:
         success_count = self.get_success_count()
         sample_size = success_count + self.get_failure_count()
         ret = [success_count, sample_size]
-        if sample_size == 0:
-            self.rows.append(self.make_empty_row(self.category_metadata.display_name))
-        else:
 
-            self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
-                                                   [success_count, sample_size]))
-            if self.measure_unlabelled_edges():
-                unlabelled_success_count = self.get_success_count(UNLABELLED)
-                ret.append(unlabelled_success_count)
-                self.rows.append(self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
-                [unlabelled_success_count, sample_size]))
-            if self.category_metadata.run_prerequisites:
-                prereq_success_count = self.get_success_count(PREREQS)
-                ret.append(prereq_success_count)
-                self.rows.append(self.make_results_row(
-                    "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
+        self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
+                                               [success_count, sample_size]))
+        if self.measure_unlabelled_edges():
+            unlabelled_success_count = self.get_success_count(UNLABELLED)
+            ret.append(unlabelled_success_count)
+            self.rows.append(self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
+            [unlabelled_success_count, sample_size]))
+        if self.category_metadata.run_prerequisites:
+            prereq_success_count = self.get_success_count(PREREQS)
+            ret.append(prereq_success_count)
+            self.rows.append(self.make_results_row(
+                "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
 
-            if self.do_error_analysis:
-                self.dump_error_analysis_pickle()
+        if self.do_error_analysis:
+            self.dump_error_analysis_pickle()
         print("Metrics:", ret)
         return ret
 

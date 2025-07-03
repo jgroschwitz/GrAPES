@@ -6,7 +6,7 @@ from penman import Graph
 from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size, \
     compute_correctness_counts_from_counter_lists
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
-    EVAL_TYPE_SUCCESS_RATE, Results, IDResults
+    EVAL_TYPE_SUCCESS_RATE, Results, IDResults, CountResults
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check, SubcategoryMetadata
 from evaluation.graph_matcher import equals_modulo_isomorphy
 from evaluation.novel_corpus.long_lists import compute_conjunct_counts, get_all_opi_edges, \
@@ -26,7 +26,10 @@ class ListAccuracy(CategoryEvaluation):
         """
         super().__init__(gold_amrs, predicted_amrs, root_dir, category_metadata, predictions_directory, do_error_analysis)
         self.gold_amrs, self.predicted_amrs = self.filter_graphs()
-        self.results = ListResults()
+        if self.do_error_analysis:
+            self.results = ListResults()
+        else:
+            self.results = ListCountResults()
 
     def _get_all_results(self):
         """
@@ -176,3 +179,44 @@ class ListResults(IDResults):
             field = self.default_field
         return getattr(self, f"total_predictions_{field}")
 
+class ListCountResults(CountResults):
+    """
+    Stores the relevant info as numbers (including numbers for precision)
+    Measures unseen opi edge recall and precision and recall on conjuncts
+    """
+    def __init__(self):
+        additional_fields = [OPi]
+        super().__init__(additional_fields=additional_fields, default_field="conjuncts")
+
+        for field in additional_fields + [self.default_field]:
+            setattr(self, f"correct_{field}", 0)
+            for corpus in ["gold", "predictions"]:
+                setattr(self, f"total_{corpus}_{field}", 0)
+
+    def get_success_count(self, field=None):
+        return getattr(self, self.make_success_key(field))
+
+    def get_failure_count(self, field=None):
+        """
+        Returns the sum of the type 1 and type 2 errors
+        """
+        if field is None:
+            field = self.default_field
+        successes = self.get_success_count(field)
+        type_1_errors = getattr(self, f"total_predictions_{field}") - successes
+        type_2_errors = getattr(self, f"total_gold_{field}") - successes
+        return type_1_errors + type_2_errors
+
+    def get_total_gold(self, field=None):
+        if field is None:
+            field = self.default_field
+        return getattr(self, f"total_gold_{field}")
+
+    def get_total_predictions(self, field=None):
+        if field is None:
+            field = self.default_field
+        return getattr(self, f"total_predictions_{field}")
+
+    def add_success(self, gold: Graph, predicted: Graph, field:str=None):
+        """Done in batches instead"""
+        pass
