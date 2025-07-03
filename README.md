@@ -244,15 +244,14 @@ GrAPES
 │ │ │ ├── viii_attachments.py
 │ │ │ ├── ix_nontrivial_word2node_relations.py
 │ │ ├── corpus_statistics.py
-│ │ ├── run_full_evaluation.py
+│ │ ├── run_full_evaluation.py              # the evaluation script used in the paper
 │ │ └── wilson_score_interval.py
 │ └── testset                               # evaluation modules for the AMR test set categories
 ├── grammars                                # Alto grammars for structural generalisation
 ├── scripts
-│ ├── full_evaluation.sh                    # script we used for the paper
 │ ├── file_manipulations                    # various scripts for changing files
 │ ├── preprocessing                         # preprocessing scripts for AM parser and AMRBART
-│ └── single_evaluation.sh                  
+│ └── single_predict.sh                     # making predictions with a parser for one category
 └── amrbank_analysis                        # various scripts and modules used in the creation of GrAPES
 ```
 
