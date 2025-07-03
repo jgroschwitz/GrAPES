@@ -52,6 +52,7 @@ class NERecall(CategoryEvaluation):
                 # and we only need to normalise the one string
                 if normalize_special_entity_value(instance_or_attribute.target) == gold_value_string:
                     self.add_success(gold_amr, predicted_amr)
+                    found = True
                     break
         else:
             for instance in predicted_amr.instances():
