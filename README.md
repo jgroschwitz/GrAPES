@@ -195,10 +195,10 @@ The files each category uses are in `evaluation`
 
 You can use `evaluation/full_evaluation/run_all_evaluations.py` if you set yourself up as follows:
 
-* in `data/raw/gold`, place a copy of your concatenated AMR 3.0 testset and call it `test.txt`
+* In `data/raw/gold`, place a copy of your concatenated AMR 3.0 testset and call it `test.txt`
 * For each parser:
   * Choose a name e.g. `"my_parser"` 
-  * create a directory in `data/raw/parser_outputs` called `my_parser-outputs`
+  * create a directory in `data/processed/parser_outputs` called `my_parser-outputs`
   * place all output files here:
     * the output of the full grapes corpus as `full_corpus.txt`
     * any single-category output files
