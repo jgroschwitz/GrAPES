@@ -2,6 +2,7 @@ from typing import List, Tuple, Set
 
 import penman
 
+from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, PREREQS, UNLABELLED
 from evaluation.util import strip_sense, get_source, get_target, filter_amrs_for_name
 
 import re
@@ -65,7 +66,7 @@ node2reification_edges_map = {t[1]: (t[2], t[3]) for t in REIFICATION_QUADRUPLES
 node2reification_edges_map["author-01"] = (":ARG0", ":ARG1")
 
 
-class PPAttachmentEvaluator:
+class PPAttachment(CategoryEvaluation):
     """
     We look for edges or reification-style common parents
     The "source" throughout is the root of the modified subgraph, and the "target" the root of the modifier,
@@ -82,27 +83,46 @@ class PPAttachmentEvaluator:
         predictions_directory: list of predicted graphs
 
     """
+    def __init__(self, gold_amrs, predicted_amrs, root_dir, info, predictions_directory=None, do_error_analysis=False):
+        """
+        Pragmatic attachments of ambiguous PPs
+        PP Attachments come from multiple files, so if they're not already in the given graphs, we try to get them.
+        """
+        super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory, do_error_analysis)
+        # if we read in the unused PP directory instead of the whole full_corpus, replace it with the real ones
+        # These have ids pp_attachment_n
+        if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):
+            print("Reading in additional files")
+            self.gold_amrs, self.predicted_amrs = self.get_additional_graphs(read_in=True)
+        if len(self.gold_amrs) != len(self.predicted_amrs) or len(self.gold_amrs) ==0:
+            raise Exception("Different number of AMRs or 0")
 
-    def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph]):
-        self.prerequisites_counter = 0
-        self.unlabeled_counter = 0
-        self.labeled_counter = 0
-        self.total_counter = 0
-        self.gold_amrs = gold_amrs
-        self.predicted_amrs = predicted_amrs
+    def measure_unlabelled_edges(self):
+        return True
 
-    def evaluate_all(self):
-        self._run_all_evaluations_and_update_internal_counters()
-        assert self.total_counter > 0, "No graphs found"
-        return self.prerequisites_counter / self.total_counter, self.unlabeled_counter / self.total_counter, \
-               self.labeled_counter / self.total_counter
+    # def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph]):
+    #     self.prerequisites_counter = 0
+    #     self.unlabeled_counter = 0
+    #     self.labeled_counter = 0
+    #     self.total_counter = 0
+    #     self.gold_amrs = gold_amrs
+    #     self.predicted_amrs = predicted_amrs
 
-    def _run_all_evaluations_and_update_internal_counters(self):
+    # def evaluate_all(self):
+    #     self._run_all_evaluations_and_update_internal_counters()
+    #     assert self.total_counter > 0, "No graphs found"
+    #     return self.prerequisites_counter / self.total_counter, self.unlabeled_counter / self.total_counter, \
+    #            self.labeled_counter / self.total_counter
+
+    def _get_all_results(self):
+        g, p = self.filter_graphs()
+        print(len(g))
         self.evaluate_see_with_graphs()
         self.evaluate_read_by_graphs()
         self.evaluate_bought_for_graphs()
         self.evaluate_keep_from_graphs()
         self.evaluate_give_up_in_graphs()
+        print(len(self.gold_amrs))
 
     def evaluate_see_with_graphs(self):
         golds, predictions = filter_amrs_for_name("see_with", self.gold_amrs, self.predicted_amrs, fail_ok=True)
@@ -141,7 +161,6 @@ class PPAttachmentEvaluator:
         for pred, gold in zip(predictions, golds):
             edges_in_gold = [e for edge_label in edge_labels_to_evaluate for e in gold.edges(role=edge_label)]
             nodes_in_gold = [n for n in gold.instances() if n[2] in node_labels_to_evaluate]
-            self.total_counter += 1
 
             # if the gold graph only contains one of the edges or nodes we want, evaluate that
             if len(edges_in_gold) + len(nodes_in_gold) == 1:
@@ -172,13 +191,6 @@ class PPAttachmentEvaluator:
         :param gold_node: node name of the node of interest in the gold graph
         :param predicted_graph: penman graph
         """
-        # MF: this is really complicated, so I made myself a running example
-        # turns out this was a terrible choice, as the target and source are conceptually swapped for author-01.
-        # I will read this book by Dickens
-        # (b / book  :mod (t / this)  :ARG1-of (a / author-01  :ARG0 (p / person ... Dickens)))
-        # gold_node = a (labeled author-01)
-        # "source" is person, "target" is book,
-        # ARG0, ARG1 from table
         edge_label_to_source, edge_label_to_target = node2reification_edges_map[gold_node.target]
         gold_source = get_target(gold.edges(source=gold_node.source, role=edge_label_to_source)[0], gold)
         gold_target = get_target(gold.edges(source=gold_node.source, role=edge_label_to_target)[0], gold)
@@ -188,7 +200,7 @@ class PPAttachmentEvaluator:
         prerequisite_target = any(strip_sense(n.target) == strip_sense(gold_target.target) for n in predicted_graph.instances())
         prerequisites = prerequisite_source and prerequisite_target
         if prerequisites:
-            self.prerequisites_counter += 1
+            self.add_success(gold, predicted_graph, PREREQS)
 
             # we try both reification and edge versions
             # get all common ARGi parents of "source" and "target" in the predicted graph
@@ -197,7 +209,7 @@ class PPAttachmentEvaluator:
             unlabeled_node_matches = get_reification_like_nodes(predicted_graph, gold_source, gold_target)
             unlabeled_node_match = len(unlabeled_node_matches) > 0
             if unlabeled_node_match:
-                self.unlabeled_counter += 1
+                self.add_success(gold, predicted_graph, UNLABELLED)
                 # for some reason we look again (discarding unlabeled_node_matches), this time for one with
                 # the right edge labels and the right common parent node label, including senses
                 # e.g. True if these are in the predicted graph:
@@ -208,19 +220,34 @@ class PPAttachmentEvaluator:
                                                          edge_label_to_target,
                                                          gold_source, gold_target, predicted_graph)
                 if labeled:
-                    self.labeled_counter += 1
+                    self.add_success(gold, predicted_graph)
+                else:
+                    self.add_fail(gold, predicted_graph)
             else:
                 # try the edge label variant instead (instead of reification)
                 unlabeled = exists_unlabeled_edge_match(gold_source, gold_target, predicted_graph)
                 if unlabeled:
-                    self.unlabeled_counter += 1
+                    self.add_success(gold, predicted_graph, UNLABELLED)
                     # find the edge variant of this reified node, if any
                     if gold_node.target in node2edge_map:
                         edge_label = node2edge_map[gold_node.target]
                         # Includes senses
                         labeled = exists_labeled_edge_match(edge_label, gold_source, gold_target, predicted_graph)
                         if labeled:
-                            self.labeled_counter += 1
+                            self.add_success(gold, predicted_graph)
+                        else:
+                            self.add_fail(gold, predicted_graph)
+                        handled = True
+                    else:
+                        self.add_fail(gold, predicted_graph)
+                else:
+                    self.add_fail(gold, predicted_graph)
+                    self.add_fail(gold, predicted_graph, UNLABELLED)
+        else:
+            self.add_fail(gold, predicted_graph)
+            self.add_fail(gold, predicted_graph, UNLABELLED)
+            self.add_fail(gold, predicted_graph, PREREQS)
+
         # else:
         #     print(f"PP attachment prerequisites missed: {gold_source.target}, {gold_target.target}")
 
@@ -232,20 +259,29 @@ class PPAttachmentEvaluator:
         prerequisite_target = any(strip_sense(n.target) == strip_sense(gold_target.target) for n in predicted_graph.instances())
         prerequisites = prerequisite_source and prerequisite_target
         if prerequisites:
-            self.prerequisites_counter += 1
+            self.add_success(gold, predicted_graph, PREREQS)
 
             unlabeled = exists_unlabeled_edge_match(gold_source, gold_target, predicted_graph)
             reification_nodes = get_reification_like_nodes(predicted_graph, gold_source, gold_target)
             unlabeled_reified = len(reification_nodes) > 0
             if unlabeled or unlabeled_reified:
-                self.unlabeled_counter += 1
+                self.add_success(gold, predicted_graph, UNLABELLED)
                 labeled = None
                 if unlabeled:
                     labeled = exists_labeled_edge_match(gold_edge.role, gold_source, gold_target, predicted_graph)
                 elif unlabeled_reified:
                     labeled = exists_labeled_reification_match(gold_edge, gold_source, gold_target, predicted_graph)
                 if labeled:
-                    self.labeled_counter += 1
+                    self.add_success(gold, predicted_graph)
+                else:
+                    self.add_fail(gold, predicted_graph)
+            else:
+                self.add_fail(gold, predicted_graph)
+                self.add_fail(gold, predicted_graph, UNLABELLED)
+        else:
+            self.add_fail(gold, predicted_graph)
+            self.add_fail(gold, predicted_graph, UNLABELLED)
+            self.add_fail(gold, predicted_graph, PREREQS)
         # else:
         #     print(f"PP attachment prerequisites missed: {gold_source.target}, {gold_target.target}")
             # else:

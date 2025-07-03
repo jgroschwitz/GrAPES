@@ -116,6 +116,7 @@ def create_results_pickles():
             print("Doing Bunch", bunch)
 
             for subcategory in bunch2subcategory[bunch]:
+                print(subcategory)
                 eval_class, info = category_name_to_set_class_and_metadata[subcategory]
 
                 # get the appropriate corpora
@@ -256,7 +257,8 @@ def print_pretty_table(result_rows):
                                f"[{num_to_score_with_preceding_0(wilson_ci[0])}, {num_to_score_with_preceding_0(wilson_ci[1])}]", row[4]])
             else:
                 print("Division by zero!", file=sys.stderr)
-                print(row[0].display_name, row[1:], file=sys.stderr)
+                print(row[0], row[1:], file=sys.stderr)
+
         elif eval_type == EVAL_TYPE_F1:
             if len(row) > 4:
                 sample_size = row[4]

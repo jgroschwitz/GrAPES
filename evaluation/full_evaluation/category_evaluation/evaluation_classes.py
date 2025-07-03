@@ -3,33 +3,10 @@ from debugpy.server.cli import TARGET
 from evaluation.graph_matcher import check_fragment_existence
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
-    EVAL_TYPE_SUCCESS_RATE, PREREQS
-from evaluation.novel_corpus.pp_attachment import get_pp_attachment_success_counters
+    PREREQS
 from evaluation.util import get_node_by_name
 
 
-class PPAttachment(CategoryEvaluation):
-    def __init__(self, gold_amrs, predicted_amrs, root_dir, info, predictions_directory=None):
-        """
-        Pragmatic attachments of ambiguous PPs
-        PP Attachments come from multiple files, so if they're not already in the given graphs, we try to get them.
-        """
-        super().__init__(gold_amrs, predicted_amrs, root_dir, info, predictions_directory)
-        # if we read in the unused PP directory instead of the whole full_cprpus, replace it with the real ones
-        # These have ids pp_attachment_n
-        if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):
-            print("Reading in additional files")
-            self.gold_amrs, self.predicted_amrs = self.get_additional_graphs(read_in=True)
-        if len(self.gold_amrs) != len(self.predicted_amrs) or len(self.gold_amrs) ==0:
-            raise Exception("Different number of AMRs or 0")
-
-    def make_results(self):
-        prereqs, unlabeled, recalled, sample_size = get_pp_attachment_success_counters(self.gold_amrs, self.predicted_amrs)
-        assert sample_size>0, "No results found!"
-        rows = [self.make_results_row("Edge recall", EVAL_TYPE_SUCCESS_RATE, [recalled, sample_size]),
-                self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE, [unlabeled, sample_size]),
-                self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereqs, sample_size])]
-        self.rows.extend(rows)
 
 
 class SubgraphRecall(CategoryEvaluation):

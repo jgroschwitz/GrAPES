@@ -1,7 +1,7 @@
 from copy import copy
 
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import PPAttachment, \
-    EllipsisRecall, SubgraphRecall, ImperativeRecall, TARGET
+from evaluation.full_evaluation.category_evaluation.evaluation_classes import (EllipsisRecall, SubgraphRecall,
+                                                                               ImperativeRecall, TARGET)
 from evaluation.full_evaluation.category_evaluation.exact_match import ExactMatch
 from evaluation.full_evaluation.category_evaluation.list_accuracy import ListAccuracy
 from evaluation.full_evaluation.category_evaluation.named_entities import NETypeRecall, NERecall
@@ -10,6 +10,7 @@ from evaluation.full_evaluation.category_evaluation.edge_recall import EdgeRecal
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.full_evaluation.category_evaluation.word_disambiguation_berts_mouth import WordDisambiguationBertsMouth
 from evaluation.full_evaluation.category_evaluation.word_disambiguation_handcrafted import  WordDisambiguationHandcrafted
+from evaluation.full_evaluation.category_evaluation.pp_attachment import PPAttachment
 from evaluation.novel_corpus.structural_generalization import \
     add_sanity_check_suffix
 from evaluation.util import SANITY_CHECK

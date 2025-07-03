@@ -26,7 +26,6 @@ class CategoryEvaluation:
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], root_dir: str,
                  category_metadata: SubcategoryMetadata, predictions_directory=None, do_error_analysis: bool = False):
-        print("initializing category evaluation")
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
         self.root_dir = root_dir
@@ -120,7 +119,6 @@ class CategoryEvaluation:
         return [category_name, metric_name, EVAL_TYPE_NA] + []
 
     def make_smatch_results(self):
-        print("running Smatch...")
         smatch = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
         smatch_f1 = self.get_f_from_prf(smatch)
         self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])
@@ -194,21 +192,26 @@ class CategoryEvaluation:
         success_count = self.get_success_count()
         sample_size = success_count + self.get_failure_count()
         ret = [success_count, sample_size]
-        self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
-                                               [success_count, sample_size]))
-        if self.measure_unlabelled_edges():
-            unlabelled_success_count = self.get_success_count(UNLABELLED)
-            ret.append(unlabelled_success_count)
-            self.rows.append(self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
-            [unlabelled_success_count, sample_size]))
-        if self.category_metadata.run_prerequisites:
-            prereq_success_count = self.get_success_count(PREREQS)
-            ret.append(prereq_success_count)
-            self.rows.append(self.make_results_row(
-                "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
+        if sample_size == 0:
+            self.rows.append(self.make_empty_row(self.category_metadata.display_name))
+        else:
+
+            self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
+                                                   [success_count, sample_size]))
+            if self.measure_unlabelled_edges():
+                unlabelled_success_count = self.get_success_count(UNLABELLED)
+                ret.append(unlabelled_success_count)
+                self.rows.append(self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
+                [unlabelled_success_count, sample_size]))
+            if self.category_metadata.run_prerequisites:
+                prereq_success_count = self.get_success_count(PREREQS)
+                ret.append(prereq_success_count)
+                self.rows.append(self.make_results_row(
+                    "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
+
+            if self.do_error_analysis:
+                self.dump_error_analysis_pickle()
         print("Metrics:", ret)
-        if self.do_error_analysis:
-            self.dump_error_analysis_pickle()
         return ret
 
     def get_predictions_for_comparison(self, predicted_amr):
@@ -221,8 +224,6 @@ class CategoryEvaluation:
         """
         Loops through graphs and updates error analysis record
         """
-        print("Using new method")
-
         if self.category_metadata.tsv is not None:
             # read in the TSV to get the targets for comparison
             id2labels = self.read_tsv()
@@ -237,8 +238,7 @@ class CategoryEvaluation:
                         self.update_results(gold_amr, predicted_amr, target, predictions_for_comparison)
         else:
             self.gold_amrs, self.predicted_amrs = self.filter_graphs()
-            if len(self.gold_amrs) == 0:
-                raise RuntimeError("No matching AMRs in given corpus")
+            assert len(self.gold_amrs) > 0, "No matching AMRs in given corpus"
             for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
                 # if no TSV, update_error_analysis is per graph pair
                 self.update_results(gold_amr, predicted_amr, None, None)
@@ -252,7 +252,6 @@ class CategoryEvaluation:
             target: optional: gold thing to match with.
             predictions_for_comparison: optional: predicted thing to match.
         """
-        print("Running exact match (default)")
         if equals_modulo_isomorphy(gold_amr, predicted_amr, match_edge_labels=False, match_senses=False):
             # self.add_success(graph_id)
             self.add_success(gold_amr, predicted_amr)

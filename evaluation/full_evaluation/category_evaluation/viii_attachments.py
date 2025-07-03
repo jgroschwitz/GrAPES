@@ -1,7 +1,7 @@
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE
 
-from evaluation.novel_corpus.pp_attachment import get_pp_attachment_success_counters
+from evaluation.full_evaluation.category_evaluation.pp_attachment import get_pp_attachment_success_counters
 
 
 class Attachments(CategoryEvaluation):
