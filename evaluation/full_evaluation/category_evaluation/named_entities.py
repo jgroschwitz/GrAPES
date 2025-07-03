@@ -12,7 +12,6 @@ class NETypeRecall(CategoryEvaluation):
     def read_tsv(self):
         return get_2_columns_from_tsv_by_id(f"{self.corpus_path}/{self.category_metadata.tsv}",
                                             id_column=self.category_metadata.graph_id_column,
-                                            column_2=self.category_metadata.label_column
                                             )
 
     def update_results(self, gold_amr, predicted_amr, target, predictions_for_comparison=None):
