@@ -2,7 +2,8 @@ import os
 import pickle
 import sys
 from abc import ABC, abstractmethod
-from typing import List
+from collections import Counter
+from typing import List, Callable
 
 import penman
 from penman import Graph
@@ -11,7 +12,6 @@ from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists, graph_i
 from evaluation.file_utils import read_label_tsv
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.graph_matcher import equals_modulo_isomorphy
-from evaluation.novel_corpus.structural_generalization import size_mappers, get_exact_match_by_size
 from evaluation.util import filter_amrs_for_name
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
@@ -437,3 +437,25 @@ class IDResults(Results):
 
 
 
+def get_exact_match_by_size(gold_graphs: List[Graph], predicted_graphs: List[Graph],
+                            size_mapper: Callable[[int], int] = lambda x: x):
+    assert len(gold_graphs) == len(predicted_graphs)
+    correct_counts = Counter()
+    total_counts = Counter()
+    for gold, prediction in zip(gold_graphs, predicted_graphs):
+        size = size_mapper(int(gold.metadata["size0"]))
+        total_counts[size] += 1
+        if equals_modulo_isomorphy(gold, prediction, match_edge_labels=False, match_senses=False):
+            correct_counts[size] += 1
+    ret = {size: correct_counts[size] / total_counts[size] for size in sorted(total_counts.keys())}
+    ret["total"] = sum(correct_counts.values()) / sum(total_counts.values())
+    return ret
+
+size_mappers = {"adjectives": lambda x: x - 2,
+                "centre_embedding": lambda x: (x - 2) // 2,
+                "nested_control": lambda x: x,
+                "deep_recursion_basic": lambda x: x - 1,
+                "deep_recursion_pronouns": lambda x: x - 1,
+                "deep_recursion_3s": lambda x: x - 1,
+                "deep_recursion_rc": lambda x: x + 1,
+                "deep_recursion_rc_contrastive_coref": lambda x: x + 1}

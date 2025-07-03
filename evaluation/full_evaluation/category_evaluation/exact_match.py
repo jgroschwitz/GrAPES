@@ -1,9 +1,5 @@
-from evaluation.corpus_metrics import compute_exact_match_successes_and_sample_size
-from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
-    EVAL_TYPE_SUCCESS_RATE
+from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check
-from evaluation.graph_matcher import equals_modulo_isomorphy
-from evaluation.novel_corpus.long_lists import compute_conjunct_counts, compute_generalization_op_counts
 from evaluation.util import filter_amrs_for_name
 
 

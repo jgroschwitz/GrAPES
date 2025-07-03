@@ -1,3 +1,4 @@
+import re
 from collections import Counter
 from typing import List
 
@@ -6,9 +7,8 @@ from penman import Graph
 from evaluation.corpus_metrics import  compute_correctness_counts_from_counter_lists
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE, IDResults, CountResults
-from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check, SubcategoryMetadata
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.graph_matcher import equals_modulo_isomorphy
-from evaluation.novel_corpus.long_lists import get_all_opi_edges, get_all_unseen_opi_edges
 from evaluation.util import copy_graph, remove_edge, get_connected_subgraph_from_node, get_target, with_edge_removed
 
 OPi = "unseen_opi"
@@ -222,3 +222,30 @@ class ListCountResults(CountResults):
     def add_success(self, gold: Graph, predicted: Graph, field:str=None):
         """Done in batches instead"""
         pass
+
+def get_all_opi_edges(graph: Graph):
+    # TODO note that since we use graph.edges() here, this ignores properties! In particular, op_i edges in names.
+    #  This seems to be what we want, but may accidentally exclude some "proper conjunct opi edges" if there are
+    #  e.g. erroneous quotation marks, I think.
+    return [e for e in graph.edges() if is_opi_edge(e)]
+
+
+def get_all_unseen_opi_edges(graph: Graph):
+    return [e for e in graph.edges() if is_unseen_coord_opi_edge(e)]
+
+def is_opi_edge(edge):
+    return re.match(r":op[0-9]+", edge.role)
+
+
+def is_unseen_coord_opi_edge(edge):
+    '''
+    In the AMRBank 3.0 training set, we have seen a conjunction with 19 conjuncts (i.e. up to :op19). This checks
+    if the edge is an edge with label :op20+. (Does NOT actually check if this is a coordination)
+    :param edge:
+    :return:
+    '''
+    if re.match(r":op[0-9]+", edge.role):
+        number = int(edge.role[3:])
+        return number >= 20
+    else:
+        return False

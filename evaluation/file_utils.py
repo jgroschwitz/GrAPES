@@ -117,3 +117,26 @@ def get_graph_for_node_string(node_string: str):
     else:
         node_name_alias_counter += 1
         return penman.decode(f"(x{node_name_alias_counter} / {node_string})")
+
+def get_2_columns_from_tsv_by_id(filename, id_column=0, column_1=1, column_2=2):
+    id2labels = dict()
+    with open(filename, "r") as f:
+        csvreader = csv.reader(f, delimiter='\t', quotechar=None)
+        for row in csvreader:
+            graph_id = row[id_column]
+            ne_type = row[column_1]
+            name_string = row[column_2]
+            labels_here = id2labels.setdefault(graph_id, [])
+            labels_here.append((ne_type, name_string))
+    return id2labels
+
+def get_graphid2labels_from_tsv_file(filepath, graph_id_column=0, label_column=1):
+    id2labels = dict()
+    with open(filepath, "r") as f:
+        csvreader = csv.reader(f, delimiter='\t', quotechar=None)
+        for row in csvreader:
+            graph_id = row[graph_id_column]
+            label = row[label_column]
+            labels_here = id2labels.setdefault(graph_id, [])
+            labels_here.append(label)
+    return id2labels

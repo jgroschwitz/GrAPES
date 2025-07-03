@@ -1,8 +1,5 @@
-from amrbank_analysis.get_unseen_names_and_dates import get_date_string_for_date_instance, \
-    get_name_string_for_name_instance
+from evaluation.file_utils import get_2_columns_from_tsv_by_id, get_graphid2labels_from_tsv_file
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, PREREQS
-from evaluation.testset.ne_types import get_2_columns_from_tsv_by_id
-from evaluation.testset.special_entities import get_graphid2labels_from_tsv_file, normalize_special_entity_value
 from evaluation.util import get_node_by_name, get_name
 
 
@@ -12,6 +9,7 @@ class NETypeRecall(CategoryEvaluation):
     def read_tsv(self):
         return get_2_columns_from_tsv_by_id(f"{self.corpus_path}/{self.category_metadata.tsv}",
                                             id_column=self.category_metadata.graph_id_column,
+                                            column_1=self.category_metadata.label_column
                                             )
 
     def update_results(self, gold_amr, predicted_amr, target, predictions_for_comparison=None):
@@ -70,3 +68,30 @@ class NERecall(CategoryEvaluation):
                         break
         if not found:
             self.add_fail(gold_amr, predicted_amr)
+
+def get_name_string_for_name_instance(graph, instance):
+    """
+    given a graph and an instance in it, returns the " ".join of its sorted target labels
+    used only when instance is a name, so the targets are op_i. Sorting them gives the parts of the name in order.
+    :param graph:
+    :param instance:
+    :return: str: e.g. "Capitol Hill"
+    """
+    name_dict = []
+    for attribute in graph.attributes(source=instance.source):
+        name_dict.append((attribute.role, attribute.target))
+    name_dict.sort()  # in opi order
+    name_string = " ".join([t[1] for t in name_dict]).replace("\"", "")
+    return name_string
+
+
+def get_date_string_for_date_instance(graph, instance):
+    date_dict = []
+    for attribute in graph.attributes(source=instance.source):
+        date_dict.append((attribute.role, attribute.target))
+    date_dict.sort()
+    date_string = " ".join([f"{t[0]} {t[1]}" for t in date_dict])
+    return date_string
+
+def normalize_special_entity_value(string):
+    return string.replace("\"", "").lower()

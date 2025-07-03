@@ -3,8 +3,9 @@ from typing import List, Callable
 
 from penman import Graph, load
 
-from evaluation.corpus_metrics import compute_exact_match_fraction, compute_smatch_f, \
+from evaluation.corpus_metrics import compute_smatch_f, \
     compute_exact_match_successes_and_sample_size
+from evaluation.full_evaluation.category_evaluation.category_metadata import add_sanity_check_suffix
 from evaluation.graph_matcher import equals_modulo_isomorphy
 
 structural_generalization_corpus_names = ["adjectives", "centre_embedding", "nested_control", "deep_recursion_basic",
@@ -19,11 +20,6 @@ size_mappers = {"adjectives": lambda x: x - 2,
                 "deep_recursion_3s": lambda x: x - 1,
                 "deep_recursion_rc": lambda x: x + 1,
                 "deep_recursion_rc_contrastive_coref": lambda x: x + 1}
-
-
-
-def add_sanity_check_suffix(filename):
-    return f"{filename}_sanity_check"
 
 
 def get_exact_match_by_size(gold_graphs: List[Graph], predicted_graphs: List[Graph],

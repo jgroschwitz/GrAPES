@@ -54,3 +54,5 @@ variables = copy(locals())
 for v in variables:
     if not v.startswith("__") and v != "copy":
         print(v, variables[v])
+
+

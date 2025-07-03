@@ -11,8 +11,6 @@ from evaluation.full_evaluation.category_evaluation.subcategory_info import Subc
 from evaluation.full_evaluation.category_evaluation.word_disambiguation import WordDisambiguationBertsMouth, \
     WordDisambiguationHandcrafted
 from evaluation.full_evaluation.category_evaluation.pp_attachment import PPAttachment
-from evaluation.novel_corpus.structural_generalization import \
-    add_sanity_check_suffix
 from evaluation.util import SANITY_CHECK
 
 set_names_with_category_names = [
@@ -209,6 +207,7 @@ category_name_to_set_class_and_metadata = {
         "Unseen dates",
         tsv="unseen_dates.tsv",
         subtype="date-entity",
+        run_prerequisites=False
     )),
     "other_seen_entities": (NERecall, SubcategoryMetadata(
         "other_seen_entities",
@@ -318,6 +317,11 @@ category_name_to_set_class_and_metadata = {
     ))
 }
 
+
+def add_sanity_check_suffix(filename):
+    return f"{filename}_sanity_check"
+
+
 for name in bunch2subcategory["3. Structural generalization"]:
     eval_class, info = category_name_to_set_class_and_metadata[name]
     new_info = copy(info)
@@ -359,6 +363,9 @@ def get_formatted_category_names(names=category_name_to_set_class_and_metadata.k
 
 def is_testset_category(info):
     return info.subcorpus_filename is None
+
+
+
 
 #
 # for category in category_name_to_set_class_and_metadata:
