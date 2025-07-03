@@ -96,7 +96,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
         for category_name in category_names:
             eval_class, info = category_name_to_set_class_and_metadata[category_name]
             if do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
-                if predictions_directory is not None:
+                # we can always try to find the appropriate subcorpus file...
+                if predictions_directory is not None and info.subcorpus_filename is not None:
                     try:
                         # try to get the subcorpus from the same folder as the full corpus
                         print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in {predictions_directory}")
