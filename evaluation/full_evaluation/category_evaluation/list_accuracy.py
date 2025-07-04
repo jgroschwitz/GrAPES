@@ -8,6 +8,7 @@ from evaluation.corpus_metrics import  compute_correctness_counts_from_counter_l
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
     EVAL_TYPE_SUCCESS_RATE, IDResults, CountResults
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 from evaluation.graph_matcher import equals_modulo_isomorphy
 from evaluation.util import copy_graph, remove_edge, get_connected_subgraph_from_node, get_target, with_edge_removed
 
@@ -17,16 +18,14 @@ class ListAccuracy(CategoryEvaluation):
     """ For the Long Lists category. Note that the Sanity Check uses ExactMatch instead."""
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], category_metadata: SubcategoryMetadata,
-                 root_dir: str = ".", predictions_directory=None, do_error_analysis=False, parser_name=None,
-                 verbose_error_analysis=True, run_smatch=False):
+                 instance_info: EvaluationInstanceInfo, given_subcorpus_file=False):
         """
         We add space for storing counts to the error analysis because (a) there are a lot of edges per graph,
         and we don't want a copy for each mistake, and (b) we also want to calculate precision.
         """
-        super().__init__(gold_amrs, predicted_amrs, category_metadata, root_dir, predictions_directory,
-                         do_error_analysis, parser_name, verbose_error_analysis)
-        if self.do_error_analysis:
-            self.results = ListResults(verbose=verbose_error_analysis)
+        super().__init__(gold_amrs, predicted_amrs, category_metadata, instance_info, given_subcorpus_file=False)
+        if self.instance_info.do_error_analysis:
+            self.results = ListResults(verbose=instance_info.verbose_error_analysis)
         else:
             self.results = ListCountResults()
 

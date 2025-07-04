@@ -9,29 +9,29 @@ class SubcategoryMetadata:
     """
     name: str
     display_name: str
-    tsv: str or None = None
-    subcorpus_filename: str or None = None
-    latex_display_name: str or None = None
-    other_subcorpus_filename: str or None = None
+    tsv: str = None
+    subcorpus_filename: str = None
+    latex_display_name: str  = None
+    other_subcorpus_filename: str = None
     graph_id_column: int = 0
     use_sense: bool = False
     first_row_is_header: bool = False
     # for nodes
     use_attributes: bool = False
-    attribute_label: str or None = None
+    attribute_label: str = None
     metric_label: str = "Recall"
     run_prerequisites: bool = True
     # for edges
-    source_column: int or None = 1
-    edge_column: int or None = 2
-    target_column: int or None = 3
-    parent_column: int or None = None
-    parent_edge_column: int or None = None
+    source_column: int = 1
+    edge_column: int = 2
+    target_column: int = 3
+    parent_column: int = None
+    parent_edge_column: int = None
     # for named entities, word disambiguation, structural generalisation
-    subtype: str or None = None
+    subtype: str = None
     label_column: int = 1
     # for pps and deep recusion with pronouns
-    extra_subcorpus_filenames: List[str] or None = None
+    extra_subcorpus_filenames: List[str] = None
     # for gathering results
     additional_fields: List[str] = field(default_factory=list)
 
@@ -57,4 +57,7 @@ def is_copyrighted_data(category_info):
 
 
 def is_sanity_check(category_info):
-    return category_info.subcorpus_filename.endswith("sanity_check")
+    if category_info.subcorpus_filename is None:
+        return True
+    else:
+        return category_info.subcorpus_filename.endswith("sanity_check")

@@ -1,5 +1,6 @@
 from copy import copy
 
+from evaluation.full_evaluation.category_evaluation.category_evaluation import STRUC_GEN
 from evaluation.full_evaluation.category_evaluation.evaluation_classes import (EllipsisRecall, SubgraphRecall,
                                                                                ImperativeRecall, TARGET)
 from evaluation.full_evaluation.category_evaluation.exact_match import ExactMatch
@@ -77,7 +78,7 @@ category_name_to_set_class_and_metadata = {
         "nested_control_and_coordination",
         display_name="Nested control and coordination",
         subcorpus_filename="nested_control",
-        subtype="structural_generalization",
+        subtype=STRUC_GEN,
         run_prerequisites=False,
         metric_label="Exact Match"
     )),
@@ -85,7 +86,7 @@ category_name_to_set_class_and_metadata = {
         "multiple_adjectives",
         display_name="Multiple adjectives",
         subcorpus_filename="adjectives",
-        subtype="structural_generalization",
+        subtype=STRUC_GEN,
         run_prerequisites=False,
         metric_label="Exact Match"
     )),
@@ -93,7 +94,7 @@ category_name_to_set_class_and_metadata = {
         "centre_embedding",
         display_name="Centre embedding",
         subcorpus_filename="centre_embedding",
-        subtype="structural_generalization",
+        subtype=STRUC_GEN,
         run_prerequisites=False,
         metric_label="Exact Match"
     )),
@@ -101,7 +102,7 @@ category_name_to_set_class_and_metadata = {
         "cp_recursion",
         display_name="CP recursion",
         subcorpus_filename="deep_recursion_basic",
-        subtype="structural_generalization",
+        subtype=STRUC_GEN,
         run_prerequisites=False,
         metric_label="Exact Match"
     )),
@@ -109,7 +110,7 @@ category_name_to_set_class_and_metadata = {
         "cp_recursion_plus_coreference",
         display_name="CP recursion + coreference",
         subcorpus_filename="deep_recursion_pronouns",
-        subtype="structural_generalization",
+        subtype=STRUC_GEN,
         extra_subcorpus_filenames=["deep_recursion_3s"],
         run_prerequisites=False,
         metric_label="Exact Match"
@@ -118,7 +119,7 @@ category_name_to_set_class_and_metadata = {
         "cp_recursion_plus_rc",
         display_name="CP recursion + relative clause (RC)",
         subcorpus_filename="deep_recursion_rc",
-        subtype="structural_generalization",
+        subtype=STRUC_GEN,
         run_prerequisites=False,
         metric_label="Exact Match"
     )),
@@ -126,7 +127,7 @@ category_name_to_set_class_and_metadata = {
         "cp_recursion_plus_rc_plus_coreference",
         display_name="CP recursion + RC + coreference",
         subcorpus_filename="deep_recursion_rc_contrastive_coref",
-        subtype="structural_generalization",
+        subtype=STRUC_GEN,
         run_prerequisites=False,
         metric_label="Exact Match"
     )),
@@ -135,7 +136,7 @@ category_name_to_set_class_and_metadata = {
         display_name="Long lists",
         subcorpus_filename="long_lists",
         metric_label="Conjunct recall",
-        subtype = "structural_generalization",
+        subtype = STRUC_GEN,
         run_prerequisites=False
     )),
     "rare_node_labels": (NodeRecall, SubcategoryMetadata(

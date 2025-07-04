@@ -10,7 +10,8 @@ from penman import Graph
 
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists, graph_is_in_ids
 from evaluation.file_utils import read_label_tsv
-from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_sanity_check
+from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 from evaluation.graph_matcher import equals_modulo_isomorphy
 from evaluation.util import filter_amrs_for_name
 
@@ -22,12 +23,13 @@ EVAL_TYPE_NA = 0
 PREREQS = "prereqs"
 UNLABELLED = "unlabelled"
 
+STRUC_GEN = "structural generalisation"
+
 
 class CategoryEvaluation:
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], category_metadata: SubcategoryMetadata,
-                 root_dir: str = ".", predictions_directory=None, do_error_analysis: bool = False,
-                 parser_name: str = None, verbose_error_analysis: bool = True, run_smatch=False):
+                 instance_info: EvaluationInstanceInfo, given_subcorpus_file=False):
         """
         Initialises evaluation of one category
         Args:
@@ -35,49 +37,47 @@ class CategoryEvaluation:
             predicted_amrs: list of one parser's precicted penman.Graph
             category_metadata: SubcategoryMetadata: stores details about evaluating this category,
                                 like the files to read in and whether to run prerequisites
-            root_dir: Optional: path to the root from file that calls this class. (default ".")
-            predictions_directory: Optional: path from the root_dir to the directory of prediction files.
-                                            Used if additional files need to be read in.
-                                            (Default None. Unnecessary when you use the full GrAPES or testset file.)
-            do_error_analysis: Optional, default: False.
-                                            If True, the Results class stores graph IDs of correct and incorrect graphs.
-            parser_name: optional, just for writing the error analysis pickle in a more specific folder.
-            verbose_error_analysis: default True. If True, and do_error_analysis, prints the pickle location
-            run_smatch: default False. If True, runs Smatch on the subcorpora. Warning: this can be very slow.
         """
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
-        self.root_dir = root_dir
+        self.root_dir = instance_info.root_dir
         self.corpus_path = f"{self.root_dir}/corpus"
         self.rows = []
         self.category_metadata = category_metadata
         self.print_dataset_name = True  # we want to print the dataset name only on the first metric calculation
         self.extra_subcorpus_filenames = category_metadata.extra_subcorpus_filenames
-        self.predictions_directory = predictions_directory
-        self.do_error_analysis = do_error_analysis
-        self.run_smatch = run_smatch
+        self.instance_info = instance_info
+        self.is_sanity_check = is_sanity_check(category_metadata)
 
-        if self.category_metadata.extra_subcorpus_filenames is None or self.category_metadata.extra_subcorpus_filenames == []:
-            self.store_filtered_graphs()
+        # get any extra corpus files needed
+        if self.category_metadata.extra_subcorpus_filenames:
+            # if given a subcorpus file rather than the whole corpus, read in new files
+            # otherwise, filter them from the corpora
+            extra_gold, extra_pred = self.get_additional_graphs(read_in=given_subcorpus_file)
+
+        # filter in between because one was to get the extra subcorpus files is by filtering the full corpus files
+        self.gold_amrs, self.predicted_amrs = self.filter_graphs()
+
+        if self.category_metadata.extra_subcorpus_filenames:
+            self.gold_amrs.extend(extra_gold)
+            self.predicted_amrs.extend(extra_pred)
 
         if len(self.predicted_amrs) == 0:
             print("No predicted amrs found!")
 
+        # build empty Results
         extra_fields = self.category_metadata.additional_fields
         if self.category_metadata.run_prerequisites:
             extra_fields.append(PREREQS)
         if self.measure_unlabelled_edges():
             extra_fields.append(UNLABELLED)
-        if do_error_analysis:
-            if parser_name is None:
-                parser_name = "unnamed_parser"
-                print("WARNING: error analysis pickle will be stored in the general unnamed_parser directory, since no parser name was provided")
+        if self.instance_info.do_error_analysis:
 
-            pickle_path = f"{self.root_dir}/error_analysis/{parser_name}/{self.category_metadata.name}.pickle"
-            self.results = IDResults(additional_fields=extra_fields, pickle_path=pickle_path, verbose=verbose_error_analysis)
+            pickle_path = f"{self.instance_info.error_analysis_outdir()}/{self.category_metadata.name}.pickle"
+            self.results = IDResults(additional_fields=extra_fields, pickle_path=pickle_path,
+                                     verbose=self.instance_info.verbose_error_analysis)
         else:
             self.results = CountResults(additional_fields=extra_fields)
-        self.parser_name = parser_name
 
     @staticmethod
     def measure_unlabelled_edges():
@@ -85,8 +85,16 @@ class CategoryEvaluation:
         return False
 
     def run_evaluation(self):
+        """
+        Main function.
+        Run all evaluations and create output rows
+        Returns: results as lists of the form TODO
+
+        """
         self._get_all_results()
         self._calculate_metrics_and_add_all_rows()
+        if self.instance_info.run_smatch or self.category_metadata.subtype == STRUC_GEN and not self.is_sanity_check:
+            self.make_smatch_results()
         return self.rows
 
     def get_additional_graphs(self, read_in):
@@ -94,8 +102,6 @@ class CategoryEvaluation:
         If there are additional graphs required by this category, we can read them in or filter them from the larger set.
         :param: read_in: if True, read them in from a file, otherwise filter them from the stored corpora
         """
-        if self.extra_subcorpus_filenames is None:
-            raise ValueError("extra_subcorpus_filenames is not defined")
         if not read_in:
             filtered_golds = []
             filtered_preds = []
@@ -106,17 +112,18 @@ class CategoryEvaluation:
                 filtered_preds += more_preds
             return filtered_golds, filtered_preds
         else:
-            if self.predictions_directory is not None:
+            try:
                 extra_predictions = []
                 extra_golds = []
                 for filename in self.extra_subcorpus_filenames:
                     print("reading in", filename)
-                    extra_predictions += penman.load(f"{self.predictions_directory}/{filename}.txt")
-                    extra_golds += penman.load(f"{self.corpus_path}/subcorpora/{filename}.txt")
+                    extra_predictions += penman.load(f"{self.instance_info.predictions_directory_path()}/{filename}.txt")
+                    extra_golds += penman.load(self.get_gold_filepath(filename))
                 return extra_golds, extra_predictions
-            else:
-                raise NotImplementedError("Can't get additional graphs without predictions directory")
-
+            except FileNotFoundError as e:
+                print(f"Extra files for {self.category_metadata.name} not found in "
+                      f"{self.instance_info.predictions_directory_path()}", file=sys.stderr)
+                raise e
 
     def make_and_append_results_row(self, metric_name: str, eval_type: str, metric_results: List):
         """
@@ -212,14 +219,14 @@ class CategoryEvaluation:
     def read_tsv(self):
         return read_label_tsv(self.root_dir, self.category_metadata.tsv)
 
-    def dump_error_analysis_pickle(self):
-        if self.do_error_analysis:
-            try:
-                self.results.write_pickle()
-            except Exception as e:
-                print("WARNING: no error analysis written:", e, file=sys.stderr)
-        else:
-            print("No error analysis data was stored, so no pickle to write")
+    # def dump_error_analysis_pickle(self):
+    #     if self. do_error_analysis:
+    #         try:
+    #             self.results.write_pickle()
+    #         except Exception as e:
+    #             print("WARNING: no error analysis written:", e, file=sys.stderr)
+    #     else:
+    #         print("No error analysis data was stored, so no pickle to write")
 
     def _calculate_metrics_and_add_all_rows(self):
 
@@ -241,11 +248,8 @@ class CategoryEvaluation:
             self.rows.append(self.make_results_row(
                 "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
 
-        if self.run_smatch:
-            self.make_smatch_results()
-
-        if self.do_error_analysis:
-            self.dump_error_analysis_pickle()
+        if self.instance_info.do_error_analysis:
+            self.results.write_pickle()
         # print("Metrics:", ret)
         return ret
 
@@ -471,7 +475,12 @@ def get_exact_match_by_size(gold_graphs: List[Graph], predicted_graphs: List[Gra
     correct_counts = Counter()
     total_counts = Counter()
     for gold, prediction in zip(gold_graphs, predicted_graphs):
-        size = size_mapper(int(gold.metadata["size0"]))
+        try:
+            size = size_mapper(int(gold.metadata["size0"]))
+        except KeyError:
+            print(f"No size0 found in {gold.metadata.keys()}!")
+            print(gold.metadata["id"])
+            raise
         total_counts[size] += 1
         if equals_modulo_isomorphy(gold, prediction, match_edge_labels=False, match_senses=False):
             correct_counts[size] += 1

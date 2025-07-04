@@ -83,24 +83,24 @@ class PPAttachment(CategoryEvaluation):
         predictions_directory: list of predicted graphs
 
     """
-    def __init__(self, gold_amrs, predicted_amrs, info, root_dir=".", predictions_directory=None,
-                 do_error_analysis=False, parser_name=None, verbose_error_analysis=True, run_smatch=False):
-        """
-        Pragmatic attachments of ambiguous PPs
-        PP Attachments come from multiple files, so if they're not already in the given graphs, we try to get them.
-        """
-        super().__init__(gold_amrs, predicted_amrs, info, root_dir, predictions_directory, do_error_analysis,
-                         parser_name, verbose_error_analysis, run_smatch)
-        # if we read in the unused PP directory instead of the whole full_corpus, replace it with the real ones
-        # These have ids pp_attachment_n
-        if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):
-            print("Reading in additional files")
-            self.gold_amrs, self.predicted_amrs = self.get_additional_graphs(read_in=True)
-        else:
-            # if got the graphs from the full corpus filter them
-            self.store_filtered_graphs()
-        if len(self.gold_amrs) != len(self.predicted_amrs) or len(self.gold_amrs) ==0:
-            raise Exception("Different number of AMRs or 0")
+    # def __init__(self, gold_amrs, predicted_amrs, info, root_dir=".", predictions_directory=None,
+    #              do_error_analysis=False, parser_name=None, verbose_error_analysis=True, run_smatch=False):
+    #     """
+    #     Pragmatic attachments of ambiguous PPs
+    #     PP Attachments come from multiple files, so if they're not already in the given graphs, we try to get them.
+    #     """
+    #     super().__init__(gold_amrs, predicted_amrs, info, root_dir, predictions_directory, do_error_analysis,
+    #                      parser_name, verbose_error_analysis, run_smatch)
+    #     # if we read in the unused PP directory instead of the whole full_corpus, replace it with the real ones
+    #     # These have ids pp_attachment_n
+    #     if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):
+    #         print("Reading in additional files")
+    #         self.gold_amrs, self.predicted_amrs = self.get_additional_graphs(read_in=True)
+    #     else:
+    #         # if got the graphs from the full corpus filter them
+    #         self.store_filtered_graphs()
+    #     if len(self.gold_amrs) != len(self.predicted_amrs) or len(self.gold_amrs) ==0:
+    #         raise Exception("Different number of AMRs or 0")
 
     def measure_unlabelled_edges(self):
         return True
