@@ -17,6 +17,8 @@ from evaluation.util import num_to_score
 from evaluation.full_evaluation.category_evaluation.category_metadata import *
 from prettytable import PrettyTable
 
+from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
+
 
 # TODO  seems to be a problem with the encoded tsv: has old ids
 
@@ -65,10 +67,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     [set number, category name, metric name, score, lower_bound, upper_bound, sample_size]
     (the latter three are omitted for f-score results, since they don't apply there)
     """
-    fail_ok  =-1 if cmd_args.strict else 0
-    do_error_analysis = cmd_args.error_analysis
-    parser_name = cmd_args.parser_name
-    run_smatch = cmd_args.smatch
+
+
 
     # figure out what to run
     full_corpus_length = 1584
@@ -222,6 +222,16 @@ def main():
 
     else:
         gold_graphs_grapes = predicted_graphs_grapes = predictions_directory = None
+
+    instance_instructions = EvaluationInstanceInfo(
+        fail_ok=-1 if args.strict else 0,
+        do_error_analysis=args.error_analysis,
+        parser_name=args.parser_name,
+        run_smatch=args.smatch,
+        print_f1_default=args.all_metrics,
+        print_unlabeled_edge_attachment=args.all_metrics,
+
+    )
 
     # run the evaluation
     results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
