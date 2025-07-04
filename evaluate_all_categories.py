@@ -45,8 +45,9 @@ def parse_args():
                                                         + get_formatted_category_names([b for b, _ in
                                                                                         set_names_with_category_names]))
     parser.add_argument('-n', "--parser_name", type=str, required=False, default=None, help='Parser name. Optional, used for output storage. ')
-    parser.add_argument('-s', "--strict", action='store_true', required=False, default=False, help='Strict mode: fail if any errors encountered')
+    parser.add_argument('-x', "--strict", action='store_true', required=False, default=False, help='Strict mode: fail if any errors encountered')
     parser.add_argument("-e", "--error_analysis", action="store_true", help="Pickle correct and incorrect graph ids")
+    parser.add_argument("-s", "--smatch", action="store_true", help="Calculate Smatch for all categories (warning: slow)")
 
     args = parser.parse_args()
     return args
@@ -56,13 +57,20 @@ def do_this_category(bunch, category_name):
     return bunch is None or category_name.startswith(str(bunch)+".")
 
 
-def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes, predictions_directory,
-                filter_out_f1=True, filter_out_unlabeled_edge_attachment=True, bunch=None, fail_ok=0, do_error_analysis=False, parser_name=None):
+def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
+                predictions_directory, cmd_args,
+                filter_out_f1=True, filter_out_unlabeled_edge_attachment=True, bunch=None):
     """
     Returns a list of result rows. Each row has the following format:
     [set number, category name, metric name, score, lower_bound, upper_bound, sample_size]
     (the latter three are omitted for f-score results, since they don't apply there)
     """
+    fail_ok  =-1 if cmd_args.strict else 0
+    do_error_analysis = cmd_args.error_analysis
+    parser_name = cmd_args.parser_name
+    run_smatch = cmd_args.smatch
+
+    # figure out what to run
     full_corpus_length = 1584
     minimal_corpus_length = 1471
     unbounded_dependencies_length = 66  # PTB
@@ -102,7 +110,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                         print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in {predictions_directory}")
                         results_here = run_single_file(eval_class, info, ".",
                                                        predictions_directory=predictions_directory,
-                                                       do_error_analysis=do_error_analysis, parser_name=parser_name)
+                                                       do_error_analysis=do_error_analysis, parser_name=parser_name,
+                                                       run_smatch=run_smatch)
                         rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
                                                      results_here, set_name)
                         results.extend(rows)
@@ -122,8 +131,9 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     predicted_graphs = predicted_graphs_grapes
 
                 evaluator = eval_class(gold_graphs, predicted_graphs, info, do_error_analysis=do_error_analysis,
-                                       parser_name=parser_name, verbose_error_analysis=False)
-                results_here = evaluate(evaluator, info, ".", predictions_directory=predictions_directory, fail_ok=fail_ok)
+                                       parser_name=parser_name, verbose_error_analysis=False, run_smatch=run_smatch)
+                results_here = evaluate(evaluator, info, ".", predictions_directory=predictions_directory,
+                                        fail_ok=fail_ok, run_smatch=run_smatch)
 
                 rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
                                       results_here, set_name)
@@ -213,15 +223,11 @@ def main():
     else:
         gold_graphs_grapes = predicted_graphs_grapes = predictions_directory = None
 
-    if args.strict:
-        fail_ok = -1
-    else:
-        fail_ok = 0
     # run the evaluation
     results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
-                          predictions_directory,
-                          filter_out_f1=not args.all_metrics, filter_out_unlabeled_edge_attachment=not args.all_metrics,
-                                   bunch=args.bunch, fail_ok=fail_ok, do_error_analysis=args.error_analysis, parser_name=args.parser_name)
+                          predictions_directory, args,
+                          filter_out_f1=not args.all_metrics and not args.smatch, filter_out_unlabeled_edge_attachment=not args.all_metrics,
+                                   bunch=args.bunch)
 
     store_results(args.parser_name, results)
 

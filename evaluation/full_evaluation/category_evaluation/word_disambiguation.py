@@ -26,10 +26,6 @@ IDS_FOR_EXACT_MATCH = [
 
 
 
-
-
-
-
 def is_relation_present_in_graph(edge_label, graph, reification):
     return len(graph.edges(role=edge_label)) >= 1 \
            or len([inst for inst in graph.instances() if inst.target == reification]) >= 1

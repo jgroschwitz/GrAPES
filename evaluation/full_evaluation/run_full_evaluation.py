@@ -32,7 +32,8 @@ full_grapes_name = "full_corpus"
 gold_testset_path = f"{root_dir_here}/data/raw/gold/test.txt"
 
 do_error_analysis = True
-run_smatch = False
+run_all_smatch = True
+run_full_corpus_smatch = False
 
 # ERROR HANDLING GLOBAL
 # raise an error if any category doesn't work
@@ -115,11 +116,10 @@ def create_results_pickles():
 
         print("Running evaluation for", parser_name, "...")
 
-
         all_result_rows = []
         parser_name2rows[parser_name] = all_result_rows
 
-        if run_smatch:
+        if run_full_corpus_smatch:
             print("Running Smatch...")
             smatch = compute_smatch_f_from_graph_lists(gold_grapes, grapes_parser_outs)
             smatch_test = compute_smatch_f_from_graph_lists(gold_amrs, testset_parser_outs)
@@ -129,6 +129,8 @@ def create_results_pickles():
 
         generalisation_by_size = {}
 
+        if run_all_smatch:
+            print("We will run Smatch on all categories. This may take a while...")
         for bunch in sorted(bunch2subcategory.keys()):
 
             all_result_rows.append([bunch])
@@ -145,16 +147,16 @@ def create_results_pickles():
                     gold = gold_grapes
                     pred = grapes_parser_outs
 
-                evaluator = eval_class(gold, pred,  info, root_dir=root_dir_here,
+                evaluator = eval_class(gold, pred, info, root_dir=root_dir_here,
                                        predictions_directory=get_predictions_path_for_parser(parser_name),
                                        do_error_analysis=do_error_analysis, parser_name=parser_name,
-                                       verbose_error_analysis=False)
+                                       verbose_error_analysis=False, run_smatch=run_all_smatch)
 
                 # Structural generalisation results by size
                 if info.subtype == "structural_generalization" and info.subcorpus_filename in size_mappers:
                     generalisation_by_size[info.display_name] =  evaluator.get_results_by_size()
 
-                rows = evaluate(evaluator, info, root_dir_here, parser_name, None)
+                rows = evaluate(evaluator, info, root_dir_here, parser_name, None, run_smatch=run_all_smatch)
                 all_result_rows += rows
 
         print("\nRESULTS FOR", parser_name)
@@ -180,7 +182,8 @@ def create_results_pickles():
 
 
 def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata,
-             root_dir=root_dir_here, parser_name=None, predictions_directory=None, fail_ok=cat_fail_ok):
+             root_dir=root_dir_here, parser_name=None, predictions_directory=None, fail_ok=cat_fail_ok,
+             run_smatch=False):
     """
     Runs the given evaluator.
     If it fails, tries on individual files.
@@ -218,6 +221,7 @@ def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata,
                           file=sys.stderr)
                 rows = run_single_file(type(evaluator), info, root_dir=root_dir, parser_name=parser_name,
                                        predictions_directory=predictions_directory, do_error_analysis=do_error_analysis,
+                                       run_smatch=run_smatch
                                        )
                 print("OK", file=sys.stderr)
                 return rows
@@ -241,10 +245,12 @@ def warn_and_make_empty_row(e, info):
 
 
 def run_single_file(eval_class, info: SubcategoryMetadata, root_dir=root_dir_here, parser_name=None,
-                    predictions_directory=None, do_error_analysis=False):
+                    predictions_directory=None, do_error_analysis=False, run_smatch=False):
     """
     Evaluates one subcorpus file
     Args:
+        run_smatch:
+        do_error_analysis:
         eval_class: CategoryEvaluation class to initialise
         info: SubcategoryMetadata for the file
         root_dir: path to root directory of this project from wherever this function is called from
@@ -259,7 +265,8 @@ def run_single_file(eval_class, info: SubcategoryMetadata, root_dir=root_dir_her
     pred = load_parser_output(info.subcorpus_filename, root_dir, parser_name=parser_name,
                               predictions_directory=predictions_directory)
     gold = load(f"{root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-    evaluator = eval_class(gold, pred,  info, root_dir=root_dir, predictions_directory=None, do_error_analysis=do_error_analysis, parser_name=parser_name)
+    evaluator = eval_class(gold, pred,  info, root_dir=root_dir, predictions_directory=None,
+                           do_error_analysis=do_error_analysis, parser_name=parser_name, run_smatch=run_smatch)
     rows = evaluator.run_evaluation()
     return rows
 

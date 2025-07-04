@@ -9,9 +9,10 @@ class ExactMatch(CategoryEvaluation):
     Checks exact match and Smatch.
     """
     def __init__(self, gold_amrs, predicted_amrs, category_metadata, root_dir=".", predictions_directory=None,
-                 do_error_analysis=False, parser_name=None, verbose_error_analysis=True):
+                 do_error_analysis=False, parser_name=None, verbose_error_analysis=True, run_smatch=True):
         super().__init__(gold_amrs, predicted_amrs, category_metadata, root_dir, predictions_directory,
-                         do_error_analysis, parser_name=parser_name, verbose_error_analysis=verbose_error_analysis)
+                         do_error_analysis, parser_name=parser_name, verbose_error_analysis=verbose_error_analysis,
+                         run_smatch=run_smatch)
 
         self.is_sanity_check = is_sanity_check(self.category_metadata)
 
@@ -30,9 +31,9 @@ class ExactMatch(CategoryEvaluation):
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
 
-    def run_evaluation(self):
-        self._get_all_results()
-        self._calculate_metrics_and_add_all_rows()
-        self.make_smatch_results()
-        return self.rows
+    # def run_evaluation(self):
+    #     self._get_all_results()
+    #     self._calculate_metrics_and_add_all_rows()
+    #     self.make_smatch_results()
+    #     return self.rows
 

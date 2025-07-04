@@ -27,7 +27,24 @@ class CategoryEvaluation:
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], category_metadata: SubcategoryMetadata,
                  root_dir: str = ".", predictions_directory=None, do_error_analysis: bool = False,
-                 parser_name: str = None, verbose_error_analysis: bool = True):
+                 parser_name: str = None, verbose_error_analysis: bool = True, run_smatch=False):
+        """
+        Initialises evaluation of one category
+        Args:
+            gold_amrs: list of gold penman.Graph
+            predicted_amrs: list of one parser's precicted penman.Graph
+            category_metadata: SubcategoryMetadata: stores details about evaluating this category,
+                                like the files to read in and whether to run prerequisites
+            root_dir: Optional: path to the root from file that calls this class. (default ".")
+            predictions_directory: Optional: path from the root_dir to the directory of prediction files.
+                                            Used if additional files need to be read in.
+                                            (Default None. Unnecessary when you use the full GrAPES or testset file.)
+            do_error_analysis: Optional, default: False.
+                                            If True, the Results class stores graph IDs of correct and incorrect graphs.
+            parser_name: optional, just for writing the error analysis pickle in a more specific folder.
+            verbose_error_analysis: default True. If True, and do_error_analysis, prints the pickle location
+            run_smatch: default False. If True, runs Smatch on the subcorpora. Warning: this can be very slow.
+        """
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
         self.root_dir = root_dir
@@ -38,6 +55,10 @@ class CategoryEvaluation:
         self.extra_subcorpus_filenames = category_metadata.extra_subcorpus_filenames
         self.predictions_directory = predictions_directory
         self.do_error_analysis = do_error_analysis
+        self.run_smatch = run_smatch
+
+        if self.category_metadata.extra_subcorpus_filenames is None or self.category_metadata.extra_subcorpus_filenames == []:
+            self.store_filtered_graphs()
 
         if len(self.predicted_amrs) == 0:
             print("No predicted amrs found!")
@@ -130,13 +151,14 @@ class CategoryEvaluation:
     def make_smatch_results(self):
         smatch = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
         smatch_f1 = self.get_f_from_prf(smatch)
-        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1])
+        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1, len(self.gold_amrs)])
 
     def get_results_by_size(self):
         """Split up the generalisation by size as marked in corpora.
         Currently just used for structural generalisation"""
         if self.category_metadata.subcorpus_filename in size_mappers:
-            return get_exact_match_by_size(self.gold_amrs, self.predicted_amrs, size_mappers[self.category_metadata.subcorpus_filename])
+            return get_exact_match_by_size(self.gold_amrs, self.predicted_amrs,
+                                           size_mappers[self.category_metadata.subcorpus_filename])
         else:
             return {}
 
@@ -148,6 +170,9 @@ class CategoryEvaluation:
         if dataset_filename is None:
             dataset_filename = self.category_metadata.subcorpus_filename
         return self.root_dir + "/corpus/" + dataset_filename + ".txt"
+
+    def store_filtered_graphs(self):
+        self.gold_amrs, self.predicted_amrs = self.filter_graphs()
 
     def filter_graphs(self):
         """
@@ -216,6 +241,9 @@ class CategoryEvaluation:
             self.rows.append(self.make_results_row(
                 "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
 
+        if self.run_smatch:
+            self.make_smatch_results()
+
         if self.do_error_analysis:
             self.dump_error_analysis_pickle()
         # print("Metrics:", ret)
@@ -223,13 +251,13 @@ class CategoryEvaluation:
 
     def get_predictions_for_comparison(self, predicted_amr):
         """
-        A handy way to get something other than just hte predicted amr needed for comparison to the target
+        implement for a handy way to get something other than just hte predicted amr for comparison to the target
         """
         return None
 
     def _get_all_results(self):
         """
-        Loops through graphs and updates error analysis record
+        Loops through graphs and updates results for each instance to evaluate
         """
         if self.category_metadata.tsv is not None:
             # read in the TSV to get the targets for comparison
@@ -241,13 +269,13 @@ class CategoryEvaluation:
                     predictions_for_comparison = self.get_predictions_for_comparison(predicted_amr)
                     for target in id2labels[graph_id]:
                         # update results for this item
-                        # if we have a TSV, update_error_analysis is per item in the TSV
+                        # if we have a TSV, update_results is per item in the TSV
                         self.update_results(gold_amr, predicted_amr, target, predictions_for_comparison)
         else:
             self.gold_amrs, self.predicted_amrs = self.filter_graphs()
             assert len(self.gold_amrs) > 0, "No matching AMRs in given corpus"
             for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
-                # if no TSV, update_error_analysis is per graph pair
+                # if no TSV, update_results is per graph pair
                 self.update_results(gold_amr, predicted_amr, None, None)
 
     def update_results(self, gold_amr, predicted_amr, target, predictions_for_comparison):
@@ -260,11 +288,9 @@ class CategoryEvaluation:
             predictions_for_comparison: optional: predicted thing to match.
         """
         if equals_modulo_isomorphy(gold_amr, predicted_amr, match_edge_labels=False, match_senses=False):
-            # self.add_success(graph_id)
             self.add_success(gold_amr, predicted_amr)
         else:
             self.add_fail(gold_amr, predicted_amr)
-            # self.add_fail(graph_id)
 
     def add_success(self, gold: Graph, predicted, field=None):
         self.results.add_success(gold, predicted, field)
@@ -279,16 +305,16 @@ class CategoryEvaluation:
         return self.results.get_fail_count(field)
 
 
-
-
-
-
-
 class Results(ABC):
+    """
+    Stores the results of a category evaluation.
+    Can be implemented to, for example, create a pickled corpus of correct and incorrect graphs.
+    """
     def __init__(self, additional_fields: List[str] = None, default_field: str = "id", verbose=True):
         """
         For each field, including the default, initialise a way to store results
-        For example, CountResults initialises variables, while IDResults initialises a dict with these as keys.
+        For example, CountResults initialises variables: self.correct_ids = 0, self.incorrect_ids = 0, etc
+         while IDResults initialises a dict with these as keys: {"correct_ids" = [], "incorrect_ids"=[]}, etc.
         These variables/keys can be made with self.make_success_key and self.make_failure_key.
         Args:
             verbose:
@@ -353,11 +379,13 @@ class Results(ABC):
         raise NotImplementedError
 
     def make_success_key(self, field=None):
+        """Default way to name correct results"""
         if field is None:
             field = self.default_field
         return f"correct_{field}"
 
     def make_fail_key(self, field=None):
+        """Default way to name incorrect results"""
         if field is None:
             field = self.default_field
         return f"incorrect_{field}"

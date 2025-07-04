@@ -18,14 +18,13 @@ class ListAccuracy(CategoryEvaluation):
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], category_metadata: SubcategoryMetadata,
                  root_dir: str = ".", predictions_directory=None, do_error_analysis=False, parser_name=None,
-                 verbose_error_analysis=True):
+                 verbose_error_analysis=True, run_smatch=False):
         """
         We add space for storing counts to the error analysis because (a) there are a lot of edges per graph,
         and we don't want a copy for each mistake, and (b) we also want to calculate precision.
         """
         super().__init__(gold_amrs, predicted_amrs, category_metadata, root_dir, predictions_directory,
                          do_error_analysis, parser_name, verbose_error_analysis)
-        self.gold_amrs, self.predicted_amrs = self.filter_graphs()
         if self.do_error_analysis:
             self.results = ListResults(verbose=verbose_error_analysis)
         else:
