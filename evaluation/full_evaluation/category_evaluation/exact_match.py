@@ -31,9 +31,9 @@ class ExactMatch(CategoryEvaluation):
     #     self.gold_amrs = gold_amrs
     #     self.predicted_amrs = predicted_amrs
     #
-    def run_evaluation(self):
-        self._get_all_results()
-        self._calculate_metrics_and_add_all_rows()
-        self.make_smatch_results()
-        return self.rows
+    # def run_evaluation(self):
+    #     self._get_all_results()
+    #     self._calculate_metrics_and_add_all_rows()
+    #     self.make_smatch_results()
+    #     return self.rows
 

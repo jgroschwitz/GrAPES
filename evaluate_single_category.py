@@ -8,7 +8,8 @@ from evaluation.full_evaluation.category_evaluation.category_metadata import cat
     add_sanity_check_suffix
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
-    size_mappers
+    size_mappers, STRUC_GEN
+from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score, SANITY_CHECK
@@ -41,22 +42,28 @@ def parse_args():
     parser.add_argument('-n', '--parser_name', type=str,
                         help="name of parser (optional)", default="parser")
     parser.add_argument("-e", "--error_analysis", action="store_true", help="Pickle correct and incorrect graph ids")
+    parser.add_argument("-s", "--smatch", action="store_true", help="Calculate Smatch even if we normally wouldn't for this category ")
 
     args = parser.parse_args()
     return args
 
-
+def instance_info_from_args(args):
+    instance_instructions = EvaluationInstanceInfo(
+        path_to_grapes_predictions_file_from_root=args.predicted_amr_file,
+        path_to_gold_testset_file_from_root=args.gold_amr_file,
+        do_error_analysis=args.error_analysis,
+        parser_name=args.parser_name,
+        run_smatch=args.smatch,
+    )
+    return instance_instructions
 
 def main():
     args = parse_args()
+    instance_info = instance_info_from_args(args)
+
     eval_class, info = category_name_to_set_class_and_metadata[args.category_name]
-    predictions_path = args.predicted_amr_file
 
-    if is_testset_category(info):
-        if args.gold_amr_file is None:
-            print(f"No gold AMR 3.0 testset file provided for testset category {info.name}; exiting")
-            exit(1)
-
+    predictions_path = instance_info.path_to_grapes_predictions_file_from_root
     prediction_file_name = os.path.basename(predictions_path)[:-4]
     if info.filename_belongs_to_subcategory(prediction_file_name):
         print("Using predicted AMR subcorpus file", predictions_path)
@@ -65,26 +72,29 @@ def main():
         print("Presumably this is the full GrAPES or AMR 3.0 testest parser output file: ", predictions_path)
         use_subcorpus = False
 
+    if is_testset_category(info):
+        if instance_info.gold_testset_path() is None:
+            print(f"No gold AMR 3.0 testset file provided for testset category {info.name}; exiting")
+            exit(1)
+
     if args.gold_amr_file is not None:
         gold_amrs = load(args.gold_amr_file)
     elif use_subcorpus:
         print("using gold subcorpus", prediction_file_name)
         gold_amrs = load(f"corpus/subcorpora/{prediction_file_name}.txt")
     else:
-        gold_amrs = load("corpus/corpus.txt")
+        gold_amrs = load(instance_info.gold_grapes_path)
 
     predicted_amrs = load_predictions(predictions_path)
-    predictions_directory = os.path.dirname(predictions_path)
 
-    evaluator = eval_class(gold_amrs, predicted_amrs, info, predictions_directory=predictions_directory,
-                           do_error_analysis=args.error_analysis)
-    results = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+    evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info, given_subcorpus_file=use_subcorpus)
+    results = evaluate(evaluator, info, instance_info)
     assert len(results) > 0, "No results!"
 
     caption = f"\nResults on {info.display_name}"
 
     # Structural generalisation results by size
-    if info.subtype == "structural_generalization":
+    if info.subtype == STRUC_GEN:
         do_by_size = info.subcorpus_filename in size_mappers
         if do_by_size:
             generalisation_by_size = evaluator.get_results_by_size()
@@ -94,8 +104,11 @@ def main():
             # Try doing the sanity check for a main class
             try:
                 eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
-                evaluator = eval_class(gold_amrs, predicted_amrs, info, predictions_directory, args.error_analysis)
-                new_rows = evaluate(evaluator, info, root_dir=".", predictions_directory=predictions_directory)
+                if use_subcorpus:
+                    gold_amrs = load(f"corpus/subcorpora/{info.subcorpus_filename}.txt")
+                    predicted_amrs = load(f"{instance_info.predictions_directory_path()}/{info.subcorpus_filename}.txt")
+                evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info, given_subcorpus_file=use_subcorpus)
+                new_rows = evaluate(evaluator, info, instance_info)
                 results += new_rows
                 caption += " and Sanity Check"
             except Exception as e:

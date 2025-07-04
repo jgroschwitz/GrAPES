@@ -50,17 +50,18 @@ class CategoryEvaluation:
         self.is_sanity_check = is_sanity_check(category_metadata)
 
         # get any extra corpus files needed
-        if self.category_metadata.extra_subcorpus_filenames:
+        if self.category_metadata.extra_subcorpus_filenames and given_subcorpus_file:
             # if given a subcorpus file rather than the whole corpus, read in new files
-            # otherwise, filter them from the corpora
-            extra_gold, extra_pred = self.get_additional_graphs(read_in=given_subcorpus_file)
-
-        # filter in between because one was to get the extra subcorpus files is by filtering the full corpus files
-        self.gold_amrs, self.predicted_amrs = self.filter_graphs()
-
-        if self.category_metadata.extra_subcorpus_filenames:
+            extra_gold, extra_pred = self.get_additional_graphs()
             self.gold_amrs.extend(extra_gold)
             self.predicted_amrs.extend(extra_pred)
+
+        # filter in between because one way to get the extra subcorpus files is by filtering the full corpus files
+        self.gold_amrs, self.predicted_amrs = self.filter_graphs()
+
+        # if self.category_metadata.extra_subcorpus_filenames:
+        #     self.gold_amrs.extend(extra_gold)
+        #     self.predicted_amrs.extend(extra_pred)
 
         if len(self.predicted_amrs) == 0:
             print("No predicted amrs found!")
@@ -97,33 +98,33 @@ class CategoryEvaluation:
             self.make_smatch_results()
         return self.rows
 
-    def get_additional_graphs(self, read_in):
+    def get_additional_graphs(self):
         """
         If there are additional graphs required by this category, we can read them in or filter them from the larger set.
         :param: read_in: if True, read them in from a file, otherwise filter them from the stored corpora
         """
-        if not read_in:
-            filtered_golds = []
-            filtered_preds = []
-            for name in self.extra_subcorpus_filenames:
-                print("Filtering additional subcorpus for", name)
-                more_golds, more_preds = filter_amrs_for_name(name, self.gold_amrs, self.predicted_amrs)
-                filtered_golds += more_golds
-                filtered_preds += more_preds
-            return filtered_golds, filtered_preds
-        else:
-            try:
-                extra_predictions = []
-                extra_golds = []
-                for filename in self.extra_subcorpus_filenames:
-                    print("reading in", filename)
-                    extra_predictions += penman.load(f"{self.instance_info.predictions_directory_path()}/{filename}.txt")
-                    extra_golds += penman.load(self.get_gold_filepath(filename))
-                return extra_golds, extra_predictions
-            except FileNotFoundError as e:
-                print(f"Extra files for {self.category_metadata.name} not found in "
-                      f"{self.instance_info.predictions_directory_path()}", file=sys.stderr)
-                raise e
+        # if not read_in:
+        #     filtered_golds = []
+        #     filtered_preds = []
+        #     for name in self.extra_subcorpus_filenames:
+        #         print("Filtering additional subcorpus for", name)
+        #         more_golds, more_preds = filter_amrs_for_name(name, self.gold_amrs, self.predicted_amrs)
+        #         filtered_golds += more_golds
+        #         filtered_preds += more_preds
+        #     return filtered_golds, filtered_preds
+        # else:
+        try:
+            extra_predictions = []
+            extra_golds = []
+            for filename in self.extra_subcorpus_filenames:
+                print("reading in", filename)
+                extra_predictions += penman.load(f"{self.instance_info.predictions_directory_path()}/{filename}.txt")
+                extra_golds += penman.load(f"{self.instance_info.root_dir}/corpus/subcorpora/{filename}.txt")
+            return extra_golds, extra_predictions
+        except FileNotFoundError as e:
+            print(f"Extra files for {self.category_metadata.name} not found in "
+                  f"{self.instance_info.predictions_directory_path()}", file=sys.stderr)
+            raise e
 
     def make_and_append_results_row(self, metric_name: str, eval_type: str, metric_results: List):
         """
@@ -173,10 +174,6 @@ class CategoryEvaluation:
     def get_f_from_prf(triple):
         return triple[2]
 
-    def get_gold_filepath(self, dataset_filename=None):
-        if dataset_filename is None:
-            dataset_filename = self.category_metadata.subcorpus_filename
-        return self.root_dir + "/corpus/" + dataset_filename + ".txt"
 
     def store_filtered_graphs(self):
         self.gold_amrs, self.predicted_amrs = self.filter_graphs()

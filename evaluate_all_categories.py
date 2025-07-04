@@ -54,22 +54,30 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+def instance_info_from_args(args):
+    instance_instructions = EvaluationInstanceInfo(
+        path_to_grapes_predictions_file_from_root=args.predicted_amr_grapes_file,
+        path_to_gold_testset_file_from_root=args.gold_amr_testset_file,
+        do_error_analysis=args.error_analysis,
+        parser_name=args.parser_name,
+        run_smatch=args.smatch,
+        fail_ok=-1 if args.strict else 0,
+        print_f1_default=args.all_metrics,
+        print_unlabeled_edge_attachment=args.all_metrics,
+    )
+    return instance_instructions
 
 def do_this_category(bunch, category_name):
     return bunch is None or category_name.startswith(str(bunch)+".")
 
 
 def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
-                predictions_directory, cmd_args,
-                filter_out_f1=True, filter_out_unlabeled_edge_attachment=True, bunch=None):
+                instance_info: EvaluationInstanceInfo, bunch=None):
     """
     Returns a list of result rows. Each row has the following format:
     [set number, category name, metric name, score, lower_bound, upper_bound, sample_size]
     (the latter three are omitted for f-score results, since they don't apply there)
     """
-
-
-
     # figure out what to run
     full_corpus_length = 1584
     minimal_corpus_length = 1471
@@ -104,20 +112,19 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
             eval_class, info = category_name_to_set_class_and_metadata[category_name]
             if do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
                 # we can always try to find the appropriate subcorpus file...
-                if predictions_directory is not None and info.subcorpus_filename is not None:
+                if instance_info.predictions_directory_path() is not None and info.subcorpus_filename is not None:
                     try:
                         # try to get the subcorpus from the same folder as the full corpus
-                        print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in {predictions_directory}")
-                        results_here = run_single_file(eval_class, info, ".",
-                                                       predictions_directory=predictions_directory,
-                                                       do_error_analysis=do_error_analysis, parser_name=parser_name,
-                                                       run_smatch=run_smatch)
-                        rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
+                        print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in"
+                              f" {instance_info.predictions_directory_path()}")
+                        results_here = run_single_file(eval_class, info, instance_info)
+                        rows = make_rows_for_results(category_name, instance_info.print_f1(),
+                                                     instance_info.print_unlabeled_edge_attachment,
                                                      results_here, set_name)
                         results.extend(rows)
                     except Exception as e:
                         print(f"Can't get category {category_name}, error: {e}")
-                        if fail_ok > -1:
+                        if instance_info.fail_ok > -1:
                             results.append(make_empty_result(set_name, info.display_name))
                         else:
                             raise e
@@ -130,13 +137,11 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     gold_graphs = gold_graphs_grapes
                     predicted_graphs = predicted_graphs_grapes
 
-                evaluator = eval_class(gold_graphs, predicted_graphs, info, do_error_analysis=do_error_analysis,
-                                       parser_name=parser_name, verbose_error_analysis=False, run_smatch=run_smatch)
-                results_here = evaluate(evaluator, info, ".", predictions_directory=predictions_directory,
-                                        fail_ok=fail_ok, run_smatch=run_smatch)
+                evaluator = eval_class(gold_graphs, predicted_graphs, info, instance_info)
+                results_here = evaluate(evaluator, info, instance_info)
 
-                rows = make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment,
-                                      results_here, set_name)
+                rows = make_rows_for_results(category_name, instance_info.print_f1(),
+                                             instance_info.print_unlabeled_edge_attachment, results_here, set_name)
                 results.extend(rows)
                 if info.subtype == "structural_generalization":
                     by_size = evaluator.get_results_by_size()
@@ -145,14 +150,14 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     return results, struct_gen_by_size
 
 
-def make_rows_for_results(category_name, filter_out_f1, filter_out_unlabeled_edge_attachment, results_here,
+def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachment, results_here,
                           set_name):
     rows = []
     for r in results_here:
         metric_name = r[1]
-        if filter_out_f1 and metric_name == "Smatch":
+        if not print_f1 and metric_name == "Smatch":
             continue
-        if filter_out_unlabeled_edge_attachment and metric_name == "Unlabeled edge recall":
+        if not print_unlabeled_edge_attachment and metric_name == "Unlabeled edge recall":
             continue
         metric_type = r[2]
         if metric_type == EVAL_TYPE_SUCCESS_RATE:
@@ -197,10 +202,15 @@ def do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use
 
 def main():
 
+    # etract info from command line
     args = parse_args()
-    if args.gold_amr_testset_file is not None and args.predicted_amr_testset_file is not None:
-        gold_graphs_testset = load(args.gold_amr_testset_file, encoding="utf8")
-        predicted_graphs_testset = load_predictions(args.predicted_amr_testset_file)
+    instance_info = instance_info_from_args(args)
+
+    # read in the graphs from the given paths
+    if instance_info.gold_testset_path() is not None and instance_info.testset_pred_file_path() is not None:
+    #if args.gold_amr_testset_file is not None and args.predicted_amr_testset_file is not None:
+        gold_graphs_testset = load(instance_info.gold_testset_path(), encoding="utf8")
+        predicted_graphs_testset = load_predictions(instance_info.testset_pred_file_path(), encoding="utf8")
         if len(gold_graphs_testset) != len(predicted_graphs_testset):
             raise ValueError(
                 "Gold and predicted AMR files must contain the same number of AMRs. This is not the case for the testset here."
@@ -209,37 +219,24 @@ def main():
     else:
         gold_graphs_testset = predicted_graphs_testset = None
 
-    if args.gold_amr_grapes_file is not None and args.predicted_amr_grapes_file is not None:
-        gold_graphs_grapes = load(args.gold_amr_grapes_file, encoding="utf8")
-        predicted_graphs_grapes = load_predictions(args.predicted_amr_grapes_file, encoding="utf8")
-        predictions_directory = os.path.dirname(args.predicted_amr_grapes_file)
+    if instance_info.full_grapes_pred_file_path():
+        gold_graphs_grapes = load(instance_info.gold_grapes_path, encoding="utf8")
+        predicted_graphs_grapes = load_predictions(instance_info.full_grapes_pred_file_path(), encoding="utf8")
+        # predictions_directory = os.path.dirname(args.predicted_amr_grapes_file)
 
         if len(gold_graphs_grapes) != len(predicted_graphs_grapes):
             raise ValueError(
                 "Gold and predicted AMR files must contain the same number of AMRs. This is not the case for the grapes corpus here."
                 "Got " + str(len(gold_graphs_grapes)) + " gold AMRs and " + str(len(predicted_graphs_grapes))
                 + " predicted AMRs.")
-
     else:
-        gold_graphs_grapes = predicted_graphs_grapes = predictions_directory = None
-
-    instance_instructions = EvaluationInstanceInfo(
-        fail_ok=-1 if args.strict else 0,
-        do_error_analysis=args.error_analysis,
-        parser_name=args.parser_name,
-        run_smatch=args.smatch,
-        print_f1_default=args.all_metrics,
-        print_unlabeled_edge_attachment=args.all_metrics,
-
-    )
+        gold_graphs_grapes = predicted_graphs_grapes = None
 
     # run the evaluation
-    results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
-                          predictions_directory, args,
-                          filter_out_f1=not args.all_metrics and not args.smatch, filter_out_unlabeled_edge_attachment=not args.all_metrics,
-                                   bunch=args.bunch)
+    results, by_size = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset,
+                                   predicted_graphs_grapes, instance_info, bunch=args.bunch)
 
-    store_results(args.parser_name, results)
+    store_results(results, instance_info)
 
     print_table = PrettyTable(field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
     print_table.align = "l"
@@ -256,17 +253,16 @@ def main():
     print(print_table)
 
 
-def store_results(parser_name, results, root_dir="."):
-    results_dir = get_root_results_path(root_dir)
+def store_results(results, instance_info: EvaluationInstanceInfo):
+    results_dir = instance_info.results_directory_path()
     os.makedirs(results_dir, exist_ok=True)
-    if parser_name is not None:
-        filename = parser_name
-    else:
-        filename = "results"
-    csv.writer(open(f"{results_dir}/{filename}.csv", "w", encoding="utf8")).writerows(results)
-    print(f"CSV of results written to {results_dir}/{filename}.csv")
-    pickle.dump(results, open(f"{results_dir}/{filename}.pickle", "wb"))
-    print(f"Pickle of results written to {results_dir}/results.pickle")
+    filename = "results_all_categories"
+    out_file = f"{results_dir}/{filename}.csv"
+    csv.writer(open(out_file, "w", encoding="utf8")).writerows(results)
+    print(f"CSV of results written to {out_file}")
+    out_file = f"{results_dir}/{filename}.pickle"
+    pickle.dump(results, open(out_file, "wb"))
+    print(f"Pickle of results written to {out_file}")
 
 
 if __name__ == "__main__":

@@ -33,8 +33,8 @@ full_grapes_name = "full_corpus"
 gold_testset_path = f"{root_dir_here}/data/raw/gold/test.txt"
 
 do_error_analysis = True
-run_all_smatch = True
-run_full_corpus_smatch = True
+run_all_smatch = False
+run_full_corpus_smatch = False
 
 # ERROR HANDLING GLOBAL
 # raise an error if any category doesn't work
@@ -67,13 +67,6 @@ def import_graphs():
 
 def get_predictions_path_for_parser(parser):
     return f"{path_to_parser_outputs}/{parser}-output"
-
-
-
-
-
-
-
 
 
 def load_parser_output(subcorpus_name, instance_info: EvaluationInstanceInfo):
@@ -131,16 +124,18 @@ def create_results_pickles():
             do_error_analysis=do_error_analysis,
             fail_ok=cat_fail_ok,
             verbose_error_analysis=False,
-            print_f1_default=True,
-            print_unlabeled_edge_attachment=True,
+            # print_f1_default=True,  # not paid attention to by the table printer in this script
+            # print_unlabeled_edge_attachment=True,
             parser_name=parser_name,
         )
-        testset_parser_outs = load(evaluation_instance_info.testset_pred_file_path())
+        testset_parser_outs = load(evaluation_instance_info.default_testset_pred_file_path())
         grapes_parser_outs = load(evaluation_instance_info.full_grapes_pred_file_path())
         os.makedirs(evaluation_instance_info.results_directory_path(), exist_ok=True)
 
-        # testset_parser_outs = load_parser_output("testset", parser_name=parser_name)
-        # grapes_parser_outs = load_parser_output(full_grapes_name, parser_name=parser_name)
+        assert len(testset_parser_outs) == len(gold_amrs)
+        assert len(grapes_parser_outs) == len(gold_grapes)
+        print(f"{len(gold_grapes)} GrAPES graphs")
+        print(f"{len(testset_parser_outs)} testset graphs")
 
 
         print("Running evaluation for", parser_name, "...")
