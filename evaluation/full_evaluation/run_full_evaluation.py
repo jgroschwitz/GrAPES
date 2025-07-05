@@ -43,7 +43,7 @@ cat_fail_ok = 0
 root_dir_here = "../.."
 
 # update for your setup
-path_to_parser_outputs = f"{root_dir_here}/data/processed/parser_outputs/"
+path_to_parser_outputs = "data/processed/parser_outputs"
 # full_grapes_name = "full_corpus"
 gold_testset_path = f"{root_dir_here}/data/raw/gold/test.txt"
 
@@ -85,7 +85,7 @@ def create_results_pickles():
         evaluation_instance_info = EvaluationInstanceInfo(
             root_dir="../..",
             run_smatch=run_all_smatch,
-            subcorpus_predictions_directory_path_from_root=f"data/processed/parser_outputs/{parser_name}-output",
+            subcorpus_predictions_directory_path_from_root=f"{path_to_parser_outputs}/{parser_name}-output",
             do_error_analysis=do_error_analysis,
             fail_ok=cat_fail_ok,
             verbose_error_analysis=False,
