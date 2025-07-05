@@ -77,7 +77,7 @@ class EvaluationInstanceInfo:
         return f"{parent}/{self.parser_name}"
 
     def error_analysis_outdir(self):
-        return f"{self.root_dir}/error_analysis/{self.parser_name}"
+        return f"{self.root_dir}/error_analysis/{self.parser_name}/dictionaries"
 
     def testset_pred_file_path(self):
         if self.absolute_path_to_predictions_file is not None:

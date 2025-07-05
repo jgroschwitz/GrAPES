@@ -8,7 +8,7 @@ from evaluation.full_evaluation.category_evaluation.list_accuracy import ListAcc
 from evaluation.full_evaluation.category_evaluation.named_entities import NETypeRecall, NERecall
 from evaluation.full_evaluation.category_evaluation.node_recall import NodeRecall
 from evaluation.full_evaluation.category_evaluation.edge_recall import EdgeRecall
-from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_sanity_check
 from evaluation.full_evaluation.category_evaluation.word_disambiguation import WordDisambiguationBertsMouth, \
     WordDisambiguationHandcrafted
 from evaluation.full_evaluation.category_evaluation.pp_attachment import PPAttachment
@@ -322,32 +322,30 @@ category_name_to_set_class_and_metadata = {
 def add_sanity_check_suffix(filename):
     return f"{filename}_sanity_check"
 
-
+new_ones = {}
 for name in bunch2subcategory["3. Structural generalization"]:
-    eval_class, info = category_name_to_set_class_and_metadata[name]
-    new_info = copy(info)
-    new_name = add_sanity_check_suffix(name)
-    new_info.display_name = SANITY_CHECK
-    new_info.name = new_name
-    new_info.subcorpus_filename = add_sanity_check_suffix(info.subcorpus_filename)
-    if new_info.extra_subcorpus_filenames is not None:
-        new_info.extra_subcorpus_filenames = [add_sanity_check_suffix(filename) for filename in info.extra_subcorpus_filenames]
-    if info.name == "long_lists":
-        new_info.metric_label = "Exact Match"
-        eval_class = ExactMatch
+    try:
+        eval_class, info = category_name_to_set_class_and_metadata[name]
+        new_info = copy(info)
+        new_name = add_sanity_check_suffix(name)
+        new_info.display_name = SANITY_CHECK
+        new_info.name = new_name
+        new_info.subcorpus_filename = add_sanity_check_suffix(info.subcorpus_filename)
+        if new_info.extra_subcorpus_filenames is not None:
+            new_info.extra_subcorpus_filenames = [add_sanity_check_suffix(filename) for filename in info.extra_subcorpus_filenames]
+        if info.name == "long_lists":
+            new_info.metric_label = "Exact Match"
+            eval_class = ExactMatch
 
-    category_name_to_set_class_and_metadata[new_name] = eval_class, new_info
+        new_ones[new_name] = eval_class, new_info
+    except KeyError:
+        continue
+
+category_name_to_set_class_and_metadata.update(new_ones)
 
 
 def get_formatted_category_names_by_main_file():
-    grapes = []
-    testset = []
-    for bunch in sorted(bunch2subcategory.keys()):
-        for category in bunch2subcategory[bunch]:
-            if is_testset_category(category_name_to_set_class_and_metadata[category][1]):
-                testset.append(category)
-            else:
-                grapes.append(category)
+    grapes, testset = get_categories_by_main_file()
     header = "AMR 3.0 testset category names:"
     ret = f"\n{'-'*len(header)}\n{header}\n{'-'*len(header)}\n"
     ret += "\n".join(testset)
@@ -356,6 +354,17 @@ def get_formatted_category_names_by_main_file():
     ret += "\n".join(grapes)
     return ret
 
+
+def get_categories_by_main_file():
+    grapes = []
+    testset = []
+    for bunch in sorted(bunch2subcategory.keys()):
+        for category in bunch2subcategory[bunch]:
+            if is_testset_category(category_name_to_set_class_and_metadata[category][1]):
+                testset.append(category)
+            else:
+                grapes.append(category)
+    return grapes, testset
 
 
 def get_formatted_category_names(names=category_name_to_set_class_and_metadata.keys()):

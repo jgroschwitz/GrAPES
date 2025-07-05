@@ -60,15 +60,7 @@ class CategoryEvaluation:
             self.gold_amrs.extend(extra_gold)
             self.predicted_amrs.extend(extra_pred)
 
-        # filter in between because one way to get the extra subcorpus files is by filtering the full corpus files
-        self.gold_amrs, self.predicted_amrs = self.filter_graphs()
-
-        # if self.category_metadata.extra_subcorpus_filenames:
-        #     self.gold_amrs.extend(extra_gold)
-        #     self.predicted_amrs.extend(extra_pred)
-
-        if len(self.predicted_amrs) == 0:
-            print("No predicted amrs found!")
+        self.store_filtered_graphs()
 
         # build empty Results
         extra_fields = self.category_metadata.additional_fields
@@ -190,12 +182,14 @@ class CategoryEvaluation:
         """
         filtered_golds = []
         filtered_preds = []
+        # filter by TSV if given
         if self.category_metadata.tsv is not None:
             ids = read_label_tsv(self.root_dir, self.category_metadata.tsv, graph_id_column=self.category_metadata.graph_id_column).keys()
             for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
                 if graph_is_in_ids(gold_amr, ids):
                     filtered_golds.append(gold_amr)
                     filtered_preds.append(predicted_amr)
+        # otherwise, filter by subcorpus file
         elif self.category_metadata.subcorpus_filename is not None:
             filtered_golds, filtered_preds = filter_amrs_for_name(self.category_metadata.subcorpus_filename, self.gold_amrs, self.predicted_amrs, fail_ok=True)
             if self.category_metadata.extra_subcorpus_filenames is not None:

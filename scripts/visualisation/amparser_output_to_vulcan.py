@@ -152,6 +152,7 @@ if __name__ == '__main__':
                 amconll_sents += [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
         except FileNotFoundError as e:
             print("WARNING: could read in AM conll file for", file, e)
+            raise e
 
     print(len(gold_amrs), len(predicted_amrs) , len(amconll_sents))
 
