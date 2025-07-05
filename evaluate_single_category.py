@@ -84,7 +84,7 @@ def main():
         print("using gold subcorpus", prediction_file_name)
         gold_amrs = load(f"corpus/subcorpora/{prediction_file_name}.txt")
     else:
-        gold_amrs = load(instance_info.gold_grapes_path)
+        gold_amrs = load(instance_info.gold_grapes_path())
 
     predicted_amrs = load_predictions(predictions_path)
 
@@ -108,6 +108,7 @@ def main():
                 if use_subcorpus:
                     gold_amrs = load(f"corpus/subcorpora/{info.subcorpus_filename}.txt")
                     predicted_amrs = load(f"{instance_info.predictions_directory_path()}/{info.subcorpus_filename}.txt")
+                print(instance_info.error_analysis_outdir())
                 evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
                 new_rows = evaluate(evaluator, info, instance_info)
                 results += new_rows

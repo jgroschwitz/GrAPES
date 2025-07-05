@@ -239,10 +239,10 @@ if __name__ == "__main__":
     command_line_parser.add_argument("-p", "--predictions_path", help="Path to the predictions file", required=True)
     command_line_parser.add_argument("-g", "--gold_path", help="Path to the gold file", required=True)
     command_line_parser.add_argument("-o", "--output_path", help="Path to the output folder", default="error_analysis")
-    command_line_parser.add_argument("-t", "--tsv", help="Path to the subcategory tsv file if you only want some of the graphs in the input file (optional)", default=None)
     command_line_parser.add_argument("-a", "--amconll_path", help="Path to the amconll file (optional, for AM parser outputs)", default=None)
-    command_line_parser.add_argument("-c", "--id_column_number", help="Column number of the ID in the TSV (optional, default 0)", default=0, type=int)
-    command_line_parser.add_argument("-s", "--subcategory_name", help="Name of the subcategory (optional, default uses the TSV filename)", default=None)
+    command_line_parser.add_argument("-s", "--subcategory_name", help="Name of the subcategory (default all)", default=None)
+    args = command_line_parser.parse_args()
+    command_line_parser.add_argument("-e", "--error_analysis_pickle_path", help="Path to the error analysis pickle file", required=True)
 
     args = command_line_parser.parse_args()
     if args.tsv is not None:

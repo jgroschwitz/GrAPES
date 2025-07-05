@@ -14,7 +14,6 @@ class EvaluationInstanceInfo:
     full_pred_testset_name: str = "testset"
     gold_testset_name: str = "test"
     gold_testset_directory_path_from_root: str = "data/raw/gold"
-    gold_grapes_path: str = f"{root_dir}/corpus/corpus.txt"
     # in case it's in a different directory from the subcorpora
     path_to_full_testset_predictions_file_from_root: str = None
     path_to_gold_testset_file_from_root: str = None
@@ -26,7 +25,7 @@ class EvaluationInstanceInfo:
     do_error_analysis: bool = False
     verbose_error_analysis: bool = True
     parser_name: str = "unnamed_parser"
-    error_analysis_outdir_from_root: str = f"error_analysis/{parser_name}"
+    # error_analysis_outdir_from_root: str = f"error_analysis/{parser_name}"
 
     # for the script running the evaluation
     fail_ok: int = 0
@@ -66,11 +65,13 @@ class EvaluationInstanceInfo:
                 return None
         else:
             return f"{self.root_dir}/{self.path_to_grapes_predictions_file_from_root}"
+
     def results_directory_path(self):
         parent = f"{self.root_dir}/{self.result_output_parent_path_from_root}"
         return f"{parent}/{self.parser_name}"
+
     def error_analysis_outdir(self):
-        return f"{self.root_dir}/{self.error_analysis_outdir_from_root}"
+        return f"{self.root_dir}/error_analysis/{self.parser_name}"
 
     def testset_pred_file_path(self):
         """default full_corpus.txt in same directory as subcorpora"""
@@ -85,3 +86,6 @@ class EvaluationInstanceInfo:
             return None
         else:
             return f"{predpath}/{self.full_pred_testset_name}.txt"
+
+    def gold_grapes_path(self):
+        return f"{self.root_dir}/corpus/corpus.txt"

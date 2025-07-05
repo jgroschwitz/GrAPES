@@ -187,7 +187,7 @@ def main():
         gold_graphs_testset = predicted_graphs_testset = None
 
     if instance_info.full_grapes_pred_file_path():
-        gold_graphs_grapes = load(instance_info.gold_grapes_path, encoding="utf8")
+        gold_graphs_grapes = load(instance_info.gold_grapes_path(), encoding="utf8")
         predicted_graphs_grapes = load_predictions(instance_info.full_grapes_pred_file_path(), encoding="utf8")
         # predictions_directory = os.path.dirname(args.predicted_amr_grapes_file)
 
