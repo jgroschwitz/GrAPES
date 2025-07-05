@@ -71,10 +71,14 @@ If you want to evaluate only on a single category, running your parser on one of
 To run the full evaluation suite, run the following:
 
 ```commandline
-python evaluate_all_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -gg corpus/corpus.txt -pg path/to/your/parser/output/GrAPES/corpus.txt 
+python evaluate_all_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -pg path/to/your/parser/output/GrAPES/corpus.txt 
 ```
+Where the arguments are:
 
-The `-gt` argument is the path to your copy of the AMR testset and the `-pt` argument is the path to your parser output for the AMR testset. The `-gg` argument is the path to the GrAPES file `corpus.txt` and `-pg` is the path to your parser output on that file. This will automatically detect whether you've added the PTB and AMR testset sentences in setup step B.
+* `-gt`: path to your copy of the AMR testset 
+* `-pt`: path to your parser output for the AMR testset 
+* `-pg`: path to your parser output on the GrAPES corpus in `corpus/corpus.tex`. This will automatically detect whether you've added the PTB and AMR testset sentences in setup step B.
+* If your GrAPES gold file `corpus.txt` is not in `corpus/corpus.tex`, add the argument `-gg path/to/your/gold/corpus.txt` 
 
 You can also evaluate on only the AMR testset, or only the GrAPES testset, simply by leaving out the other parameters.
 
@@ -87,8 +91,14 @@ python evaluate_all_categories.py -gt path/to/AMR/testset -pt path/to/parser/out
  GrAPES testset only:
 
 ```commandline
-python evaluate_all_categories.py -gg corpus/corpus.txt -pg path/to/your/parser/output/GrAPES/corpus.txt 
+python evaluate_all_categories.py -pg path/to/your/parser/output/GrAPES/corpus.txt 
 ```
+
+Additional options include:
+* `--parser_name`: name your parser for more specific output file naming
+* `--smatch`: running Smatch on all subcategories (slow),
+* `--error_analysis` writing the graph IDs of successes and failures to pickled dictionaries,
+* `--all_metrics`: printing Smatch results on Structural Generalisation categories and unlabelled edge recall on appropriate categories (not included in the GrAPES paper)
 
 ### What do to if you are missing PTB or AMR 3.0
 
@@ -103,38 +113,29 @@ If you don't have PTB:
 
 ### Evaluate on a single category
 
-To evaluate on just one of the 36 categories, use the `evaluate_single_category.py` script and give the name of the category to evaluate, and provide the path to the relevant gold file (`-g`) and the relevant prediction file (`-p`). 
+To evaluate on just one of the 36 categories, use the `evaluate_single_category.py` script and give the name of the category to evaluate, and provide the path to the  relevant prediction file (`-p`).
 
-Category names are listed below. The "relevant" gold file is either the path to the AMR testset, the path to the GrAPES gold `corpus.txt` file, or, if you prefer, the GrAPES subcorpus file, such as `adjectives.txt`. Similarly, your parser output can be the full GrAPES `corpus.txt` output, or just the output from running your parser on the one file.
+Category names are listed below. The "relevant" predictions file is the path to your parser's output on corresponding corpus: the AMR testset, GrAPES `corpus.txt` file, or, if you prefer, the GrAPES subcorpus file, such as `adjectives.txt`. 
+
+If your gold corpus files are not in `corpus/corpus.tex` and `corpus/subcorpora`, include the path to the gold file with option `-g`.
 
 For example, to evaluate on the category Adjectives, which is a GrAPES-only category, either of the following will work:
 
 ```commandline
-python evaluate_single_category.py -c adjectives -g corpus/corpus.txt -p path/to/parser/full/grapes/output 
+python evaluate_single_category.py -c adjectives  -p path/to/parser/full/grapes/output 
 ```
 
 ```commandline
-python evaluate_single_category.py -c adjectives -g corpus/subcorpora/adjectives.txt -p path/to/parser/output/adjectives/only 
+python evaluate_single_category.py -c adjectives -p path/to/parser/output/adjectives/only 
 ```
 
 As long as the files have the same number of graphs, the order matches, and they contain the particular category you want, this will work.
 
-
 To evaluate an AMR testset category, e.g. here the Rare Senses category, run the following.
 
 ```commandline
-python evaluate_single_category.py -c rare_senses -g path/to/AMR/testset -p path/to/parser/AMR/testset/output
+python evaluate_single_category.py -c rare_senses -p path/to/parser/AMR/testset/output
 ```
-
-#### Special Cases: PP attachment and Structural Generalisation
-
-Most categories correspond to one file, but not for these two categories.
-
-Structural generalisation categories will automatically include the separate `sanity_check` subcorpora if you provide the whole corpus. If you provide separate files, run the sanity check separately.
-
-Moreover, the `cp_recursion_plus_coreference` category uses two files, which are both used if you provide the path to the full GrAPES dataset.
-
-The PP Attachemnt category has several files. If you provide the path to the GrAPES full output file, this will work. You can also provide the path only to one file. If you don't have the full GrAPES file, you can try providing the path to any file in the directory of output subcorpora and it will read in the relevant files.
 
 #### Category names for the command line
 
