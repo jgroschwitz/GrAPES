@@ -2,7 +2,7 @@
 .idea/*
 amparser-output/*
 cailam-output/*
-archive/*
+archived_code/*
 *.pyc
 test_raw.txt
 test.txt
