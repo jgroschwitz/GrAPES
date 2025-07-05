@@ -6,14 +6,11 @@ import pickle
 from penman import load
 
 from evaluate_single_category import SmartFormatter, load_predictions
-from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
-    EVAL_TYPE_PRECISION
+
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_grapes_category_with_testset_data, \
     is_grapes_category_with_ptb_data
 from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate, \
     pretty_print_structural_generalisation_by_size, make_rows_for_results, get_bunch_number_and_name
-from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
-from evaluation.util import num_to_score
 
 from evaluation.full_evaluation.category_evaluation.category_metadata import *
 from prettytable import PrettyTable
