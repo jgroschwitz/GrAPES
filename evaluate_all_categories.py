@@ -6,7 +6,8 @@ import pickle
 from penman import load
 
 from evaluate_single_category import SmartFormatter, load_predictions
-from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
+from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
+    EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_grapes_category_with_testset_data, \
     is_grapes_category_with_ptb_data
 from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate, \
@@ -56,6 +57,7 @@ def parse_args():
 
 def instance_info_from_args(args):
     instance_instructions = EvaluationInstanceInfo(
+        path_to_full_testset_predictions_file_from_root=args.predicted_amr_testset_file,
         path_to_grapes_predictions_file_from_root=args.predicted_amr_grapes_file,
         path_to_gold_testset_file_from_root=args.gold_amr_testset_file,
         do_error_analysis=args.error_analysis,
@@ -110,6 +112,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
         results.append([""]*7)
         for category_name in category_names:
             eval_class, info = category_name_to_set_class_and_metadata[category_name]
+            instance_info.given_single_file = False
             if do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
                 # we can always try to find the appropriate subcorpus file...
                 if instance_info.predictions_directory_path() is not None and info.subcorpus_filename is not None:
@@ -160,7 +163,7 @@ def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachme
         if not print_unlabeled_edge_attachment and metric_name == "Unlabeled edge recall":
             continue
         metric_type = r[2]
-        if metric_type == EVAL_TYPE_SUCCESS_RATE:
+        if metric_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
             wilson_ci = wilson_score_interval(r[3], r[4])
             if r[4] > 0:
                 rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,

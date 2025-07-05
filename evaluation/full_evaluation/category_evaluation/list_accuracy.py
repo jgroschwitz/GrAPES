@@ -6,7 +6,7 @@ from penman import Graph
 
 from evaluation.corpus_metrics import  compute_correctness_counts_from_counter_lists
 from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
-    EVAL_TYPE_SUCCESS_RATE, IDResults, CountResults
+    EVAL_TYPE_SUCCESS_RATE, IDResults, CountResults, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 from evaluation.graph_matcher import equals_modulo_isomorphy
@@ -23,7 +23,7 @@ class ListAccuracy(CategoryEvaluation):
         We add space for storing counts to the error analysis because (a) there are a lot of edges per graph,
         and we don't want a copy for each mistake, and (b) we also want to calculate precision.
         """
-        super().__init__(gold_amrs, predicted_amrs, category_metadata, instance_info, given_subcorpus_file=False)
+        super().__init__(gold_amrs, predicted_amrs, category_metadata, instance_info)
         if self.instance_info.do_error_analysis:
             self.results = ListResults(verbose=instance_info.verbose_error_analysis)
         else:
@@ -45,7 +45,7 @@ class ListAccuracy(CategoryEvaluation):
 
         self.make_and_append_results_row("Conjunct recall", EVAL_TYPE_SUCCESS_RATE,
                                          [conj_true_predictions, conj_total_gold])
-        self.make_and_append_results_row("Conjunct precision", EVAL_TYPE_SUCCESS_RATE,
+        self.make_and_append_results_row("Conjunct precision", EVAL_TYPE_PRECISION,
                                          [conj_true_predictions, conj_total_predictions])
 
         # unseen opis
@@ -60,11 +60,9 @@ class ListAccuracy(CategoryEvaluation):
         Unusually, here we store counts, not just graph IDs, and only one copy of graph IDs for successes and failures
         """
         pred_op_edges = get_all_opi_edges(predicted_amr)
-        # self.error_analysis_dict["conj_total_predictions"] += len(pred_op_edges)
         self.results.total_predictions_conjuncts += len(pred_op_edges)
 
         gold_op_edges = get_all_opi_edges(gold_amr)
-        # self.error_analysis_dict["conj_total_gold"] += len(gold_op_edges)
         self.results.total_gold_conjuncts += len(gold_op_edges)
 
         # initialise to all, subtract as we match with gold
@@ -83,15 +81,11 @@ class ListAccuracy(CategoryEvaluation):
             contains_an_error = True
 
         if contains_an_error:
-            # self.add_fail(graph_id)
             self.add_fail(gold_amr, predicted_amr)
         else:
             self.add_success(gold_amr, predicted_amr)
-            #self.add_success(graph_id)
-
-        # self.error_analysis_dict["recalled_conjuncts"] += recalled_edges
+        # update recalled edges
         setattr(self.results, self.results.make_success_key(), self.get_success_count() + recalled_edges)
-
 
     def gold_edge_has_a_match(self, gold, gold_op_edge, pred, pred_op_edges):
         gold_graph_without_op_edge = copy_graph(gold)

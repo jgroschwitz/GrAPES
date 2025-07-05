@@ -12,7 +12,7 @@ from prettytable import PrettyTable
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
-    CategoryEvaluation, EVAL_TYPE_NONE, EVAL_TYPE_NA, STRUC_GEN, size_mappers
+    CategoryEvaluation, EVAL_TYPE_NONE, EVAL_TYPE_NA, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
     is_testset_category, bunch2subcategory
 
@@ -127,6 +127,7 @@ def create_results_pickles():
 
             for subcategory in bunch2subcategory[bunch]:
                 eval_class, info = category_name_to_set_class_and_metadata[subcategory]
+                evaluation_instance_info.given_single_file = False
 
                 # get the appropriate corpora
                 if is_testset_category(info):
@@ -232,7 +233,8 @@ def run_single_file(eval_class, info: SubcategoryMetadata, instance_info: Evalua
         raise ValueError(f"{info.display_name} is an AMR 3.0 category, but we're trying to get it from a GrAPES corpus file")
     pred = load(f"{instance_info.predictions_directory_path()}/{info.subcorpus_filename}.txt")
     gold = load(f"{instance_info.root_dir}/corpus/subcorpora/{info.subcorpus_filename}.txt")
-    evaluator = eval_class(gold, pred, info, instance_info, given_subcorpus_file=True)
+    instance_info.given_single_file = True
+    evaluator = eval_class(gold, pred, info, instance_info)
     rows = evaluator.run_evaluation()
     return rows
 
@@ -249,11 +251,14 @@ def print_full_pretty_table(result_rows):
         else:
             category = row[0].display_name
         eval_type = _get_row_evaluation_type(row)
-        if eval_type == EVAL_TYPE_SUCCESS_RATE:
+        if eval_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
             wilson_ci = wilson_score_interval(row[3], row[4])
             if row[4] > 0:
+                # total predictions varies by parser, so don't print total here
+                total_print = "-" if eval_type==EVAL_TYPE_PRECISION else row[4]
                 table.add_row([category, row[1], num_to_score_with_preceding_0(row[3] / row[4]),
-                               f"[{num_to_score_with_preceding_0(wilson_ci[0])}, {num_to_score_with_preceding_0(wilson_ci[1])}]", row[4]])
+                               f"[{num_to_score_with_preceding_0(wilson_ci[0])}, {num_to_score_with_preceding_0(wilson_ci[1])}]",
+                               total_print])
             else:
                 print("Division by zero!", file=sys.stderr)
                 print(row[0], row[1:], file=sys.stderr)

@@ -17,6 +17,7 @@ from evaluation.util import filter_amrs_for_name
 
 EVAL_TYPE_SUCCESS_RATE = "success_rate"
 EVAL_TYPE_F1 = "f1"
+EVAL_TYPE_PRECISION = "precision"
 EVAL_TYPE_NONE = 1
 EVAL_TYPE_NA = 0
 
@@ -29,7 +30,7 @@ STRUC_GEN = "structural generalisation"
 class CategoryEvaluation:
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], category_metadata: SubcategoryMetadata,
-                 instance_info: EvaluationInstanceInfo, given_subcorpus_file=False):
+                 instance_info: EvaluationInstanceInfo):
         """
         Initialises evaluation of one category
         Args:
@@ -53,7 +54,7 @@ class CategoryEvaluation:
         self.is_sanity_check = is_sanity_check(category_metadata)
 
         # get any extra corpus files needed
-        if self.category_metadata.extra_subcorpus_filenames and given_subcorpus_file:
+        if self.category_metadata.extra_subcorpus_filenames and self.instance_info.given_single_file:
             # if given a subcorpus file rather than the whole corpus, read in new files
             extra_gold, extra_pred = self.get_additional_graphs()
             self.gold_amrs.extend(extra_gold)
@@ -148,7 +149,7 @@ class CategoryEvaluation:
         Returns: new row: [display name if new, metric name, eval type, successes, sample_size]
         """
         if self.print_dataset_name:
-            ds_name = self.category_metadata #.display_name TODO
+            ds_name = self.category_metadata
             self.print_dataset_name = False  # don't print it next time
         else:
             ds_name = None  # ""

@@ -20,6 +20,7 @@ class EvaluationInstanceInfo:
     path_to_gold_testset_file_from_root: str = None
     result_output_parent_path_from_root: str = "data/processed/results"
 
+    given_single_file=False
 
     # for error analysis
     do_error_analysis: bool = False

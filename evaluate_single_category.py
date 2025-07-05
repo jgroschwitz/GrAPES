@@ -8,7 +8,7 @@ from evaluation.full_evaluation.category_evaluation.category_metadata import cat
     add_sanity_check_suffix
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
-    size_mappers, STRUC_GEN
+    size_mappers, STRUC_GEN, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
@@ -68,6 +68,7 @@ def main():
     if info.filename_belongs_to_subcategory(prediction_file_name):
         print("Using predicted AMR subcorpus file", predictions_path)
         use_subcorpus = True
+        instance_info.given_single_file = True
     else:
         print("Presumably this is the full GrAPES or AMR 3.0 testest parser output file: ", predictions_path)
         use_subcorpus = False
@@ -87,7 +88,7 @@ def main():
 
     predicted_amrs = load_predictions(predictions_path)
 
-    evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info, given_subcorpus_file=use_subcorpus)
+    evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
     results = evaluate(evaluator, info, instance_info)
     assert len(results) > 0, "No results!"
 
@@ -107,7 +108,7 @@ def main():
                 if use_subcorpus:
                     gold_amrs = load(f"corpus/subcorpora/{info.subcorpus_filename}.txt")
                     predicted_amrs = load(f"{instance_info.predictions_directory_path()}/{info.subcorpus_filename}.txt")
-                evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info, given_subcorpus_file=use_subcorpus)
+                evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
                 new_rows = evaluate(evaluator, info, instance_info)
                 results += new_rows
                 caption += " and Sanity Check"
@@ -124,11 +125,12 @@ def main():
         metric_type = row[2]
         if info is not None and info.display_name == SANITY_CHECK:
             metric_name = f"{SANITY_CHECK} {metric_name}"
-        if metric_type == EVAL_TYPE_SUCCESS_RATE:
+        if metric_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
             wilson_ci = wilson_score_interval(row[3], row[4])
+            total_type = "sample size" if metric_type == EVAL_TYPE_SUCCESS_RATE else "total predictions"
             if row[4] > 0:
                 print(f"{metric_name}: {num_to_score(row[3] / row[4])} with Wilson confidence interval "
-                      f"[{num_to_score(wilson_ci[0])}, {num_to_score(wilson_ci[1])}] and sample size {row[4]}])")
+                      f"[{num_to_score(wilson_ci[0])}, {num_to_score(wilson_ci[1])}] and {total_type} {row[4]}")
             else:
                 print("ERROR: Division by zero! This means something unexpected went wrong (feel free to contact the "
                       "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
