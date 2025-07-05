@@ -97,7 +97,7 @@ def write_amr_corpora_for_testset_subcategory(prediction_path, gold_path, subcat
 
 
 def build_pickle_for_testset_subcategory(prediction_path, gold_path, subcategory_tsv, pickle_directory,
-                                         amconll=None, graph_id_column=0, subcategory_name=None):
+                                         graph_id_column=0, subcategory_name=None):
 
     # write intermediate files
     out_predicted_path, out_gold_path, ids, subcategory_name = write_amr_corpora_for_testset_subcategory(prediction_path,
@@ -110,18 +110,10 @@ def build_pickle_for_testset_subcategory(prediction_path, gold_path, subcategory
     predicted_graphs = load(out_predicted_path)
     gold_graphs = load(out_gold_path)
 
-    if amconll is not None:
-        # get just the relevant AM trees
-        trees, am_sents = get_am_dependency_trees(amconll, ids)
-        write_conll(f"{pickle_directory}/{subcategory_name}.amconll", am_sents)
-
     vulcan_pickle_builder = VulcanPickleBuilderOwnGraphComparison()
     for i in range(len(gold_graphs)):
         gold_graph = gold_graphs[i]
         include_sentence = True
-        if amconll is not None:
-            vulcan_pickle_builder.add_am_tree(trees[i])
-            include_sentence = False
         predicted_graph = predicted_graphs[i]
         vulcan_pickle_builder.add_gold_graph(gold_graph, include_sentence)
         vulcan_pickle_builder.add_predicted_graph(predicted_graph)
@@ -176,15 +168,13 @@ if __name__ == "__main__":
     command_line_parser.add_argument("-p", "--predictions_path", help="Path to the predictions file", required=True)
     command_line_parser.add_argument("-g", "--gold_path", help="Path to the gold file", required=True)
     command_line_parser.add_argument("-o", "--output_path", help="Path to the output folder", default="error_analysis")
-    command_line_parser.add_argument("-a", "--amconll_path", help="Path to the amconll file (optional, for AM parser outputs)", default=None)
     command_line_parser.add_argument("-s", "--subcategory_name", help="Name of the subcategory (default all)", default=None)
-    args = command_line_parser.parse_args()
     command_line_parser.add_argument("-e", "--error_analysis_pickle_path", help="Path to the error analysis pickle file", required=True)
 
     args = command_line_parser.parse_args()
     if args.tsv is not None:
         build_pickle_for_testset_subcategory(args.predictions_path, args.gold_path, args.tsv,
-                                             args.output_path, args.amconll_path, args.id_column_number, args.subcategory_name)
+                                             args.output_path, args.id_column_number, args.subcategory_name)
         # write_amr_corpora_for_testset_subcategory(args.predictions_path, args.gold_path, args.tsv,  out_path=args.output_path)
     else:
         main([None, args.predictions_path, args.gold_path, args.output_path])
