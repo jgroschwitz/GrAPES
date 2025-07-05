@@ -23,14 +23,7 @@ else:
     # parser_names = ["amparser", "cailam", "amrbart"]
     parser_names = ["amparser"]
 
-# globals
-root_dir_here = "../.."
-path_to_parser_outputs = f"{root_dir_here}/data/processed/parser_outputs/"
-
-
-full_grapes_name = "full_corpus"
-gold_testset_path = f"{root_dir_here}/data/raw/gold/test.txt"
-
+# update per use if desired
 do_error_analysis = True
 run_all_smatch = False
 run_full_corpus_smatch = False
@@ -45,10 +38,21 @@ cat_fail_ok = 0
 # just skip anything that doesn't work and make an empty row for it
 # cat_fail_ok = 1
 
+
+# globals
+root_dir_here = "../.."
+
+# update for your setup
+path_to_parser_outputs = f"{root_dir_here}/data/processed/parser_outputs/"
+# full_grapes_name = "full_corpus"
+gold_testset_path = f"{root_dir_here}/data/raw/gold/test.txt"
+
+
 def get_root_results_path(root_dir):
     x = f"{root_dir}/data/processed/results"
     os.makedirs(x, exist_ok=True)
     return x
+
 
 def make_results_path():
     results_path = f"{get_root_results_path(root_dir_here)}/from_run_all_evaluations"
@@ -57,48 +61,12 @@ def make_results_path():
     by_size_pickle_path = f"{results_path}/all_parsers_structural_generation_by_size.pickle"
     return results_path, pickle_path, by_size_pickle_path
 
-def import_graphs():
+
+def import_gold_graphs():
     gold_amrs = load(gold_testset_path)
 
     gold_grapes = load(f"{root_dir_here}/corpus/corpus.txt")
     return gold_amrs, gold_grapes
-
-
-def get_predictions_path_for_parser(parser):
-    return f"{path_to_parser_outputs}/{parser}-output"
-
-
-def load_parser_output(subcorpus_name, instance_info: EvaluationInstanceInfo):
-    """
-    Use the predictions directory, or make it from the parser name, to load a subcorpus.
-    Args:
-        subcorpus_name:
-        root_dir: path to root of the project from wherever this is being called
-        parser_name: Optional
-        predictions_directory: Optional if get_predictions_path_for_parser can get the path right
-
-    Returns: list of Penman graphs
-    """
-
-    load(f"{instance_info.predictions_directory_path()}/{subcorpus_name}.txt")
-
-    # if instance_info.parser_name is not None:
-    #     try:
-    #         return load(f"{get_predictions_path_for_parser(parser_name)}/{subcorpus_name}.txt")
-    #     except FileNotFoundError as e:
-    #         if predictions_directory is not None:
-    #             print(f"Could not find {subcorpus_name} in {get_predictions_path_for_parser(parser_name)}\n"
-    #                   f"trying with given predictions directory {predictions_directory}", file=sys.stderr)
-    #             pass
-    #         else:
-    #             raise e
-    # if predictions_directory is not None:
-    #     graphs = load(f"{root_dir}/{predictions_directory}/{subcorpus_name}.txt")
-    #     if len(graphs) == 0:
-    #         print(f"No graphs found for {subcorpus_name}", file=sys.stderr)
-    #     return graphs
-    # else:
-    #     raise ValueError("parser name or predictions directory must be specified")
 
 
 def create_results_pickles():
@@ -108,12 +76,10 @@ def create_results_pickles():
 
     Pickles and prints the results
     """
-    gold_amrs, gold_grapes = import_graphs()
+    gold_amrs, gold_grapes = import_gold_graphs()
     # results_path, pickle_path, by_size_pickle_path = make_results_path()
     parser_name2rows = dict()
     all_generalisations_by_size_dict = dict()
-
-
 
     for parser_name in parser_names:
         evaluation_instance_info = EvaluationInstanceInfo(
@@ -135,7 +101,6 @@ def create_results_pickles():
         assert len(grapes_parser_outs) == len(gold_grapes)
         print(f"{len(gold_grapes)} GrAPES graphs")
         print(f"{len(testset_parser_outs)} testset graphs")
-
 
         print("Running evaluation for", parser_name, "...")
 
@@ -190,7 +155,6 @@ def create_results_pickles():
         csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
         csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
 
-
         print("All result rows")
         # print(all_result_rows)
         print_full_pretty_table(all_result_rows)
@@ -202,7 +166,6 @@ def create_results_pickles():
     pickle.dump(parser_name2rows, open(pickle_path, "wb"))
     pickle.dump(all_generalisations_by_size_dict, open(by_size_pickle_path, "wb"))
     print("Results pickled in ", results_path)
-
 
 
 def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, instance_info: EvaluationInstanceInfo):

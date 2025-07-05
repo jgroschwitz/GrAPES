@@ -37,6 +37,9 @@ class CategoryEvaluation:
             predicted_amrs: list of one parser's precicted penman.Graph
             category_metadata: SubcategoryMetadata: stores details about evaluating this category,
                                 like the files to read in and whether to run prerequisites
+            instance_info: information about this evaluation instance, like parser name
+            given_subcorpus_file: True if we know that the corpora passed to the initialiser are not the full grapes or
+             testset but rather individual files from the subcorpora. Used if extra files need to be read in.
         """
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
@@ -89,13 +92,13 @@ class CategoryEvaluation:
         """
         Main function.
         Run all evaluations and create output rows
-        Returns: results as lists of the form TODO
+        Returns: list of rows of results: [dataset name, metric_name, eval_type] + metric_results
 
         """
         self._get_all_results()
         self._calculate_metrics_and_add_all_rows()
         if self.instance_info.run_smatch or self.category_metadata.subtype == STRUC_GEN and not self.is_sanity_check:
-            self.make_smatch_results()
+            self.make_and_add_smatch_results()
         return self.rows
 
     def get_additional_graphs(self):
@@ -156,14 +159,14 @@ class CategoryEvaluation:
     def make_empty_row(category_name="", metric_name="-"):
         return [category_name, metric_name, EVAL_TYPE_NA] + []
 
-    def make_smatch_results(self):
+    def make_and_add_smatch_results(self):
         smatch = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
         smatch_f1 = self.get_f_from_prf(smatch)
         self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1, len(self.gold_amrs)])
 
     def get_results_by_size(self):
         """Split up the generalisation by size as marked in corpora.
-        Currently just used for structural generalisation"""
+        Currently just used for structural generalisation. Requires a size0 in gold metadata."""
         if self.category_metadata.subcorpus_filename in size_mappers:
             return get_exact_match_by_size(self.gold_amrs, self.predicted_amrs,
                                            size_mappers[self.category_metadata.subcorpus_filename])
@@ -174,8 +177,8 @@ class CategoryEvaluation:
     def get_f_from_prf(triple):
         return triple[2]
 
-
     def store_filtered_graphs(self):
+        """FIlter the graphs as appropriate for this category and make them the new gold and predicted graphs stored."""
         self.gold_amrs, self.predicted_amrs = self.filter_graphs()
 
     def filter_graphs(self):
@@ -214,41 +217,33 @@ class CategoryEvaluation:
         return [gold.metadata["id"] for gold in filtered_gold]
 
     def read_tsv(self):
+        """ Default TSV reader. Can be overridden by other functions"""
         return read_label_tsv(self.root_dir, self.category_metadata.tsv)
 
-    # def dump_error_analysis_pickle(self):
-    #     if self. do_error_analysis:
-    #         try:
-    #             self.results.write_pickle()
-    #         except Exception as e:
-    #             print("WARNING: no error analysis written:", e, file=sys.stderr)
-    #     else:
-    #         print("No error analysis data was stored, so no pickle to write")
-
     def _calculate_metrics_and_add_all_rows(self):
-
+        """ Turns self.results into self.rows """
         success_count = self.get_success_count()
         sample_size = success_count + self.get_failure_count()
         assert sample_size > 0, "No results for _calculate_metrics_and_add_all_rows"
-        ret = [success_count, sample_size]
+        # ret = [success_count, sample_size]
 
         self.rows.append(self.make_results_row(self.category_metadata.metric_label, EVAL_TYPE_SUCCESS_RATE,
                                                [success_count, sample_size]))
         if self.measure_unlabelled_edges():
             unlabelled_success_count = self.get_success_count(UNLABELLED)
-            ret.append(unlabelled_success_count)
+            # ret.append(unlabelled_success_count)
             self.rows.append(self.make_results_row("Unlabeled edge recall", EVAL_TYPE_SUCCESS_RATE,
             [unlabelled_success_count, sample_size]))
         if self.category_metadata.run_prerequisites:
             prereq_success_count = self.get_success_count(PREREQS)
-            ret.append(prereq_success_count)
+            # ret.append(prereq_success_count)
             self.rows.append(self.make_results_row(
                 "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
 
         if self.instance_info.do_error_analysis:
             self.results.write_pickle()
         # print("Metrics:", ret)
-        return ret
+        # return ret
 
     def get_predictions_for_comparison(self, predicted_amr):
         """
@@ -392,7 +387,6 @@ class Results(ABC):
         return f"incorrect_{field}"
 
 
-
 class CountResults(Results):
     """
     Just counts everything, no storage of which graph is which
@@ -406,25 +400,17 @@ class CountResults(Results):
             setattr(self, self.make_fail_key(field), 0)
 
     def add_success(self, gold: Graph, predicted: Graph, success_type=None):
-        if success_type is None:
-            success_type = self.default_field
         key = self.make_success_key(success_type)
         setattr(self, key, getattr(self, key) + 1)
 
     def add_fail(self, gold: Graph, predicted: Graph, failure_type=None):
-        if failure_type is None:
-            failure_type = self.default_field
         key = self.make_fail_key(failure_type)
         setattr(self, key, getattr(self, key) + 1)
 
     def get_success_count(self, field=None):
-        if field is None:
-            field = self.default_field
         return getattr(self, self.make_success_key(field))
 
     def get_fail_count(self, field=None):
-        if field is None:
-            field = self.default_field
         return getattr(self, self.make_fail_key(field))
 
 class IDResults(Results):
@@ -463,11 +449,18 @@ class IDResults(Results):
         if self.verbose:
             print("Wrote error analysis pickle to " + self.pickle_path)
 
-
-
-
 def get_exact_match_by_size(gold_graphs: List[Graph], predicted_graphs: List[Graph],
                             size_mapper: Callable[[int], int] = lambda x: x):
+    """
+    If the gold graphs' metadata includes 'size0', makes a dict from size0 values to the number of predicted graphs
+     with that size0 that are an exact match with the gold graph
+    Args:
+        gold_graphs: list of gold graphs
+        predicted_graphs: list of predicted graphs
+        size_mapper: function for calculating the intuitive way to express size based on whatever was stored in size0.
+    Returns:
+        dict from size to successes
+    """
     assert len(gold_graphs) == len(predicted_graphs)
     correct_counts = Counter()
     total_counts = Counter()
@@ -475,15 +468,14 @@ def get_exact_match_by_size(gold_graphs: List[Graph], predicted_graphs: List[Gra
         try:
             size = size_mapper(int(gold.metadata["size0"]))
         except KeyError:
-            print(f"No size0 found in {gold.metadata.keys()}!")
-            print(gold.metadata["id"])
-            raise
+            raise ValueError(f"No size information found in {gold.metadata.keys()} for graph {gold.metadata['id']}")
         total_counts[size] += 1
         if equals_modulo_isomorphy(gold, prediction, match_edge_labels=False, match_senses=False):
             correct_counts[size] += 1
     ret = {size: correct_counts[size] / total_counts[size] for size in sorted(total_counts.keys())}
     ret["total"] = sum(correct_counts.values()) / sum(total_counts.values())
     return ret
+
 
 size_mappers = {"adjectives": lambda x: x - 2,
                 "centre_embedding": lambda x: (x - 2) // 2,
