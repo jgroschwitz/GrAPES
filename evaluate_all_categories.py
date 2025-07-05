@@ -11,7 +11,7 @@ from evaluation.full_evaluation.category_evaluation.category_evaluation import E
 from evaluation.full_evaluation.category_evaluation.subcategory_info import is_grapes_category_with_testset_data, \
     is_grapes_category_with_ptb_data
 from evaluation.full_evaluation.run_full_evaluation import run_single_file, evaluate, \
-    pretty_print_structural_generalisation_by_size, get_root_results_path
+    pretty_print_structural_generalisation_by_size, make_rows_for_results, get_bunch_number_and_name
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score
 
@@ -109,7 +109,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
         if not do_this_category(bunch, set_name):
             continue
         print("\nEvaluating " + set_name)
-        results.append([""]*7)
+        n, name = get_bunch_number_and_name(set_name)
+        results.append([n, name] + [""]*5)
         for category_name in category_names:
             eval_class, info = category_name_to_set_class_and_metadata[category_name]
             instance_info.given_single_file = False
@@ -146,45 +147,11 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                 rows = make_rows_for_results(category_name, instance_info.print_f1(),
                                              instance_info.print_unlabeled_edge_attachment, results_here, set_name)
                 results.extend(rows)
-                if info.subtype == "structural_generalization":
+                if info.subtype == STRUC_GEN:
                     by_size = evaluator.get_results_by_size()
                     struct_gen_by_size[info.display_name] = by_size
 
     return results, struct_gen_by_size
-
-
-def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachment, results_here,
-                          set_name):
-    rows = []
-    for r in results_here:
-        metric_name = r[1]
-        if not print_f1 and metric_name == "Smatch":
-            continue
-        if not print_unlabeled_edge_attachment and metric_name == "Unlabeled edge recall":
-            continue
-        metric_type = r[2]
-        if metric_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
-            wilson_ci = wilson_score_interval(r[3], r[4])
-            if r[4] > 0:
-                rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
-                                num_to_score(r[3] / r[4]),
-                                num_to_score(wilson_ci[0]),
-                                num_to_score(wilson_ci[1]),
-                                r[4]])
-            else:
-                print(
-                    "ERROR: Division by zero! This means something unexpected went wrong (feel free to contact the "
-                    "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
-                print(r)
-        elif metric_type == EVAL_TYPE_F1:
-            rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
-                            num_to_score(r[3]), "-", "-", "-"])
-        else:
-            print(
-                "ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
-                "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
-            print(r)
-    return rows
 
 
 def make_empty_result(set_name, category_name):
@@ -257,9 +224,9 @@ def main():
 
 
 def store_results(results, instance_info: EvaluationInstanceInfo):
-    results_dir = instance_info.results_directory_path()
+    results_dir = f"{instance_info.root_dir}/data/processed/results/from_evaluate_all_categories"
     os.makedirs(results_dir, exist_ok=True)
-    filename = "results_all_categories"
+    filename = instance_info.parser_name
     out_file = f"{results_dir}/{filename}.csv"
     csv.writer(open(out_file, "w", encoding="utf8")).writerows(results)
     print(f"CSV of results written to {out_file}")

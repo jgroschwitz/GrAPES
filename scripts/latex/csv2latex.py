@@ -1,3 +1,4 @@
+import argparse
 import os
 import sys
 import csv
@@ -10,6 +11,7 @@ def main():
 
     This returns a tabular environment to be used in a LaTeX document. You need to include the following in your
     document preamble (use a single backslash for \\usepockage; just need to escape here):
+    \\usepackage{longtable}
     \\usepackage{xcolor, colortbl}
     \definecolor{lightlightlightgray}{gray}{0.95}
     \newcommand{\successScore}[4]{#1 \scriptsize\textcolor{gray}{#4[#2,#3]}}
@@ -22,37 +24,54 @@ def main():
 
     """
     # arguments: output_file, csv_files
-    output_file = sys.argv[1]
-    csv_files = sys.argv[2:]
+    # output_file = sys.argv[1]
+    # csv_files = sys.argv[2:]
+    default_tex_file = "../../data/processed/results/latex/table.tex"
+
+    parser = argparse.ArgumentParser(description="Turn CSV into LaTeX table")
+    parser.add_argument("-o", "--output_file", type=str, help=f"Path to the output file (default {default_tex_file})", default=default_tex_file)
+    parser.add_argument("csv_files", type=str, nargs="+", help="Paths to the CSV files")
+    parser.add_argument("--print_headers", action="store_true", help="Print a header for each set of categories")
+    args = parser.parse_args()
 
     # read csv files
     csv_contents = []
-    for csv_file in csv_files:
+    for csv_file in args.csv_files:
         with open(csv_file, "r") as f:
             csv_reader = csv.reader(f)
             csv_contents.append(list(csv_reader))
 
-    names = [os.path.basename(csv_file)[:-4] for csv_file in csv_files]
+    names = [os.path.basename(csv_file)[:-4] for csv_file in args.csv_files]
 
     transposed_csv_contents = [list(i) for i in zip(*csv_contents)]
     # print(csv_contents)
 
-    head_column = "Set ID & Dataset & Metric & " + " & ".join([name.replace("_", "") for name in names]) + " & \\#"
-    table_columns = "{l | l | l  | " + " | ".join(["c"] * len(csv_files)) + " | r }"
-    header = "\\begin{tabular}" + table_columns + "\n\t" + head_column + "\\\\\\hline\n"
-    closer = "\\end{tabular}"
+    head_column = "Set & Category & Metric & " + " & ".join([name.replace("_", "") for name in names]) + " & \\#"
+    table_columns = "{l | l | l  | " + " | ".join(["c"] * len(args.csv_files)) + " | r }"
+    header = "\\begin{longtable}" + table_columns + "\n\t" + head_column + "\\\\\\hline\n"
+    closer = "\\end{longtable}"
 
+    print_header = args.print_headers
     set_id = 0
     old_dataset_name = ""
-    with open(output_file, "w") as f:
+    with open(args.output_file, "w") as f:
         f.write(header)
         shade_row = True
         for zipped_csv_row in transposed_csv_contents:
             old_set_id = set_id
             set_id = zipped_csv_row[0][0]
+            is_header = zipped_csv_row[0][2] == ""
+            if is_header and not print_header:
+                set_id = int(set_id) - 1
+                continue
+
             set_id_to_print = set_id if set_id != old_set_id else ""
             dataset_name = zipped_csv_row[0][1]
             dataset_name_to_print = dataset_name if dataset_name != old_dataset_name else ""
+            if is_header:
+                set_id_to_print = f"\\textbf{{{set_id_to_print}}}"
+                dataset_name_to_print = f"\\textbf{{{dataset_name_to_print}}}"
+
             old_dataset_name = dataset_name
             metric_name = zipped_csv_row[0][2]
             scores = [entry[3] for entry in zipped_csv_row]

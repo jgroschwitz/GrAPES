@@ -3,6 +3,8 @@ import os
 import pickle
 import sys
 
+from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
+from evaluation.util import num_to_score
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_copyrighted_data
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
@@ -38,7 +40,6 @@ cat_fail_ok = 0
 # just skip anything that doesn't work and make an empty row for it
 # cat_fail_ok = 1
 
-
 # globals
 root_dir_here = "../.."
 
@@ -50,12 +51,11 @@ gold_testset_path = f"{root_dir_here}/data/raw/gold/test.txt"
 
 def get_root_results_path(root_dir):
     x = f"{root_dir}/data/processed/results"
-    os.makedirs(x, exist_ok=True)
     return x
 
 
 def make_results_path():
-    results_path = f"{get_root_results_path(root_dir_here)}/from_run_all_evaluations"
+    results_path = f"{get_root_results_path(root_dir_here)}/from_run_full_evaluation"
     os.makedirs(results_path, exist_ok=True)
     pickle_path = f"{results_path}/all_parsers_results_table.pickle"
     by_size_pickle_path = f"{results_path}/all_parsers_structural_generation_by_size.pickle"
@@ -67,6 +67,14 @@ def import_gold_graphs():
 
     gold_grapes = load(f"{root_dir_here}/corpus/corpus.txt")
     return gold_amrs, gold_grapes
+
+def get_bunch_number_and_name(bunch_string):
+    """
+    Structure: n. name of bunch
+    """
+    parts = bunch_string.split(". ")
+    name = ".".join(parts[1:])  # put it back together just in case
+    return parts[0], name
 
 
 def create_results_pickles():
@@ -95,7 +103,7 @@ def create_results_pickles():
         )
         testset_parser_outs = load(evaluation_instance_info.default_testset_pred_file_path())
         grapes_parser_outs = load(evaluation_instance_info.full_grapes_pred_file_path())
-        os.makedirs(evaluation_instance_info.results_directory_path(), exist_ok=True)
+        # os.makedirs(evaluation_instance_info.results_directory_path(), exist_ok=True)
 
         assert len(testset_parser_outs) == len(gold_amrs)
         assert len(grapes_parser_outs) == len(gold_grapes)
@@ -121,8 +129,9 @@ def create_results_pickles():
             print("We will run Smatch on all categories. This may take a while...\n"
                   " to avoid this, stop and change run_all_smatch to False.")
         for bunch in sorted(bunch2subcategory.keys()):
-
-            all_result_rows.append([bunch])
+            n, name = get_bunch_number_and_name(bunch)
+            all_result_rows.append([n, name] + [""] * 5)
+            # all_result_rows.append([bunch])
             print("Doing Bunch", bunch)
 
             for subcategory in bunch2subcategory[bunch]:
@@ -143,26 +152,48 @@ def create_results_pickles():
                 if info.subtype == STRUC_GEN and info.subcorpus_filename in size_mappers:
                     generalisation_by_size[info.display_name] =  evaluator.get_results_by_size()
 
-                rows = evaluate(evaluator, info, evaluation_instance_info)
+                results_here = evaluate(evaluator, info, evaluation_instance_info)
+                rows = make_rows_for_results(subcategory, evaluation_instance_info.print_f1(),
+                                             evaluation_instance_info.print_unlabeled_edge_attachment, results_here, bunch)
                 all_result_rows += rows
 
         print("\nRESULTS FOR", parser_name)
 
+        results_path, pickle_path, by_size_pickle_path = make_results_path()
         if evaluation_instance_info.do_error_analysis:
             print("Error analysis pickles in", f"{root_dir_here}/error_analysis/{parser_name}/")
         table = pretty_print_structural_generalisation_by_size(generalisation_by_size)
         all_generalisations_by_size_dict[parser_name] = generalisation_by_size
-        out_csv_by_size = f"{evaluation_instance_info.results_directory_path()}/by_size.csv"
+        out_csv_by_size = f"{results_path}/{parser_name}_by_size.csv"
         csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
         csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
 
         print("All result rows")
-        # print(all_result_rows)
-        print_full_pretty_table(all_result_rows)
-        csv.writer(open(f"{evaluation_instance_info.results_directory_path()}/all_result_rows.csv",
-                        "w", encoding="utf8")).writerows(all_result_rows)
 
-    results_path, pickle_path, by_size_pickle_path = make_results_path()
+        print_table = PrettyTable(
+            field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
+        print_table.align = "l"
+        for row in all_result_rows:
+            print_table.add_row(row)
+        print(print_table)
+
+        # print(all_result_rows)
+        # print_full_pretty_table(all_result_rows)
+        csv_path = f"{results_path}/{parser_name}.csv"
+        csv_rows = []
+        for row in all_result_rows:
+            if len(row) > 1:
+                if row[0] is None:
+                    row_to_append = [""]
+                else:
+                    row_to_append = [row[0]] # [row[0].display_name]
+                row_to_append += row[1:]
+                missing_entries = 7 - len(row)
+                for i in range(missing_entries):
+                    row_to_append.append("")
+                csv_rows.append(row_to_append)
+        csv.writer(open(csv_path, "w", encoding="utf8")).writerows(csv_rows)
+        print("written to", csv_path)
 
     pickle.dump(parser_name2rows, open(pickle_path, "wb"))
     pickle.dump(all_generalisations_by_size_dict, open(by_size_pickle_path, "wb"))
@@ -239,150 +270,151 @@ def run_single_file(eval_class, info: SubcategoryMetadata, instance_info: Evalua
     return rows
 
 
-def print_full_pretty_table(result_rows):
-    table = PrettyTable()
-    table.field_names = ["Dataset", "Metric", "Score", "Wilson CI", "Sample size"]
-    table.align = "l"
-    for row in result_rows:
-        if row[0] is None:
-            category = ""
-        elif isinstance(row[0], str):
-            category = row[0]
-        else:
-            category = row[0].display_name
-        eval_type = _get_row_evaluation_type(row)
-        if eval_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
-            wilson_ci = wilson_score_interval(row[3], row[4])
-            if row[4] > 0:
-                # total predictions varies by parser, so don't print total here
-                total_print = "-" if eval_type==EVAL_TYPE_PRECISION else row[4]
-                table.add_row([category, row[1], num_to_score_with_preceding_0(row[3] / row[4]),
-                               f"[{num_to_score_with_preceding_0(wilson_ci[0])}, {num_to_score_with_preceding_0(wilson_ci[1])}]",
-                               total_print])
-            else:
-                print("Division by zero!", file=sys.stderr)
-                print(row[0], row[1:], file=sys.stderr)
+# def print_full_pretty_table(result_rows):
+#     table = PrettyTable()
+#     table.field_names = ["Dataset", "Metric", "Score", "Wilson CI", "Sample size"]
+#     table.align = "l"
+#     for row in result_rows:
+#         if row[0] is None:
+#             category = ""
+#         elif isinstance(row[0], str):
+#             category = row[0]
+#         else:
+#             category = row[0].display_name
+#         eval_type = _get_row_evaluation_type(row)
+#         if eval_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
+#             wilson_ci = wilson_score_interval(row[3], row[4])
+#             if row[4] > 0:
+#                 # total predictions varies by parser, so don't print total here
+#                 total_print = "-" if eval_type==EVAL_TYPE_PRECISION else row[4]
+#                 table.add_row([category, row[1], num_to_score_with_preceding_0(row[3] / row[4]),
+#                                f"[{num_to_score_with_preceding_0(wilson_ci[0])}, {num_to_score_with_preceding_0(wilson_ci[1])}]",
+#                                total_print])
+#             else:
+#                 print("Division by zero!", file=sys.stderr)
+#                 print(row[0], row[1:], file=sys.stderr)
+#
+#         elif eval_type == EVAL_TYPE_F1:
+#             if len(row) > 4:
+#                 sample_size = row[4]
+#             else:
+#                 sample_size = ""
+#             table.add_row([category, row[1], num_to_score_with_preceding_0(row[3]), "", sample_size])
+#         elif eval_type == EVAL_TYPE_NONE:
+#             table.add_row(["", "", "", "", ""])
+#             table.add_row([category, "", "", "", ""])
+#         elif eval_type == EVAL_TYPE_NA:
+#             table.add_row([category, row[1], "N/A", "N/A", "N/A"])
+#         else:
+#             print(row)
+#             raise Exception(f"Unknown evaluation type: {eval_type}")
+#     print(table)
 
-        elif eval_type == EVAL_TYPE_F1:
-            if len(row) > 4:
-                sample_size = row[4]
-            else:
-                sample_size = ""
-            table.add_row([category, row[1], num_to_score_with_preceding_0(row[3]), "", sample_size])
-        elif eval_type == EVAL_TYPE_NONE:
-            table.add_row(["", "", "", "", ""])
-            table.add_row([category, "", "", "", ""])
-        elif eval_type == EVAL_TYPE_NA:
-            table.add_row([category, row[1], "N/A", "N/A", "N/A"])
-        else:
-            print(row)
-            raise Exception(f"Unknown evaluation type: {eval_type}")
-    print(table)
 
-
-def make_latex_table(root_dir: str):
-    """
-    TODO This is not currently working with the refactoring
-    Might not matter: I think the csv2latex one works
-    """
-    result_rows_by_parser_name = pickle.load(open(root_dir + "/results_table.pickle", "rb"))
-
-    master_parser = parser_names[0]
-    master_rows = result_rows_by_parser_name[master_parser]
-
-    # results_rows_by_column = zip()
-    # print("\n###", list(results_rows_by_column))
-    # results_rows_by_column = zip(result_rows_by_parser_name["amparser"],
-    #                              # result_rows_by_parser_name["cailam"],
-    #                              # result_rows_by_parser_name["amrbart"]
-    #                              )
-
-    set_to_scores = dict()
-    current_scores = None
-
-    with open(root_dir + "/latex_results_table.txt", "w") as f:
-        set_id = ""
-        shade_row = True
-        for j, parser_row in enumerate(master_rows):
-            is_title_row = len(parser_row) == 1
-            if is_title_row:
-                set_id = parser_row[0][0]
-                current_scores = [[] for _ in range(len(parser_names))]
-                set_to_scores[parser_row[0]] = current_scores
-                continue
-
-            if parser_row[0] is None:
-                dataset_name = ""
-            elif isinstance(parser_row[0], str):
-                dataset_name = parser_row[0]
-            else:
-                dataset_name = parser_row[0].get_latex_display_name()
-            # dataset_name = parser_rows[0][0]
-            metric_name = parser_row[1]
-
-            is_unlabeled_edge_row = metric_name == "Unlabeled edge recall"
-            is_smatch_row = "smatch" in metric_name.lower()
-            if is_unlabeled_edge_row or is_smatch_row:
-                continue
-
-            is_sanity_check_row = "sanity" in dataset_name.lower()
-            is_prereq_row = "prereq" in metric_name.lower()
-            if set_id in ["1", "3", "4", "7"]:  # the sets that start a new table
-                shade_row = True
-            else:
-                if is_sanity_check_row or dataset_name.strip() == "":
-                    pass
-                else:
-                    shade_row = not shade_row
-
-            shading_prefix = "\\rowcolor{lightlightlightgray}" if shade_row else ""
-            latex_line = f"\t\t{shading_prefix}{set_id} & {dataset_name} & {metric_name}"
-
-            is_success_rate_row = parser_row[2] == EVAL_TYPE_SUCCESS_RATE
-            if is_success_rate_row and not "precision" in metric_name.lower():
-                for name in parser_names:
-                    assert parser_row[4] == result_rows_by_parser_name[name][4]
-            for i in range(len(parser_names)):
-                if is_success_rate_row:
-                    wilson_ci = wilson_score_interval(row[3], row[4])
-                    score = num_to_score_with_preceding_0(row[3] / row[4])
-                    if not (is_prereq_row or is_sanity_check_row):
-                        current_scores[i].append(row[3] / row[4])
-                    if len(score) == 2:
-                        score = "\\phantom{1}" + score
-                    lower_bound = num_to_score_with_preceding_0(wilson_ci[0])
-                    upper_bound = num_to_score_with_preceding_0(wilson_ci[1])
-                    if len(lower_bound) == 2:
-                        lower_bound = lower_bound
-                    if len(upper_bound) == 2:
-                        upper_bound = "\\phantom{1}" + upper_bound
-                    # latex_line += f" & ${score}_{{{lower_bound}}}^{{{upper_bound}}}$"
-                    latex_line += f" & \\successScore{{{score}}}{{{lower_bound}}}{{{upper_bound}}}{{\\phantom{{1}}}}"
-                else:
-                    if not (is_prereq_row or is_sanity_check_row):
-                        current_scores[i].append(row[3])
-                    latex_line += f" & {num_to_score_with_preceding_0(row[3])}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ "
-
-            if is_success_rate_row:
-                latex_line += f" & {parser_rows[0][4]}\\\\\n"
-            else:
-                latex_line += f" & \\\\\n"
-
-            f.write(latex_line)
-
-            set_id = ""
-
-    with open(root_dir + "/latex_compact_table.txt", "w") as f:
-        for set_name, scores_by_parser in set_to_scores.items():
-            # print(set_name)
-            # print(scores_by_parser)
-            latex_line = f"\t\t{set_name}"
-            for scores in scores_by_parser:
-                # average the scores
-                score = sum(scores) / len(scores)
-                latex_line += f" & {num_to_score_with_preceding_0(score)}"
-            latex_line += "\\\\\n"
-            f.write(latex_line)
+# Broken. Use scripts/latex/csv2latex.py
+#
+# def make_latex_table(root_dir: str):
+#     """
+#     Might not matter: I think the csv2latex one works
+#     """
+#     result_rows_by_parser_name = pickle.load(open(root_dir + "/results_table.pickle", "rb"))
+#
+#     master_parser = parser_names[0]
+#     master_rows = result_rows_by_parser_name[master_parser]
+#
+#     # results_rows_by_column = zip()
+#     # print("\n###", list(results_rows_by_column))
+#     # results_rows_by_column = zip(result_rows_by_parser_name["amparser"],
+#     #                              # result_rows_by_parser_name["cailam"],
+#     #                              # result_rows_by_parser_name["amrbart"]
+#     #                              )
+#
+#     set_to_scores = dict()
+#     current_scores = None
+#
+#     with open(root_dir + "/latex_results_table.txt", "w") as f:
+#         set_id = ""
+#         shade_row = True
+#         for j, parser_row in enumerate(master_rows):
+#             is_title_row = len(parser_row) == 1
+#             if is_title_row:
+#                 set_id = parser_row[0][0]
+#                 current_scores = [[] for _ in range(len(parser_names))]
+#                 set_to_scores[parser_row[0]] = current_scores
+#                 continue
+#
+#             if parser_row[0] is None:
+#                 dataset_name = ""
+#             elif isinstance(parser_row[0], str):
+#                 dataset_name = parser_row[0]
+#             else:
+#                 dataset_name = parser_row[0].get_latex_display_name()
+#             # dataset_name = parser_rows[0][0]
+#             metric_name = parser_row[1]
+#
+#             is_unlabeled_edge_row = metric_name == "Unlabeled edge recall"
+#             is_smatch_row = "smatch" in metric_name.lower()
+#             if is_unlabeled_edge_row or is_smatch_row:
+#                 continue
+#
+#             is_sanity_check_row = "sanity" in dataset_name.lower()
+#             is_prereq_row = "prereq" in metric_name.lower()
+#             if set_id in ["1", "3", "4", "7"]:  # the sets that start a new table
+#                 shade_row = True
+#             else:
+#                 if is_sanity_check_row or dataset_name.strip() == "":
+#                     pass
+#                 else:
+#                     shade_row = not shade_row
+#
+#             shading_prefix = "\\rowcolor{lightlightlightgray}" if shade_row else ""
+#             latex_line = f"\t\t{shading_prefix}{set_id} & {dataset_name} & {metric_name}"
+#
+#             is_success_rate_row = parser_row[2] == EVAL_TYPE_SUCCESS_RATE
+#             if is_success_rate_row and not "precision" in metric_name.lower():
+#                 for name in parser_names:
+#                     assert parser_row[4] == result_rows_by_parser_name[name][4]
+#             for i in range(len(parser_names)):
+#                 if is_success_rate_row:
+#                     wilson_ci = wilson_score_interval(row[3], row[4])
+#                     score = num_to_score_with_preceding_0(row[3] / row[4])
+#                     if not (is_prereq_row or is_sanity_check_row):
+#                         current_scores[i].append(row[3] / row[4])
+#                     if len(score) == 2:
+#                         score = "\\phantom{1}" + score
+#                     lower_bound = num_to_score_with_preceding_0(wilson_ci[0])
+#                     upper_bound = num_to_score_with_preceding_0(wilson_ci[1])
+#                     if len(lower_bound) == 2:
+#                         lower_bound = lower_bound
+#                     if len(upper_bound) == 2:
+#                         upper_bound = "\\phantom{1}" + upper_bound
+#                     # latex_line += f" & ${score}_{{{lower_bound}}}^{{{upper_bound}}}$"
+#                     latex_line += f" & \\successScore{{{score}}}{{{lower_bound}}}{{{upper_bound}}}{{\\phantom{{1}}}}"
+#                 else:
+#                     if not (is_prereq_row or is_sanity_check_row):
+#                         current_scores[i].append(row[3])
+#                     latex_line += f" & {num_to_score_with_preceding_0(row[3])}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ "
+#
+#             if is_success_rate_row:
+#                 latex_line += f" & {parser_rows[0][4]}\\\\\n"
+#             else:
+#                 latex_line += f" & \\\\\n"
+#
+#             f.write(latex_line)
+#
+#             set_id = ""
+#
+#     with open(root_dir + "/latex_compact_table.txt", "w") as f:
+#         for set_name, scores_by_parser in set_to_scores.items():
+#             # print(set_name)
+#             # print(scores_by_parser)
+#             latex_line = f"\t\t{set_name}"
+#             for scores in scores_by_parser:
+#                 # average the scores
+#                 score = sum(scores) / len(scores)
+#                 latex_line += f" & {num_to_score_with_preceding_0(score)}"
+#             latex_line += "\\\\\n"
+#             f.write(latex_line)
 
 
 
@@ -432,6 +464,40 @@ def pretty_print_structural_generalisation_by_size(results):
     print("\nStructure generalisation results by size")
     print(table)
     return table
+
+def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachment, results_here,
+                          set_name):
+    rows = []
+    for r in results_here:
+        metric_name = r[1]
+        if not print_f1 and metric_name == "Smatch":
+            continue
+        if not print_unlabeled_edge_attachment and metric_name == "Unlabeled edge recall":
+            continue
+        metric_type = r[2]
+        if metric_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
+            wilson_ci = wilson_score_interval(r[3], r[4])
+            if r[4] > 0:
+                rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
+                                num_to_score(r[3] / r[4]),
+                                num_to_score(wilson_ci[0]),
+                                num_to_score(wilson_ci[1]),
+                                r[4]])
+            else:
+                print(
+                    "ERROR: Division by zero! This means something unexpected went wrong (feel free to contact the "
+                    "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
+                print(r)
+        elif metric_type == EVAL_TYPE_F1:
+            rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
+                            num_to_score(r[3]), "-", "-", "-"])
+        else:
+            print(
+                "ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
+                "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
+            print(r)
+    return rows
+
 
 
 
