@@ -1,7 +1,7 @@
 from copy import copy
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import STRUC_GEN
-from evaluation.full_evaluation.category_evaluation.evaluation_classes import (EllipsisRecall, SubgraphRecall,
+from evaluation.full_evaluation.category_evaluation.misc_evaluation import (EllipsisRecall, SubgraphRecall,
                                                                                ImperativeRecall, TARGET)
 from evaluation.full_evaluation.category_evaluation.exact_match import ExactMatch
 from evaluation.full_evaluation.category_evaluation.list_accuracy import ListAccuracy
@@ -350,10 +350,10 @@ def get_formatted_category_names_by_main_file():
                 grapes.append(category)
     header = "AMR 3.0 testset category names:"
     ret = f"\n{'-'*len(header)}\n{header}\n{'-'*len(header)}\n"
-    ret += "\n\t".join(testset)
+    ret += "\n".join(testset)
     header = "GrAPES category names:"
     ret += f"\n{'-'*len(header)}\n{header}\n{'-'*len(header)}\n"
-    ret += "\n\t".join(grapes)
+    ret += "\n".join(grapes)
     return ret
 
 
@@ -365,10 +365,6 @@ def get_formatted_category_names(names=category_name_to_set_class_and_metadata.k
 def is_testset_category(info):
     return info.subcorpus_filename is None
 
+# with open("categories.txt", "w") as f:
+#     f.write(get_formatted_category_names_by_main_file())
 
-
-
-#
-# for category in category_name_to_set_class_and_metadata:
-#     if category != category_name_to_set_class_and_metadata[category][1].name:
-#         print(category)

@@ -6,19 +6,14 @@ import csv
 
 def main():
     """
-    Usage: python csv2latex.py output_file csv_files
-    Example: python csv2latex.py output.tex parser1.csv parser2.csv parser3.csv
-
-    This returns a tabular environment to be used in a LaTeX document. You need to include the following in your
+    This returns a longtable environment to be used in a LaTeX document. You need to include the following in your
     document preamble (use a single backslash for \\usepockage; just need to escape here):
     \\usepackage{longtable}
     \\usepackage{xcolor, colortbl}
     \definecolor{lightlightlightgray}{gray}{0.95}
     \newcommand{\successScore}[4]{#1 \scriptsize\textcolor{gray}{#4[#2,#3]}}
 
-
     also, you probably want to print the whole table with \small in front.
-
 
     TODO: on Jonas' Laptop, the current setup adds a weird "2" to the Unaccusatives dataset name.
 
