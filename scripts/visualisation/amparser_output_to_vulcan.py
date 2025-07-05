@@ -37,7 +37,7 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], filte
     # initialise the pickle builder with the appropriate fields and their data types
     # The sentence is a table because it will stack the supertags on the words for each word
     pickle_builder = PickleBuilder({"Gold graph": FORMAT_NAME_GRAPH, "Predicted graph": FORMAT_NAME_GRAPH,
-                                    "Sentence": FORMAT_NAME_OBJECT_TABLE})
+                                    "Sentence": FORMAT_NAME_OBJECT_TABLE, "ID": FORMAT_NAME_STRING})
 
     # everything is in the same order, so we can zip the lists to get all info for each corpus entry
     for gold_amr, predicted_amr, amconll_sent in zip(gold_graphs, predicted_graphs, amconll_sents):
@@ -62,7 +62,9 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], filte
         # use the exact same field names as used when the pickle builder was initialised.
         pickle_builder.add_instances_by_name({"Gold graph": gold_amr,
                                               "Predicted graph": predicted_amr,
-                                              "Sentence": tagged_sentence})
+                                              "Sentence": tagged_sentence,
+                                              "ID": gold_amr.metadata["id"]
+                                              })
 
         # add the dependency tree edges to the Sentence entry
         deptree = make_dependency_tree(amconll_sent)
@@ -115,11 +117,11 @@ def make_am_path(directory, subcorpus):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=SmartFormatter)
+    parser.add_argument("-c", "--category", help="category to evaluate Choices:" + get_formatted_category_names())
     parser.add_argument("-a", "--am_path", help="path to AM parser output folder: parent of all the intermediary_files folders")
     parser.add_argument("-p", "--pred_path", help="path to AM parser predicted AMR file (e.g. full_corpus.txt)")
     parser.add_argument("-g", "--gold_path", help="path to gold file (optional if GrAPES category: will use corpus/corpus.txt)", default=None)
     parser.add_argument("-o", "--output_path", help="path to write Vulcan pickle file", default=None)
-    parser.add_argument("-c", "--category", help="category to evaluate Choices:" + get_formatted_category_names())
     args = parser.parse_args()
 
 
@@ -135,14 +137,6 @@ if __name__ == '__main__':
 
     print(info.display_name)
     gold_path, predictions_path, use_subcorpus = get_gold_path_based_on_info(args.gold_path, info, instance_info)
-
-    # if is_testset_category(info):
-    #     gold_amrs = penman.load(instance_info.gold_testset_path())
-    #     category_identifier = "testset"
-    # else:
-    #     print("GrAPES")
-    #     gold_amrs = penman.load(instance_info.gold_grapes_path())
-    #     category_identifier = info.subcorpus_filename
 
     gold_amrs = penman.load(gold_path)
     predicted_amrs = penman.load(predictions_path)
@@ -162,10 +156,6 @@ if __name__ == '__main__':
     print(len(gold_amrs), len(predicted_amrs) , len(amconll_sents))
 
     dummy_evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
-    print(len(dummy_evaluator.gold_amrs), len(dummy_evaluator.predicted_amrs), len(amconll_sents))
-
-    ids = dummy_evaluator.get_all_gold_ids()
-    print(len(ids))
 
     filtered_amconll_path = f"{root_dir_here}/error_analysis/{info.name}.amconll"
     write_conll(filtered_amconll_path, amconll_sents)
@@ -173,7 +163,8 @@ if __name__ == '__main__':
 
     pickle_path = args.output_path if args.output_path is not None else f"{root_dir_here}/error_analysis/amparser/{info.name}_vulcan.pickle"
 
-    create_pickle(gold_amrs, predicted_amrs, filtered_amconll_path, pickle_path)
+    create_pickle(dummy_evaluator.gold_amrs, dummy_evaluator.predicted_amrs, filtered_amconll_path, pickle_path)
+    print("wrote Vulcan pickle to", pickle_path)
 
 
 
