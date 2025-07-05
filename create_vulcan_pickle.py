@@ -144,69 +144,6 @@ def get_graph_ids_from_tsv(graph_id_column, subcategory_tsv):
     return ids
 
 
-def get_am_dependency_trees(amconll, ids=None):
-    trees = []
-    filtered_am_sentences = []
-    # read in the amconll file of parser predictions
-    with open(amconll, "r", encoding="utf-8") as f:
-        amconll_sents = [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
-        # list of lists of pairs (datatype, content)
-        # each word is a list of the entries for the table, paired with their data type:
-        # e.g. [("token", "dog"),("graph", <graph for dog>)]
-        for amconll_sent in amconll_sents:
-            if ids is None or amconll_sent.attributes["id"] in ids:
-                filtered_am_sentences.append(amconll_sent)
-                tagged_sentence = []
-                for entry in amconll_sent.words:
-                    tagged_token = []
-                    tagged_sentence.append(tagged_token)
-
-                    tagged_token.append(("token", entry.token))
-                    if entry.fragment == "_":
-                        # empty graph constants are treated by Vulcan as tokens, not graphs
-                        tagged_token.append(("token", entry.fragment))
-                    else:
-                        # relexicalise the delexicalised graph constant
-                        tagged_token.append(("graph_string", relabel_supertag(entry.fragment, entry)))
-                trees.append(tagged_sentence)
-    return trees, filtered_am_sentences
-
-
-def relabel_supertag(supertag, amconll_entry: Entry):
-    """
-    Relexicalise a graph fragment, replacing --LEX-- with the correct label from the amconll entry.
-    Args:
-        supertag: str: the graph in string form.
-        amconll_entry: amconll.Entry from which the new label is taken
-
-    Returns:
-        The updated graph in string form, also without its <root> source label.
-    """
-    # Regex for SGraph sources
-    SOURCE_PATTERN = re.compile(r"(?P<source><[a-zA-Z0-9]+>)")
-    if supertag == "_" or supertag == "NONE":
-        return supertag
-    else:
-        supertag = supertag.replace("--LEX--", amconll_entry.lexlabel).replace("$LEMMA$", amconll_entry.lemma) \
-            .replace("$FORM$", amconll_entry.token)
-        supertag = supertag.replace("<root>", "")
-        return SOURCE_PATTERN.sub(r" / \g<source>", supertag)
-
-def make_dependency_tree(amconll_sent):
-    """
-    Given an amconll sentence, return a list of edges (source index, target index, label)
-    :param amconll_sent: amconll.AMSentence: parsed sentence.
-    :return: list of triples (int, int, str)
-    """
-    ret = []
-    for i, entry in enumerate(amconll_sent.words):
-        if entry.label not in ["IGNORE", "ROOT"]:
-            # TODO why are you subtracting 1?
-            ret.append((entry.head - 1, i, entry.label))
-    ret += [(-1, i, "ROOT") for i, entry in enumerate(amconll_sent.words) if entry.label == "ROOT"]
-    return ret
-
-
 
 
 def main(args):

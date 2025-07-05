@@ -8,6 +8,8 @@ class EvaluationInstanceInfo:
     run_smatch: bool = False
 
     # paths
+    absolute_path_to_predictions_file: str = None
+    absolute_path_to_gold_file: str = None
     path_to_grapes_predictions_file_from_root: str = None
     subcorpus_predictions_directory_path_from_root: str = None
     full_pred_grapes_name: str = "full_corpus"
@@ -40,7 +42,9 @@ class EvaluationInstanceInfo:
 
     # path functions
     def gold_testset_path(self):
-        if self.path_to_gold_testset_file_from_root is None:
+        if self.absolute_path_to_gold_file is not None:
+            return self.absolute_path_to_gold_file
+        elif self.path_to_gold_testset_file_from_root is None:
             if self.gold_testset_directory_path_from_root is not None:
                 return f"{self.root_dir}/{self.gold_testset_directory_path_from_root}/{self.gold_testset_name}.txt"
             else:
@@ -52,6 +56,8 @@ class EvaluationInstanceInfo:
         if self.subcorpus_predictions_directory_path_from_root is None:
             if self.path_to_grapes_predictions_file_from_root is not None:
                 return os.path.dirname(self.path_to_grapes_predictions_file_from_root)
+            elif self.absolute_path_to_predictions_file is not None:
+                return os.path.dirname(self.absolute_path_to_predictions_file)
             else:
                 return None
         else:
@@ -74,8 +80,9 @@ class EvaluationInstanceInfo:
         return f"{self.root_dir}/error_analysis/{self.parser_name}"
 
     def testset_pred_file_path(self):
-        """default full_corpus.txt in same directory as subcorpora"""
-        if self.path_to_full_testset_predictions_file_from_root is not None:
+        if self.absolute_path_to_predictions_file is not None:
+            return self.absolute_path_to_predictions_file
+        elif self.path_to_full_testset_predictions_file_from_root is not None:
             return f"{self.root_dir}/{self.path_to_full_testset_predictions_file_from_root}"
         else:
             return None
@@ -89,3 +96,12 @@ class EvaluationInstanceInfo:
 
     def gold_grapes_path(self):
         return f"{self.root_dir}/corpus/corpus.txt"
+
+    def pred_grapes_file_path(self):
+        """default full_corpus.txt in same directory as subcorpora"""
+        if self.absolute_path_to_predictions_file is not None:
+            return self.absolute_path_to_predictions_file
+        elif self.path_to_grapes_predictions_file_from_root is not None:
+            return f"{self.root_dir}/{self.path_to_grapes_predictions_file_from_root}"
+        else:
+            return None

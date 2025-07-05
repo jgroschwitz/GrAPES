@@ -49,8 +49,8 @@ def parse_args():
 
 def instance_info_from_args(args):
     instance_instructions = EvaluationInstanceInfo(
-        path_to_grapes_predictions_file_from_root=args.predicted_amr_file,
-        path_to_gold_testset_file_from_root=args.gold_amr_file,
+        absolute_path_to_predictions_file=args.predicted_amr_file,
+        absolute_path_to_gold_file=args.gold_amr_file,
         do_error_analysis=args.error_analysis,
         parser_name=args.parser_name,
         run_smatch=args.smatch,
@@ -63,29 +63,10 @@ def main():
 
     eval_class, info = category_name_to_set_class_and_metadata[args.category_name]
 
-    predictions_path = instance_info.path_to_grapes_predictions_file_from_root
-    prediction_file_name = os.path.basename(predictions_path)[:-4]
-    if info.filename_belongs_to_subcategory(prediction_file_name):
-        print("Using predicted AMR subcorpus file", predictions_path)
-        use_subcorpus = True
-        instance_info.given_single_file = True
-    else:
-        print("Presumably this is the full GrAPES or AMR 3.0 testest parser output file: ", predictions_path)
-        use_subcorpus = False
 
-    if is_testset_category(info):
-        if instance_info.gold_testset_path() is None:
-            print(f"No gold AMR 3.0 testset file provided for testset category {info.name}; exiting")
-            exit(1)
+    gold_path, predictions_path, use_subcorpus = get_gold_path_based_on_info(args.gold_amr_file, info, instance_info)
 
-    if args.gold_amr_file is not None:
-        gold_amrs = load(args.gold_amr_file)
-    elif use_subcorpus:
-        print("using gold subcorpus", prediction_file_name)
-        gold_amrs = load(f"corpus/subcorpora/{prediction_file_name}.txt")
-    else:
-        gold_amrs = load(instance_info.gold_grapes_path())
-
+    gold_amrs = load(gold_path)
     predicted_amrs = load_predictions(predictions_path)
 
     evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
@@ -142,6 +123,28 @@ def main():
             print("ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
                   "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
             print(row)
+
+
+def get_gold_path_based_on_info(given_gold_path, info, instance_info):
+    predictions_path = instance_info.pred_grapes_file_path()
+    prediction_file_name = os.path.basename(predictions_path)[:-4]
+    if info.filename_belongs_to_subcategory(prediction_file_name):
+        use_subcorpus = True
+        instance_info.given_single_file = True
+    else:
+        use_subcorpus = False
+    if is_testset_category(info):
+        if instance_info.gold_testset_path() is None:
+            print(f"No gold AMR 3.0 testset file provided for testset category {info.name}; exiting")
+            exit(1)
+    if given_gold_path is not None:
+        gold_path = given_gold_path
+    elif use_subcorpus:
+        print("using gold subcorpus", prediction_file_name)
+        gold_path = f"{instance_info.root_dir}/corpus/subcorpora/{prediction_file_name}.txt"
+    else:
+        gold_path = instance_info.gold_grapes_path()
+    return gold_path, predictions_path, use_subcorpus
 
 
 def load_predictions(predictions_path, encoding="utf8"):
