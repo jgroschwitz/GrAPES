@@ -6,14 +6,13 @@ import sys
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_copyrighted_data
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
-from evaluation.novel_corpus.structural_generalization import size_mappers
 from evaluation.util import num_to_score_with_preceding_0
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from prettytable import PrettyTable
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
-    CategoryEvaluation, EVAL_TYPE_NONE, EVAL_TYPE_NA, STRUC_GEN
+    CategoryEvaluation, EVAL_TYPE_NONE, EVAL_TYPE_NA, STRUC_GEN, size_mappers
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
     is_testset_category, bunch2subcategory
 
