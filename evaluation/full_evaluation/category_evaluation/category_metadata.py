@@ -468,4 +468,4 @@ def is_testset_category(info):
 
 # print(list(bunch_number2name.values()))
 
-print(bunch2subcategory)
+# print(bunch2subcategory)

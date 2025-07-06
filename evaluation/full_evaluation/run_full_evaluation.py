@@ -27,8 +27,8 @@ else:
 
 # update per use if desired
 do_error_analysis = True
-run_all_smatch = False
-run_full_corpus_smatch = False
+run_all_smatch = True
+run_full_corpus_smatch = True
 
 # ERROR HANDLING GLOBAL
 # raise an error if any category doesn't work
@@ -638,15 +638,18 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     # Smatch on the full corpora
     if instance_info.run_full_corpus_smatch:
         print("Running Smatch...")
-        smatch = compute_smatch_f_from_graph_lists(gold_graphs_grapes, predicted_graphs_grapes)
-        smatch_test = compute_smatch_f_from_graph_lists(gold_graphs_testset, predicted_graphs_testset)
+        if use_grapes:
+            smatch = compute_smatch_f_from_graph_lists(gold_graphs_grapes, predicted_graphs_grapes)
+            rows = make_rows_for_results("Overall on novel GrAPES corpus", True, True,
+                                         [[None, "Smatch", EVAL_TYPE_F1, smatch[2], len(gold_graphs_grapes)]], "", "")
+            results.extend(rows)
+        if use_testset:
+            smatch_test = compute_smatch_f_from_graph_lists(gold_graphs_testset, predicted_graphs_testset)
+            rows = make_rows_for_results("Overall on AMR 3.0 testset", True, True,
+                                         [[None, "Smatch", EVAL_TYPE_F1, smatch_test[2], len(gold_graphs_testset)]], "", "")
+            results.extend(rows)
         print("Smatch done")
-        rows = make_rows_for_results("Overall on novel GrAPES corpus", True, True,
-                                     [[None, "Smatch", EVAL_TYPE_F1, smatch[2], len(gold_graphs_grapes)]], "")
-        results.extend(rows)
-        rows = make_rows_for_results("Overall on AMR 3.0 testset", True, True,
-                                     [[None, "Smatch", EVAL_TYPE_F1, smatch_test[2], len(gold_graphs_testset)]], "")
-        results.extend(rows)
+
 
     if instance_info.run_smatch:
         print("We will run Smatch on all categories. This may take a while...\n"
