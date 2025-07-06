@@ -17,9 +17,16 @@ echo "##########"
 cd ../../scripts/latex || exit
 
 csvs=()
-for parser in "$@"; do csvs+=("../../data/processed/results/from_run_full_evaluation/$parser.csv"); done
+average_csvs=()
+for parser in "$@"; do csvs+=("../../data/processed/results/from_run_full_evaluation/$parser.csv");
+average_csvs+=(../../data/processed/results/from_run_full_evaluation/"$parser"_averages.csv); done
 
-PYTHONPATH=../.. python csv2latex.py -o "../../data/processed/results/latex/$parser/table.tex" --print_headers "${csvs[@]}"
+# no category names and averages in big table:
+# PYTHONPATH=../.. python csv2latex.py -o "../../data/processed/results/latex/$parser/table.tex" --print_headers "${csvs[@]}"
+# with category names and averages in big table:
+PYTHONPATH=../.. python csv2latex.py -o "../../data/processed/results/latex/$parser/table.tex" --print_headers "${csvs[@]}" -a "${average_csvs[@]}"
+
+
 
 cd ../../data/processed/results/latex || exit
 

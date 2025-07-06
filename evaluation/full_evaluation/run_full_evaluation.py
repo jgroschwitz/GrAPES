@@ -181,6 +181,7 @@ def create_results_pickles():
             divisors.append(divisors_here)
 
         print("\nRESULTS FOR", parser_name)
+        results_path, pickle_path, by_size_pickle_path = make_results_path()
 
         # print("sums", sums, divisors)
         # for total, divisor in zip(sums, divisors):
@@ -196,7 +197,6 @@ def create_results_pickles():
             csv.writer(f).writerows(averages_table.rows)
 
 
-        results_path, pickle_path, by_size_pickle_path = make_results_path()
         if evaluation_instance_info.do_error_analysis:
             print("Error analysis pickles in", f"{root_dir_here}/error_analysis/{parser_name}/")
         table = pretty_print_structural_generalisation_by_size(generalisation_by_size)
