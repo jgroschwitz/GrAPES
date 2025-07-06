@@ -69,8 +69,8 @@ def get_size(gold_graph, mapper):
 
 def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], path_to_pickle: str):
     """
-    Read in AM Parser output files and create a vulcan-readable pickle
-    Pickle contains AM dependency tree, including graph constants, and gold and predicted graphs.
+    Create a vulcan-readable pickle
+    Pickle contains gold and predicted graphs, sentence, graph ID, and, if sizeis defined, the size
     Args:
         gold_graphs: the gold graphs, read in and filtered to contain exactly the relevant ones
         predicted_graphs: the predictions, same order as gold
@@ -118,6 +118,9 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, error_analys
     out_dir = f"{out_path}/{evaluator.instance_info.parser_name}/vulcan_correct_and_incorrect"
     os.makedirs(out_dir, exist_ok=True)
     for key in error_eval_dict:
+        if len(error_eval_dict[key]) == 0:
+            print("no graphs for category", key)
+            continue
         golds = []
         preds = []
         for gold, pred in zip(evaluator.gold_amrs, evaluator.predicted_amrs):
@@ -125,6 +128,8 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, error_analys
             if graph_id in error_eval_dict[key]:
                 golds.append(gold)
                 preds.append(pred)
+        if len(golds) == 0:
+            print("no matching graphs for", key)
         create_pickle(
             golds,
             preds,
@@ -134,7 +139,7 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, error_analys
 if __name__ == "__main__":
     command_line_parser = argparse.ArgumentParser()
     command_line_parser.add_argument("-p", "--predictions_path", help="Path to the predictions file", required=True)
-    command_line_parser.add_argument("-g", "--gold_path", help="Path to the gold file", required=True)
+    command_line_parser.add_argument("-g", "--gold_path", default=None, help="Path to the gold file. Optional for GrAPES categories (will use corpus/corpus.txt)", required=False)
     command_line_parser.add_argument("-o", "--output_path", help="Path to the output folder", default="error_analysis")
     command_line_parser.add_argument("-c", "--category", help="Name of the category to make a pickl for",
                                      required=False, default=None)
@@ -152,11 +157,15 @@ if __name__ == "__main__":
     pickle_dir = args.output_path
     os.makedirs(pickle_dir, exist_ok=True)
 
+    if args.gold_path is None:
+        gold_path = "corpus/corpus.txt"
+    else:
+        gold_path = args.gold_path
 
     if args.category is None and not args.error_analysis:
         print("Doing all")
         pickle_path = f"{pickle_dir}/{args.parser_name}/{os.path.basename(args.predictions_path)[:-4]}_vulcan.pickle"
-        golds = penman.load(args.gold_path)
+        golds = penman.load(gold_path)
         preds = penman.load(args.predictions_path)
         create_pickle(golds, preds, pickle_path)
     else:
@@ -168,13 +177,19 @@ if __name__ == "__main__":
                     print("parser_name must be provided if no error analysis pickle path is given")
                     exit(1)
                 else:
-                    error_analysis_pickle_path = f"error_analysis/{args.parser_name}/dictionaries"
+                    error_analysis_pickle_dir = f"error_analysis/{args.parser_name}/dictionaries"
+                    error_analysis_pickle_path = None
+
             else:
                 error_analysis_pickle_path = args.error_analysis_pickle_path
+                error_analysis_pickle_dir = None
 
             if args.category is None:
+                if error_analysis_pickle_dir is None:
+                    print("category must be provided if no error analysis pickle path is given")
+                    exit(1)
                 print("Making pickles for all categories in given file")
-                gold_amrs = load(args.gold_path)
+                gold_amrs = load(gold_path)
                 predicted_amrs = load(args.predictions_path)
 
                 for category in category_name_to_set_class_and_metadata:
@@ -183,20 +198,22 @@ if __name__ == "__main__":
                                                          category, args.parser_name)
                         create_pickle_for_error_analysis(
                             evaluator,
-                            f"{error_analysis_pickle_path}/{category}.pickle",
+                            f"{error_analysis_pickle_dir}/{category}.pickle",
                             args.output_path)
                     except:
                         pass
             else:
-                evaluator = make_dummy_evaluator(args.predictions_path, args.gold_path,
+                evaluator = make_dummy_evaluator(args.predictions_path, gold_path,
                                                  args.category, args.parser_name)
+                if error_analysis_pickle_path is None:
+                    error_analysis_pickle_path = f"{error_analysis_pickle_dir}/{args.category}.pickle"
                 create_pickle_for_error_analysis(
                     evaluator,
-                    f"{error_analysis_pickle_path}/{args.category}.pickle",
+                    error_analysis_pickle_path,
                     args.output_path)
 
         else:
             pickle_path = f"{pickle_dir}/{args.category_name}_vulcan.pickle"
-            evaluator = make_dummy_evaluator(args.predictions_path, args.gold_path,
+            evaluator = make_dummy_evaluator(args.predictions_path, gold_path,
                                              args.category, args.parser_name)
             create_pickle(evaluator.gold_amrs, evaluator.predicted_amrs, pickle_path)

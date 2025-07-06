@@ -44,6 +44,8 @@ class CategoryEvaluation:
         """
         self.gold_amrs = gold_amrs
         self.predicted_amrs = predicted_amrs
+        if len(gold_amrs) != len(predicted_amrs):
+            raise ValueError(f"Must have the same number of Gold and Predicted graphs, but we have {len(gold_amrs)} gold and {len(predicted_amrs)} predicted.")
         self.root_dir = instance_info.root_dir
         self.corpus_path = f"{self.root_dir}/corpus"
         self.rows = []
@@ -61,6 +63,9 @@ class CategoryEvaluation:
             self.predicted_amrs.extend(extra_pred)
 
         self.store_filtered_graphs()
+        if len(self.gold_amrs) == 0:
+            raise ValueError("None of the given graphs belong to this category! Check that you provided the AMR 3.0 "
+                             "testset for a testset category and a GrAPES corpus for a GrAPES-specific category.")
 
         # build empty Results
         extra_fields = self.category_metadata.additional_fields
@@ -178,7 +183,6 @@ class CategoryEvaluation:
     def filter_graphs(self):
         """
         Filter by TSV or id containing info.subcorpus_filename
-        If neither works (neither true or we get 0 graphs this way) just return the whole stored graph lists.
         Returns: filtered_golds, filtered_predicted
         """
         filtered_golds = []
@@ -243,13 +247,14 @@ class CategoryEvaluation:
 
     def get_predictions_for_comparison(self, predicted_amr):
         """
-        implement for a handy way to get something other than just hte predicted amr for comparison to the target
+        implement for a handy way to get something other than just the predicted AMR for comparison to the target
         """
         return None
 
     def _get_all_results(self):
         """
-        Loops through graphs and updates results for each instance to evaluate
+        Loops through graphs and updates results for each instance to evaluate.
+        Calls the (often quite category-specific) self.update_results.
         """
         if self.category_metadata.tsv is not None:
             # read in the TSV to get the targets for comparison
@@ -264,15 +269,13 @@ class CategoryEvaluation:
                         # if we have a TSV, update_results is per item in the TSV
                         self.update_results(gold_amr, predicted_amr, target, predictions_for_comparison)
         else:
-            self.gold_amrs, self.predicted_amrs = self.filter_graphs()
-            assert len(self.gold_amrs) > 0, "No matching AMRs in given corpus"
             for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
                 # if no TSV, update_results is per graph pair
                 self.update_results(gold_amr, predicted_amr, None, None)
 
     def update_results(self, gold_amr, predicted_amr, target, predictions_for_comparison):
         """
-        Default: exact match, modulo edge labels and senses
+        Default: exact match, modulo edge labels, edge direction, root, and PropBank senses
         Args:
             gold_amr: Graph
             predicted_amr: Graph

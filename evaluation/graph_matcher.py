@@ -180,11 +180,11 @@ class SubgraphMatcher:
 def contains_subgraph_modulo_isomorphy(graph: Graph, subgraph: Graph,
                                        match_edge_labels: bool = True, match_senses: bool = True) -> bool:
     """
-    Takes a graph and a potential subgraph, and returns true if the full graph contains the subgraph (modulo isomorphy).
+    Takes a graph and a potential subgraph, and returns true if the full graph contains the subgraph (modulo isomorphy, root).
     :param graph:
     :param subgraph:
     :param match_edge_labels: if false, edge labels and edge directions are ignored
-    :param match_senses: if false, Propbank senses are ignored
+    :param match_senses: if false, PropBank senses are ignored
     :return:
     """
     matcher = SubgraphMatcher(graph, subgraph, match_edge_labels=match_edge_labels, match_senses=match_senses)

@@ -100,9 +100,13 @@ def create_results_pickles():
             # print_unlabeled_edge_attachment=True,
             parser_name=parser_name,
         )
-        testset_parser_outs = load(evaluation_instance_info.default_testset_pred_file_path())
-        grapes_parser_outs = load(evaluation_instance_info.full_grapes_pred_file_path())
-        # os.makedirs(evaluation_instance_info.results_directory_path(), exist_ok=True)
+        try:
+            testset_parser_outs = load(evaluation_instance_info.default_testset_pred_file_path())
+            grapes_parser_outs = load(evaluation_instance_info.full_grapes_pred_file_path())
+            # os.makedirs(evaluation_instance_info.results_directory_path(), exist_ok=True)
+        except FileNotFoundError as e:
+            print(f"\n!! {parser_name} outputs not found. Check your parser outputs are in data/processed/parser_outputs/<parser_name>-output/ and named full_corpus.txt (for GrAPES) and testset.txt (for the original AMR 3.0 dataset)\n")
+            raise(e)
 
         assert len(testset_parser_outs) == len(gold_amrs)
         assert len(grapes_parser_outs) == len(gold_grapes)

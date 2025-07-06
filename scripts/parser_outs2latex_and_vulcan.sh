@@ -1,6 +1,14 @@
 # if everything is in its default location with default names, this script will take you from parser names to:
 # CSV files and pickles of results in data/processed/results/from_run_full_evaluation
-# LaTeX tables in data/processed/results
+# LaTeX tables in data/processed/results > sandbox.pdf
+# Vulcan-readable pickles for error analysis in error_analysis/<parser_name>/vulcan_correct_and_incorrect/
+if [[ $1 = "-h" ]] || [[ $1 = "--help" ]]; then echo "Enter parser names as arguments separated by spaces"; exit; fi
+
+if [ $# -eq 0 ]; then
+    >&2 echo "Provide the name of at least one parser"
+    exit 1
+fi
+
 
 echo "##########"
 echo "EVALUATING"
@@ -9,6 +17,12 @@ echo "##########"
 
 cd ../evaluation/full_evaluation || exit
 PYTHONPATH=../.. python run_full_evaluation.py "$@"
+
+ret=$?
+if [ $ret -ne 0 ]; then
+     exit
+fi
+
 
 printf "\n\n\n##########\n"
 echo "   LATEX"
@@ -26,7 +40,10 @@ average_csvs+=(../../data/processed/results/from_run_full_evaluation/"$parser"_a
 # with category names and averages in big table:
 PYTHONPATH=../.. python csv2latex.py -o "../../data/processed/results/latex/$parser/table.tex" --print_headers "${csvs[@]}" -a "${average_csvs[@]}"
 
-
+ret=$?
+if [ $ret -ne 0 ]; then
+     exit
+fi
 
 cd ../../data/processed/results/latex || exit
 
