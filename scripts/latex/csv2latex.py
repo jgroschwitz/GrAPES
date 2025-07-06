@@ -38,7 +38,7 @@ def main():
     for csv_file in args.csv_files:
         with open(csv_file, "r") as f:
             csv_reader = csv.reader(f)
-            csv_contents.append(list(csv_reader))
+            csv_contents.append(list(csv_reader)[1:]) # skip header
 
     names = [os.path.basename(csv_file)[:-4] for csv_file in args.csv_files]
 

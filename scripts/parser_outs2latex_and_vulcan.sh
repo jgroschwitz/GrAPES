@@ -19,7 +19,7 @@ cd ../../scripts/latex || exit
 csvs=()
 for parser in "$@"; do csvs+=("../../data/processed/results/from_run_full_evaluation/$parser.csv"); done
 
-PYTHONPATH=../.. python csv2latex.py "${csvs[@]}" -o "../../data/processed/results/latex/$parser/table.tex"
+PYTHONPATH=../.. python csv2latex.py "${csvs[@]}" -o "../../data/processed/results/latex/$parser/table.tex" --print_headers
 
 cd ../../data/processed/results/latex || exit
 

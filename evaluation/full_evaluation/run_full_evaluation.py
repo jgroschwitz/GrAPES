@@ -226,7 +226,7 @@ def create_results_pickles():
         # print(all_result_rows)
         # print_full_pretty_table(all_result_rows)
         csv_path = f"{results_path}/{parser_name}.csv"
-        csv_rows = []
+        csv_rows = [["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"]]
         for row in all_result_rows:
             if len(row) > 1:
                 if row[0] is None:
