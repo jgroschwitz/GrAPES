@@ -16,7 +16,7 @@ from evaluation.full_evaluation.category_evaluation.category_evaluation import E
     CategoryEvaluation, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
     is_testset_category, bunch2subcategory, bunch_number2name, get_bunch_name_for_number, \
-    get_bunch_categories_for_number
+    get_bunch_categories_for_number, get_bunch_display_name_for_number
 
 args = sys.argv
 if len(args) > 1:
@@ -276,8 +276,9 @@ def display_and_store_averages(divisors, parser_name, results_path, sums):
     averages_table = PrettyTable(
         field_names=["Set", "Average"])
     averages_table.align = "l"
-    for bunch, total, divisor in zip(bunch2subcategory.keys(), sums, divisors):
-        averages_table.add_row([bunch, int((total / divisor) * 100)])
+    for bunch, (total, divisor) in enumerate(zip(sums, divisors)):
+        if divisor > 0:
+            averages_table.add_row([get_bunch_display_name_for_number(bunch+1), int((total / divisor) * 100)])
     print(averages_table)
     with open(f"{results_path}/{parser_name}_averages.csv", "w") as f:
         csv.writer(f).writerows(averages_table.rows)
@@ -677,6 +678,17 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                         print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in"
                               f" {instance_info.predictions_directory_path()}")
                         results_here = run_single_file(eval_class, info, instance_info)
+                        for r in results_here:
+                            metric_name = r[1]
+
+                            is_sanity_check_row = is_sanity_check(info)
+                            is_prereq_row = "prereq" in metric_name.lower()
+                            is_smatch_row = "smatch" in metric_name.lower()
+                            is_unlabelled_row = "unlabel" in metric_name.lower()
+                            exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row
+                            if not exclude_from_average:
+                                sum_here += r[3] / r[4]
+                                divisors_here += 1
                         rows = make_rows_for_results(category_name, instance_info.print_f1(),
                                                      instance_info.print_unlabeled_edge_attachment,
                                                      results_here, i)
@@ -684,7 +696,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     except Exception as e:
                         print(f"Can't get category {category_name}, error: {e}")
                         if instance_info.fail_ok > -1:
-                            results.append(make_empty_result(set_name, info.display_name))
+                            results.append(make_empty_result(i, set_name, info.display_name))
                         else:
                             raise e
             else:
@@ -698,23 +710,25 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                 evaluator = eval_class(gold_graphs, predicted_graphs, info, instance_info)
                 results_here = evaluate(evaluator, info, instance_info)
 
+                for r in results_here:
+                    metric_name = r[1]
+
+                    is_sanity_check_row = is_sanity_check(info)
+                    is_prereq_row = "prereq" in metric_name.lower()
+                    is_smatch_row = "smatch" in metric_name.lower()
+                    is_unlabelled_row = "unlabel" in metric_name.lower()
+                    exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row
+                    if not exclude_from_average:
+                        sum_here += r[3] / r[4]
+                        divisors_here += 1
+
                 rows = make_rows_for_results(category_name, instance_info.print_f1(),
                                              instance_info.print_unlabeled_edge_attachment, results_here, i, set_name)
                 results.extend(rows)
                 if info.subtype == STRUC_GEN and info.subcorpus_filename in size_mappers:
                     by_size = evaluator.get_results_by_size()
                     struct_gen_by_size[info.display_name] = by_size
-            for r in results_here:
-                metric_name = r[1]
 
-                is_sanity_check_row = is_sanity_check(info)
-                is_prereq_row = "prereq" in metric_name.lower()
-                is_smatch_row = "smatch" in metric_name.lower()
-                is_unlabelled_row = "unlabel" in metric_name.lower()
-                exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row
-                if not exclude_from_average:
-                    sum_here += r[3] / r[4]
-                    divisors_here += 1
 
         sums.append(sum_here)
         divisors.append(divisors_here)
@@ -722,8 +736,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     return results, struct_gen_by_size, sums, divisors
 
 
-def make_empty_result(set_name, category_name):
-    return [set_name[0], category_name, "N/A", "N/A", "N/A", "N/A", "N/A"]
+def make_empty_result(set_id, set_name, category_name):
+    return [set_id, set_name, category_name, "N/A", "N/A", "N/A", "N/A", "N/A"]
 
 
 def do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):

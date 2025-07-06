@@ -64,6 +64,8 @@ def get_bunch_categories_for_number(n):
 def get_bunch_categories_for_name(name):
     return bunch2subcategory[name]
 
+def get_bunch_display_name_for_number(n):
+    return f"{n}. {get_bunch_name_for_number(n)}"
 
 # set_names_with_category_names = [
 #     ("1. Pragmatic reentrancies", ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"]),
