@@ -106,8 +106,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
         if not do_this_category(bunch, set_name):
             continue
         print("\nEvaluating " + set_name)
-        n, name = get_bunch_number_and_name(set_name)
-        results.append([n, name] + [""]*5)
+        # n, name = get_bunch_number_and_name(set_name)
+        # results.append([n, name] + [""]*5)
         for category_name in category_names:
             eval_class, info = category_name_to_set_class_and_metadata[category_name]
             instance_info.given_single_file = False

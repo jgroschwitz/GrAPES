@@ -15,7 +15,7 @@ from penman import load
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
     CategoryEvaluation, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
-    is_testset_category, bunch2subcategory
+    is_testset_category, bunch2subcategory, bunch_number2name
 
 args = sys.argv
 if len(args) > 1:
@@ -137,8 +137,8 @@ def create_results_pickles():
         for bunch in sorted(bunch2subcategory.keys()):
             sum_here = 0
             divisors_here = 0
-            n, name = get_bunch_number_and_name(bunch)
-            all_result_rows.append([n, name] + [""] * 5)
+            # n, name = get_bunch_number_and_name(bunch)
+            # all_result_rows.append([n, name] + [""] * 5)
             # all_result_rows.append([bunch])
             print("Doing Bunch", bunch)
 
@@ -208,8 +208,19 @@ def create_results_pickles():
         print_table = PrettyTable(
             field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
         print_table.align = "l"
-        for row in all_result_rows:
-            print_table.add_row(row)
+        current_set = 0
+        for i, row in enumerate(all_result_rows):
+            previous_set = current_set
+            current_set = int(row[0])
+            if current_set != previous_set:
+                total = sums[current_set - 1]
+                divisor = divisors[current_set - 1]
+                print_table.add_row([row[0], bunch_number2name[current_set], "Average", int((total / divisor)*100), "", "", ""])
+            try:
+                print_divider = int(all_result_rows[i + 1][0]) > current_set
+            except IndexError:
+                print_divider = False
+            print_table.add_row(row, divider=print_divider)
         print(print_table)
 
         # print(all_result_rows)

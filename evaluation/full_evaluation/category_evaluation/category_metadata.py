@@ -14,6 +14,19 @@ from evaluation.full_evaluation.category_evaluation.word_disambiguation import W
 from evaluation.full_evaluation.category_evaluation.pp_attachment import PPAttachment
 from evaluation.util import SANITY_CHECK
 
+
+bunch_number2name = {
+    1: "Pragmatic reentrancies",
+    2: "Unambiguous reentrancies",
+    3: "Structural generalization",
+    4: "Rare and unseen words",
+    5: "Special entities",
+    6: "Entity classification and linking",
+    7: "Lexical disambiguations",
+    8: "Edge attachments",
+    9: "Non-trivial word-to-node relations"
+}
+
 set_names_with_category_names = [
     ("1. Pragmatic reentrancies", ["pragmatic_coreference_testset", "pragmatic_coreference_winograd"]),
     ("2. Unambiguous reentrancies", ["syntactic_gap_reentrancies", "unambiguous_coreference"]),
