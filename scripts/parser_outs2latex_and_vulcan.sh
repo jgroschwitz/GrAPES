@@ -33,9 +33,9 @@ cd ../../../..
 
 for parser in "$@"; do
   printf "\n ** GrAPES corpus ** \n"
-python create_vulcan_pickle.py -g corpus/corpus.txt -p "data/processed/parser_outputs/$parser-output/full_corpus.txt" -e -n "$parser" >> error_analysis/log 2>&1
+python create_vulcan_pickle.py -g corpus/corpus.txt -p "data/processed/parser_outputs/$parser-output/full_corpus.txt" -e -n "$parser" # >> error_analysis/log 2>&1
   printf "\n ** Testset ** "
-python create_vulcan_pickle.py -g "data/raw/gold/test.txt" -p "data/processed/parser_outputs/$parser-output/testset.txt" -e -n "$parser"  >> error_analysis/log 2>&1
-echo "Wrote pickles to error_analysis/$parser/correct_and_incorrect/"
+python create_vulcan_pickle.py -g "data/raw/gold/test.txt" -p "data/processed/parser_outputs/$parser-output/testset.txt" -e -n "$parser"  # >> error_analysis/log 2>&1
+echo "Wrote pickles to error_analysis/$parser/vulcan_correct_and_incorrect/"
 
 done

@@ -80,7 +80,10 @@ def main():
 
             is_sanity_check_row = "sanity" in dataset_name.lower()
             is_prereq_row = "prereq" in metric_name.lower()
-            if is_sanity_check_row or is_prereq_row:
+            is_smatch_row = "smatch" in metric_name.lower()
+            is_still_long_lists = "precision" in metric_name.lower() or "unseen" in metric_name.lower()
+            is_same_category = is_smatch_row or is_prereq_row or is_sanity_check_row or is_still_long_lists
+            if is_same_category:
                 pass
             else:
                 shade_row = not shade_row

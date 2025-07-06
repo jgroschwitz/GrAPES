@@ -3,18 +3,17 @@ import os
 import pickle
 import sys
 
-from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
-from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_copyrighted_data
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_copyrighted_data, \
+    is_sanity_check
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
-from evaluation.util import num_to_score_with_preceding_0
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from prettytable import PrettyTable
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
-    CategoryEvaluation, EVAL_TYPE_NONE, EVAL_TYPE_NA, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION
+    CategoryEvaluation, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
     is_testset_category, bunch2subcategory
 
@@ -27,8 +26,8 @@ else:
 
 # update per use if desired
 do_error_analysis = True
-run_all_smatch = True
-run_full_corpus_smatch = True
+run_all_smatch = False
+run_full_corpus_smatch = False
 
 # ERROR HANDLING GLOBAL
 # raise an error if any category doesn't work
@@ -114,6 +113,8 @@ def create_results_pickles():
 
         all_result_rows = []
         parser_name2rows[parser_name] = all_result_rows
+        sums = []
+        divisors = []
 
         if run_full_corpus_smatch:
             print("Running Smatch...")
@@ -134,6 +135,8 @@ def create_results_pickles():
             print("We will run Smatch on all categories. This may take a while...\n"
                   " to avoid this, stop and change run_all_smatch to False.")
         for bunch in sorted(bunch2subcategory.keys()):
+            sum_here = 0
+            divisors_here = 0
             n, name = get_bunch_number_and_name(bunch)
             all_result_rows.append([n, name] + [""] * 5)
             # all_result_rows.append([bunch])
@@ -160,9 +163,36 @@ def create_results_pickles():
                 results_here = evaluate(evaluator, info, evaluation_instance_info)
                 rows = make_rows_for_results(subcategory, evaluation_instance_info.print_f1(),
                                              evaluation_instance_info.print_unlabeled_edge_attachment, results_here, bunch)
+
+                for r in results_here:
+                    metric_name = r[1]
+
+                    is_sanity_check_row = is_sanity_check(info)
+                    is_prereq_row = "prereq" in metric_name.lower()
+                    is_smatch_row = "smatch" in metric_name.lower()
+                    is_unlabelled_row = "unlabel" in metric_name.lower()
+                    exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row
+                    if not exclude_from_average:
+                        sum_here += r[3] / r[4]
+                        divisors_here += 1
+
                 all_result_rows += rows
+            sums.append(sum_here)
+            divisors.append(divisors_here)
 
         print("\nRESULTS FOR", parser_name)
+
+        # print("sums", sums, divisors)
+        # for total, divisor in zip(sums, divisors):
+        #     print(total / divisor)
+
+        averages_table = PrettyTable(
+            field_names=["Set", "Average"])
+        averages_table.align = "l"
+        for bunch, total, divisor in zip(bunch2subcategory.keys(), sums, divisors):
+            averages_table.add_row([bunch, int((total / divisor)*100)])
+        print(averages_table)
+
 
         results_path, pickle_path, by_size_pickle_path = make_results_path()
         if evaluation_instance_info.do_error_analysis:
@@ -191,7 +221,7 @@ def create_results_pickles():
                 if row[0] is None:
                     row_to_append = [""]
                 else:
-                    row_to_append = [row[0]] # [row[0].display_name]
+                    row_to_append = [row[0]]
                 row_to_append += row[1:]
                 missing_entries = 7 - len(row)
                 for i in range(missing_entries):
@@ -448,6 +478,7 @@ def pretty_print_structural_generalisation_by_size(results):
     Prints the structural generalisation results split up by size
     Args:
         results: dict from parser name to dataset name to dict from size to score
+    Return: PrettyTable
     """
     table = PrettyTable()
     max_size = 10

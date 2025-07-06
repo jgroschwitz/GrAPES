@@ -19,9 +19,31 @@ from evaluation.full_evaluation.category_evaluation.subcategory_info import Subc
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 
 
+def make_dummy_evaluator_given_graphs(gold_amrs: List[Graph], predicted_amrs: List[Graph],
+                                      subcategory_name: str, parser_name: str=None):
+    """
+    Used when we know we don't need to read in any additional files
+    Args:
+        gold_amrs:
+        predicted_amrs:
+        subcategory_name:
+        parser_name:
+
+    Returns:
+
+    """
+    eval_class, info = category_name_to_set_class_and_metadata[subcategory_name]
+    instance_info = EvaluationInstanceInfo(
+        do_error_analysis=True,
+    )
+    if parser_name is not None:
+        instance_info.parser_name = parser_name
+    dummy_evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
+    return dummy_evaluator
+
+
 def make_dummy_evaluator(prediction_path, gold_path, subcategory_name, parser_name=None):
-    x: Tuple[Callable, SubcategoryMetadata] = category_name_to_set_class_and_metadata[subcategory_name]
-    eval_class, info = x
+    eval_class, info = category_name_to_set_class_and_metadata[subcategory_name]
 
     instance_info = EvaluationInstanceInfo(
         absolute_path_to_predictions_file=prediction_path,
@@ -93,7 +115,7 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], path_
 
 def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, error_analysis_pickle_path: str, out_path: str):
     error_eval_dict = pickle.load(open(error_analysis_pickle_path, "rb"))
-    out_dir = f"{out_path}/{evaluator.instance_info.parser_name}/correct_and_incorrect"
+    out_dir = f"{out_path}/{evaluator.instance_info.parser_name}/vulcan_correct_and_incorrect"
     os.makedirs(out_dir, exist_ok=True)
     for key in error_eval_dict:
         golds = []
@@ -152,10 +174,12 @@ if __name__ == "__main__":
 
             if args.category is None:
                 print("Making pickles for all categories in given file")
+                gold_amrs = load(args.gold_path)
+                predicted_amrs = load(args.predictions_path)
 
                 for category in category_name_to_set_class_and_metadata:
                     try:
-                        evaluator = make_dummy_evaluator(args.predictions_path, args.gold_path,
+                        evaluator = make_dummy_evaluator_given_graphs(gold_amrs, predicted_amrs,
                                                          category, args.parser_name)
                         create_pickle_for_error_analysis(
                             evaluator,

@@ -58,6 +58,6 @@ def is_copyrighted_data(category_info):
 
 def is_sanity_check(category_info):
     if category_info.subcorpus_filename is None:
-        return True
+        return False
     else:
         return category_info.subcorpus_filename.endswith("sanity_check")
