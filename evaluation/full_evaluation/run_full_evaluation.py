@@ -192,6 +192,8 @@ def create_results_pickles():
         for bunch, total, divisor in zip(bunch2subcategory.keys(), sums, divisors):
             averages_table.add_row([bunch, int((total / divisor)*100)])
         print(averages_table)
+        with open(f"{results_path}/{parser_name}_averages.csv", "w") as f:
+            csv.writer(f).writerows(averages_table.rows)
 
 
         results_path, pickle_path, by_size_pickle_path = make_results_path()

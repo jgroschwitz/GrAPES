@@ -3,6 +3,8 @@ import os
 import sys
 import csv
 
+from evaluation.full_evaluation.category_evaluation.category_metadata import bunch_number2name
+
 
 def main():
     """
@@ -27,6 +29,7 @@ def main():
     parser.add_argument("-o", "--output_file", type=str, help=f"Path to the output file (default {default_tex_file})", default=default_tex_file)
     parser.add_argument("csv_files", type=str, nargs="+", help="Paths to the CSV files")
     parser.add_argument("--print_headers", action="store_true", help="Print a header for each set of categories")
+    parser.add_argument("-a", "--csv_averages_files", type=str, nargs="+", help="Paths to the CSV average files")
     args = parser.parse_args()
 
     dir_path = args.output_file.split("/")[:-1]
@@ -39,6 +42,15 @@ def main():
         with open(csv_file, "r") as f:
             csv_reader = csv.reader(f)
             csv_contents.append(list(csv_reader)[1:]) # skip header
+
+    if args.csv_averages_files is not None:
+        averages_contents = []
+        for averages_file in args.csv_averages_files:
+            with open(averages_file, "r") as f:
+                csv_reader = csv.reader(f)
+                averages_contents.append(list(csv_reader))
+    else:
+        averages_contents = None
 
     names = [os.path.basename(csv_file)[:-4] for csv_file in args.csv_files]
 
@@ -70,6 +82,13 @@ def main():
             if is_header:
                 set_id_to_print = f"\\textbf{{{set_id_to_print}}}"
                 dataset_name_to_print = f"\\textbf{{{dataset_name_to_print}}}"
+            if set_id_to_print != "" and averages_contents is not None and print_header:
+                scores = averages_contents[set_id - 1]
+                set_name = bunch_number2name[set_id]
+                set_id_to_print = f"\\textbf{{{set_id_to_print}}}"
+                dataset_name_to_print = f"\\textbf{{{set_name}}}"
+                metric_name = "Average"
+
 
             old_dataset_name = dataset_name
             metric_name = zipped_csv_row[0][2]
