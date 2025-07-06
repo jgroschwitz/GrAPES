@@ -9,7 +9,8 @@ import penman
 from amconll import parse_amconll, AMSentence, Entry, write_conll
 from vulcan.data_handling.format_names import *
 
-from evaluate_single_category import SmartFormatter, get_gold_path_based_on_info
+from evaluate_single_category import get_gold_path_based_on_info
+from scripts.argparse_formatter import SmartFormatter
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
     get_formatted_category_names, is_testset_category
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata

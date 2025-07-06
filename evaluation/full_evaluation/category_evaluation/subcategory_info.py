@@ -9,6 +9,7 @@ class SubcategoryMetadata:
     """
     name: str
     display_name: str
+    bunch: int
     tsv: str = None
     subcorpus_filename: str = None
     latex_display_name: str  = None

@@ -83,7 +83,7 @@ def write_full_table(args, names, transposed_averages_contents, transposed_csv_c
 
             first_row_of_the_bunch = set_id != old_set_id
             set_id_to_print = set_id if first_row_of_the_bunch else ""
-            dataset_name = zipped_csv_row[0][1]
+            dataset_name = zipped_csv_row[0][2]
             dataset_name_to_print = dataset_name if dataset_name != old_dataset_name else ""
             # if is_header:
             #     set_id_to_print = f"\\textbf{{{set_id_to_print}}}"
@@ -91,8 +91,7 @@ def write_full_table(args, names, transposed_averages_contents, transposed_csv_c
             if first_row_of_the_bunch and transposed_averages_contents is not None and print_header:
                 # insert a header for the bunch with its name and the average score
                 scores = [entry[1] for entry in transposed_averages_contents[set_id - 1]]
-                print(transposed_averages_contents[set_id - 1])
-                set_name = bunch_number2name[set_id]
+                set_name = zipped_csv_row[0][1]
                 bunch_id_to_print = f"\\textbf{{{set_id_to_print}}}"
                 bunch_name_to_print = f"\\textbf{{{set_name}}}"
                 metric_name = "Average"
@@ -105,11 +104,11 @@ def write_full_table(args, names, transposed_averages_contents, transposed_csv_c
                 set_id_to_print = ""  # printing set id in header, so no need in categories
 
             old_dataset_name = dataset_name
-            metric_name = zipped_csv_row[0][2]
-            scores = [entry[3] for entry in zipped_csv_row]
-            lower_bounds = [entry[4] for entry in zipped_csv_row]
-            upper_bounds = [entry[5] for entry in zipped_csv_row]
-            count = zipped_csv_row[0][6]
+            metric_name = zipped_csv_row[0][3]
+            scores = [entry[4] for entry in zipped_csv_row]
+            lower_bounds = [entry[5] for entry in zipped_csv_row]
+            upper_bounds = [entry[6] for entry in zipped_csv_row]
+            count = zipped_csv_row[0][7]
 
             is_sanity_check_row = "sanity" in dataset_name.lower()
             is_prereq_row = "prereq" in metric_name.lower()

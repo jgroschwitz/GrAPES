@@ -64,8 +64,10 @@ class CategoryEvaluation:
 
         self.store_filtered_graphs()
         if len(self.gold_amrs) == 0:
-            raise ValueError("None of the given graphs belong to this category! Check that you provided the AMR 3.0 "
+            print(f"WARNING: None of the given graphs belong to this category ({self.category_metadata.name})! Check that you provided the AMR 3.0 "
                              "testset for a testset category and a GrAPES corpus for a GrAPES-specific category.")
+            # raise ValueError(f"None of the given graphs belong to this category ({self.category_metadata.name})! Check that you provided the AMR 3.0 "
+            #                  "testset for a testset category and a GrAPES corpus for a GrAPES-specific category.")
 
         # build empty Results
         extra_fields = self.category_metadata.additional_fields

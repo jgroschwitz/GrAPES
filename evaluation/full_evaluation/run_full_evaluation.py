@@ -6,7 +6,7 @@ import sys
 from evaluation.util import num_to_score
 from evaluation.corpus_metrics import compute_smatch_f_from_graph_lists
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata, is_copyrighted_data, \
-    is_sanity_check
+    is_sanity_check, is_grapes_category_with_testset_data, is_grapes_category_with_ptb_data
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from prettytable import PrettyTable
@@ -15,7 +15,8 @@ from penman import load
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
     CategoryEvaluation, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
-    is_testset_category, bunch2subcategory, bunch_number2name
+    is_testset_category, bunch2subcategory, bunch_number2name, get_bunch_name_for_number, \
+    get_bunch_categories_for_number
 
 args = sys.argv
 if len(args) > 1:
@@ -83,15 +84,17 @@ def create_results_pickles():
 
     Pickles and prints the results
     """
-    gold_amrs, gold_grapes = import_gold_graphs()
+    gold_testset, gold_grapes = import_gold_graphs()
     # results_path, pickle_path, by_size_pickle_path = make_results_path()
     parser_name2rows = dict()
     all_generalisations_by_size_dict = dict()
 
     for parser_name in parser_names:
-        evaluation_instance_info = EvaluationInstanceInfo(
+
+        instance_info = EvaluationInstanceInfo(
             root_dir="../..",
             run_smatch=run_all_smatch,
+            run_full_corpus_smatch=run_full_corpus_smatch,
             subcorpus_predictions_directory_path_from_root=f"{path_to_parser_outputs}/{parser_name}-output",
             do_error_analysis=do_error_analysis,
             fail_ok=cat_fail_ok,
@@ -101,155 +104,183 @@ def create_results_pickles():
             parser_name=parser_name,
         )
         try:
-            testset_parser_outs = load(evaluation_instance_info.default_testset_pred_file_path())
-            grapes_parser_outs = load(evaluation_instance_info.full_grapes_pred_file_path())
+            testset_parser_outs = load(instance_info.default_testset_pred_file_path())
+            grapes_parser_outs = load(instance_info.full_grapes_pred_file_path())
             # os.makedirs(evaluation_instance_info.results_directory_path(), exist_ok=True)
         except FileNotFoundError as e:
             print(f"\n!! {parser_name} outputs not found. Check your parser outputs are in data/processed/parser_outputs/<parser_name>-output/ and named full_corpus.txt (for GrAPES) and testset.txt (for the original AMR 3.0 dataset)\n")
             raise(e)
 
-        assert len(testset_parser_outs) == len(gold_amrs)
+        assert len(testset_parser_outs) == len(gold_testset)
         assert len(grapes_parser_outs) == len(gold_grapes)
         print(f"{len(gold_grapes)} GrAPES graphs")
         print(f"{len(testset_parser_outs)} testset graphs")
 
         print("Running evaluation for", parser_name, "...")
 
-        all_result_rows = []
-        parser_name2rows[parser_name] = all_result_rows
-        sums = []
-        divisors = []
+        results, by_size, sums, divisors = get_results(gold_testset, gold_grapes, testset_parser_outs, grapes_parser_outs, instance_info)
+        parser_name2rows[parser_name] = results
+        store_results(results, instance_info,
+                      results_dir=f"{instance_info.root_dir}/data/processed/results/from_run_full_evaluation")
 
-        if run_full_corpus_smatch:
-            print("Running Smatch...")
-            smatch = compute_smatch_f_from_graph_lists(gold_grapes, grapes_parser_outs)
-            smatch_test = compute_smatch_f_from_graph_lists(gold_amrs, testset_parser_outs)
-            print("Smatch done")
-            rows = make_rows_for_results("Overall on novel GrAPES corpus", True, True,
-                                  [[None, "Smatch", EVAL_TYPE_F1,  smatch[2], len(gold_grapes)]], "")
-            all_result_rows.extend(rows)
-            rows = make_rows_for_results("Overall on AMR 3.0 testset", True, True,
-                                   [[None, "Smatch", EVAL_TYPE_F1,  smatch_test[2], len(gold_amrs)]], "")
-            all_result_rows.extend(rows)
-
-
-        generalisation_by_size = {}
-
-        if run_all_smatch:
-            print("We will run Smatch on all categories. This may take a while...\n"
-                  " to avoid this, stop and change run_all_smatch to False.")
-        for bunch in sorted(bunch2subcategory.keys()):
-            sum_here = 0
-            divisors_here = 0
-            # n, name = get_bunch_number_and_name(bunch)
-            # all_result_rows.append([n, name] + [""] * 5)
-            # all_result_rows.append([bunch])
-            print("Doing Bunch", bunch)
-
-            for subcategory in bunch2subcategory[bunch]:
-                eval_class, info = category_name_to_set_class_and_metadata[subcategory]
-                evaluation_instance_info.given_single_file = False
-
-                # get the appropriate corpora
-                if is_testset_category(info):
-                    gold = gold_amrs
-                    pred = testset_parser_outs
-                else:
-                    gold = gold_grapes
-                    pred = grapes_parser_outs
-
-                evaluator = eval_class(gold, pred, info, evaluation_instance_info)
-
-                # Structural generalisation results by size
-                if info.subtype == STRUC_GEN and info.subcorpus_filename in size_mappers:
-                    generalisation_by_size[info.display_name] =  evaluator.get_results_by_size()
-
-                results_here = evaluate(evaluator, info, evaluation_instance_info)
-                rows = make_rows_for_results(subcategory, evaluation_instance_info.print_f1(),
-                                             evaluation_instance_info.print_unlabeled_edge_attachment, results_here, bunch)
-
-                for r in results_here:
-                    metric_name = r[1]
-
-                    is_sanity_check_row = is_sanity_check(info)
-                    is_prereq_row = "prereq" in metric_name.lower()
-                    is_smatch_row = "smatch" in metric_name.lower()
-                    is_unlabelled_row = "unlabel" in metric_name.lower()
-                    exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row
-                    if not exclude_from_average:
-                        sum_here += r[3] / r[4]
-                        divisors_here += 1
-
-                all_result_rows += rows
-            sums.append(sum_here)
-            divisors.append(divisors_here)
+        display_results(results, by_size)
 
         print("\nRESULTS FOR", parser_name)
         results_path, pickle_path, by_size_pickle_path = make_results_path()
 
-        # print("sums", sums, divisors)
-        # for total, divisor in zip(sums, divisors):
-        #     print(total / divisor)
+        display_and_store_averages(divisors, parser_name, results_path, sums)
 
-        averages_table = PrettyTable(
-            field_names=["Set", "Average"])
-        averages_table.align = "l"
-        for bunch, total, divisor in zip(bunch2subcategory.keys(), sums, divisors):
-            averages_table.add_row([bunch, int((total / divisor)*100)])
-        print(averages_table)
-        with open(f"{results_path}/{parser_name}_averages.csv", "w") as f:
-            csv.writer(f).writerows(averages_table.rows)
-
-
-        if evaluation_instance_info.do_error_analysis:
+        if instance_info.do_error_analysis:
             print("Error analysis pickles in", f"{root_dir_here}/error_analysis/{parser_name}/")
-        table = pretty_print_structural_generalisation_by_size(generalisation_by_size)
-        all_generalisations_by_size_dict[parser_name] = generalisation_by_size
-        out_csv_by_size = f"{results_path}/{parser_name}_by_size.csv"
-        csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
-        csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
 
-        print("All result rows")
 
-        print_table = PrettyTable(
-            field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
-        print_table.align = "l"
-        current_set = 0
-        for i, row in enumerate(all_result_rows):
-            previous_set = current_set
-            current_set = int(row[0])
-            if current_set != previous_set:
-                total = sums[current_set - 1]
-                divisor = divisors[current_set - 1]
-                print_table.add_row([row[0], bunch_number2name[current_set], "Average", int((total / divisor)*100), "", "", ""])
-            try:
-                print_divider = int(all_result_rows[i + 1][0]) > current_set
-            except IndexError:
-                print_divider = False
-            print_table.add_row(row, divider=print_divider)
-        print(print_table)
 
-        # print(all_result_rows)
-        # print_full_pretty_table(all_result_rows)
-        csv_path = f"{results_path}/{parser_name}.csv"
-        csv_rows = [["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"]]
-        for row in all_result_rows:
-            if len(row) > 1:
-                if row[0] is None:
-                    row_to_append = [""]
-                else:
-                    row_to_append = [row[0]]
-                row_to_append += row[1:]
-                missing_entries = 7 - len(row)
-                for i in range(missing_entries):
-                    row_to_append.append("")
-                csv_rows.append(row_to_append)
-        csv.writer(open(csv_path, "w", encoding="utf8")).writerows(csv_rows)
-        print("written to", csv_path)
+        # all_result_rows = []
+        # parser_name2rows[parser_name] = all_result_rows
+        # sums = []
+        # divisors = []
+        #
+        # if run_full_corpus_smatch:
+        #     print("Running Smatch...")
+        #     smatch = compute_smatch_f_from_graph_lists(gold_grapes, grapes_parser_outs)
+        #     smatch_test = compute_smatch_f_from_graph_lists(gold_amrs, testset_parser_outs)
+        #     print("Smatch done")
+        #     rows = make_rows_for_results("Overall on novel GrAPES corpus", True, True,
+        #                           [[None, "Smatch", EVAL_TYPE_F1,  smatch[2], len(gold_grapes)]], "")
+        #     all_result_rows.extend(rows)
+        #     rows = make_rows_for_results("Overall on AMR 3.0 testset", True, True,
+        #                            [[None, "Smatch", EVAL_TYPE_F1,  smatch_test[2], len(gold_amrs)]], "")
+        #     all_result_rows.extend(rows)
+        #
+        #
+        # generalisation_by_size = {}
+        #
+        # if run_all_smatch:
+        #     print("We will run Smatch on all categories. This may take a while...\n"
+        #           " to avoid this, stop and change run_all_smatch to False.")
+        # for bunch in sorted(bunch2subcategory.keys()):
+        #     sum_here = 0
+        #     divisors_here = 0
+        #     # n, name = get_bunch_number_and_name(bunch)
+        #     # all_result_rows.append([n, name] + [""] * 5)
+        #     # all_result_rows.append([bunch])
+        #     print("Doing Bunch", bunch)
+        #
+        #     for subcategory in bunch2subcategory[bunch]:
+        #         eval_class, info = category_name_to_set_class_and_metadata[subcategory]
+        #         evaluation_instance_info.given_single_file = False
+        #
+        #         # get the appropriate corpora
+        #         if is_testset_category(info):
+        #             gold = gold_amrs
+        #             pred = testset_parser_outs
+        #         else:
+        #             gold = gold_grapes
+        #             pred = grapes_parser_outs
+        #
+        #         evaluator = eval_class(gold, pred, info, evaluation_instance_info)
+        #
+        #         # Structural generalisation results by size
+        #         if info.subtype == STRUC_GEN and info.subcorpus_filename in size_mappers:
+        #             generalisation_by_size[info.display_name] =  evaluator.get_results_by_size()
+        #
+        #         results_here = evaluate(evaluator, info, evaluation_instance_info)
+        #         rows = make_rows_for_results(subcategory, evaluation_instance_info.print_f1(),
+        #                                      evaluation_instance_info.print_unlabeled_edge_attachment, results_here, bunch)
+        #
+        #         for r in results_here:
+        #             metric_name = r[1]
+        #
+        #             is_sanity_check_row = is_sanity_check(info)
+        #             is_prereq_row = "prereq" in metric_name.lower()
+        #             is_smatch_row = "smatch" in metric_name.lower()
+        #             is_unlabelled_row = "unlabel" in metric_name.lower()
+        #             exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row
+        #             if not exclude_from_average:
+        #                 sum_here += r[3] / r[4]
+        #                 divisors_here += 1
+        #
+        #         all_result_rows += rows
+        #     sums.append(sum_here)
+        #     divisors.append(divisors_here)
+        #
+        # print("\nRESULTS FOR", parser_name)
+        # results_path, pickle_path, by_size_pickle_path = make_results_path()
+        #
+        # # print("sums", sums, divisors)
+        # # for total, divisor in zip(sums, divisors):
+        # #     print(total / divisor)
+        #
+        # averages_table = PrettyTable(
+        #     field_names=["Set", "Average"])
+        # averages_table.align = "l"
+        # for bunch, total, divisor in zip(bunch2subcategory.keys(), sums, divisors):
+        #     averages_table.add_row([bunch, int((total / divisor)*100)])
+        # print(averages_table)
+        # with open(f"{results_path}/{parser_name}_averages.csv", "w") as f:
+        #     csv.writer(f).writerows(averages_table.rows)
+        #
+        #
+        # if evaluation_instance_info.do_error_analysis:
+        #     print("Error analysis pickles in", f"{root_dir_here}/error_analysis/{parser_name}/")
+        # table = pretty_print_structural_generalisation_by_size(generalisation_by_size)
+        # all_generalisations_by_size_dict[parser_name] = generalisation_by_size
+        # out_csv_by_size = f"{results_path}/{parser_name}_by_size.csv"
+        # csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
+        # csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
+        #
+        # print("All result rows")
+        #
+        # print_table = PrettyTable(
+        #     field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
+        # print_table.align = "l"
+        # current_set = 0
+        # for i, row in enumerate(all_result_rows):
+        #     previous_set = current_set
+        #     current_set = int(row[0])
+        #     if current_set != previous_set:
+        #         total = sums[current_set - 1]
+        #         divisor = divisors[current_set - 1]
+        #         print_table.add_row([row[0], bunch_number2name[current_set], "Average", int((total / divisor)*100), "", "", ""])
+        #     try:
+        #         print_divider = int(all_result_rows[i + 1][0]) > current_set
+        #     except IndexError:
+        #         print_divider = False
+        #     print_table.add_row(row, divider=print_divider)
+        # print(print_table)
+        #
+        # # print(all_result_rows)
+        # # print_full_pretty_table(all_result_rows)
+        # csv_path = f"{results_path}/{parser_name}.csv"
+        # csv_rows = [["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"]]
+        # for row in all_result_rows:
+        #     if len(row) > 1:
+        #         if row[0] is None:
+        #             row_to_append = [""]
+        #         else:
+        #             row_to_append = [row[0]]
+        #         row_to_append += row[1:]
+        #         missing_entries = 7 - len(row)
+        #         for i in range(missing_entries):
+        #             row_to_append.append("")
+        #         csv_rows.append(row_to_append)
+        # csv.writer(open(csv_path, "w", encoding="utf8")).writerows(csv_rows)
+        # print("written to", csv_path)
 
-    pickle.dump(parser_name2rows, open(pickle_path, "wb"))
-    pickle.dump(all_generalisations_by_size_dict, open(by_size_pickle_path, "wb"))
-    print("Results pickled in ", results_path)
+    # pickle.dump(parser_name2rows, open(pickle_path, "wb"))
+    # pickle.dump(all_generalisations_by_size_dict, open(by_size_pickle_path, "wb"))
+    # print("Results pickled in ", results_path)
+
+
+def display_and_store_averages(divisors, parser_name, results_path, sums):
+    averages_table = PrettyTable(
+        field_names=["Set", "Average"])
+    averages_table.align = "l"
+    for bunch, total, divisor in zip(bunch2subcategory.keys(), sums, divisors):
+        averages_table.add_row([bunch, int((total / divisor) * 100)])
+    print(averages_table)
+    with open(f"{results_path}/{parser_name}_averages.csv", "w") as f:
+        csv.writer(f).writerows(averages_table.rows)
 
 
 def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, instance_info: EvaluationInstanceInfo):
@@ -519,10 +550,9 @@ def pretty_print_structural_generalisation_by_size(results):
     return table
 
 def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachment, results_here,
-                          set_name):
+                          set_id, set_name):
     rows = []
     for r in results_here:
-        set_id = get_bunch_number_and_name(set_name)[0]
         try:
             name = category_name_to_set_class_and_metadata[category_name][1].display_name
         except KeyError:
@@ -536,7 +566,7 @@ def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachme
         if metric_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
             wilson_ci = wilson_score_interval(r[3], r[4])
             if r[4] > 0:
-                rows.append([set_id, name, metric_name,
+                rows.append([set_id, set_name, name, metric_name,
                                 num_to_score(r[3] / r[4]),
                                 num_to_score(wilson_ci[0]),
                                 num_to_score(wilson_ci[1]),
@@ -547,7 +577,7 @@ def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachme
                     "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
                 print(r)
         elif metric_type == EVAL_TYPE_F1:
-            rows.append([set_id, name, metric_name,
+            rows.append([set_id, set_name, name, metric_name,
                             num_to_score(r[3]), "-", "-", r[4]])
         else:
             print(
@@ -562,6 +592,162 @@ def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachme
 def main():
     create_results_pickles()
     # make_latex_table(results_path)
+
+def display_results(results, by_size, bunch=None):
+    print_table = PrettyTable(
+        field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
+    print_table.align = "l"
+    for row in results:
+        print_table.add_row([row[0]] + row[2:])
+    if len(by_size) > 0:
+        pretty_print_structural_generalisation_by_size(by_size)
+    header = "\nAll results"
+    if bunch is not None:
+        header += f" for bunch {bunch}"
+    print(header)
+    print(print_table)
+
+
+def store_results(results, instance_info: EvaluationInstanceInfo, results_dir: str):
+    os.makedirs(results_dir, exist_ok=True)
+    filename = instance_info.parser_name
+    out_file = f"{results_dir}/{filename}.csv"
+    csv.writer(open(out_file, "w", encoding="utf8")).writerows(results)
+    print(f"CSV of results written to {out_file}")
+    out_file = f"{results_dir}/{filename}.pickle"
+    pickle.dump(results, open(out_file, "wb"))
+    print(f"Pickle of results written to {out_file}")
+
+
+def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,
+                instance_info: EvaluationInstanceInfo,
+                use_grapes=True, use_grapes_from_ptb=True, use_grapes_from_testset=True, use_testset=True, bunch=None):
+    """
+    Creates a list of result rows. Each row has the following format:
+    [set number, category name, metric name, score, lower_bound, upper_bound, sample_size]
+    (the latter three are omitted for f-score results, since they don't apply there)
+
+    plus additional metrics
+    Return results, struct_gen_by_size, sums, divisors
+    """
+    results = []
+    struct_gen_by_size = {}
+    sums = []
+    divisors = []
+
+    # Smatch on the full corpora
+    if instance_info.run_full_corpus_smatch:
+        print("Running Smatch...")
+        smatch = compute_smatch_f_from_graph_lists(gold_graphs_grapes, predicted_graphs_grapes)
+        smatch_test = compute_smatch_f_from_graph_lists(gold_graphs_testset, predicted_graphs_testset)
+        print("Smatch done")
+        rows = make_rows_for_results("Overall on novel GrAPES corpus", True, True,
+                                     [[None, "Smatch", EVAL_TYPE_F1, smatch[2], len(gold_graphs_grapes)]], "")
+        results.extend(rows)
+        rows = make_rows_for_results("Overall on AMR 3.0 testset", True, True,
+                                     [[None, "Smatch", EVAL_TYPE_F1, smatch_test[2], len(gold_graphs_testset)]], "")
+        results.extend(rows)
+
+    if instance_info.run_smatch:
+        print("We will run Smatch on all categories. This may take a while...\n"
+              " to avoid this, stop and change run_all_smatch to False.")
+
+    # loop through bunches
+    for i in range(1, len(bunch2subcategory)+1):
+        sum_here = 0  # for bunch averages
+        divisors_here = 0 # "
+        set_name = get_bunch_name_for_number(i)
+        display_set_name = f"{i}. {set_name}"
+        category_names = get_bunch_categories_for_number(i)
+        if not do_this_category(bunch, i):
+            continue
+        print(f"\nEvaluating {display_set_name}")
+        for category_name in category_names:
+
+            eval_class, info = category_name_to_set_class_and_metadata[category_name]
+            instance_info.given_single_file = False
+            if do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
+                # we can always try to find the appropriate subcorpus file...
+                if instance_info.predictions_directory_path() is not None and info.subcorpus_filename is not None:
+                    try:
+                        # try to get the subcorpus from the same folder as the full corpus
+                        print(f"Trying skipped category from single file {info.subcorpus_filename}.txt in"
+                              f" {instance_info.predictions_directory_path()}")
+                        results_here = run_single_file(eval_class, info, instance_info)
+                        rows = make_rows_for_results(category_name, instance_info.print_f1(),
+                                                     instance_info.print_unlabeled_edge_attachment,
+                                                     results_here, i)
+                        results.extend(rows)
+                    except Exception as e:
+                        print(f"Can't get category {category_name}, error: {e}")
+                        if instance_info.fail_ok > -1:
+                            results.append(make_empty_result(set_name, info.display_name))
+                        else:
+                            raise e
+            else:
+                if info.subcorpus_filename is None:  # testset
+                    gold_graphs = gold_graphs_testset
+                    predicted_graphs = predicted_graphs_testset
+                else:
+                    gold_graphs = gold_graphs_grapes
+                    predicted_graphs = predicted_graphs_grapes
+
+                evaluator = eval_class(gold_graphs, predicted_graphs, info, instance_info)
+                results_here = evaluate(evaluator, info, instance_info)
+
+                rows = make_rows_for_results(category_name, instance_info.print_f1(),
+                                             instance_info.print_unlabeled_edge_attachment, results_here, i, set_name)
+                results.extend(rows)
+                if info.subtype == STRUC_GEN and info.subcorpus_filename in size_mappers:
+                    by_size = evaluator.get_results_by_size()
+                    struct_gen_by_size[info.display_name] = by_size
+            for r in results_here:
+                metric_name = r[1]
+
+                is_sanity_check_row = is_sanity_check(info)
+                is_prereq_row = "prereq" in metric_name.lower()
+                is_smatch_row = "smatch" in metric_name.lower()
+                is_unlabelled_row = "unlabel" in metric_name.lower()
+                exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row
+                if not exclude_from_average:
+                    sum_here += r[3] / r[4]
+                    divisors_here += 1
+
+        sums.append(sum_here)
+        divisors.append(divisors_here)
+
+    return results, struct_gen_by_size, sums, divisors
+
+
+def make_empty_result(set_name, category_name):
+    return [set_name[0], category_name, "N/A", "N/A", "N/A", "N/A", "N/A"]
+
+
+def do_skip_category(info, use_testset, use_grapes, use_grapes_from_testset, use_grapes_from_ptb):
+    if not use_testset and is_testset_category(info):
+        return True
+    if not use_grapes and not is_testset_category(info):
+        return True
+    if not use_grapes_from_testset and is_grapes_category_with_testset_data(info):
+        return True
+    if not use_grapes_from_ptb and is_grapes_category_with_ptb_data(info):
+        return True
+    return False
+
+
+def load_predictions(predictions_path, encoding="utf8"):
+    """
+    Add some printing around loading predictions in case of warnings from Penman
+    """
+    print("\nLoading predicted AMRs...")
+    predicted_amrs = load(predictions_path, encoding=encoding)
+    print("Done\n")
+    return predicted_amrs
+
+
+def do_this_category(bunch_to_do, bunch_id):
+    return bunch_to_do is None or bunch_to_do == bunch_id
+
 
 if __name__ == '__main__':
     main()

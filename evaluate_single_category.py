@@ -10,20 +10,11 @@ from evaluation.full_evaluation.category_evaluation.subcategory_info import is_s
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
     size_mappers, STRUC_GEN, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
-from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size
+from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size, \
+    load_predictions
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score, SANITY_CHECK
-
-
-class SmartFormatter(argparse.HelpFormatter):
-    """
-    Custom Help Formatter used to split help text when '\n' was
-    inserted in it.
-    """
-    def _split_lines(self, text, width):
-        r = []
-        for t in text.splitlines(): r.extend(argparse.HelpFormatter._split_lines(self, t, width))
-        return r
+from scripts.argparse_formatter import SmartFormatter
 
 
 def parse_args():
@@ -145,16 +136,6 @@ def get_gold_path_based_on_info(given_gold_path, info, instance_info):
     else:
         gold_path = instance_info.gold_grapes_path()
     return gold_path, predictions_path, use_subcorpus
-
-
-def load_predictions(predictions_path, encoding="utf8"):
-    """
-    Add some printing around loading predictions in case of warnings from Penman
-    """
-    print("\nLoading predicted AMRs...")
-    predicted_amrs = load(predictions_path, encoding=encoding)
-    print("Done\n")
-    return predicted_amrs
 
 
 if __name__ == "__main__":
