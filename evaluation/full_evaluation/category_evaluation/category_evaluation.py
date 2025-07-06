@@ -88,6 +88,7 @@ class CategoryEvaluation:
         Returns: list of rows of results: [dataset name, metric_name, eval_type] + metric_results
 
         """
+        assert len(self.gold_amrs) > 0, "No AMRs to evaluate!"
         self._get_all_results()
         self._calculate_metrics_and_add_all_rows()
         if self.instance_info.run_smatch or self.category_metadata.subtype == STRUC_GEN and not self.is_sanity_check:
@@ -203,7 +204,7 @@ class CategoryEvaluation:
             filtered_golds = self.gold_amrs
             filtered_preds = self.predicted_amrs
         if len(filtered_golds) == 0:
-            print("WARNING: filtering gave us 0 graphs!", file=sys.stderr)
+            # print("WARNING: filtering gave us 0 graphs!", file=sys.stderr)
             return [],[]
         return filtered_golds, filtered_preds
 

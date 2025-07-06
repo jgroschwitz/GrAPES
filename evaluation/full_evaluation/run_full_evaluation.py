@@ -27,8 +27,8 @@ else:
 
 # update per use if desired
 do_error_analysis = True
-run_all_smatch = False
-run_full_corpus_smatch = False
+run_all_smatch = True
+run_full_corpus_smatch = True
 
 # ERROR HANDLING GLOBAL
 # raise an error if any category doesn't work
@@ -120,8 +120,13 @@ def create_results_pickles():
             smatch = compute_smatch_f_from_graph_lists(gold_grapes, grapes_parser_outs)
             smatch_test = compute_smatch_f_from_graph_lists(gold_amrs, testset_parser_outs)
             print("Smatch done")
-            all_result_rows.append(["Overall on novel GrAPES corpus", "Smatch", EVAL_TYPE_F1,  smatch[2], len(gold_grapes)])
-            all_result_rows.append(["Overall on AMR 3.0 testset", "Smatch", EVAL_TYPE_F1,  smatch_test[2], len(gold_amrs)])
+            rows = make_rows_for_results("Overall on novel GrAPES corpus", True, True,
+                                  [[None, "Smatch", EVAL_TYPE_F1,  smatch[2], len(gold_grapes)]], "")
+            all_result_rows.extend(rows)
+            rows = make_rows_for_results("Overall on AMR 3.0 testset", True, True,
+                                   [[None, "Smatch", EVAL_TYPE_F1,  smatch_test[2], len(gold_amrs)]], "")
+            all_result_rows.extend(rows)
+
 
         generalisation_by_size = {}
 
@@ -469,6 +474,11 @@ def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachme
                           set_name):
     rows = []
     for r in results_here:
+        set_id = get_bunch_number_and_name(set_name)[0]
+        try:
+            name = category_name_to_set_class_and_metadata[category_name][1].display_name
+        except KeyError:
+            name = category_name
         metric_name = r[1]
         if not print_f1 and metric_name == "Smatch":
             continue
@@ -478,7 +488,7 @@ def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachme
         if metric_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
             wilson_ci = wilson_score_interval(r[3], r[4])
             if r[4] > 0:
-                rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
+                rows.append([set_id, name, metric_name,
                                 num_to_score(r[3] / r[4]),
                                 num_to_score(wilson_ci[0]),
                                 num_to_score(wilson_ci[1]),
@@ -489,13 +499,13 @@ def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachme
                     "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
                 print(r)
         elif metric_type == EVAL_TYPE_F1:
-            rows.append([set_name[0], category_name_to_set_class_and_metadata[category_name][1].display_name, metric_name,
-                            num_to_score(r[3]), "-", "-", "-"])
+            rows.append([set_id, name, metric_name,
+                            num_to_score(r[3]), "-", "-", r[4]])
         else:
             print(
                 "ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
                 "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
-            print(r)
+            print(metric_type)
     return rows
 
 

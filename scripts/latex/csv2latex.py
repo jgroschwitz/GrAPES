@@ -29,6 +29,10 @@ def main():
     parser.add_argument("--print_headers", action="store_true", help="Print a header for each set of categories")
     args = parser.parse_args()
 
+    dir_path = args.output_file.split("/")[:-1]
+
+    os.makedirs("/".join(dir_path), exist_ok=True)
+
     # read csv files
     csv_contents = []
     for csv_file in args.csv_files:

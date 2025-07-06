@@ -162,7 +162,8 @@ def filter_amrs_for_name(name, gold_graphs, predicted_graphs, fail_ok=False):
             gold_graphs_filtered.append(g)
             predicted_graphs_filtered.append(p)
     if len(gold_graphs_filtered) == 0 and fail_ok:
-        print("WARNING: didn't find any AMRs using filter_amrs_for_name for", name, file=sys.stderr)
+        pass
+        # print("WARNING: didn't find any AMRs using filter_amrs_for_name for", name, file=sys.stderr)
     else:
         assert len(gold_graphs_filtered) > 0, f"Corpus does not contain any AMRs with ID matching {regular_expression}"
 
