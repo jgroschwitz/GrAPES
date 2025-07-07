@@ -66,7 +66,7 @@ def get_size(gold_graph, mapper):
     return mapper(size0)
 
 
-def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], path_to_pickle: str):
+def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], path_to_pickle: str, extra_metadata=None):
     """
     Create a vulcan-readable pickle
     Pickle contains gold and predicted graphs, sentence, graph ID, and, if size is defined, the size
@@ -74,10 +74,11 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], path_
         gold_graphs: the gold graphs, read in and filtered to contain exactly the relevant ones
         predicted_graphs: the predictions, same order as gold
         path_to_pickle: output path to write vulcan pickle to
+        extra_metadata: Dict str: str of anything else you want printed along with the sentence ID (and size for Structural Generalisation)
     """
 
     example_graph = gold_graphs[0]
-    metadata_fieldname, metadata_mapper = get_metadata_fieldname_and_mapper(example_graph)
+    metadata_fieldname, metadata_mapper = get_metadata_fieldname_and_mapper(example_graph, extra_metadata=extra_metadata)
 
 
     # initialise the pickle builder with the appropriate fields and their data types
@@ -118,10 +119,7 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, error_analys
                 preds.append(pred)
         if len(golds) == 0:
             print("no matching graphs for", key)
-        create_pickle(
-            golds,
-            preds,
-            f"{out_dir}/{evaluator.category_metadata.name}_{key}.pickle")
+        create_pickle(golds, preds, f"{out_dir}/{evaluator.category_metadata.name}_{key}.pickle", extra_metadata={"": key})
 
 
 if __name__ == "__main__":
@@ -208,16 +206,21 @@ if __name__ == "__main__":
             create_pickle(evaluator.gold_amrs, evaluator.predicted_amrs, pickle_path)
 
 
-def get_metadata_fieldname_and_mapper(graph):
+def get_metadata_fieldname_and_mapper(graph, extra_metadata=None):
+    if extra_metadata is None:
+        ending = ""
+        metadata_fieldname = "ID"
+    else:
+        ending = " ".join([f"{key}: {val}" for key, val in extra_metadata.items()])
+        metadata_fieldname = "MetaData"
     graph_id = graph.metadata["id"]
     parts = graph_id.split("_")
     prefix = "_".join(parts[:-1])
     if prefix in size_mappers:
         mapper = size_mappers[prefix]
         metadata_fieldname = "MetaData"
-        metadata_maker = lambda gold_amr: f'ID: {gold_amr.metadata["id"]}  Size: {get_size(gold_amr, mapper)}'
+        metadata_maker = lambda gold_amr: f'ID: {gold_amr.metadata["id"]}  Size: {get_size(gold_amr, mapper)}  {ending}'
     else:
-        metadata_fieldname = "ID"
-        metadata_maker = lambda gold_amr: gold_amr.metadata["id"]
+        metadata_maker = lambda gold_amr: f'{gold_amr.metadata["id"]}  {ending}'
 
     return metadata_fieldname, metadata_maker

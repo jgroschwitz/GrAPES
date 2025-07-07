@@ -2,7 +2,7 @@ import argparse
 import os
 import pickle
 import re
-from typing import Tuple, Callable, List
+from typing import Tuple, Callable, List, Dict
 
 import amconll
 from penman import Graph
@@ -25,18 +25,20 @@ from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstan
 SOURCE_PATTERN = re.compile(r"(?P<source><[a-zA-Z0-9]+>)")
 
 
-def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], amconll_sentences: List[amconll.AMSentence], path_to_pickle: str):
+def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], amconll_sentences: List[amconll.AMSentence],
+                  path_to_pickle: str, extra_metadata: Dict[str, str]=None):
     """
     Read in AM Parser output files and create a vulcan-readable pickle
     Pickle contains AM dependency tree, including graph constants, and gold and predicted graphs.
     Args:
         gold_graphs: the gold graphs, read in and filtered to contain exactly the relevant ones
         predicted_graphs: the predictions, same order as gold
-        filtered_amconll: path to the newly-written amconll file, containing exactly the same sentences in order
+        amconll_sentences: the amconll sentences from the relevant files
         path_to_pickle: output path to write vulcan pickle to
     """
+    # What to include in the metadata field (just ID or more)
     example_graph = gold_graphs[0]
-    metadata_fieldname, metadata_mapper = get_metadata_fieldname_and_mapper(example_graph)
+    metadata_fieldname, metadata_mapper = get_metadata_fieldname_and_mapper(example_graph, extra_metadata=extra_metadata)
 
     # # read in the amconll file of parser predictions
     # with open(filtered_amconll, "r", encoding="utf-8") as f:
@@ -121,11 +123,10 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, amconll_sent
                 amconlls.append(amconll_sentence)
         if len(golds) == 0:
             print("no matching graphs for", key)
-        create_pickle(
-            golds,
-            preds,
-            amconlls,
-            f"{out_dir}/{evaluator.category_metadata.name}_{key}.pickle")
+        print_key = key if not key.endswith("_id") else key[:-3]
+        create_pickle(golds,preds,amconlls,
+                      f"{out_dir}/{evaluator.category_metadata.name}_{print_key}.pickle",
+                      extra_metadata={"error status": print_key})
 
 
 
