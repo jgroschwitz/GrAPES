@@ -5,8 +5,7 @@ import re
 from typing import Tuple, Callable, List
 
 import penman
-from penman import load, dump, Graph
-from amconll import parse_amconll, Entry, write_conll, AMSentence
+from penman import load, Graph
 from vulcan.data_handling.format_names import FORMAT_NAME_TOKENIZED_STRING, FORMAT_NAME_GRAPH, FORMAT_NAME_STRING
 from vulcan.pickle_builder.pickle_builder import PickleBuilder
 
@@ -70,22 +69,15 @@ def get_size(gold_graph, mapper):
 def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], path_to_pickle: str):
     """
     Create a vulcan-readable pickle
-    Pickle contains gold and predicted graphs, sentence, graph ID, and, if sizeis defined, the size
+    Pickle contains gold and predicted graphs, sentence, graph ID, and, if size is defined, the size
     Args:
         gold_graphs: the gold graphs, read in and filtered to contain exactly the relevant ones
         predicted_graphs: the predictions, same order as gold
         path_to_pickle: output path to write vulcan pickle to
     """
 
-    print_size = False
-    metadata_fieldname = "ID"
-    example = gold_graphs[0]
-    graph_id = example.metadata["id"]
-    parts = graph_id.split("_")
-    if parts[0] in size_mappers:
-        mapper = size_mappers[parts[0]]
-        print_size = True
-        metadata_fieldname = "MetaData"
+    example_graph = gold_graphs[0]
+    metadata_fieldname, metadata_mapper = get_metadata_fieldname_and_mapper(example_graph)
 
 
     # initialise the pickle builder with the appropriate fields and their data types
@@ -96,12 +88,8 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], path_
 
     # everything is in the same order, so we can zip the lists to get all info for each corpus entry
     for gold_amr, predicted_amr in zip(gold_graphs, predicted_graphs):
+        meta = metadata_mapper(gold_amr)
 
-        graph_id = gold_amr.metadata['id']
-        if print_size:
-            meta = f"ID: {graph_id}  Size: {get_size(gold_amr, mapper)}"
-        else:
-            meta = graph_id
         # use the exact same field names as used when the pickle builder was initialised.
         pickle_builder.add_instances_by_name({"Gold graph": gold_amr,
                                               "Predicted graph": predicted_amr,
@@ -143,7 +131,8 @@ if __name__ == "__main__":
     command_line_parser.add_argument("-o", "--output_path", help="Path to the output folder", default="error_analysis")
     command_line_parser.add_argument("-c", "--category", help="Name of the category to make a pickl for",
                                      required=False, default=None)
-    command_line_parser.add_argument("-ep", "--error_analysis_pickle_path", help="Path to the error analysis pickle file",
+    command_line_parser.add_argument("-ep", "--error_analysis_pickle_path",
+                                     help="Path to the error analysis pickle file. (Optional: if not given, will try to reconstruct from other info)",
                                      required=False, default=None)
     command_line_parser.add_argument("-e", "--error_analysis",
                                      action="store_true",
@@ -217,3 +206,18 @@ if __name__ == "__main__":
             evaluator = make_dummy_evaluator(args.predictions_path, gold_path,
                                              args.category, args.parser_name)
             create_pickle(evaluator.gold_amrs, evaluator.predicted_amrs, pickle_path)
+
+
+def get_metadata_fieldname_and_mapper(graph):
+    graph_id = graph.metadata["id"]
+    parts = graph_id.split("_")
+    prefix = "_".join(parts[:-1])
+    if prefix in size_mappers:
+        mapper = size_mappers[prefix]
+        metadata_fieldname = "MetaData"
+        metadata_maker = lambda gold_amr: f'ID: {gold_amr.metadata["id"]}  Size: {get_size(gold_amr, mapper)}'
+    else:
+        metadata_fieldname = "ID"
+        metadata_maker = lambda gold_amr: gold_amr.metadata["id"]
+
+    return metadata_fieldname, metadata_maker

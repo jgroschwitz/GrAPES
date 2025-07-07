@@ -1,15 +1,19 @@
 import argparse
+import os
 import pickle
 import re
 from typing import Tuple, Callable, List
 
+import amconll
 from penman import Graph
 from vulcan.pickle_builder.pickle_builder import PickleBuilder
 import penman
-from amconll import parse_amconll, AMSentence, Entry, write_conll
+from amconll import parse_amconll, Entry, write_conll
 from vulcan.data_handling.format_names import *
 
+from create_vulcan_pickle import get_metadata_fieldname_and_mapper
 from evaluate_single_category import get_gold_path_based_on_info
+from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation
 from scripts.argparse_formatter import SmartFormatter
 from evaluation.full_evaluation.category_evaluation.category_metadata import (category_name_to_set_class_and_metadata,
                                                                               is_testset_category,
@@ -21,7 +25,7 @@ from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstan
 SOURCE_PATTERN = re.compile(r"(?P<source><[a-zA-Z0-9]+>)")
 
 
-def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], filtered_amconll: str, path_to_pickle: str):
+def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], amconll_sentences: List[amconll.AMSentence], path_to_pickle: str):
     """
     Read in AM Parser output files and create a vulcan-readable pickle
     Pickle contains AM dependency tree, including graph constants, and gold and predicted graphs.
@@ -31,19 +35,20 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], filte
         filtered_amconll: path to the newly-written amconll file, containing exactly the same sentences in order
         path_to_pickle: output path to write vulcan pickle to
     """
+    example_graph = gold_graphs[0]
+    metadata_fieldname, metadata_mapper = get_metadata_fieldname_and_mapper(example_graph)
 
-    # read in the amconll file of parser predictions
-    with open(filtered_amconll, "r", encoding="utf-8") as f:
-        amconll_sents = [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
+    # # read in the amconll file of parser predictions
+    # with open(filtered_amconll, "r", encoding="utf-8") as f:
+    #     amconll_sentences = [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
 
     # initialise the pickle builder with the appropriate fields and their data types
     # The sentence is a table because it will stack the supertags on the words for each word
     pickle_builder = PickleBuilder({"Gold graph": FORMAT_NAME_GRAPH, "Predicted graph": FORMAT_NAME_GRAPH,
-                                    "Sentence": FORMAT_NAME_OBJECT_TABLE, "ID": FORMAT_NAME_STRING})
+                                    "Sentence": FORMAT_NAME_OBJECT_TABLE, metadata_fieldname: FORMAT_NAME_STRING})
 
 
-    # everything is in the same order, so we can zip the lists to get all info for each corpus entry
-    for i, amconll_sent in enumerate(amconll_sents):
+    for i, amconll_sent in enumerate(amconll_sentences):
         # just for PP attachments, there are some extra graphs in the corpus that we don't have AM conll files for
         # because they're not part of the final GrAPES dataset
         gold_amr = gold_graphs[i]
@@ -51,28 +56,16 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], filte
             i += 1
             gold_amr = gold_graphs[i]
 
-        # list of lists of pairs (datatype, content)
-        # each word is a list of the entries for the table, paired with their data type:
-        # e.g. [("token", "dog"),("graph", <graph for dog>)]
-        tagged_sentence = []
+        tagged_sentence = get_tagged_sentence_for_amconll_sent(amconll_sent)
 
-        for entry in amconll_sent.words:
-            tagged_token = []
-            tagged_sentence.append(tagged_token)
-
-            tagged_token.append((FORMAT_NAME_TOKEN, entry.token))
-            if entry.fragment == "_":
-                # empty graph constants are treated by Vulcan as tokens, not graphs
-                tagged_token.append((FORMAT_NAME_TOKEN, entry.fragment))
-            else:
-                # relexicalise the delexicalised graph constant
-                tagged_token.append((FORMAT_NAME_GRAPH_STRING, relabel_supertag(entry.fragment, entry)))
+        # info to put in the metadata field in the pickle (id and size if applicable)
+        meta = metadata_mapper(gold_amr)
 
         # use the exact same field names as used when the pickle builder was initialised.
         pickle_builder.add_instances_by_name({"Gold graph": gold_amr,
                                               "Predicted graph": predicted_graphs[i],
                                               "Sentence": tagged_sentence,
-                                              "ID": gold_amr.metadata["id"]
+                                              metadata_fieldname: meta
                                               })
 
         # add the dependency tree edges to the Sentence entry
@@ -82,8 +75,58 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], filte
     # transform stored dict in pickle_builder.data into a list of dicts with original keys as value of "name"
 
     # write the pickle
-    with open(path_to_pickle, "wb") as f:
-        pickle_builder.write(pickle_path)
+    pickle_builder.write(path_to_pickle)
+    print(f"Wrote pickle to {path_to_pickle}")
+
+
+def get_tagged_sentence_for_amconll_sent(amconll_sent):
+    # list of lists of pairs (datatype, content)
+    # each word is a list of the entries for the table, paired with their data type:
+    # e.g. [("token", "dog"),("graph", <graph for dog>)]
+    tagged_sentence = []
+    for entry in amconll_sent.words:
+        tagged_token = []
+        tagged_sentence.append(tagged_token)
+
+        tagged_token.append((FORMAT_NAME_TOKEN, entry.token))
+        if entry.fragment == "_":
+            # empty graph constants are treated by Vulcan as tokens, not graphs
+            tagged_token.append((FORMAT_NAME_TOKEN, entry.fragment))
+        else:
+            # relexicalise the delexicalised graph constant
+            tagged_token.append((FORMAT_NAME_GRAPH_STRING, relabel_supertag(entry.fragment, entry)))
+    return tagged_sentence
+
+
+def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, amconll_sentences: List[amconll.AMSentence],
+                                     error_analysis_pickle_path: str, out_dir_path: str):
+    error_eval_dict = pickle.load(open(error_analysis_pickle_path, "rb"))
+
+    os.makedirs(out_dir_path, exist_ok=True)
+    for key in error_eval_dict:
+        if len(error_eval_dict[key]) == 0:
+            print("no graphs for category", key)
+            continue
+        golds = []
+        preds = []
+        amconlls = []
+        for gold, pred in zip(evaluator.gold_amrs, evaluator.predicted_amrs):
+            graph_id = gold.metadata["id"]
+            if graph_id in error_eval_dict[key]:
+                golds.append(gold)
+                preds.append(pred)
+        # do these separately because for PP attachment there are extra graphs
+        for amconll_sentence in amconll_sentences:
+            if amconll_sentence.attributes["id"] in error_eval_dict[key]:
+                amconlls.append(amconll_sentence)
+        if len(golds) == 0:
+            print("no matching graphs for", key)
+        create_pickle(
+            golds,
+            preds,
+            amconlls,
+            f"{out_dir}/{evaluator.category_metadata.name}_{key}.pickle")
+
 
 
 def make_dependency_tree(amconll_sent):
@@ -120,9 +163,11 @@ def relabel_supertag(supertag, amconll_entry: Entry):
         return SOURCE_PATTERN.sub(r" / \g<source>", supertag)
 
 
-
 def make_am_path(directory, subcorpus):
+    """AM parser makes folders called <subcorpus>_intermediary_files that contains i.a. the AM Conll file,
+        mysteriously called AMR-2020_pred.amconll"""
     return f"{directory}/{subcorpus}_intermediary_files"
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=SmartFormatter)
@@ -130,7 +175,16 @@ if __name__ == '__main__':
     parser.add_argument("-a", "--am_path", help="path to AM parser output folder: parent of all the intermediary_files folders")
     parser.add_argument("-p", "--pred_path", help="path to AM parser predicted AMR file (e.g. full_corpus.txt)")
     parser.add_argument("-g", "--gold_path", help="path to gold file (optional if GrAPES category: will use corpus/corpus.txt)", default=None)
-    parser.add_argument("-o", "--output_path", help="path to write Vulcan pickle file", default=None)
+    parser.add_argument("-o", "--output_path", help="path to write Vulcan pickle file. "
+                                                    "Default error_analysis/<parser_name>/<category>_vulcan.pickle. "
+                                                    "NB: If --error_analysis, we will make our own paths.", default=None)
+    parser.add_argument('-n', '--parser_name', type=str,
+                        help="name of parser (optional, for creating output pathname)", default="amparser")
+    parser.add_argument("-e", "--error_analysis", action="store_true", help="Split up into correct and incorrect graphs according to the criteria. "
+                                                                            "Only works if you have run your evaluation with the --error_analysis flag.")
+    parser.add_argument("-ep", "--input_error_analysis_pickle_path",
+                                     help="Path to the error analysis pickle file generated by evaluation. (Optional: if not given, will try to reconstruct from other info)",
+                                     required=False, default=None)
     args = parser.parse_args()
 
 
@@ -142,6 +196,7 @@ if __name__ == '__main__':
         root_dir=root_dir_here,
         absolute_path_to_predictions_file=args.pred_path,
         absolute_path_to_gold_file=args.gold_path,
+        parser_name=args.parser_name,
     )
 
     print(info.display_name)
@@ -160,21 +215,35 @@ if __name__ == '__main__':
             with open(f"{make_am_path(args.am_path, file)}/AMR-2020_pred.amconll", "r", encoding="utf-8") as f:
                 amconll_sents += [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
         except FileNotFoundError as e:
-            print("WARNING: could read in AM conll file for", file, e)
-            # raise e
+            if args.category == "pp_attachment":
+                pass
+            else:
+                print("WARNING: could not read in AM conll file for", file, e)
+                raise e
 
-    print(len(gold_amrs), len(predicted_amrs) , len(amconll_sents))
+    # print(len(gold_amrs), len(predicted_amrs) , len(amconll_sents))
 
     dummy_evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
+
+    parent = f"{root_dir_here}/error_analysis/{instance_info.parser_name}/am_trees"
 
     filtered_amconll_path = f"{root_dir_here}/error_analysis/{info.name}.amconll"
     write_conll(filtered_amconll_path, amconll_sents)
 
-
-    pickle_path = args.output_path if args.output_path is not None else f"{root_dir_here}/error_analysis/amparser/{info.name}_vulcan.pickle"
-
-    create_pickle(dummy_evaluator.gold_amrs, dummy_evaluator.predicted_amrs, filtered_amconll_path, pickle_path)
-    print("wrote Vulcan pickle to", pickle_path)
+    if args.error_analysis:
+        if args.input_error_analysis_pickle_path is not None:
+            input_error_analysis_pickle_path = args.input_error_analysis_pickle_path
+        else:
+            input_error_analysis_pickle_path = f"{root_dir_here}/error_analysis/{instance_info.parser_name}/dictionaries/{info.name}.pickle"
+        out_dir = f"{parent}/vulcan_correct_and_incorrect"
+        os.makedirs(out_dir, exist_ok=True)
+        create_pickle_for_error_analysis(dummy_evaluator, amconll_sents, input_error_analysis_pickle_path, out_dir)
+    else:
+        out_dir = f"{parent}/vulcan_subcorpora"
+        pickle_path = args.output_path if args.output_path is not None else f"{out_dir}/{info.name}.pickle"
+        os.makedirs(out_dir, exist_ok=True)
+        create_pickle(dummy_evaluator.gold_amrs, dummy_evaluator.predicted_amrs, amconll_sents, pickle_path)
+        print("wrote Vulcan pickle to", pickle_path)
 
 
 
