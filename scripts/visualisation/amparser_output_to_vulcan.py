@@ -26,7 +26,7 @@ SOURCE_PATTERN = re.compile(r"(?P<source><[a-zA-Z0-9]+>)")
 
 
 def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], amconll_sentences: List[amconll.AMSentence],
-                  path_to_pickle: str, extra_metadata: Dict[str, str]=None):
+                  path_to_pickle: str, extra_metadata: Dict[str, str]=None, verbose=True):
     """
     Read in AM Parser output files and create a vulcan-readable pickle
     Pickle contains AM dependency tree, including graph constants, and gold and predicted graphs.
@@ -78,7 +78,8 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], amcon
 
     # write the pickle
     pickle_builder.write(path_to_pickle)
-    print(f"Wrote pickle to {path_to_pickle}")
+    if verbose:
+        print(f"Wrote pickle to {path_to_pickle}")
     if added != len(amconll_sentences) != len(gold_graphs) != len(predicted_graphs):
         print(f"Warning: we started with {len(amconll_sentences)} AMConll sentences and {len(gold_graphs)} graphs, but we wrote {added} to the pickle")
 
@@ -103,11 +104,11 @@ def get_tagged_sentence_for_amconll_sent(amconll_sent):
 
 
 def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, amconll_sentences: List[amconll.AMSentence],
-                                     error_analysis_pickle_path: str, out_dir_path: str):
+                                     error_analysis_pickle_path: str, out_dir_path: str, verbose=True):
 
     error_eval_dict = pickle.load(open(error_analysis_pickle_path, "rb"))
 
-    labels = evaluator.read_tsv()
+    labels = evaluator.read_tsv() if evaluator.category_metadata.tsv else None
     metric = evaluator.category_metadata.metric_label
 
     os.makedirs(out_dir_path, exist_ok=True)
@@ -115,7 +116,7 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, amconll_sent
         print_key = key if not key.endswith("_id") else key[:-3]
         extra_fields = {"error status": print_key, "metric": metric}
         if len(error_eval_dict[key]) == 0:
-            print("no graphs for category", key)
+            print("no graphs for category", key, evaluator.category_metadata.name)
             continue
         golds = []
         preds = []
@@ -136,7 +137,7 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, amconll_sent
 
         create_pickle(golds,preds,amconlls,
                       f"{out_dir_path}/{evaluator.category_metadata.name}_{print_key}.pickle",
-                      extra_metadata=extra_fields)
+                      extra_metadata=extra_fields, verbose=verbose)
 
 
 
