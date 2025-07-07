@@ -133,7 +133,7 @@ def create_results_pickles():
         if instance_info.do_error_analysis:
             print("Error analysis pickles in", f"{root_dir_here}/error_analysis/{parser_name}/")
 
-
+        display_and_store_by_size(all_generalisations_by_size_dict, by_size, parser_name, results_path)
 
         # all_result_rows = []
         # parser_name2rows[parser_name] = all_result_rows
@@ -267,9 +267,20 @@ def create_results_pickles():
         # csv.writer(open(csv_path, "w", encoding="utf8")).writerows(csv_rows)
         # print("written to", csv_path)
 
-    # pickle.dump(parser_name2rows, open(pickle_path, "wb"))
-    # pickle.dump(all_generalisations_by_size_dict, open(by_size_pickle_path, "wb"))
-    # print("Results pickled in ", results_path)
+    pickle.dump(parser_name2rows, open(pickle_path, "wb"))
+    pickle.dump(all_generalisations_by_size_dict, open(by_size_pickle_path, "wb"))
+    print("Results pickled in ", results_path)
+
+
+def display_and_store_by_size(all_generalisations_by_size_dict, by_size, parser_name, results_path):
+    table = structural_generalisation_by_size_as_table(by_size)
+    all_generalisations_by_size_dict[parser_name] = by_size
+    out_csv_by_size = f"{results_path}/{parser_name}_by_size.csv"
+    csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
+    csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
+    print("\nStructure generalisation results by size")
+    print(table)
+    return all_generalisations_by_size_dict
 
 
 def display_and_store_averages(divisors, parser_name, results_path, sums):
@@ -522,7 +533,7 @@ def _get_row_evaluation_type(row):
     else:
         return len(row)
 
-def pretty_print_structural_generalisation_by_size(results):
+def structural_generalisation_by_size_as_table(results):
     """
     Prints the structural generalisation results split up by size
     Args:
@@ -545,9 +556,6 @@ def pretty_print_structural_generalisation_by_size(results):
             else:
                 row.append("")
         table.add_row(row)
-
-    print("\nStructure generalisation results by size")
-    print(table)
     return table
 
 def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachment, results_here,
@@ -601,7 +609,7 @@ def display_results(results, by_size, bunch=None):
     for row in results:
         print_table.add_row([row[0]] + row[2:])
     if len(by_size) > 0:
-        pretty_print_structural_generalisation_by_size(by_size)
+        structural_generalisation_by_size_as_table(by_size)
     header = "\nAll results"
     if bunch is not None:
         header += f" for bunch {bunch}"
@@ -618,7 +626,7 @@ def store_results(results, instance_info: EvaluationInstanceInfo, results_dir: s
     print(f"CSV of results written to {out_file}")
     out_file = f"{results_dir}/{filename}.pickle"
     pickle.dump(results, open(out_file, "wb"))
-    print(f"Pickle of results written to {out_file}")
+
 
 
 def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset, predicted_graphs_grapes,

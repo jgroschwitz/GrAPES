@@ -10,7 +10,7 @@ from evaluation.full_evaluation.category_evaluation.subcategory_info import is_s
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
     size_mappers, STRUC_GEN, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
-from evaluation.full_evaluation.run_full_evaluation import evaluate, pretty_print_structural_generalisation_by_size, \
+from evaluation.full_evaluation.run_full_evaluation import evaluate, structural_generalisation_by_size_as_table, \
     load_predictions
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
 from evaluation.util import num_to_score, SANITY_CHECK
@@ -71,7 +71,7 @@ def main():
         do_by_size = info.subcorpus_filename in size_mappers
         if do_by_size:
             generalisation_by_size = evaluator.get_results_by_size()
-            pretty_print_structural_generalisation_by_size({info.subcorpus_filename: generalisation_by_size})
+            structural_generalisation_by_size_as_table({info.subcorpus_filename: generalisation_by_size})
 
         if not is_sanity_check(info):
             # Try doing the sanity check for a main class

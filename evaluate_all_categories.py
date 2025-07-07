@@ -1,8 +1,11 @@
 import argparse
+import csv
+
 from penman import load
 from scripts.argparse_formatter import SmartFormatter
 from evaluation.full_evaluation.run_full_evaluation import display_results, \
-    store_results, get_results, load_predictions, display_and_store_averages
+    store_results, get_results, load_predictions, display_and_store_averages, display_and_store_by_size, \
+    structural_generalisation_by_size_as_table
 from evaluation.full_evaluation.category_evaluation.category_metadata import *
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 
@@ -139,6 +142,11 @@ def main():
     display_results(results, by_size, bunch=args.bunch)
 
     display_and_store_averages(divisors, instance_info.parser_name, results_dir, sums)
+    table = structural_generalisation_by_size_as_table(by_size)
+    out_csv_by_size = f"{results_dir}/{instance_info.parser_name}_by_size.csv"
+    csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
+    csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
+
 
     if instance_info.do_error_analysis:
         print("Error analysis pickles in", f"{instance_info.root_dir}/error_analysis/{instance_info.parser_name}/")
