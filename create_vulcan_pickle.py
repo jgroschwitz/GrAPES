@@ -211,7 +211,7 @@ def get_metadata_fieldname_and_mapper(graph, extra_metadata=None):
         ending = ""
         metadata_fieldname = "ID"
     else:
-        ending = " ".join([f"{key}: {val}" for key, val in extra_metadata.items()])
+        ending = "  ".join([f"{key}: {val}" for key, val in extra_metadata.items()])
         metadata_fieldname = "MetaData"
     graph_id = graph.metadata["id"]
     parts = graph_id.split("_")

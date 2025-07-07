@@ -48,7 +48,7 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], amcon
     # The sentence is a table because it will stack the supertags on the words for each word
     pickle_builder = PickleBuilder({"Gold graph": FORMAT_NAME_GRAPH, "Predicted graph": FORMAT_NAME_GRAPH,
                                     "Sentence": FORMAT_NAME_OBJECT_TABLE, metadata_fieldname: FORMAT_NAME_STRING})
-
+    added = 0
 
     for i, amconll_sent in enumerate(amconll_sentences):
         # just for PP attachments, there are some extra graphs in the corpus that we don't have AM conll files for
@@ -62,7 +62,7 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], amcon
 
         # info to put in the metadata field in the pickle (id and size if applicable)
         meta = metadata_mapper(gold_amr)
-
+        added +=1
         # use the exact same field names as used when the pickle builder was initialised.
         pickle_builder.add_instances_by_name({"Gold graph": gold_amr,
                                               "Predicted graph": predicted_graphs[i],
@@ -79,6 +79,8 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], amcon
     # write the pickle
     pickle_builder.write(path_to_pickle)
     print(f"Wrote pickle to {path_to_pickle}")
+    if added != len(amconll_sentences) != len(gold_graphs) != len(predicted_graphs):
+        print(f"Warning: we started with {len(amconll_sentences)} AMConll sentences and {len(gold_graphs)} graphs, but we wrote {added} to the pickle")
 
 
 def get_tagged_sentence_for_amconll_sent(amconll_sent):
@@ -102,10 +104,16 @@ def get_tagged_sentence_for_amconll_sent(amconll_sent):
 
 def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, amconll_sentences: List[amconll.AMSentence],
                                      error_analysis_pickle_path: str, out_dir_path: str):
+
     error_eval_dict = pickle.load(open(error_analysis_pickle_path, "rb"))
+
+    labels = evaluator.read_tsv()
+    metric = evaluator.category_metadata.metric_label
 
     os.makedirs(out_dir_path, exist_ok=True)
     for key in error_eval_dict:
+        print_key = key if not key.endswith("_id") else key[:-3]
+        extra_fields = {"error status": print_key, "metric": metric}
         if len(error_eval_dict[key]) == 0:
             print("no graphs for category", key)
             continue
@@ -117,16 +125,18 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, amconll_sent
             if graph_id in error_eval_dict[key]:
                 golds.append(gold)
                 preds.append(pred)
+                if labels:
+                    extra_fields["gold label"] = labels[graph_id]
         # do these separately because for PP attachment there are extra graphs
         for amconll_sentence in amconll_sentences:
             if amconll_sentence.attributes["id"] in error_eval_dict[key]:
                 amconlls.append(amconll_sentence)
         if len(golds) == 0:
             print("no matching graphs for", key)
-        print_key = key if not key.endswith("_id") else key[:-3]
+
         create_pickle(golds,preds,amconlls,
-                      f"{out_dir}/{evaluator.category_metadata.name}_{print_key}.pickle",
-                      extra_metadata={"error status": print_key})
+                      f"{out_dir_path}/{evaluator.category_metadata.name}_{print_key}.pickle",
+                      extra_metadata=extra_fields)
 
 
 
@@ -189,6 +199,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
 
+
+
     x: Tuple[Callable, SubcategoryMetadata] = category_name_to_set_class_and_metadata[args.category]
     eval_class, info = x
     root_dir_here = "../.."
@@ -205,6 +217,8 @@ if __name__ == '__main__':
 
     gold_amrs = penman.load(gold_path)
     predicted_amrs = penman.load(predictions_path)
+    dummy_evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
+    ids = dummy_evaluator.get_all_gold_ids()
 
     # read in the amconll file(s) of parser predictions
     amconll_sents = []
@@ -214,7 +228,7 @@ if __name__ == '__main__':
     for file in files_to_read:
         try:
             with open(f"{make_am_path(args.am_path, file)}/AMR-2020_pred.amconll", "r", encoding="utf-8") as f:
-                amconll_sents += [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
+                amconll_sents += [s for s in parse_amconll(f, False) if s.attributes["id"] in ids]
         except FileNotFoundError as e:
             if args.category == "pp_attachment":
                 pass
@@ -224,11 +238,12 @@ if __name__ == '__main__':
 
     # print(len(gold_amrs), len(predicted_amrs) , len(amconll_sents))
 
-    dummy_evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
+
 
     parent = f"{root_dir_here}/error_analysis/{instance_info.parser_name}/am_trees"
+    os.makedirs(parent, exist_ok=True)
 
-    filtered_amconll_path = f"{root_dir_here}/error_analysis/{info.name}.amconll"
+    filtered_amconll_path = f"{parent}/{info.name}.amconll"
     write_conll(filtered_amconll_path, amconll_sents)
 
     if args.error_analysis:
@@ -243,6 +258,7 @@ if __name__ == '__main__':
         out_dir = f"{parent}/vulcan_subcorpora"
         pickle_path = args.output_path if args.output_path is not None else f"{out_dir}/{info.name}.pickle"
         os.makedirs(out_dir, exist_ok=True)
+        print(len(dummy_evaluator.gold_amrs), len(dummy_evaluator.predicted_amrs))
         create_pickle(dummy_evaluator.gold_amrs, dummy_evaluator.predicted_amrs, amconll_sents, pickle_path)
         print("wrote Vulcan pickle to", pickle_path)
 

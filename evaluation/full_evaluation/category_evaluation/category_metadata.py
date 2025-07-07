@@ -445,8 +445,17 @@ def get_formatted_category_names_by_main_file():
     ret += "\n".join(grapes)
     return ret
 
+def write_category_names_to_files():
+    grapes, testset = get_categories_by_main_file()
+    with open("../../../scripts/grapes_categories.txt", "w") as f:
+        f.write("\n".join(grapes))
+    with open("../../../scripts/testset_categories.txt", "w") as f:
+        f.write("\n".join(testset))
 
 def get_categories_by_main_file():
+    """
+    Returns: 2 lists of strings: GrAPES, testset
+    """
     grapes = []
     testset = []
     for bunch in sorted(bunch2subcategory.keys()):
@@ -471,3 +480,5 @@ def is_testset_category(info):
 # print(list(bunch_number2name.values()))
 
 # print(bunch2subcategory)
+
+# write_category_names_to_files()

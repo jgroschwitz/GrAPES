@@ -18,14 +18,15 @@ class ListAccuracy(CategoryEvaluation):
     """ For the Long Lists category. Note that the Sanity Check uses ExactMatch instead."""
 
     def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph], category_metadata: SubcategoryMetadata,
-                 instance_info: EvaluationInstanceInfo, given_subcorpus_file=False):
+                 instance_info: EvaluationInstanceInfo):
         """
         We add space for storing counts to the error analysis because (a) there are a lot of edges per graph,
         and we don't want a copy for each mistake, and (b) we also want to calculate precision.
         """
         super().__init__(gold_amrs, predicted_amrs, category_metadata, instance_info)
         if self.instance_info.do_error_analysis:
-            self.results = ListResults(verbose=instance_info.verbose_error_analysis)
+            pickle_path = f"{self.instance_info.error_analysis_outdir()}/{self.category_metadata.name}.pickle"
+            self.results = ListResults(verbose=instance_info.verbose_error_analysis, pickle_path=pickle_path)
         else:
             self.results = ListCountResults()
 
@@ -54,6 +55,8 @@ class ListAccuracy(CategoryEvaluation):
         true_predictions = self.get_success_count(OPi)
         self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
                                          [true_predictions, opi_total_gold])
+        if self.instance_info.do_error_analysis:
+            self.results.write_pickle()
 
     def update_results(self, gold_amr, predicted_amr, target=None, predictions_for_comparison=None):
         """
@@ -140,9 +143,9 @@ class ListResults(IDResults):
     Also writes a coarse-grained pickle of predictions with and without any errors in two categories
     Measures unseen opi edge recall and precision and recall on conjuncts
     """
-    def __init__(self, verbose=True):
+    def __init__(self, pickle_path, verbose=True):
         additional_fields = [OPi]
-        super().__init__(additional_fields=additional_fields, default_field="conjuncts", verbose=verbose)
+        super().__init__(additional_fields=additional_fields, default_field="conjuncts", pickle_path=pickle_path, verbose=verbose)
 
         for field in additional_fields + [self.default_field]:
             setattr(self, f"correct_{field}", 0)

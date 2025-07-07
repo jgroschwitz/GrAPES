@@ -220,7 +220,11 @@ class CategoryEvaluation:
 
     def read_tsv(self):
         """ Default TSV reader. Can be overridden by other functions"""
-        return read_label_tsv(self.root_dir, self.category_metadata.tsv)
+        if self.category_metadata.tsv is not None:
+            return read_label_tsv(self.root_dir, self.category_metadata.tsv)
+        else:
+            print("No TSV for this category")
+            return None
 
     def _calculate_metrics_and_add_all_rows(self):
         """ Turns self.results into self.rows """
