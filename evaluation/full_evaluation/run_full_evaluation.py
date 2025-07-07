@@ -27,7 +27,7 @@ else:
 
 # update per use if desired
 do_error_analysis = True
-run_all_smatch = True
+run_all_smatch = False
 run_full_corpus_smatch = True
 
 # ERROR HANDLING GLOBAL
@@ -613,7 +613,8 @@ def store_results(results, instance_info: EvaluationInstanceInfo, results_dir: s
     os.makedirs(results_dir, exist_ok=True)
     filename = instance_info.parser_name
     out_file = f"{results_dir}/{filename}.csv"
-    csv.writer(open(out_file, "w", encoding="utf8")).writerows(results)
+    csv_rows = [["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"]] + results
+    csv.writer(open(out_file, "w", encoding="utf8")).writerows(csv_rows)
     print(f"CSV of results written to {out_file}")
     out_file = f"{results_dir}/{filename}.pickle"
     pickle.dump(results, open(out_file, "wb"))
@@ -642,12 +643,12 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
         if use_grapes:
             smatch = compute_smatch_f_from_graph_lists(gold_graphs_grapes, predicted_graphs_grapes)
             rows = make_rows_for_results("Overall on novel GrAPES corpus", True, True,
-                                         [[None, "Smatch", EVAL_TYPE_F1, smatch[2], len(gold_graphs_grapes)]], "", "")
+                                         [[None, "Smatch", EVAL_TYPE_F1, smatch[2], len(gold_graphs_grapes)]], 0, "")
             results.extend(rows)
         if use_testset:
             smatch_test = compute_smatch_f_from_graph_lists(gold_graphs_testset, predicted_graphs_testset)
             rows = make_rows_for_results("Overall on AMR 3.0 testset", True, True,
-                                         [[None, "Smatch", EVAL_TYPE_F1, smatch_test[2], len(gold_graphs_testset)]], "", "")
+                                         [[None, "Smatch", EVAL_TYPE_F1, smatch_test[2], len(gold_graphs_testset)]], 0, "")
             results.extend(rows)
         print("Smatch done")
 
