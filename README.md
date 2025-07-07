@@ -195,7 +195,7 @@ pp_attachment
 unbounded_dependencies
 ```
 
-The files each category uses are in `evaluation`
+The evaluation classes each category uses are in `evaluation/full_evaluation/category_evaluation/`
 
 ## Running evaluations on multiple parsers at once
 
@@ -215,6 +215,12 @@ You can use `evaluation/full_evaluation/run_all_evaluations.py` if you set yours
 
 ```commandline
 PYTHONPATH=../../ python run_full_evaluation.py amparser amrbart
+```
+
+Similarly, with that setup you can go all the way from parser names to full results stored in pickles and CSV files, Vulcan-readable pickles for error analysis, and LaTeX > PDF for tables you might want in your paper with the bash script `scripts/parser_outs2latex_and_vulcan.sh`. (If the global `run_all_smatch` in `run_full_evaluation.py` is set to `True`, this will take a few minutes because it will run Smatch on every subcategory.)
+
+```commandline
+bash parser_outs2latex_and_vulcan.sh parser1_name parser2_name parser3_name
 ```
 
 ## Details about the construction of each category
@@ -238,16 +244,15 @@ You probably want to print the whole table with `\small` in front. Results colum
 
 You may find [Vulcan](https://github.com/jgroschwitz/vulcan) helpful for looking at your parser output and comparing it to the gold graph, when available. Git Clone the repository, and install the dependencies. 
 
-From your GrAPES main folder, create pickles of the data. This works for any pair of files with predicted and gold graphs in the same order.
+From your GrAPES main folder, create pickles of the data. This works for any pair of files with predicted and gold graphs in the same order. 
+
+See the help instructions for `create_vulcan_pickles.py` for more details. To get Vulcan-redable pickles of gold and predicted graphs for a category, use:
 
 ```commandline
-python create_vulcan_pickle.py path/to/prediction/file path/to/gold/file path/to/output.pickle
+python create_vulcan_pickle.py -p path/to/prediction/file -g path/to/gold/file -o path/to/output.pickle -c category_name
 ```
-For example, for the adjectives subcorpus, you could have something like:
 
-```commandline
-python create_vulcan_pickle.py ../parser_outputs/subcorpora/adjectives_predictions.txt corpus/subcorpora/adjectives.txt error_analysis/adjectives.pickle
-```
+If you want them further split by whether they were correct or not, make sure you've run the evaluation with the `-e` flag, which stores the graph IDs of correct and incorrect outputs according to each evaluation criterion. Then you can run `create_vulcan_pickle.py` with the `-e` flag, and it will create separate pickles for correct and incorrect graphs for each criterion. (`(in)correct_id` are for the basic criteria.)
 
 You can then view the graphs and sentences side-by-side with Vulcan from your Vulcan folder (not from your GrAPES folder!):
 
@@ -296,6 +301,7 @@ GrAPES
 │ └── corpus_metrics.py
 ├── grammars                            # Alto grammars for structural generalisation
 ├── scripts
+│ ├── parser_outs2latex_and_vulcan.sh   # from parser names to full displayed and saved results (see documentation)
 │ ├── file_manipulations                # various scripts for changing files
 │ ├── latex                             # converts csv outs from evaluate_all_categories and run_all_evaluations to LaTeX table
 │ └── preprocessing                     # preprocessing scripts for AM parser and AMRBART
