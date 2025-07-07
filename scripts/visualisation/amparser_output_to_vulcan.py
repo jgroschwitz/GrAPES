@@ -11,8 +11,9 @@ from vulcan.data_handling.format_names import *
 
 from evaluate_single_category import get_gold_path_based_on_info
 from scripts.argparse_formatter import SmartFormatter
-from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
-    get_formatted_category_names, is_testset_category
+from evaluation.full_evaluation.category_evaluation.category_metadata import (category_name_to_set_class_and_metadata,
+                                                                              is_testset_category,
+                                                                              get_formatted_category_names_by_main_file)
 from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 
@@ -40,8 +41,15 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], filte
     pickle_builder = PickleBuilder({"Gold graph": FORMAT_NAME_GRAPH, "Predicted graph": FORMAT_NAME_GRAPH,
                                     "Sentence": FORMAT_NAME_OBJECT_TABLE, "ID": FORMAT_NAME_STRING})
 
+
     # everything is in the same order, so we can zip the lists to get all info for each corpus entry
-    for gold_amr, predicted_amr, amconll_sent in zip(gold_graphs, predicted_graphs, amconll_sents):
+    for i, amconll_sent in enumerate(amconll_sents):
+        # just for PP attachments, there are some extra graphs in the corpus that we don't have AM conll files for
+        # because they're not part of the final GrAPES dataset
+        gold_amr = gold_graphs[i]
+        while amconll_sent.attributes["id"] != gold_amr.metadata["id"]:
+            i += 1
+            gold_amr = gold_graphs[i]
 
         # list of lists of pairs (datatype, content)
         # each word is a list of the entries for the table, paired with their data type:
@@ -62,7 +70,7 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], filte
 
         # use the exact same field names as used when the pickle builder was initialised.
         pickle_builder.add_instances_by_name({"Gold graph": gold_amr,
-                                              "Predicted graph": predicted_amr,
+                                              "Predicted graph": predicted_graphs[i],
                                               "Sentence": tagged_sentence,
                                               "ID": gold_amr.metadata["id"]
                                               })
@@ -118,7 +126,7 @@ def make_am_path(directory, subcorpus):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=SmartFormatter)
-    parser.add_argument("-c", "--category", help="category to evaluate Choices:" + get_formatted_category_names())
+    parser.add_argument("-c", "--category", help="category to evaluate Choices:" + get_formatted_category_names_by_main_file())
     parser.add_argument("-a", "--am_path", help="path to AM parser output folder: parent of all the intermediary_files folders")
     parser.add_argument("-p", "--pred_path", help="path to AM parser predicted AMR file (e.g. full_corpus.txt)")
     parser.add_argument("-g", "--gold_path", help="path to gold file (optional if GrAPES category: will use corpus/corpus.txt)", default=None)
@@ -153,7 +161,7 @@ if __name__ == '__main__':
                 amconll_sents += [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
         except FileNotFoundError as e:
             print("WARNING: could read in AM conll file for", file, e)
-            raise e
+            # raise e
 
     print(len(gold_amrs), len(predicted_amrs) , len(amconll_sents))
 
