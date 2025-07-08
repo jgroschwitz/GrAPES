@@ -87,11 +87,11 @@ def figure_out_what_to_run(gold_graphs_grapes, gold_graphs_testset, predicted_gr
     if not use_grapes:
         print("No GrAPES AMRs given. Skipping GrAPES categories.")
     if not use_grapes_from_testset:
-        print("No AMRs for the 'Word ambiguities (handcrafted)' category were given. Will attempt with individual files, but if the fails, will skip it, as well as the"
+        print("No AMRs for the 'Word ambiguities (handcrafted)' category were given. Will attempt with individual files, but if it fails, will skip it, as well as the"
               " 'Lexical disambiguation' compact evaluation results. You can add the graphs from the AMR testset with a"
               " script; see the documentation on the GitHub page.")
     if not use_grapes_from_ptb:
-        print("No AMRs for the 'Unbounded dependencies' category were given. Will attempt with individual files, but if the fails, will skip it, as well as the"
+        print("No AMRs for the 'Unbounded dependencies' category were given. Will attempt with individual files, but if it fails, will skip it, as well as the"
               " 'Edge attachments' compact evaluation results. You can add the graphs from the PTB with a"
               " script; see the documentation on the GitHub page.")
     return use_grapes, use_grapes_from_ptb, use_grapes_from_testset, use_testset
@@ -132,6 +132,9 @@ def main():
                                                                                                    gold_graphs_testset,
                                                                                                    predicted_graphs_grapes,
                                                                                                    predicted_graphs_testset)
+    if instance_info.run_smatch:
+        print("We will run Smatch on all categories. This may take a while...\n"
+              " to avoid this, stop and rerun without the --smatch option.")
     # run the evaluation
     results, by_size, sums, divisors, dont_print_these_averages = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset,
                                    predicted_graphs_grapes, instance_info, use_grapes, use_grapes_from_ptb,

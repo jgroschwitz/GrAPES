@@ -118,6 +118,9 @@ def create_results_pickles():
         print(f"{len(testset_parser_outs)} testset graphs")
 
         print("Running evaluation for", parser_name, "...")
+        if instance_info.run_smatch:
+            print("We will run Smatch on all categories. This may take a while...\n"
+                  " to avoid this, stop and change run_all_smatch to False.")
 
 
         results, by_size, sums, divisors, dont_print_these_averages = get_results(gold_testset, gold_grapes, testset_parser_outs, grapes_parser_outs, instance_info)
@@ -549,10 +552,6 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
             results.extend(rows)
         print("Smatch done")
 
-
-    if instance_info.run_smatch:
-        print("We will run Smatch on all categories. This may take a while...\n"
-              " to avoid this, stop and change run_all_smatch to False.")
 
     # loop through bunches
     for i in range(1, len(bunch2subcategory)+1):
