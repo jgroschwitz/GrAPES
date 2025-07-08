@@ -27,8 +27,8 @@ else:
 
 # update per use if desired
 do_error_analysis = True
-run_all_smatch = False
-run_full_corpus_smatch = False
+run_all_smatch = True
+run_full_corpus_smatch = True
 
 # ERROR HANDLING GLOBAL
 # raise an error if any category doesn't work
@@ -105,8 +105,8 @@ def create_results_pickles():
             parser_name=parser_name,
         )
         try:
-            testset_parser_outs = load(instance_info.default_testset_pred_file_path())
-            grapes_parser_outs = load(instance_info.full_grapes_pred_file_path())
+            testset_parser_outs = load_predictions(instance_info.default_testset_pred_file_path())
+            grapes_parser_outs = load_predictions(instance_info.full_grapes_pred_file_path())
             # os.makedirs(evaluation_instance_info.results_directory_path(), exist_ok=True)
         except FileNotFoundError as e:
             print(f"\n!! {parser_name} outputs not found. Check your parser outputs are in data/processed/parser_outputs/<parser_name>-output/ and named full_corpus.txt (for GrAPES) and testset.txt (for the original AMR 3.0 dataset)\n")

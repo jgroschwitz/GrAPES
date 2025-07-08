@@ -12,11 +12,11 @@ from scripts.visualisation.amparser_output_to_vulcan import create_pickle_for_er
     create_pickle, make_am_path
 
 
-def get_evaluator_info_and_ids_for_category(category, gold_amrs, predicted_amrs):
+def get_evaluator_info_and_ids_for_category(category, gold_graphs, predicted_graphs, instance_metadata):
 
     x: Tuple[Callable, SubcategoryMetadata] = category_name_to_set_class_and_metadata[category]
     eval_class, info = x
-    dummy_evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
+    dummy_evaluator = eval_class(gold_graphs, predicted_graphs, info, instance_metadata)
     ids = dummy_evaluator.get_all_gold_ids()
     return dummy_evaluator, info,  ids
 
@@ -43,10 +43,10 @@ def get_am_sents(info, ids):
     return amconll_sents
 
 
-def run_all_for_file(categories, gold_amrs, predicted_amrs):
+def run_all_for_file(categories, gold_amrs, predicted_amrs, instance_info):
     for category in categories:
 
-        evaluator, info, ids = get_evaluator_info_and_ids_for_category(category, gold_amrs, predicted_amrs)
+        evaluator, info, ids = get_evaluator_info_and_ids_for_category(category, gold_amrs, predicted_amrs, instance_info)
         if len(ids) == 0:
             print(f"\n### Skipping {category}: no matching graphs found in corpus\n")
             continue
@@ -95,12 +95,12 @@ if __name__ == '__main__':
     print("GrAPES")
     gold_amrs = penman.load(instance_info.gold_grapes_path())
     predicted_amrs = penman.load(instance_info.pred_grapes_file_path())
-    run_all_for_file(grapes_categories, gold_amrs, predicted_amrs)
+    run_all_for_file(grapes_categories, gold_amrs, predicted_amrs, instance_info)
 
     print("\nAMR 3.0 testset")
     gold_amrs = penman.load(instance_info.gold_testset_path())
     predicted_amrs = penman.load(instance_info.testset_pred_file_path())
-    run_all_for_file(testset_categories, gold_amrs, predicted_amrs)
+    run_all_for_file(testset_categories, gold_amrs, predicted_amrs, instance_info)
 
 
 

@@ -179,6 +179,7 @@ if __name__ == "__main__":
                 gold_amrs = load(gold_path)
                 predicted_amrs = load(args.predictions_path)
 
+
                 for category in category_name_to_set_class_and_metadata:
                     try:
                         evaluator = make_dummy_evaluator_given_graphs(gold_amrs, predicted_amrs,

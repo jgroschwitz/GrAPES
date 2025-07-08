@@ -1,6 +1,6 @@
 # if everything is in its default location with default names, this script will take you from parser names to:
 # CSV files and pickles of results in data/processed/results/from_run_full_evaluation
-# LaTeX tables in data/processed/results > sandbox.pdf
+# LaTeX tables in data/processed/results/latex/<parser_name> > sandbox.pdf
 # Vulcan-readable pickles for error analysis in error_analysis/<parser_name>/vulcan_correct_and_incorrect/
 if [[ $1 = "-h" ]] || [[ $1 = "--help" ]]; then echo "Enter parser names as arguments separated by spaces"; exit; fi
 
