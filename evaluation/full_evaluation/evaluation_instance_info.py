@@ -7,6 +7,7 @@ class EvaluationInstanceInfo:
     root_dir: str = "."
     run_smatch: bool = False
     run_full_corpus_smatch: bool = False
+    run_structural_generalisation_smatch: bool = False
 
     # paths
     absolute_path_to_predictions_file: str = None

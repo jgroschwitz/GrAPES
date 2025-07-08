@@ -95,6 +95,7 @@ def create_results_pickles():
             root_dir="../..",
             run_smatch=run_all_smatch,
             run_full_corpus_smatch=run_full_corpus_smatch,
+            run_structural_generalisation_smatch=True,
             subcorpus_predictions_directory_path_from_root=f"{path_to_parser_outputs}/{parser_name}-output",
             do_error_analysis=do_error_analysis,
             fail_ok=cat_fail_ok,

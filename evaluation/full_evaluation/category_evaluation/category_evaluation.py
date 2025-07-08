@@ -54,7 +54,9 @@ class CategoryEvaluation:
         self.extra_subcorpus_filenames = category_metadata.extra_subcorpus_filenames
         self.instance_info = instance_info
         self.is_sanity_check = is_sanity_check(category_metadata)
-        self.run_smatch = self.instance_info.run_smatch or self.category_metadata.subtype == STRUC_GEN and not self.is_sanity_check
+        self.run_smatch = (self.instance_info.run_smatch or
+                           (self.category_metadata.subtype == STRUC_GEN and not self.is_sanity_check
+                            and self.instance_info.run_structural_generalisation_smatch))
 
         # get any extra corpus files needed
         if self.category_metadata.extra_subcorpus_filenames and self.instance_info.given_single_file:

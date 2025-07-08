@@ -54,6 +54,7 @@ def instance_info_from_args(args):
         print_f1_default=args.all_metrics,
         print_unlabeled_edge_attachment=args.all_metrics,
         run_full_corpus_smatch=args.smatch,
+        run_structural_generalisation_smatch=args.all_metrics,
     )
     return instance_instructions
 

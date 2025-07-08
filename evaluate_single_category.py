@@ -45,6 +45,7 @@ def instance_info_from_args(args):
         do_error_analysis=args.error_analysis,
         parser_name=args.parser_name,
         run_smatch=args.smatch,
+        run_structural_generalisation_smatch=args.smatch
     )
     return instance_instructions
 
