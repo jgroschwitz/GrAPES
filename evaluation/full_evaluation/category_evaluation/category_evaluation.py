@@ -54,6 +54,7 @@ class CategoryEvaluation:
         self.extra_subcorpus_filenames = category_metadata.extra_subcorpus_filenames
         self.instance_info = instance_info
         self.is_sanity_check = is_sanity_check(category_metadata)
+        self.run_smatch = self.instance_info.run_smatch or self.category_metadata.subtype == STRUC_GEN and not self.is_sanity_check
 
         # get any extra corpus files needed
         if self.category_metadata.extra_subcorpus_filenames and self.instance_info.given_single_file:
@@ -62,6 +63,7 @@ class CategoryEvaluation:
             self.gold_amrs.extend(extra_gold)
             self.predicted_amrs.extend(extra_pred)
 
+        # set self.gold_amrs and self.predicted_amrs to just the relevant ones
         self.store_filtered_graphs()
         if len(self.gold_amrs) == 0:
             print(f"WARNING: None of the given graphs belong to this category ({self.category_metadata.name})! Check that you provided the AMR 3.0 "
@@ -76,7 +78,7 @@ class CategoryEvaluation:
         if self.measure_unlabelled_edges():
             extra_fields.append(UNLABELLED)
         if self.instance_info.do_error_analysis:
-
+            # this kind of Results stores the graph IDs of successes and failures for each metric
             pickle_path = f"{self.instance_info.error_analysis_outdir()}/{self.category_metadata.name}.pickle"
             self.results = IDResults(additional_fields=extra_fields, pickle_path=pickle_path,
                                      verbose=self.instance_info.verbose_error_analysis)
@@ -93,13 +95,16 @@ class CategoryEvaluation:
         Main function.
         Run all evaluations and create output rows
         Returns: list of rows of results: [dataset name, metric_name, eval_type] + metric_results
-
         """
         assert len(self.gold_amrs) > 0, "No AMRs to evaluate!"
+        # run the evaluations and store the results in self.results
         self._get_all_results()
+        if self.run_smatch:
+            self.evaluate_with_smatch()
+        # turn self.results into self.rows
         self._calculate_metrics_and_add_all_rows()
-        if self.instance_info.run_smatch or self.category_metadata.subtype == STRUC_GEN and not self.is_sanity_check:
-            self.make_and_add_smatch_results()
+        # if self.run_smatch:
+        #     self.make_and_add_smatch_results()
         return self.rows
 
     def get_additional_graphs(self):
@@ -160,10 +165,19 @@ class CategoryEvaluation:
     def make_empty_row(category_name="", metric_name="-"):
         return [category_name, metric_name, EVAL_TYPE_NA] + []
 
-    def make_and_add_smatch_results(self):
-        smatch = compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
-        smatch_f1 = self.get_f_from_prf(smatch)
-        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [smatch_f1, len(self.gold_amrs)])
+    def get_smatch_prf(self):
+        return compute_smatch_f_from_graph_lists(self.gold_amrs, self.predicted_amrs)
+
+    def evaluate_with_smatch(self):
+        """Run Smatch and store the F-score in self.results.smatch"""
+        self.results.smatch = self.get_f_from_prf(self.get_smatch_prf())
+
+    # def make_and_add_smatch_results(self):
+    #     smatch = self.get_smatch_prf()
+    #     self.add_smatch_results(smatch)
+
+    def add_smatch_results(self):
+        self.make_and_append_results_row("Smatch", EVAL_TYPE_F1, [self.results.smatch, len(self.gold_amrs)])
 
     def get_results_by_size(self):
         """Split up the generalisation by size as marked in corpora.
@@ -245,6 +259,8 @@ class CategoryEvaluation:
             # ret.append(prereq_success_count)
             self.rows.append(self.make_results_row(
                 "Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq_success_count, sample_size]))
+        if self.run_smatch:
+            self.add_smatch_results()
 
         if self.instance_info.do_error_analysis:
             self.results.write_pickle()
@@ -324,6 +340,7 @@ class Results(ABC):
         """
         self.default_field = default_field
         self.verbose = verbose
+        self.smatch = None  # if we run Smatch, will change this to the F-score
 
     @abstractmethod
     def add_success(self, gold: Graph, predicted: Graph, field:str=None):

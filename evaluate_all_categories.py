@@ -1,11 +1,9 @@
 import argparse
-import csv
 
 from penman import load
 from scripts.argparse_formatter import SmartFormatter
 from evaluation.full_evaluation.run_full_evaluation import display_results, \
-    store_results, get_results, load_predictions, display_and_store_averages, display_and_store_by_size, \
-    structural_generalisation_by_size_as_table
+    store_results, get_results, load_predictions, display_and_store_averages, display_and_store_by_size
 from evaluation.full_evaluation.category_evaluation.category_metadata import *
 from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
 
@@ -34,7 +32,7 @@ def parse_args():
                                                                    'attachment scores.')
     parser.add_argument('-b', '--bunch', type=int, required=False, default=None, help='Only evaluate this "bunch" of categories. Optional.'
                                                         ' Choose a number from the following:\n'
-                                                        + get_formatted_category_names(bunch2subcategory.keys()))
+                                                        + get_formatted_category_names([get_bunch_display_name_for_number(i) for i in range(1, len(bunch_number2name))]))
     parser.add_argument('-n', "--parser_name", type=str, required=False, default=None, help='Parser name. Optional, used for output storage. ')
     parser.add_argument('-x', "--strict", action='store_true', required=False, default=False, help='Strict mode: fail if any errors encountered')
     parser.add_argument("-e", "--error_analysis", action="store_true", help="Pickle correct and incorrect graph ids")
@@ -49,6 +47,7 @@ def instance_info_from_args(args):
         path_to_grapes_predictions_file_from_root=args.predicted_amr_grapes_file,
         path_to_gold_testset_file_from_root=args.gold_amr_testset_file,
         do_error_analysis=args.error_analysis,
+        verbose_error_analysis=False,
         parser_name=args.parser_name,
         run_smatch=args.smatch,
         fail_ok=-1 if args.strict else 0,
@@ -71,6 +70,7 @@ def figure_out_what_to_run(gold_graphs_grapes, gold_graphs_testset, predicted_gr
     Returns:
         use_grapes, use_grapes_from_ptb, use_grapes_from_testset, use_testset
     """
+    # initialise: will determine whether to print averages for their sets
     full_corpus_length = 1584
     minimal_corpus_length = 1471
     unbounded_dependencies_length = 66  # PTB
@@ -86,11 +86,11 @@ def figure_out_what_to_run(gold_graphs_grapes, gold_graphs_testset, predicted_gr
     if not use_grapes:
         print("No GrAPES AMRs given. Skipping GrAPES categories.")
     if not use_grapes_from_testset:
-        print("No AMRs for the 'Word ambiguities (handcrafted)' category were given. Will skip it, as well as the"
+        print("No AMRs for the 'Word ambiguities (handcrafted)' category were given. Will attempt with individual files, but if the fails, will skip it, as well as the"
               " 'Lexical disambiguation' compact evaluation results. You can add the graphs from the AMR testset with a"
               " script; see the documentation on the GitHub page.")
     if not use_grapes_from_ptb:
-        print("No AMRs for the 'Unbounded dependencies' category were given. Will skip it, as well as the"
+        print("No AMRs for the 'Unbounded dependencies' category were given. Will attempt with individual files, but if the fails, will skip it, as well as the"
               " 'Edge attachments' compact evaluation results. You can add the graphs from the PTB with a"
               " script; see the documentation on the GitHub page.")
     return use_grapes, use_grapes_from_ptb, use_grapes_from_testset, use_testset
@@ -132,20 +132,20 @@ def main():
                                                                                                    predicted_graphs_grapes,
                                                                                                    predicted_graphs_testset)
     # run the evaluation
-    results, by_size, sums, divisors = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset,
+    results, by_size, sums, divisors, dont_print_these_averages = get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testset,
                                    predicted_graphs_grapes, instance_info, use_grapes, use_grapes_from_ptb,
                                    use_grapes_from_testset, use_testset, bunch=args.bunch)
 
     results_dir = f"{instance_info.root_dir}/data/processed/results/from_evaluate_all_categories"
+
     store_results(results, instance_info, results_dir=results_dir)
-
-    display_results(results, by_size, bunch=args.bunch)
-
-    display_and_store_averages(divisors, instance_info.parser_name, results_dir, sums)
-    table = structural_generalisation_by_size_as_table(by_size)
-    out_csv_by_size = f"{results_dir}/{instance_info.parser_name}_by_size.csv"
-    csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
-    csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
+    display_results(results, bunch=args.bunch)
+    display_and_store_averages(divisors, instance_info.parser_name, results_dir, sums, dont_print_these_averages)
+    display_and_store_by_size(by_size, instance_info.parser_name, results_dir)
+    # table = structural_generalisation_by_size_as_table(by_size)
+    # out_csv_by_size = f"{results_dir}/{instance_info.parser_name}_by_size.csv"
+    # csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
+    # csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
 
 
     if instance_info.do_error_analysis:

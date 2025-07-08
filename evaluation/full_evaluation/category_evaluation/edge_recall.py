@@ -7,9 +7,10 @@ from evaluation.full_evaluation.category_evaluation.category_evaluation import C
 class EdgeRecall(CategoryEvaluation):
     def run_evaluation(self):
         try:
-            self._get_all_results()
-            self._calculate_metrics_and_add_all_rows()
-            return self.rows
+            return super().run_evaluation()
+            # self._get_all_results()
+            # self._calculate_metrics_and_add_all_rows()
+            # return self.rows
         except IndexError as e:
             if self.category_metadata.subcorpus_filename == "unbounded_dependencies":
                 print("Check that corpus/unbounded_dependencies.tsv has 66 rows")

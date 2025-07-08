@@ -15,7 +15,7 @@ from penman import load
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
     CategoryEvaluation, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
-    is_testset_category, bunch2subcategory, bunch_number2name, get_bunch_name_for_number, \
+    is_testset_category, bunch2subcategory, get_bunch_name_for_number, \
     get_bunch_categories_for_number, get_bunch_display_name_for_number
 
 args = sys.argv
@@ -27,8 +27,8 @@ else:
 
 # update per use if desired
 do_error_analysis = True
-run_all_smatch = True
-run_full_corpus_smatch = True
+run_all_smatch = False
+run_full_corpus_smatch = False
 
 # ERROR HANDLING GLOBAL
 # raise an error if any category doesn't work
@@ -118,23 +118,27 @@ def create_results_pickles():
 
         print("Running evaluation for", parser_name, "...")
 
-        results, by_size, sums, divisors = get_results(gold_testset, gold_grapes, testset_parser_outs, grapes_parser_outs, instance_info)
+
+        results, by_size, sums, divisors, dont_print_these_averages = get_results(gold_testset, gold_grapes, testset_parser_outs, grapes_parser_outs, instance_info)
         parser_name2rows[parser_name] = results
         store_results(results, instance_info,
                       results_dir=f"{instance_info.root_dir}/data/processed/results/from_run_full_evaluation")
 
-        display_results(results, by_size)
-
         print("\nRESULTS FOR", parser_name)
+
+        display_results(results)
+
         results_path, pickle_path, by_size_pickle_path = make_results_path()
 
-        display_and_store_averages(divisors, parser_name, results_path, sums)
+        display_and_store_averages(divisors, parser_name, results_path, sums, dont_print_these_averages)
 
         if instance_info.do_error_analysis:
             print("Error analysis pickles in", f"{root_dir_here}/error_analysis/{parser_name}/")
 
-        display_and_store_by_size(all_generalisations_by_size_dict, by_size, parser_name, results_path)
+        if len(by_size) > 0:
+            display_and_store_by_size(by_size, parser_name, results_path, all_generalisations_by_size_dict)
 
+        # TODO Had two versions, and this one might still contain stuff I forgot to add so keeping it for now
         # all_result_rows = []
         # parser_name2rows[parser_name] = all_result_rows
         # sums = []
@@ -272,27 +276,31 @@ def create_results_pickles():
     print("Results pickled in ", results_path)
 
 
-def display_and_store_by_size(all_generalisations_by_size_dict, by_size, parser_name, results_path):
+def display_and_store_by_size(by_size, parser_name, results_path, all_generalisations_by_size_dict=None):
     table = structural_generalisation_by_size_as_table(by_size)
-    all_generalisations_by_size_dict[parser_name] = by_size
+    if all_generalisations_by_size_dict is not None:
+        all_generalisations_by_size_dict[parser_name] = by_size
     out_csv_by_size = f"{results_path}/{parser_name}_by_size.csv"
     csv.writer(open(out_csv_by_size, "w")).writerow(table.field_names)
     csv.writer(open(out_csv_by_size, "a", encoding="utf8")).writerows(table.rows)
+    print(f"Wrote structural generalisation results by size to {out_csv_by_size}")
     print("\nStructure generalisation results by size")
     print(table)
     return all_generalisations_by_size_dict
 
 
-def display_and_store_averages(divisors, parser_name, results_path, sums):
+def display_and_store_averages(divisors, parser_name, results_path, sums, dont_print_these_averages):
     averages_table = PrettyTable(
         field_names=["Set", "Average"])
     averages_table.align = "l"
     for bunch, (total, divisor) in enumerate(zip(sums, divisors)):
-        if divisor > 0:
-            averages_table.add_row([get_bunch_display_name_for_number(bunch+1), int((total / divisor) * 100)])
+        bunch_number = bunch + 1
+        if divisor > 0 and bunch_number not in dont_print_these_averages:
+            averages_table.add_row([get_bunch_display_name_for_number(bunch_number), int((total / divisor) * 100)])
     print(averages_table)
     with open(f"{results_path}/{parser_name}_averages.csv", "w") as f:
         csv.writer(f).writerows(averages_table.rows)
+    print(f"Wrote averages to {results_path}/{parser_name}_averages.csv")
 
 
 def evaluate(evaluator: CategoryEvaluation, info: SubcategoryMetadata, instance_info: EvaluationInstanceInfo):
@@ -406,125 +414,6 @@ def run_single_file(eval_class, info: SubcategoryMetadata, instance_info: Evalua
 #     print(table)
 
 
-# Broken. Use scripts/latex/csv2latex.py
-#
-# def make_latex_table(root_dir: str):
-#     """
-#     Might not matter: I think the csv2latex one works
-#     """
-#     result_rows_by_parser_name = pickle.load(open(root_dir + "/results_table.pickle", "rb"))
-#
-#     master_parser = parser_names[0]
-#     master_rows = result_rows_by_parser_name[master_parser]
-#
-#     # results_rows_by_column = zip()
-#     # print("\n###", list(results_rows_by_column))
-#     # results_rows_by_column = zip(result_rows_by_parser_name["amparser"],
-#     #                              # result_rows_by_parser_name["cailam"],
-#     #                              # result_rows_by_parser_name["amrbart"]
-#     #                              )
-#
-#     set_to_scores = dict()
-#     current_scores = None
-#
-#     with open(root_dir + "/latex_results_table.txt", "w") as f:
-#         set_id = ""
-#         shade_row = True
-#         for j, parser_row in enumerate(master_rows):
-#             is_title_row = len(parser_row) == 1
-#             if is_title_row:
-#                 set_id = parser_row[0][0]
-#                 current_scores = [[] for _ in range(len(parser_names))]
-#                 set_to_scores[parser_row[0]] = current_scores
-#                 continue
-#
-#             if parser_row[0] is None:
-#                 dataset_name = ""
-#             elif isinstance(parser_row[0], str):
-#                 dataset_name = parser_row[0]
-#             else:
-#                 dataset_name = parser_row[0].get_latex_display_name()
-#             # dataset_name = parser_rows[0][0]
-#             metric_name = parser_row[1]
-#
-#             is_unlabeled_edge_row = metric_name == "Unlabeled edge recall"
-#             is_smatch_row = "smatch" in metric_name.lower()
-#             if is_unlabeled_edge_row or is_smatch_row:
-#                 continue
-#
-#             is_sanity_check_row = "sanity" in dataset_name.lower()
-#             is_prereq_row = "prereq" in metric_name.lower()
-#             if set_id in ["1", "3", "4", "7"]:  # the sets that start a new table
-#                 shade_row = True
-#             else:
-#                 if is_sanity_check_row or dataset_name.strip() == "":
-#                     pass
-#                 else:
-#                     shade_row = not shade_row
-#
-#             shading_prefix = "\\rowcolor{lightlightlightgray}" if shade_row else ""
-#             latex_line = f"\t\t{shading_prefix}{set_id} & {dataset_name} & {metric_name}"
-#
-#             is_success_rate_row = parser_row[2] == EVAL_TYPE_SUCCESS_RATE
-#             if is_success_rate_row and not "precision" in metric_name.lower():
-#                 for name in parser_names:
-#                     assert parser_row[4] == result_rows_by_parser_name[name][4]
-#             for i in range(len(parser_names)):
-#                 if is_success_rate_row:
-#                     wilson_ci = wilson_score_interval(row[3], row[4])
-#                     score = num_to_score_with_preceding_0(row[3] / row[4])
-#                     if not (is_prereq_row or is_sanity_check_row):
-#                         current_scores[i].append(row[3] / row[4])
-#                     if len(score) == 2:
-#                         score = "\\phantom{1}" + score
-#                     lower_bound = num_to_score_with_preceding_0(wilson_ci[0])
-#                     upper_bound = num_to_score_with_preceding_0(wilson_ci[1])
-#                     if len(lower_bound) == 2:
-#                         lower_bound = lower_bound
-#                     if len(upper_bound) == 2:
-#                         upper_bound = "\\phantom{1}" + upper_bound
-#                     # latex_line += f" & ${score}_{{{lower_bound}}}^{{{upper_bound}}}$"
-#                     latex_line += f" & \\successScore{{{score}}}{{{lower_bound}}}{{{upper_bound}}}{{\\phantom{{1}}}}"
-#                 else:
-#                     if not (is_prereq_row or is_sanity_check_row):
-#                         current_scores[i].append(row[3])
-#                     latex_line += f" & {num_to_score_with_preceding_0(row[3])}\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ "
-#
-#             if is_success_rate_row:
-#                 latex_line += f" & {parser_rows[0][4]}\\\\\n"
-#             else:
-#                 latex_line += f" & \\\\\n"
-#
-#             f.write(latex_line)
-#
-#             set_id = ""
-#
-#     with open(root_dir + "/latex_compact_table.txt", "w") as f:
-#         for set_name, scores_by_parser in set_to_scores.items():
-#             # print(set_name)
-#             # print(scores_by_parser)
-#             latex_line = f"\t\t{set_name}"
-#             for scores in scores_by_parser:
-#                 # average the scores
-#                 score = sum(scores) / len(scores)
-#                 latex_line += f" & {num_to_score_with_preceding_0(score)}"
-#             latex_line += "\\\\\n"
-#             f.write(latex_line)
-
-
-
-    # 1 & Ambiguous
-    # coreference & Recall & $6
-    # _
-    # {1} ^ {15}$ & & $39
-    # _
-    # {26} ^ {47}$ \todo
-    # {put in actual
-    # numbers} & ?\ \
-
-
-# TODO: make a table that is average for categories (can't have wilson scores here,
-#  because we DON'T want to normalize by sample size here)
 
 
 def _get_row_evaluation_type(row):
@@ -602,14 +491,12 @@ def main():
     create_results_pickles()
     # make_latex_table(results_path)
 
-def display_results(results, by_size, bunch=None):
+def display_results(results, bunch=None):
     print_table = PrettyTable(
         field_names=["Set", "Category", "Metric", "Score", "Lower bound", "Upper bound", "Sample size"])
     print_table.align = "l"
     for row in results:
         print_table.add_row([row[0]] + row[2:])
-    if len(by_size) > 0:
-        structural_generalisation_by_size_as_table(by_size)
     header = "\nAll results"
     if bunch is not None:
         header += f" for bunch {bunch}"
@@ -644,6 +531,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
     struct_gen_by_size = {}
     sums = []
     divisors = []
+    dont_print_these_averages = []
 
     # Smatch on the full corpora
     if instance_info.run_full_corpus_smatch:
@@ -700,12 +588,13 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                                 divisors_here += 1
                         rows = make_rows_for_results(category_name, instance_info.print_f1(),
                                                      instance_info.print_unlabeled_edge_attachment,
-                                                     results_here, i)
+                                                     results_here, i, set_name)
                         results.extend(rows)
                     except Exception as e:
                         print(f"Can't get category {category_name}, error: {e}")
                         if instance_info.fail_ok > -1:
                             results.append(make_empty_result(i, set_name, info.display_name))
+                            dont_print_these_averages.append(i)
                         else:
                             raise e
             else:
@@ -742,7 +631,7 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
         sums.append(sum_here)
         divisors.append(divisors_here)
 
-    return results, struct_gen_by_size, sums, divisors
+    return results, struct_gen_by_size, sums, divisors, dont_print_these_averages
 
 
 def make_empty_result(set_id, set_name, category_name):

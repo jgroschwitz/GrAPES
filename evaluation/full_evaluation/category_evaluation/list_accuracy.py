@@ -34,8 +34,9 @@ class ListAccuracy(CategoryEvaluation):
         """
         Runs both conjunct recall and precision and the unseen opi recall.
         """
-        for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
-            self.update_results(gold_amr, predicted_amr)
+        super()._get_all_results()
+        # for gold_amr, predicted_amr in zip(self.gold_amrs, self.predicted_amrs):
+        #     self.update_results(gold_amr, predicted_amr)
         self.compute_generalization_op_counts()
 
     def _calculate_metrics_and_add_all_rows(self):
@@ -55,6 +56,9 @@ class ListAccuracy(CategoryEvaluation):
         true_predictions = self.get_success_count(OPi)
         self.make_and_append_results_row("Unseen :opi recall", EVAL_TYPE_SUCCESS_RATE,
                                          [true_predictions, opi_total_gold])
+        if self.run_smatch:
+            self.add_smatch_results()
+
         if self.instance_info.do_error_analysis:
             self.results.write_pickle()
 
@@ -224,13 +228,11 @@ def get_all_opi_edges(graph: Graph):
     #  e.g. erroneous quotation marks, I think.
     return [e for e in graph.edges() if is_opi_edge(e)]
 
-
 def get_all_unseen_opi_edges(graph: Graph):
     return [e for e in graph.edges() if is_unseen_coord_opi_edge(e)]
 
 def is_opi_edge(edge):
     return re.match(r":op[0-9]+", edge.role)
-
 
 def is_unseen_coord_opi_edge(edge):
     '''

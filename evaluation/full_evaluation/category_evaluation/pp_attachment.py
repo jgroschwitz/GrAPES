@@ -9,6 +9,7 @@ import re
 
 from penman import Graph
 
+# REIFICATIONS
 # Relation	Reification	Domain	Range	Example
 # :accompanier	accompany-01	:ARG0	:ARG1	“she's with him”
 # :age	age-01	:ARG1	:ARG2	“she's 41 years old”
@@ -73,61 +74,16 @@ class PPAttachment(CategoryEvaluation):
         except with :poss, where the possessor is the source and the target is the possessed thing,
         and author-01 because Jonas wrote it in backwards to confuse me. Since the nodes and edges in
         question are extracted from the gold graph, this works with no special cases
-    Attributes:
-        prerequisites_counter: the number of graphs with nodes labelled with the labels of interest, modulo sources
-        unlabeled_counter: the number of graphs with any edge from the desired source to target, modulo senses
-        labeled_counter: the number of graphs with a correctly-labelled edge or reification node
-                            linking the desired source to target. Includes senses
-        total_counter: the number of graphs checked
-        gold_directory: list of gold graphs
-        predictions_directory: list of predicted graphs
-
     """
-    # def __init__(self, gold_amrs, predicted_amrs, info, root_dir=".", predictions_directory=None,
-    #              do_error_analysis=False, parser_name=None, verbose_error_analysis=True, run_smatch=False):
-    #     """
-    #     Pragmatic attachments of ambiguous PPs
-    #     PP Attachments come from multiple files, so if they're not already in the given graphs, we try to get them.
-    #     """
-    #     super().__init__(gold_amrs, predicted_amrs, info, root_dir, predictions_directory, do_error_analysis,
-    #                      parser_name, verbose_error_analysis, run_smatch)
-    #     # if we read in the unused PP directory instead of the whole full_corpus, replace it with the real ones
-    #     # These have ids pp_attachment_n
-    #     if self.gold_amrs[0].metadata['id'].startswith(self.category_metadata.subcorpus_filename):
-    #         print("Reading in additional files")
-    #         self.gold_amrs, self.predicted_amrs = self.get_additional_graphs(read_in=True)
-    #     else:
-    #         # if got the graphs from the full corpus filter them
-    #         self.store_filtered_graphs()
-    #     if len(self.gold_amrs) != len(self.predicted_amrs) or len(self.gold_amrs) ==0:
-    #         raise Exception("Different number of AMRs or 0")
-
     def measure_unlabelled_edges(self):
         return True
 
-    # def __init__(self, gold_amrs: List[Graph], predicted_amrs: List[Graph]):
-    #     self.prerequisites_counter = 0
-    #     self.unlabeled_counter = 0
-    #     self.labeled_counter = 0
-    #     self.total_counter = 0
-    #     self.gold_amrs = gold_amrs
-    #     self.predicted_amrs = predicted_amrs
-
-    # def evaluate_all(self):
-    #     self._run_all_evaluations_and_update_internal_counters()
-    #     assert self.total_counter > 0, "No graphs found"
-    #     return self.prerequisites_counter / self.total_counter, self.unlabeled_counter / self.total_counter, \
-    #            self.labeled_counter / self.total_counter
-
     def _get_all_results(self):
-        g, p = self.filter_graphs()
-        print(len(g))
         self.evaluate_see_with_graphs()
         self.evaluate_read_by_graphs()
         self.evaluate_bought_for_graphs()
         self.evaluate_keep_from_graphs()
         self.evaluate_give_up_in_graphs()
-        print(len(self.gold_amrs))
 
     def evaluate_see_with_graphs(self):
         golds, predictions = filter_amrs_for_name("see_with", self.gold_amrs, self.predicted_amrs, fail_ok=True)
@@ -393,8 +349,8 @@ def evaluate_pp_attachments(gold_directory, predictions_directory):
     return evaluator._get_all_results()
 
 
-def get_pp_attachment_success_counters(gold_amrs, predicted_amrs):
-    evaluator = PPAttachment(gold_amrs, predicted_amrs, )
-    evaluator._get_all_results()
-    return evaluator.prerequisites_counter, evaluator.unlabeled_counter, evaluator.labeled_counter,\
-           evaluator.total_counter
+# def get_pp_attachment_success_counters(gold_amrs, predicted_amrs):
+#     evaluator = PPAttachment(gold_amrs, predicted_amrs, )
+#     evaluator._get_all_results()
+#     return evaluator.prerequisites_counter, evaluator.unlabeled_counter, evaluator.labeled_counter,\
+#            evaluator.total_counter
