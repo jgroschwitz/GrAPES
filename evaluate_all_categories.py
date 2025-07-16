@@ -18,7 +18,7 @@ def parse_args():
                                                                          'testset.')
     parser.add_argument('-gg', '--gold_amr_grapes_file', type=str, help='Path to GrAPES gold corpus file. Optional, default corpus/corpus.txt', default="corpus/corpus.txt")
     parser.add_argument('-pt', '--predicted_amr_testset_file', type=str,
-                        help='Path to predicted AMR file. Must contain AMRs '
+                        help='Path to predicted AMR 3.0 testset file. Must contain AMRs '
                              'for all sentences in the gold file, in the same '
                              'order.')
     parser.add_argument('-pg', '--predicted_amr_grapes_file', type=str,
@@ -26,8 +26,8 @@ def parse_args():
                              'for all sentences in the gold grapes corpus file, in the same '
                              'order.')
     parser.add_argument('--all_metrics', action='store_true', help='If set, all metrics will be computed. If not set,'
-                                                                   'only the metrics that are used in the paper will be'
-                                                                   'computed. Affected metrics are Smatch for'
+                                                                   ' only the metrics that are used in the paper will be'
+                                                                   ' computed. Affected metrics are Smatch for'
                                                                    ' structural generalization, and unlabeled edge '
                                                                    'attachment scores.')
     parser.add_argument('-b', '--bunch', type=int, required=False, default=None, help='Only evaluate this "bunch" of categories. Optional.'
@@ -144,7 +144,7 @@ def main():
 
     store_results(results, instance_info, results_dir=results_dir)
     display_results(results, bunch=args.bunch)
-    display_and_store_averages(divisors, instance_info.parser_name, results_dir, sums, dont_print_these_averages)
+    display_and_store_averages(divisors, instance_info.parser_name, results_dir, sums, dont_print_these_averages, args.bunch)
     display_and_store_by_size(by_size, instance_info.parser_name, results_dir)
     # table = structural_generalisation_by_size_as_table(by_size)
     # out_csv_by_size = f"{results_dir}/{instance_info.parser_name}_by_size.csv"

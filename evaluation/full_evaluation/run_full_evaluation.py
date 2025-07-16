@@ -293,14 +293,30 @@ def display_and_store_by_size(by_size, parser_name, results_path, all_generalisa
     return all_generalisations_by_size_dict
 
 
-def display_and_store_averages(divisors, parser_name, results_path, sums, dont_print_these_averages):
+def display_and_store_averages(divisors, parser_name, results_path, sums, dont_print_these_averages, only_bunch=None):
+    sums_and_divisors = list(zip(sums, divisors))
     averages_table = PrettyTable(
         field_names=["Set", "Average"])
     averages_table.align = "l"
-    for bunch, (total, divisor) in enumerate(zip(sums, divisors)):
-        bunch_number = bunch + 1
-        if divisor > 0 and bunch_number not in dont_print_these_averages:
-            averages_table.add_row([get_bunch_display_name_for_number(bunch_number), int((total / divisor) * 100)])
+    index_in_results = 0
+    if only_bunch is not None:
+        total, divisor = sums_and_divisors[index_in_results]
+        if divisor > 0:
+            averages_table.add_row([get_bunch_display_name_for_number(only_bunch), int((total / divisor) * 100)])
+        else:
+            averages_table.add_row([get_bunch_display_name_for_number(only_bunch), "-"])
+    else:
+        for bunch in range(len(bunch2subcategory)):
+            bunch_number = bunch + 1
+            if bunch_number not in dont_print_these_averages:
+                total, divisor = sums_and_divisors[index_in_results]
+                if divisor > 0:
+                    averages_table.add_row([get_bunch_display_name_for_number(bunch_number), int((total / divisor) * 100)])
+                else:
+                    averages_table.add_row([get_bunch_display_name_for_number(bunch_number), "-"])
+                index_in_results += 1
+            else:
+                averages_table.add_row([get_bunch_display_name_for_number(bunch_number), "-"])
     print(averages_table)
     with open(f"{results_path}/{parser_name}_averages.csv", "w") as f:
         csv.writer(f).writerows(averages_table.rows)
