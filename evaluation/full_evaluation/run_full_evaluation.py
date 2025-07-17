@@ -27,8 +27,8 @@ else:
 
 # update per use if desired
 do_error_analysis = True
-run_all_smatch = True
-run_full_corpus_smatch = True
+run_all_smatch = False
+run_full_corpus_smatch = False
 
 # ERROR HANDLING GLOBAL
 # raise an error if any category doesn't work
