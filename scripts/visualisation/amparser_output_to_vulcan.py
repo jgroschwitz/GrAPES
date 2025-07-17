@@ -1,3 +1,9 @@
+"""
+Run with PYTHONPATH set to root of GrAPES repository
+e.g. PYTHONPATH=../.. python amparser_output_to_vulcan.py -h
+"""
+
+
 import argparse
 import os
 import pickle
@@ -182,16 +188,16 @@ def make_am_path(directory, subcorpus):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(formatter_class=SmartFormatter)
+    parser = argparse.ArgumentParser(formatter_class=SmartFormatter, description="AM-Parser output to Vulcan-readable pickle for one category.")
     parser.add_argument("-c", "--category", help="category to evaluate Choices:" + get_formatted_category_names_by_main_file())
     parser.add_argument("-a", "--am_path", help="path to AM parser output folder: parent of all the intermediary_files folders")
     parser.add_argument("-p", "--pred_path", help="path to AM parser predicted AMR file (e.g. full_corpus.txt)")
     parser.add_argument("-g", "--gold_path", help="path to gold file (optional if GrAPES category: will use corpus/corpus.txt)", default=None)
     parser.add_argument("-o", "--output_path", help="path to write Vulcan pickle file. "
-                                                    "Default error_analysis/<parser_name>/<category>_vulcan.pickle. "
+                                                    "Default error_analysis/<parser_name>/vulcan_subcorpora/<category>.pickle. "
                                                     "NB: If --error_analysis, we will make our own paths.", default=None)
     parser.add_argument('-n', '--parser_name', type=str,
-                        help="name of parser (optional, for creating output pathname)", default="amparser")
+                        help="name of parser (optional, for creating output pathname, default error analysis input path)", default="amparser")
     parser.add_argument("-e", "--error_analysis", action="store_true", help="Split up into correct and incorrect graphs according to the criteria. "
                                                                             "Only works if you have run your evaluation with the --error_analysis flag.")
     parser.add_argument("-ep", "--input_error_analysis_pickle_path",
@@ -232,14 +238,13 @@ if __name__ == '__main__':
                 amconll_sents += [s for s in parse_amconll(f, False) if s.attributes["id"] in ids]
         except FileNotFoundError as e:
             if args.category == "pp_attachment":
+                # the default file for pp_attachment isn't actually used, so there may be no amconll file for it
                 pass
             else:
-                print("WARNING: could not read in AM conll file for", file, e)
+                print("ERROR: could not read in AM conll file for", file, e)
                 raise e
 
     # print(len(gold_amrs), len(predicted_amrs) , len(amconll_sents))
-
-
 
     parent = f"{root_dir_here}/error_analysis/{instance_info.parser_name}/am_trees"
     os.makedirs(parent, exist_ok=True)
@@ -248,6 +253,7 @@ if __name__ == '__main__':
     write_conll(filtered_amconll_path, amconll_sents)
 
     if args.error_analysis:
+        # works if evaluation was run with error analysis. Splits the output into correct and incorrect.
         if args.input_error_analysis_pickle_path is not None:
             input_error_analysis_pickle_path = args.input_error_analysis_pickle_path
         else:
@@ -256,12 +262,10 @@ if __name__ == '__main__':
         os.makedirs(out_dir, exist_ok=True)
         create_pickle_for_error_analysis(dummy_evaluator, amconll_sents, input_error_analysis_pickle_path, out_dir)
     else:
+        # just pickle the outputs for the category, not splitting by correctness
         out_dir = f"{parent}/vulcan_subcorpora"
         pickle_path = args.output_path if args.output_path is not None else f"{out_dir}/{info.name}.pickle"
         os.makedirs(out_dir, exist_ok=True)
         print(len(dummy_evaluator.gold_amrs), len(dummy_evaluator.predicted_amrs))
         create_pickle(dummy_evaluator.gold_amrs, dummy_evaluator.predicted_amrs, amconll_sents, pickle_path)
         print("wrote Vulcan pickle to", pickle_path)
-
-
-

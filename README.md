@@ -122,17 +122,17 @@ If your gold corpus files are not in `corpus/corpus.tex` and `corpus/subcorpora`
 For example, to evaluate on the category Multiple Adjectives, which is a GrAPES-only category, either of the following will work:
 
 ```commandline
-python evaluate_single_category.py -c multiple_adjectives  -p path/to/parser/full/grapes/output 
+python evaluate_single_category.py -c multiple_adjectives  -p path/to/parser/full/grapes/output/file 
 ```
 
 ```commandline
-python evaluate_single_category.py -c adjectives -p path/to/parser/output/for/adjectives.txt
+python evaluate_single_category.py -c multiple_adjectives -p path/to/parser/output/for/adjectives.txt
 ```
 
 To evaluate an AMR testset category, e.g. here the Rare Senses category, run the following.
 
 ```commandline
-python evaluate_single_category.py -c rare_senses -p path/to/parser/AMR/testset/output
+python evaluate_single_category.py -c rare_predicate_senses_excl_01 -p path/to/parser/AMR/testset/output
 ```
 
 #### Category names for the command line
