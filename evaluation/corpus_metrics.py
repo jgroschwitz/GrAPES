@@ -1,4 +1,6 @@
+import os
 import pickle
+import shutil
 from typing import Counter, List, Union, Tuple
 import tempfile
 
@@ -7,9 +9,10 @@ import smatch
 from penman import Graph
 from penman import load
 
+from evaluation.full_evaluation.category_evaluation.subcategory_info import SubcategoryMetadata
 from evaluation.util import get_node_name_for_gold_label, strip_sense
 from evaluation.graph_matcher import equals_modulo_isomorphy, check_fragment_existence
-from evaluation.file_utils import read_node_label_tsv, load_corpus_from_folder, read_edge_tsv, get_graph_for_node_string
+from evaluation.file_utils import read_label_tsv, load_corpus_from_folder, read_edge_tsv, get_graph_for_node_string
 
 
 def compute_precision_recall_f1_from_counters(pred_counter: Counter, gold_counter: Counter):
@@ -89,37 +92,49 @@ def compute_smatch_f_from_graph_lists(gold_graphs: List[Graph], predicted_graphs
         with tempfile.NamedTemporaryFile(mode="w") as prediction_f:
             penman.dump(gold_graphs, gold_f)
             penman.dump(predicted_graphs, prediction_f)
-            return compute_smatch_f(gold_f.name, prediction_f.name)[2]
+            # reset curser so we can read from the beginning of the file
+            gold_f.seek(0)
+            prediction_f.seek(0)
+            return compute_smatch_f(gold_f.name, prediction_f.name)
 
 
-def calculate_node_label_recall(tsv_file_name, gold_amrs=None, predicted_amrs=None, parser_name=None,
-                                root_dir="../../", use_attributes=False, attribute_label=None, use_sense=True,
+def calculate_node_label_recall(category_metadata: SubcategoryMetadata, gold_amrs=None, predicted_amrs=None,
+                                root_dir="../../",
+                                prereq=False,
                                 error_analysis_output_filename=None, error_analysis_message=None):
-    success_count, sample_size = calculate_node_label_successes_and_sample_size(tsv_file_name, gold_amrs,
-                                                                                predicted_amrs, root_dir, use_attributes,
-                                                                                attribute_label, use_sense,
-                                                                                error_analysis_output_filename,
-                                                                                error_analysis_message)
+    success_count, sample_size = calculate_node_label_successes_and_sample_size(category_metadata, gold_amrs,
+                                                                                predicted_amrs, root_dir,
+                                                                                prereq=prereq,
+                                                                                error_analysis_output_filename=error_analysis_output_filename,
+                                                                                error_analysis_message=error_analysis_message)
 
     recall = success_count / sample_size if sample_size > 0 else 1.0
     return recall
 
+def graph_is_in_ids(graph:penman.Graph, ids):
+    return graph.metadata['id'] in ids
 
-def calculate_node_label_successes_and_sample_size(tsv_file_name, gold_amrs=None, predicted_amrs=None,
-                                                   root_dir="../../", use_attributes=False, attribute_label=None,
-                                                   use_sense=True,
+def calculate_node_label_successes_and_sample_size(category_metadata: SubcategoryMetadata,
+                                                   gold_amrs=None,
+                                                   predicted_amrs=None,
+                                                   root_dir="../../",
+                                                   prereq=False,
                                                    error_analysis_output_filename=None, error_analysis_message=None):
-    id2labels = read_node_label_tsv(root_dir, tsv_file_name)
+    if prereq:
+        use_sense = category_metadata.use_sense_prereq
+    else:
+        use_sense = category_metadata.use_sense
+    id2labels = read_label_tsv(root_dir, category_metadata.tsv)
     success_count = 0
     sample_size = 0
     do_error_analysis = error_analysis_output_filename is not None
     error_analysis = {"gold_graphs": [], "predicted_graphs": [], "sentences": [], "highlights": [],
                       "message": error_analysis_message}
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
-        if gold_amr.metadata['id'] in id2labels:
+        if graph_is_in_ids(gold_amr, id2labels.keys()):
             sample_size += len(id2labels[gold_amr.metadata['id']])
-            predicted_labels = _get_predicted_labels_based_on_evaluation_case(attribute_label, predicted_amr,
-                                                                              use_attributes, use_sense)
+            predicted_labels = _get_predicted_labels_based_on_evaluation_case(category_metadata.attribute_label, predicted_amr,
+                                                                              category_metadata.use_attributes, use_sense=use_sense)
             for target_label in id2labels[gold_amr.metadata['id']]:
                 # print(label)
                 # print(gold_amr.instances())
@@ -132,7 +147,7 @@ def calculate_node_label_successes_and_sample_size(tsv_file_name, gold_amrs=None
                 if label_found:
                     success_count += 1
                 elif do_error_analysis:
-                    missing_label = get_node_name_for_gold_label(target_label, gold_amr, attribute_label)
+                    missing_label = get_node_name_for_gold_label(target_label, gold_amr, category_metadata.attribute_label)
                     error_analysis["gold_graphs"].append(gold_amr)
                     error_analysis["predicted_graphs"].append(predicted_amr)
                     error_analysis["sentences"].append(gold_amr.metadata['snt'])
@@ -145,13 +160,12 @@ def calculate_node_label_successes_and_sample_size(tsv_file_name, gold_amrs=None
     return success_count, sample_size
 
 
-def calculate_subgraph_existence_successes_and_sample_size(tsv_file_path: str, gold_amrs: List[Graph],
-                                                           predicted_amrs: List[Graph], root_dir: str):
-    id2subgraphs = read_node_label_tsv(root_dir=root_dir, tsv_file_name=tsv_file_path)
+def calculate_subgraph_existence_successes_and_sample_size(id2subgraphs, gold_amrs: List[Graph],
+                                                           predicted_amrs: List[Graph]):
     success_count = 0
     sample_size = 0
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
-        if gold_amr.metadata['id'] in id2subgraphs:
+        if graph_is_in_ids(gold_amr, id2subgraphs.keys()):
             sample_size += len(id2subgraphs[gold_amr.metadata['id']])
             for subgraph_string in id2subgraphs[gold_amr.metadata['id']]:
                 if check_fragment_existence(subgraph_string, predicted_amr):
@@ -197,54 +211,34 @@ def run_checks_and_get_backup_data_if_applicable(attribute_label, gold_amrs, par
     return gold_amrs, predicted_amrs
 
 
-def calculate_edge_recall_for_tsv_file(tsv_file_name, gold_amrs=None, predicted_amrs=None, parser_name=None,
-                                       root_dir="../../", use_sense=True,
+def calculate_edge_recall_for_tsv_file(subcategory_info: SubcategoryMetadata, gold_amrs=None, predicted_amrs=None, parser_name=None,
+                                       root_dir="../../",
                                        error_analysis_output_filename=None, error_analysis_message=None,
-                                       graph_id_column=0, source_column=1, edge_column=2, target_column=3,
-                                       parent_column=None, parent_edge_column=None):
+                                       ):
     prereq_successes, unlabeled_successes, recall_successes, sample_size = calculate_edge_prereq_recall_and_sample_size_counts(
-        tsv_file_name, gold_amrs, predicted_amrs,
-        root_dir, use_sense,
-        error_analysis_output_filename, error_analysis_message,
-        graph_id_column, source_column, edge_column, target_column,
-        parent_column, parent_edge_column)
+        subcategory_info,
+        gold_amrs, predicted_amrs,
+        root_dir,
+        error_analysis_output_filename, error_analysis_message
+        )
     prereq = prereq_successes / sample_size if sample_size > 0 else 1.0
     recall = recall_successes / sample_size if sample_size > 0 else 1.0
     return prereq, recall
 
 
-def calculate_edge_prereq_recall_and_sample_size_counts(tsv_file_name, gold_amrs=None, predicted_amrs=None,
+def calculate_edge_prereq_recall_and_sample_size_counts(subcategory_info,
+                                                        gold_amrs=None,
+                                                        predicted_amrs=None,
                                                         root_dir="../../",
-                                                        use_sense=True,
                                                         error_analysis_output_filename=None,
                                                         error_analysis_message=None,
-                                                        graph_id_column=0, source_column=1, edge_column=2,
-                                                        target_column=3,
-                                                        parent_column=None, parent_edge_column=None,
-                                                        first_row_is_header=False):
+                                                        ):
     """
     Returns prereq_successes, unlabeled_successes, recall_successes, sample_size
-    :param first_row_is_header: If true, the first row in the CSV will be skipped
-    :param use_sense:
-    :param tsv_file_name:
-    :param gold_amrs:
-    :param predicted_amrs:
-    :param parser_name:
-    :param root_dir:
-    :param error_analysis_output_filename:
-    :param error_analysis_message:
-    :param graph_id_column:
-    :param source_column:
-    :param edge_column:
-    :param target_column:
-    :param parent_column:
-    :param parent_edge_column:
-    :return:
     """
     # predicted_amrs = gold_amrs  # this is for debugging: check if the gold matches what is written in the tsv file
     #  (both recall and prerequisites should be 1.0, except if the gold graph has an error and the tsv is correct)
-    id2labels = read_edge_tsv(root_dir, tsv_file_name, graph_id_column, source_column, edge_column, target_column,
-                              parent_column, parent_edge_column, first_row_is_header=first_row_is_header)
+    id2labels = read_edge_tsv(root_dir, subcategory_info=subcategory_info)
     prereq_successes, unlabeled_successes, recall_successes, sample_size = _calculate_edge_recall(
         error_analysis_message,
         error_analysis_output_filename,
@@ -252,12 +246,13 @@ def calculate_edge_prereq_recall_and_sample_size_counts(tsv_file_name, gold_amrs
         id2labels,
         predicted_amrs,
         root_dir,
-        use_sense)
+        subcategory_info.use_sense)
     return prereq_successes, unlabeled_successes, recall_successes, sample_size
 
 
 def _calculate_edge_recall(error_analysis_message, error_analysis_output_filename, gold_amrs, id2labels, predicted_amrs,
                            root_dir, use_sense):
+    assert len(gold_amrs) > 0 and len(gold_amrs) == len(predicted_amrs), f"We have {len(gold_amrs)} gold AMRs and {len(predicted_amrs)} predicted AMRs"
     recalled = 0
     unlabeled_recalled = 0
     prereqs = 0
@@ -266,7 +261,7 @@ def _calculate_edge_recall(error_analysis_message, error_analysis_output_filenam
     error_analysis = {"gold_graphs": [], "predicted_graphs": [], "sentences": [], "highlights": [],
                       "message": error_analysis_message}
     for gold_amr, predicted_amr in zip(gold_amrs, predicted_amrs):
-        if gold_amr.metadata['id'] in id2labels:
+        if graph_is_in_ids(gold_amr, id2labels.keys()):
             total += len(id2labels[gold_amr.metadata['id']])
 
             for target_tuple in id2labels[gold_amr.metadata['id']]:
@@ -294,6 +289,7 @@ def _calculate_edge_recall(error_analysis_message, error_analysis_output_filenam
         # TODO shuffle the error analysis lists (synchronously), so that we can get a random sample of the errors
         with open(f"{root_dir}/error_analysis/{error_analysis_output_filename}", "wb") as f:
             pickle.dump(error_analysis, f)
+    assert total > 0, f"No matching graphs found! Started with {len(gold_amrs)} gold AMRs."
     return prereqs, unlabeled_recalled, recalled, total
 
 
@@ -373,3 +369,5 @@ def invert_edge_label(edge_label: str) -> str:
         return edge_label[:-3]
     else:
         return edge_label + "-of"
+
+

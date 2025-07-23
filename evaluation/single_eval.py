@@ -1,8 +1,8 @@
 import sys
 
 from penman import load
-from evaluation.pp_attachment import evaluate_pp_attachments
-from evaluation.long_lists import evaluate_long_lists, evaluate_singletons, evaluate_long_lists_generalization
+from evaluation.full_evaluation.category_evaluation.pp_attachment import evaluate_pp_attachments
+from evaluation.novel_corpus.long_lists import evaluate_long_lists, evaluate_singletons, evaluate_long_lists_generalization
 import prettytable
 from evaluation.corpus_metrics import compute_exact_match_fraction, compute_smatch_f
 
@@ -11,10 +11,10 @@ def main(args):
     parser = args[1]
     dataset = args[2]
 
-    gold_file_path = f"../corpus/{dataset}.txt"
+    gold_file_path = f"../corpus/subcorpora/{dataset}.txt"
     golds = load(gold_file_path)
 
-    prediction_folder = "../" + parser + "-output/"
+    prediction_folder = "../data/processed/parser_outputs/" + parser + "-output/"
     prediction_file_path = prediction_folder + dataset + ".txt"
     predictions = load(prediction_file_path)
 

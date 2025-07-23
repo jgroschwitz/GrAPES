@@ -12,7 +12,7 @@ path_to_corpus_folder = "corpus/"  # path from import location
 
 def write_ptb_data(decrypted_txt, decrypted_tsv):
     """
-    Write the contents of the AMR and TSV files for descripted PTB sentences to files
+    Write the contents of the AMR and TSV files for decrypted PTB sentences to files
     individual AMR corpus:
         corpus/subcorpora/unbounded_dependencies.txt
     append to corpus/corpus.txt

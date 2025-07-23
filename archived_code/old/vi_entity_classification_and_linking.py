@@ -1,0 +1,72 @@
+from evaluation.full_evaluation.category_evaluation.category_evaluation import CategoryEvaluation, \
+    EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1
+
+from evaluation.testset.ne_types import get_ne_type_successes_and_sample_size, get_2_columns_from_tsv_by_id
+
+
+class EntityClassificationAndLinking(CategoryEvaluation):
+
+    def _run_all_evaluations(self):
+        self.set_dataset_name("Types of seen named entities")
+        id2labels = get_2_columns_from_tsv_by_id(f"{self.root_dir}/corpus/{self.category_metadata.tsv}")
+        prereq, successes, sample_size = get_ne_type_successes_and_sample_size(
+            id2labels,
+            self.gold_amrs,
+            self.predicted_amrs)
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
+
+        self.set_dataset_name("Types of unseen named entities")
+        id2labels = get_2_columns_from_tsv_by_id(f"{self.root_dir}/corpus/{self.category_metadata.tsv}")
+
+        prereq, successes, sample_size = get_ne_type_successes_and_sample_size(id2labels,
+            self.gold_amrs,
+            self.predicted_amrs)
+        self.make_and_append_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size])
+        self.make_and_append_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])
+
+        self.set_dataset_name("Seen and/or easy wiki links")
+        self.make_results_column_for_node_recall("seen_andor_easy_wiki_test_data.tsv", use_sense=True,
+                                                 use_attributes=True,
+                                                 attribute_label=":wiki",
+                                                 metric_label="Recall")
+
+        self.set_dataset_name("Hard unseen wiki links")
+        self.make_results_column_for_node_recall("hard_wiki_test_data.tsv", use_sense=True,
+                                                 use_attributes=True,
+                                                 attribute_label=":wiki",
+                                                 metric_label="Recall")
+
+    def compute_seen_ne_types_results(self, gold_graphs, predicted_graphs):
+        prereq, successes, sample_size = get_ne_type_successes_and_sample_size(
+            self.root_dir + "/corpus/seen_ne_types_test.tsv",
+            gold_graphs,
+            predicted_graphs)
+        return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size]),
+                self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])]
+
+    def compute_unseen_ne_types_results(self, gold_graphs, predicted_graphs):
+        prereq, successes, sample_size = get_ne_type_successes_and_sample_size(
+            self.root_dir + "/corpus/unseen_ne_types_test.tsv",
+            gold_graphs,
+            predicted_graphs)
+        return [self.make_results_row("Recall", EVAL_TYPE_SUCCESS_RATE, [successes, sample_size]),
+                self.make_results_row("Prerequisites", EVAL_TYPE_SUCCESS_RATE, [prereq, sample_size])]
+
+    def compute_seen_andor_easy_wiki_results(self, gold_graphs, predicted_graphs):
+        return [self.make_results_column_for_node_recall_from_graphs("seen_andor_easy_wiki_test_data.tsv",
+                                                                     gold_graphs,
+                                                                     predicted_graphs,
+                                                                     use_sense=True,
+                                                                     use_attributes=True,
+                                                                     attribute_label=":wiki",
+                                                                     metric_label="Recall")]
+
+    def compute_hard_wiki_results(self, gold_graphs, predicted_graphs):
+        return [self.make_results_column_for_node_recall_from_graphs("hard_wiki_test_data.tsv",
+                                                                     gold_graphs,
+                                                                     predicted_graphs,
+                                                                     use_sense=True,
+                                                                     use_attributes=True,
+                                                                     attribute_label=":wiki",
+                                                                     metric_label="Recall")]

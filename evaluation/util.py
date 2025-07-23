@@ -1,10 +1,12 @@
 import re
+import sys
 from typing import Set
 
 from penman import Graph, encode
 
 
-def num_to_score(number):
+
+def num_to_score_with_preceding_0(number):
     string_result = f"{(number*100):.0f}"
     if len(string_result) == 1:
         string_result = "0" + string_result
@@ -151,7 +153,7 @@ def get_node_name_for_gold_label(gold_label, gold_amr, is_attribute):
     return None
 
 
-def filter_amrs_for_name(name, gold_graphs, predicted_graphs):
+def filter_amrs_for_name(name, gold_graphs, predicted_graphs, fail_ok=False):
     regular_expression = name+"_[0-9]+"
     gold_graphs_filtered = []
     predicted_graphs_filtered = []
@@ -159,4 +161,17 @@ def filter_amrs_for_name(name, gold_graphs, predicted_graphs):
         if re.match(regular_expression, g.metadata["id"]):
             gold_graphs_filtered.append(g)
             predicted_graphs_filtered.append(p)
+    if len(gold_graphs_filtered) == 0 and fail_ok:
+        pass
+        # print("WARNING: didn't find any AMRs using filter_amrs_for_name for", name, file=sys.stderr)
+    else:
+        assert len(gold_graphs_filtered) > 0, f"Corpus does not contain any AMRs with ID matching {regular_expression}"
+
     return gold_graphs_filtered, predicted_graphs_filtered
+
+
+SANITY_CHECK = "Sanity check"
+
+
+def num_to_score(number):
+    return f"{(number * 100):.0f}"

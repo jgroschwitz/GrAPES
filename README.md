@@ -71,10 +71,14 @@ If you want to evaluate only on a single category, running your parser on one of
 To run the full evaluation suite, run the following:
 
 ```commandline
-python evaluate_all_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -gg corpus/corpus.txt -pg path/to/your/parser/output/GrAPES/corpus.txt 
+python evaluate_all_categories.py -gt path/to/AMR/testset -pt path/to/parser/output/AMR/testset -pg path/to/your/parser/output/GrAPES/corpus.txt 
 ```
+Where the arguments are:
 
-The `-gt` argument is the path to your copy of the AMR testset and the `-pt` argument is the path to your parser output for the AMR testset. The `-gg` argument is the path to the GrAPES file `corpus.txt` and `-pg` is the path to your parser output on that file. This will automatically detect whether you've added the PTB and AMR testset sentences in setup step B.
+* `-gt`: path to your copy of the AMR testset 
+* `-pt`: path to your parser output for the AMR testset 
+* `-pg`: path to your parser output on the GrAPES corpus in `corpus/corpus.tex`. This will automatically detect whether you've added the PTB and AMR testset sentences in setup step B.
+* If your GrAPES gold file `corpus.txt` is not in `corpus/corpus.tex`, add the argument `-gg path/to/your/gold/corpus.txt` 
 
 You can also evaluate on only the AMR testset, or only the GrAPES testset, simply by leaving out the other parameters.
 
@@ -87,8 +91,14 @@ python evaluate_all_categories.py -gt path/to/AMR/testset -pt path/to/parser/out
  GrAPES testset only:
 
 ```commandline
-python evaluate_all_categories.py -gg corpus/corpus.txt -pg path/to/your/parser/output/GrAPES/corpus.txt 
+python evaluate_all_categories.py -pg path/to/your/parser/output/GrAPES/corpus.txt 
 ```
+
+Additional options include:
+* `--parser_name`: name your parser for more specific output file naming
+* `--smatch`: running Smatch on all subcategories (slow),
+* `--error_analysis` writing the graph IDs of successes and failures to pickled dictionaries,
+* `--all_metrics`: printing Smatch results on Structural Generalisation categories and unlabelled edge recall on appropriate categories (not included in the GrAPES paper)
 
 ### What do to if you are missing PTB or AMR 3.0
 
@@ -103,27 +113,26 @@ If you don't have PTB:
 
 ### Evaluate on a single category
 
-To evaluate on just one of the 36 categories, use the `evaluate_single_category.py` script and give the name of the category to evaluate, and provide the path to the relevant gold file (`-g`) and the relevant prediction file (`-p`). 
+To evaluate on just one of the 36 categories, use the `evaluate_single_category.py` script and give the name of the category to evaluate (`-c`) and provide the path to the  relevant prediction file (`-p`).
 
-Category names are listed below. The "relevant" gold file is either the path to the AMR testset, the path to the GrAPES gold `corpus.txt` file, or, if you prefer, the GrAPES subcorpus file, such as `adjectives.txt`. Similarly, your parser output can be the full GrAPES `corpus.txt` output, or just the output from running your parser on the one category.
+Category names are listed below. The "relevant" predictions file is the path to your parser's output on corresponding corpus: the AMR testset, GrAPES `corpus.txt` file, or, if you prefer, the GrAPES subcorpus file, such as `adjectives.txt`. 
 
-For example, to evaluate on the category Adjectives, which is a GrAPES-only category, either of the following will work:
+If your gold corpus files are not in `corpus/corpus.tex` and `corpus/subcorpora`, include the path to the gold file with option `-g`.
+
+For example, to evaluate on the category Multiple Adjectives, which is a GrAPES-only category, either of the following will work:
 
 ```commandline
-python evaluate_single_category.py -c adjectives -g corpus/corpus.txt -p path/to/parser/full/grapes/output 
+python evaluate_single_category.py -c multiple_adjectives  -p path/to/parser/full/grapes/output/file 
 ```
 
 ```commandline
-python evaluate_single_category.py -c adjectives -g corpus/subcorpora/adjectives.txt -p path/to/parser/output/adjectives/only 
+python evaluate_single_category.py -c multiple_adjectives -p path/to/parser/output/for/adjectives.txt
 ```
-
-As long as the files have the same number of graphs, the order matches, and they contain the particular category you want, this will work.
-
 
 To evaluate an AMR testset category, e.g. here the Rare Senses category, run the following.
 
 ```commandline
-python evaluate_single_category.py -c rare_senses -g path/to/AMR/testset -p path/to/parser/AMR/testset/output
+python evaluate_single_category.py -c rare_predicate_senses_excl_01 -p path/to/parser/AMR/testset/output
 ```
 
 #### Category names for the command line
@@ -131,10 +140,37 @@ python evaluate_single_category.py -c rare_senses -g path/to/AMR/testset -p path
 These are also listed if you use the `--help` option.
 
 ```
+-------------------------------
+AMR 3.0 testset category names:
+-------------------------------
 pragmatic_coreference_testset
-pragmatic_coreference_winograd
 syntactic_gap_reentrancies
 unambiguous_coreference
+rare_node_labels
+unseen_node_labels
+rare_predicate_senses_excl_01
+rare_edge_labels_ARG2plus
+seen_names
+unseen_names
+seen_dates
+unseen_dates
+other_seen_entities
+other_unseen_entities
+types_of_seen_named_entities
+types_of_unseen_named_entities
+seen_andor_easy_wiki_links
+hard_unseen_wiki_links
+frequent_predicate_senses_incl_01
+passives
+unaccusatives
+ellipsis
+multinode_word_meanings
+imperatives
+
+----------------------
+GrAPES category names:
+----------------------
+pragmatic_coreference_winograd
 nested_control_and_coordination
 nested_control_and_coordination_sanity_check
 multiple_adjectives
@@ -151,52 +187,72 @@ cp_recursion_plus_rc_plus_coreference
 cp_recursion_plus_rc_plus_coreference_sanity_check
 long_lists
 long_lists_sanity_check
-rare_node_labels
-unseen_node_labels
-rare_predicate_senses_excl_01
 unseen_predicate_senses_excl_01
-rare_edge_labels
-unseen_edge_labels
-seen_names
-unseen_names
-seen_dates
-unseen_dates
-other_seen_entities
-other_unseen_entities
-types_of_seen_named_entities
-types_of_unseen_named_entities
-seen_andor_easy_wiki_links
-hard_unseen_wiki_links
-frequent_predicate_senses_incl_01
+unseen_edge_labels_ARG2plus
 word_ambiguities_handcrafted
 word_ambiguities_karidi_et_al_2021
 pp_attachment
 unbounded_dependencies
-passives
-unaccusatives
-ellipsis
-multinode_word_meanings
-imperatives
 ```
 
-## Details about the contruction of each category
+The evaluation classes each category uses are in `evaluation/full_evaluation/category_evaluation/`
 
-The appendix of the [paper](https://aclanthology.org/2023.emnlp-main.662/) provides extensive details for each of the 36 categories.
+## Running evaluations on multiple parsers at once
+
+You can use `evaluation/full_evaluation/run_all_evaluations.py` if you set yourself up as follows:
+
+* In `data/raw/gold`, place a copy of your concatenated AMR 3.0 testset and call it `test.txt`
+* For each parser:
+  * Choose a name e.g. `"my_parser"` 
+  * create a directory in `data/processed/parser_outputs` called `my_parser-outputs`
+  * place all output files here:
+    * the output of the full grapes corpus as `full_corpus.txt`
+    * any single-category output files
+    * the output on the AMR 3.0 testset as `testset.txt`
+* For Python Path reasons, running this as a script can be hard. You have (at least) two choices:
+  1. Edit the `parser_names` variable at the top of the file to be your parser names, and just run the file from within your IDE
+  2. Run it as a script from its folder, with python path set to two directories up (`../..`). For each parser you want to include, include a command line argument For example:
+
+```commandline
+PYTHONPATH=../../ python run_full_evaluation.py amparser amrbart
+```
+
+Similarly, with that setup you can go all the way from parser names to full results stored in pickles and CSV files, Vulcan-readable pickles for error analysis, and LaTeX > PDF for tables you might want in your paper with the bash script `scripts/parser_outs2latex_and_vulcan.sh`. (If the global `run_all_smatch` in `run_full_evaluation.py` is set to `True`, this will take a few minutes because it will run Smatch on every subcategory.)
+
+```commandline
+bash parser_outs2latex_and_vulcan.sh parser1_name parser2_name parser3_name
+```
+
+## Details about the construction of each category
+
+The appendix of the [paper](https://aclanthology.org/2023.emnlp-main.662/) (also in documents/grapes.pdf) provides extensive details for each of the 36 categories.
+
+## LaTeX tables
+
+`scripts/latex/csv2latex.py` converts CSV outputs from `run_full_evaluation` or `evaluate_all_categories` to a LaTeX table for as many parsers as you want. We used this for the full tables in the paper. You'll need in your preamble:
+
+```
+\usepackage{longtable}
+\usepackage{xcolor, colortbl}
+\definecolor{lightlightlightgray}{gray}{0.95}
+\newcommand{\successScore}[4]{#1 \scriptsize\textcolor{gray}{#4[#2,#3]}}
+```
+
+You probably want to print the whole table with `\small` in front. Results column names are taken from CSV filenames. There is a `sandbox.tex` file in `data/processed/latex/` that you can use to check the outputs. (Default output location for the script).
 
 ## Looking at example outputs
 
 You may find [Vulcan](https://github.com/jgroschwitz/vulcan) helpful for looking at your parser output and comparing it to the gold graph, when available. Git Clone the repository, and install the dependencies. 
 
-From your GrAPES main folder, create pickles of the data. This works for any pair of files with predicted and gold graphs in the same order.
+From your GrAPES main folder, create pickles of the data. This works for any pair of files with predicted and gold graphs in the same order. 
+
+See the help instructions for `create_vulcan_pickles.py` for more details. To get Vulcan-redable pickles of gold and predicted graphs for a category, use:
 
 ```commandline
-python create_vulcan_pickle.py path/to/prediction/file path/to/gold/file path/to/output.pickle
+python create_vulcan_pickle.py -p path/to/prediction/file -g path/to/gold/file -o path/to/output.pickle -c category_name
 ```
-For example, for the adjectives subcorpus, you could have something like:
 
-```commandline
-python create_vulcan_pickle.py ../parser_outputs/subcorpora/adjectives_predictions.txt corpus/subcorpora/adjectives.txt error_analysis/adjectives.pickle
-```
+If you want them further split by whether they were correct or not, make sure you've run the evaluation with the `-e` flag, which stores the graph IDs of correct and incorrect outputs according to each evaluation criterion. Then you can run `create_vulcan_pickle.py` with the `-e` flag, and it will create separate pickles for correct and incorrect graphs for each criterion. (`(in)correct_id` are for the basic criteria.)
 
 You can then view the graphs and sentences side-by-side with Vulcan from your Vulcan folder (not from your GrAPES folder!):
 
@@ -204,55 +260,56 @@ You can then view the graphs and sentences side-by-side with Vulcan from your Vu
 python launch_vulcan.py path/to/pickle
 ```
 
-
 ## Structure of this repository
 
 * All provided corpus files are in `corpus/`, including the main file `corpus.txt`.
 * All required python scripts are at the root level
 * The evaluation modules are in `evaluation/`
 * Code that was used for the paper (but that you don't need to use) is also included. 
-  * You may find that running scripts that are not at the root level gives you `PYTHONPATH` trouble. In Mac and Linux, try prepending `PYTHONPATH=./` to the command. In Windows, try to add the parent directory to the Python Path environment variable.
+* You may find that running scripts that are not at the root level gives you `PYTHONPATH` trouble. In Mac and Linux, try prepending `PYTHONPATH=./` to the command. In Windows, try to add the parent directory to the Python Path environment variable.
 
 
 ```
 GrAPES
-├── evaluate_all_categories.py              # main script
-├── evaluate_single_category.py             # main script for 1 category
-├── concatenate_amr_files.py                # for setup
-├── complete_the_corpus.py                  # for setup
-├── create_vulcan_pickle.py                 # for visualising predicted/gold pairs
-├── corpus                                  # all GrAPES corpus files, including TSV files used for evaluation
-│ ├── subcorpora                            # all GrAPES AMR files (AMR test set not included)
-│ └── corpus.txt                            # the full concatenated GrAPES corpus (AMR test set not included)
+├── evaluate_all_categories.py          # main script
+├── evaluate_single_category.py         # main script for 1 category
+├── concatenate_amr_files.py            # for setup
+├── complete_the_corpus.py              # for setup
+├── create_vulcan_pickle.py             # for visualising predicted/gold pairs
+├── corpus                              # all GrAPES corpus files, including TSV files used for evaluation
+│ ├── subcorpora                        # all GrAPES AMR files (AMR test set not included)
+│ └── corpus.txt                        # the full concatenated GrAPES corpus (AMR test set not included)
 ├── LICENSE
 ├── README.md
-├── docker-compose                          # Docker compose files for AM parser and AMRBART
-├── error_analysis                          # a good place for Vulcan pickles
+├── docker-compose                      # Docker compose files for AM parser and AMRBART
+├── error_analysis                      # a good place for Vulcan pickles
 │ └── README.md
-├── evaluation                              # all evaluation modules
-│ ├── corpus_metrics.py
-│ ├── full_evaluation                       # full evaluation modules
-│ │ ├── category_evaluation                 # evaluation modules by set
-│ │ │ ├── category_evaluation.py
-│ │ │ ├── i_pragmatic_reentrancies.py
-│ │ │ ├── ii_unambiguous_reentrancies.py
-│ │ │ ├── iii_structural_generalization.py
-│ │ │ ├── iv_rare_unseen_nodes_edges.py
-│ │ │ └── v_names_dates_etc.py
-│ │ │ ├── vi_entity_classification_and_linking.py
-│ │ │ ├── vii_lexical_disambiguation.py
-│ │ │ ├── viii_attachments.py
-│ │ │ ├── ix_nontrivial_word2node_relations.py
+── documents
+│   └── grapes.pdf                      # the paper, including detailed appendix re categories
+├── evaluation                          # all evaluation modules
+│ ├── full_evaluation                   # full evaluation modules
+│ │ ├── category_evaluation             # category evaluation modules
+│ │ │ ├── subcategory_info.py           # defines dataclass to store info about each subcategory for evaluation
+│ │ │ ├── category_metadata.py          # subcategory info by category
+│ │ │ ├── category_evaluation.py        # abstract class
+│ │ │ ├── edge_recall.py                # edge recall evaluation class
+│ │ │ ├── pp_attachment.py              # PP attachment evaluation class
+│ │ │ └── etc...                        # more classes for specific evaluations
 │ │ ├── corpus_statistics.py
-│ │ ├── run_full_evaluation.py              # the evaluation script used in the paper
+│ │ ├── run_full_evaluation.py          # runs evaluations on multiple parsers (used for paper)
 │ │ └── wilson_score_interval.py
-│ └── testset                               # evaluation modules for the AMR test set categories
-├── grammars                                # Alto grammars for structural generalisation
+│ └── corpus_metrics.py
+├── grammars                            # Alto grammars for structural generalisation
 ├── scripts
-│ ├── file_manipulations                    # various scripts for changing files
-│ ├── preprocessing                         # preprocessing scripts for AM parser and AMRBART
-│ └── single_predict.sh                     # making predictions with a parser for one category
-└── amrbank_analysis                        # various scripts and modules used in the creation of GrAPES
+│ ├── parser_outs2latex_and_vulcan.sh   # from parser names to full displayed and saved results (see documentation)
+│ ├── file_manipulations                # various scripts for changing files
+│ ├── latex                             # converts csv outs from evaluate_all_categories and run_all_evaluations to LaTeX table
+│ └── preprocessing                     # preprocessing scripts for AM parser and AMRBART
+├── data
+│ ├── raw                               # good place for a copy of gold AMR testset, e.g.
+│ ├── processed                         # good place parser outs
+│ │ └── results                         # evaluation scripts save outputs here
+└── amrbank_analysis                    # various scripts and modules used in the creation of GrAPES
 ```
 
 ## Credits
@@ -262,3 +319,8 @@ Authors: Jonas Groschwitz, Shay B. Cohen, Lucia Donatelli, & Meaghan Fowlie
 This work builds on (and contains parts of) the [Winograd Schema Challenge](https://cs.nyu.edu/~davise/papers/WinogradSchemas/WS.html), which is published under the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license.
 
 This work also builds on the [Putting Words into BERT's Mouth](https://github.com/tai314159/PWIBM-Putting-Words-in-Bert-s-Mouth) corpus.
+
+
+```
+
+```

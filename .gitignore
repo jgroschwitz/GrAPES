@@ -2,7 +2,7 @@
 .idea/*
 amparser-output/*
 cailam-output/*
-archive/*
+archived_code/*
 *.pyc
 test_raw.txt
 test.txt
@@ -133,4 +133,6 @@ scripts/file_manipulations/copyrighted_data.txt
 README.html
 corpus/subcorpora/unbounded_dependencies_probably_correct.txt
 /data/
-/error_analysis/
+error_analysis/
+corpus/subcorpora/unbounded_dependencies_old_ids.txt
+corpus/unbounded_dependencies_new_ids.tsv

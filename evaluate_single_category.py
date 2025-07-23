@@ -1,115 +1,109 @@
 import argparse
+import os
+
 from penman import load
 
-from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE
-from evaluation.full_evaluation.category_evaluation.i_pragmatic_reentrancies import PragmaticReentrancies
-from evaluation.full_evaluation.category_evaluation.ii_unambiguous_reentrancies import UnambiguousReentrancies
-from evaluation.full_evaluation.category_evaluation.iii_structural_generalization import StructuralGeneralization
-from evaluation.full_evaluation.category_evaluation.iv_rare_unseen_nodes_edges import RareUnseenNodesEdges
-from evaluation.full_evaluation.category_evaluation.ix_nontrivial_word2node_relations import \
-    NontrivialWord2NodeRelations
-from evaluation.full_evaluation.category_evaluation.v_names_dates_etc import NamesDatesEtc
-from evaluation.full_evaluation.category_evaluation.vi_entity_classification_and_linking import \
-    EntityClassificationAndLinking
-from evaluation.full_evaluation.category_evaluation.vii_lexical_disambiguation import LexicalDisambiguation
-from evaluation.full_evaluation.category_evaluation.viii_attachments import Attachments
+from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
+     is_testset_category, get_formatted_category_names_by_main_file, \
+    add_sanity_check_suffix
+from evaluation.full_evaluation.category_evaluation.subcategory_info import is_sanity_check
+from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_F1, EVAL_TYPE_SUCCESS_RATE, \
+    size_mappers, STRUC_GEN, EVAL_TYPE_PRECISION
+from evaluation.full_evaluation.evaluation_instance_info import EvaluationInstanceInfo
+from evaluation.full_evaluation.run_full_evaluation import evaluate, structural_generalisation_by_size_as_table, \
+    load_predictions
 from evaluation.full_evaluation.wilson_score_interval import wilson_score_interval
-from evaluation.single_eval import num_to_score
-
-#  Category names are the same as in the paper (tables 3-5), but all lowercase, and with all punctuation, brackets etc.
-#  removed. Except for '+', which is replaced by 'plus', and whitespace ' ' which is replaced by '_'.
-#  Sanity checks include the name of the category they are checking, such as multiple_adjectives_sanity_check.
-#  Finally, in CP recursion names, "relative clause" is always abbreviated as "rc".
-category_name_to_set_class_and_eval_function = {
-    "pragmatic_coreference_testset": (PragmaticReentrancies, PragmaticReentrancies.compute_testset_results),
-    "pragmatic_coreference_winograd": (PragmaticReentrancies, PragmaticReentrancies.compute_winograd_results),
-    "syntactic_gap_reentrancies": (UnambiguousReentrancies, UnambiguousReentrancies.compute_syntactic_gap_results),
-    "unambiguous_coreference": (UnambiguousReentrancies, UnambiguousReentrancies.compute_unambiguous_coreference_results),
-    "nested_control_and_coordination": (StructuralGeneralization, StructuralGeneralization.computed_nested_control_and_coordination_results),
-    "nested_control_and_coordination_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_nested_control_and_coordination_sanity_check_results),
-    "multiple_adjectives": (StructuralGeneralization, StructuralGeneralization.compute_multiple_adjectives_results),
-    "multiple_adjectives_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_multiple_adjectives_sanity_check_results),
-    "centre_embedding": (StructuralGeneralization, StructuralGeneralization.compute_centre_embedding_results),
-    "centre_embedding_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_centre_embedding_sanity_check_results),
-    "cp_recursion": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_results),
-    "cp_recursion_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_sanity_check_results),
-    "cp_recursion_plus_coreference": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_coref_results),
-    "cp_recursion_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_coref_sanity_check_results),
-    "cp_recursion_plus_rc": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_results),
-    "cp_recursion_plus_rc_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_sanity_check_results),
-    "cp_recursion_plus_rc_plus_coreference": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_and_coref_results),
-    "cp_recursion_plus_rc_plus_coreference_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_cp_recursion_with_rc_and_coref_sanity_check_results),
-    "long_lists": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_results),
-    "long_lists_sanity_check": (StructuralGeneralization, StructuralGeneralization.compute_long_lists_sanity_check_results),
-    "rare_node_labels": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_rare_node_label_results),
-    "unseen_node_labels": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_node_label_results),
-    "rare_predicate_senses_excl_01": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_rare_sense_results),
-    "unseen_predicate_senses_excl_01": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_sense_results),
-    "rare_edge_labels_ARG2plus": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_rare_edge_label_results),
-    "unseen_edge_labels_ARG2plus": (RareUnseenNodesEdges, RareUnseenNodesEdges.compute_unseen_edge_label_results),
-    "seen_names": (NamesDatesEtc, NamesDatesEtc.compute_seen_names_results),
-    "unseen_names": (NamesDatesEtc, NamesDatesEtc.compute_unseen_names_results),
-    "seen_dates": (NamesDatesEtc, NamesDatesEtc.compute_seen_dates_results),
-    "unseen_dates": (NamesDatesEtc, NamesDatesEtc.compute_unseen_dates_results),
-    "other_seen_entities": (NamesDatesEtc, NamesDatesEtc.compute_seen_special_entities_results),
-    "other_unseen_entities": (NamesDatesEtc, NamesDatesEtc.compute_unseen_special_entities_results),
-    "types_of_seen_named_entities": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_seen_ne_types_results),
-    "types_of_unseen_named_entities": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_unseen_ne_types_results),
-    "seen_andor_easy_wiki_links": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_seen_andor_easy_wiki_results),
-    "hard_unseen_wiki_links": (EntityClassificationAndLinking, EntityClassificationAndLinking.compute_hard_wiki_results),
-    "frequent_predicate_senses_incl_01": (LexicalDisambiguation, LexicalDisambiguation.compute_common_senses_results),
-    "word_ambiguities_handcrafted": (LexicalDisambiguation, LexicalDisambiguation.compute_grapes_word_disambiguation_results),
-    "word_ambiguities_karidi_et_al_2021": (LexicalDisambiguation, LexicalDisambiguation.compute_berts_mouth_results),
-    "pp_attachment": (Attachments, Attachments.compute_pp_results),
-    "unbounded_dependencies": (Attachments, Attachments.compute_unbounded_results),
-    "passives": (Attachments, Attachments.compute_passive_results),
-    "unaccusatives": (Attachments, Attachments.compute_unaccusative_results),
-    "ellipsis": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_ellipsis_results),
-    "multinode_word_meanings": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_multinode_constants_results),
-    "imperatives": (NontrivialWord2NodeRelations, NontrivialWord2NodeRelations.compute_imperative_results)
-}
-
-
-def get_formatted_category_names():
-    return "\n".join(category_name_to_set_class_and_eval_function.keys())  # TODO linebreak doesn't seem to work in help
+from evaluation.util import num_to_score, SANITY_CHECK
+from scripts.argparse_formatter import SmartFormatter
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Evaluate single category.")
-    parser.add_argument('-c', '--category_name', type=str, help='Category to evaluate. Possible values are: '
-                                                                + get_formatted_category_names())
-    parser.add_argument('-g', '--gold_amr_file', type=str, help='Path to gold AMR file')
-    parser.add_argument('-p', '--predicted_amr_file', type=str, help='Path to predicted AMR file. Must contain AMRs '
-                                                                     'for all sentences in the gold file, in the same '
-                                                                     'order.')
+    parser = argparse.ArgumentParser(description="Evaluate single category. Make sure you provide paths to the AMR 3.0 testset for AMR 3.0 testset categories and GrAPES for GrAPES ", formatter_class=SmartFormatter,
+                                     )
+    parser.add_argument('-c', '--category_name', type=str, help='Category to evaluate. Possible values are:\n'
+                                                                + get_formatted_category_names_by_main_file())
+    parser.add_argument('-g', '--gold_amr_file', type=str, help='Path to gold AMR file. '
+                                                                'Optional if a GrAPES-specific category, '
+                                                                'in which case we use corpus/corpus.txt',
+                        default=None)
+    parser.add_argument('-p', '--predicted_amr_file',
+                        type=str,
+                        help="Path to the predicted AMR file. May use the full corpus output (GrAPES or AMR 3.0)"
+                             " or a GrAPES subcorpus file")
+    parser.add_argument('-n', '--parser_name', type=str,
+                        help="name of parser (optional)", default="parser")
+    parser.add_argument("-e", "--error_analysis", action="store_true", help="Pickle correct and incorrect graph ids")
+    parser.add_argument("-s", "--smatch", action="store_true", help="Calculate Smatch even if we normally wouldn't for this category ")
+
     args = parser.parse_args()
     return args
 
-
-def get_results(gold_graphs, predicted_graphs, category_name):
-    set_class, eval_function = category_name_to_set_class_and_eval_function[category_name]
-    set = set_class(gold_graphs, predicted_graphs, None, "./")
-    return eval_function(set, gold_graphs, predicted_graphs)
-
+def instance_info_from_args(args):
+    instance_instructions = EvaluationInstanceInfo(
+        absolute_path_to_predictions_file=args.predicted_amr_file,
+        absolute_path_to_gold_file=args.gold_amr_file,
+        do_error_analysis=args.error_analysis,
+        parser_name=args.parser_name,
+        run_smatch=args.smatch,
+        run_structural_generalisation_smatch=args.smatch
+    )
+    return instance_instructions
 
 def main():
     args = parse_args()
-    gold_graphs = load(args.gold_amr_file)
-    predicted_graphs = load(args.predicted_amr_file)
-    if len(gold_graphs) != len(predicted_graphs):
-        raise ValueError("Gold and predicted AMR files must contain the same number of AMRs."
-                         "Got " + str(len(gold_graphs)) + " gold AMRs and " + str(len(predicted_graphs))
-                         + " predicted AMRs.")
-    results = get_results(gold_graphs, predicted_graphs, args.category_name)
-    print("Results on " + args.category_name)
+    instance_info = instance_info_from_args(args)
+
+    eval_class, info = category_name_to_set_class_and_metadata[args.category_name]
+
+
+    gold_path, predictions_path, use_subcorpus = get_gold_path_based_on_info(args.gold_amr_file, info, instance_info)
+
+    gold_amrs = load(gold_path)
+    predicted_amrs = load_predictions(predictions_path)
+
+    evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
+    results = evaluate(evaluator, info, instance_info)
+    assert len(results) > 0, "No results!"
+
+    caption = f"\nResults on {info.display_name}"
+
+    # Structural generalisation results by size
+    if info.subtype == STRUC_GEN:
+        do_by_size = info.subcorpus_filename in size_mappers
+        if do_by_size:
+            generalisation_by_size = evaluator.get_results_by_size()
+            structural_generalisation_by_size_as_table({info.subcorpus_filename: generalisation_by_size})
+
+        if not is_sanity_check(info):
+            # Try doing the sanity check for a main class
+            try:
+                eval_class, info = category_name_to_set_class_and_metadata[add_sanity_check_suffix(args.category_name)]
+                if use_subcorpus:
+                    gold_amrs = load(f"corpus/subcorpora/{info.subcorpus_filename}.txt")
+                    predicted_amrs = load(f"{instance_info.predictions_directory_path()}/{info.subcorpus_filename}.txt")
+                evaluator = eval_class(gold_amrs, predicted_amrs, info, instance_info)
+                new_rows = evaluate(evaluator, info, instance_info)
+                results += new_rows
+                caption += " and Sanity Check"
+            except Exception as e:
+                print("(No Sanity Check: Need full GrAPES corpus or separate sanity_check file)")
+                raise e
+
+    print(caption)
+    print()
+
     for row in results:
+        info = row[0]
         metric_name = row[1]
         metric_type = row[2]
-        if metric_type == EVAL_TYPE_SUCCESS_RATE:
+        if info is not None and info.display_name == SANITY_CHECK:
+            metric_name = f"{SANITY_CHECK} {metric_name}"
+        if metric_type in [EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_PRECISION]:
             wilson_ci = wilson_score_interval(row[3], row[4])
+            total_type = "sample size" if metric_type == EVAL_TYPE_SUCCESS_RATE else "total predictions"
             if row[4] > 0:
                 print(f"{metric_name}: {num_to_score(row[3] / row[4])} with Wilson confidence interval "
-                      f"[{num_to_score(wilson_ci[0])}, {num_to_score(wilson_ci[1])}] and sample size {row[4]}])")
+                      f"[{num_to_score(wilson_ci[0])}, {num_to_score(wilson_ci[1])}] and {total_type} {row[4]}")
             else:
                 print("ERROR: Division by zero! This means something unexpected went wrong (feel free to contact the "
                       "developers of GrAPES for help, e.g. by filing an issue on GitHub).")
@@ -120,6 +114,28 @@ def main():
             print("ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
                   "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
             print(row)
+
+
+def get_gold_path_based_on_info(given_gold_path, info, instance_info):
+    predictions_path = instance_info.pred_grapes_file_path()
+    prediction_file_name = os.path.basename(predictions_path)[:-4]
+    if info.filename_belongs_to_subcategory(prediction_file_name):
+        use_subcorpus = True
+        instance_info.given_single_file = True
+    else:
+        use_subcorpus = False
+    if is_testset_category(info):
+        if instance_info.gold_testset_path() is None:
+            print(f"No gold AMR 3.0 testset file provided for testset category {info.name}; exiting")
+            exit(1)
+    if given_gold_path is not None:
+        gold_path = given_gold_path
+    elif use_subcorpus:
+        print("using gold subcorpus", prediction_file_name)
+        gold_path = f"{instance_info.root_dir}/corpus/subcorpora/{prediction_file_name}.txt"
+    else:
+        gold_path = instance_info.gold_grapes_path()
+    return gold_path, predictions_path, use_subcorpus
 
 
 if __name__ == "__main__":

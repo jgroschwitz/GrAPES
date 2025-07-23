@@ -1,7 +1,5 @@
-Move combine_amr_files to scripts/file_manipulations
-
+Fix encodeing of copyrighted data
 Tidy up corpus folder
 
-delete tree.txt
 
 delete this file
