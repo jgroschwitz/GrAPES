@@ -13,7 +13,7 @@ from prettytable import PrettyTable
 from penman import load
 
 from evaluation.full_evaluation.category_evaluation.category_evaluation import EVAL_TYPE_SUCCESS_RATE, EVAL_TYPE_F1, \
-    CategoryEvaluation, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION
+    CategoryEvaluation, STRUC_GEN, size_mappers, EVAL_TYPE_PRECISION, EVAL_TYPE_NONE, EVAL_TYPE_NA
 from evaluation.full_evaluation.category_evaluation.category_metadata import category_name_to_set_class_and_metadata, \
     is_testset_category, bunch2subcategory, get_bunch_name_for_number, \
     get_bunch_categories_for_number, get_bunch_display_name_for_number
@@ -497,9 +497,11 @@ def make_rows_for_results(category_name, print_f1, print_unlabeled_edge_attachme
         elif metric_type == EVAL_TYPE_F1:
             rows.append([set_id, set_name, name, metric_name,
                             num_to_score(r[3]), "-", "-", r[4]])
+        elif metric_type in [EVAL_TYPE_NA, EVAL_TYPE_NONE]:
+            rows.append(make_empty_result(set_id, set_name, name))
         else:
             print(
-                "ERROR: Unexpected evaluation type! This means something unexpected went wrong (feel free to "
+                f"ERROR: Unexpected evaluation type ({metric_type})! This means something unexpected went wrong (feel free to "
                 "contact the developers of GrAPES for help, e.g. by filing an issue on GitHub).")
             print(metric_type)
     return rows
@@ -631,7 +633,8 @@ def get_results(gold_graphs_testset, gold_graphs_grapes, predicted_graphs_testse
                     is_prereq_row = "prereq" in metric_name.lower()
                     is_smatch_row = "smatch" in metric_name.lower()
                     is_unlabelled_row = "unlabel" in metric_name.lower()
-                    exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row
+                    no_results = len(r) < 5
+                    exclude_from_average = is_sanity_check_row or is_prereq_row or is_smatch_row or is_unlabelled_row or no_results
                     if not exclude_from_average:
                         sum_here += r[3] / r[4]
                         divisors_here += 1
