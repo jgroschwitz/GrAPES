@@ -61,6 +61,7 @@ def make_dummy_evaluator(prediction_path, gold_path, subcategory_name, parser_na
     return dummy_evaluator
 
 
+
 def get_size(gold_graph, mapper):
     size0 = int(gold_graph.metadata["size0"])
     return mapper(size0)
@@ -76,7 +77,135 @@ def create_pickle(gold_graphs: List[Graph], predicted_graphs: List[Graph], path_
         path_to_pickle: output path to write vulcan pickle to
         extra_metadata: Dict str: str of anything else you want printed along with the sentence ID (and size for Structural Generalisation)
     """
+    predicted_graphs = load(prediction_path)
+    gold_graphs = load(gold_path)
+    if subcategory_name is None:
+        # use the TSV filename
+        subcategory_name = os.path.basename(subcategory_tsv)[:-4]
 
+    # write here
+    out_gold_path = f"{out_path}/{subcategory_name}_gold.txt"
+    out_predicted_path = f"{out_path}/{subcategory_name}_pred.txt"
+
+    # the IDs of the graphs we actually want
+    ids = get_graph_ids_from_tsv(graph_id_column, subcategory_tsv)
+
+    predictions = []
+    golds = []
+    for i in range(len(gold_graphs)):
+        gold_graph = gold_graphs[i]
+        graph_id = gold_graph.metadata["id"]
+        if graph_id in ids:
+            sent = gold_graph.metadata["snt"]
+            predicted_graph = predicted_graphs[i]
+            # add the metadata from the gold graph
+            predicted_graph.metadata["snt"] = sent
+            predicted_graph.metadata["id"] = graph_id
+            golds.append(gold_graph)
+            predictions.append(predicted_graph)
+    dump(golds, out_gold_path)
+    dump(predictions, out_predicted_path)
+    # return info so we can access outputs easily from build_pickle_for_testset_subcategory
+    return out_predicted_path, out_gold_path, ids, subcategory_name
+
+
+def build_pickle_for_testset_subcategory(prediction_path, gold_path, subcategory_tsv, pickle_directory,
+                                         amconll=None, graph_id_column=0, subcategory_name=None):
+
+    # write intermediate files
+    out_predicted_path, out_gold_path, ids, subcategory_name = write_amr_corpora_for_testset_subcategory(prediction_path,
+                                                                                  gold_path,
+                                                                                  subcategory_tsv,
+                                                                                  subcategory_name,
+                                                                                  pickle_directory,
+                                                                                  graph_id_column)
+    # read in subcorpora
+    predicted_graphs = load(out_predicted_path)
+    gold_graphs = load(out_gold_path)
+
+    vulcan_types = {
+        "Gold AMR": FORMAT_NAME_GRAPH,
+        "Predicted AMR": FORMAT_NAME_GRAPH,
+    }
+
+    if amconll is not None:
+        # get just the relevant AM trees
+        tagged_sentences, tree_edges, am_sents = get_am_dependency_trees(amconll, ids)
+        write_conll(f"{pickle_directory}/{subcategory_name}.amconll", am_sents)
+        vulcan_types["AM Tree"] = FORMAT_NAME_OBJECT_TABLE
+    else:
+        vulcan_types["Sentence"] = FORMAT_NAME_TOKENIZED_STRING
+
+    vulcan_pickle_builder = PickleBuilder(vulcan_types)
+    for i in range(len(gold_graphs)):
+        gold_graph = gold_graphs[i]
+        predicted_graph = predicted_graphs[i]
+        to_add = {
+            "Gold AMR": gold_graph,
+            "Predicted AMR": predicted_graph,
+        }
+        if amconll is None:
+            sent = gold_graph.metadata["snt"]
+            to_add["Sentence"] = sent
+        else:
+            to_add["AM Tree"] = tagged_sentences[i]
+
+        vulcan_pickle_builder.add_instances_by_name(to_add)
+        if amconll is not None:
+            # add the dependency tree edges to the Sentence entry
+            vulcan_pickle_builder.add_dependency_tree_by_name("AM Tree", tree_edges[i])
+
+    pickle_path = f"{pickle_directory}/{subcategory_name}.pickle"
+    vulcan_pickle_builder.write(pickle_path)
+    print(f"Wrote pickle to {pickle_path}")
+    print(f"Wrote AMR corpora to {out_gold_path} and {out_predicted_path}")
+
+
+
+def get_graph_ids_from_tsv(graph_id_column, subcategory_tsv):
+    ids = []
+    with open(subcategory_tsv, "r", encoding="utf8") as f:
+        csvreader = read_tsv_with_comments(f)
+        for row in csvreader:
+            graph_id = row[graph_id_column]
+            ids.append(graph_id)
+    return ids
+
+
+def get_am_dependency_trees(amconll, ids=None):
+    tagged_sentences = []
+    filtered_am_sentences = []
+    tree_edges = []
+    # read in the amconll file of parser predictions
+    with open(amconll, "r", encoding="utf-8") as f:
+        amconll_sents = [s for s in parse_amconll(f, False)]  # read it all in so we can close the file
+        # list of lists of pairs (datatype, content)
+        # each word is a list of the entries for the table, paired with their data type:
+        # e.g. [("token", "dog"),("graph", <graph for dog>)]
+        for amconll_sent in amconll_sents:
+            if ids is None or amconll_sent.attributes["id"] in ids:
+                filtered_am_sentences.append(amconll_sent)
+                tagged_sentence = []
+                for entry in amconll_sent.words:
+                    tagged_token = []
+                    tagged_sentence.append(tagged_token)
+
+                    tagged_token.append(("token", entry.token))
+                    if entry.fragment == "_":
+                        # empty graph constants are treated by Vulcan as tokens, not graphs
+                        tagged_token.append(("token", entry.fragment))
+                    else:
+                        # relexicalise the delexicalised graph constant
+                        tagged_token.append(("graph_string", relabel_supertag(entry.fragment, entry)))
+                tagged_sentences.append(tagged_sentence)
+                # add the dependency tree edges to the Sentence entry
+                deptree = make_dependency_tree(amconll_sent)
+                tree_edges.append(deptree)
+
+    return tagged_sentences, tree_edges, filtered_am_sentences
+
+
+def relabel_supertag(supertag, amconll_entry: Entry):
     example_graph = gold_graphs[0]
     metadata_fieldname, metadata_mapper = get_metadata_fieldname_and_mapper(example_graph, extra_metadata=extra_metadata)
 
