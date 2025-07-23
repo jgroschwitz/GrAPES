@@ -122,6 +122,26 @@ def create_pickle_for_error_analysis(evaluator: CategoryEvaluation, error_analys
         create_pickle(golds, preds, f"{out_dir}/{evaluator.category_metadata.name}_{key}.pickle", extra_metadata={"": key})
 
 
+def get_metadata_fieldname_and_mapper(graph, extra_metadata=None):
+    if extra_metadata is None:
+        ending = ""
+        metadata_fieldname = "ID"
+    else:
+        ending = "  ".join([f"{key}: {val}" for key, val in extra_metadata.items()])
+        metadata_fieldname = "MetaData"
+    graph_id = graph.metadata["id"]
+    parts = graph_id.split("_")
+    prefix = "_".join(parts[:-1])
+    if prefix in size_mappers:
+        mapper = size_mappers[prefix]
+        metadata_fieldname = "MetaData"
+        metadata_maker = lambda gold_amr: f'ID: {gold_amr.metadata["id"]}  Size: {get_size(gold_amr, mapper)}  {ending}'
+    else:
+        metadata_maker = lambda gold_amr: f'{gold_amr.metadata["id"]}  {ending}'
+
+    return metadata_fieldname, metadata_maker
+
+
 if __name__ == "__main__":
     command_line_parser = argparse.ArgumentParser()
     command_line_parser.add_argument("-p", "--predictions_path", help="Path to the predictions file", required=True)
@@ -201,27 +221,9 @@ if __name__ == "__main__":
                     args.output_path)
 
         else:
-            pickle_path = f"{pickle_dir}/{args.category_name}_vulcan.pickle"
+            pickle_path = f"{pickle_dir}/{args.category}_vulcan.pickle"
             evaluator = make_dummy_evaluator(args.predictions_path, gold_path,
                                              args.category, args.parser_name)
             create_pickle(evaluator.gold_amrs, evaluator.predicted_amrs, pickle_path)
 
 
-def get_metadata_fieldname_and_mapper(graph, extra_metadata=None):
-    if extra_metadata is None:
-        ending = ""
-        metadata_fieldname = "ID"
-    else:
-        ending = "  ".join([f"{key}: {val}" for key, val in extra_metadata.items()])
-        metadata_fieldname = "MetaData"
-    graph_id = graph.metadata["id"]
-    parts = graph_id.split("_")
-    prefix = "_".join(parts[:-1])
-    if prefix in size_mappers:
-        mapper = size_mappers[prefix]
-        metadata_fieldname = "MetaData"
-        metadata_maker = lambda gold_amr: f'ID: {gold_amr.metadata["id"]}  Size: {get_size(gold_amr, mapper)}  {ending}'
-    else:
-        metadata_maker = lambda gold_amr: f'{gold_amr.metadata["id"]}  {ending}'
-
-    return metadata_fieldname, metadata_maker
